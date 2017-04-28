@@ -1,0 +1,7 @@
+kumuluzee:
+  datasources:
+    - jndi-name: jdbc/SimpleDS
+      connection-url: jdbc:postgresql://localhost:5432/postgres
+      username: postgres
+      password: postgres
+      max-pool-size: 20
