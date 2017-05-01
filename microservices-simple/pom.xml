@@ -15,7 +15,7 @@
         <module>orders</module>
     </modules>
 
-    <artifactId>kumuluzee-samples-microservices-simple</artifactId>
+    <artifactId>microservices-simple</artifactId>
 
     <name>Simple microservices sample with KumuluzEE</name>
     <description>Two simple microservices sample using KumuluzEE using a shared database module</description>

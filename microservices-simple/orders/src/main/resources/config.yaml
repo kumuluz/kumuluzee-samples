@@ -1,6 +1,6 @@
 kumuluzee:
   datasources:
-    - jndi-name: jdbc/SimpleDS
+    - jndi-name: jdbc/BooksDS
       connection-url: jdbc:postgresql://localhost:5432/postgres
       username: postgres
       password: postgres

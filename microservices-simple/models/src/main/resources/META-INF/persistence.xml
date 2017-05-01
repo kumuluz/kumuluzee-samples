@@ -7,7 +7,7 @@
              version="2.1">
     <persistence-unit name="books" transaction-type="RESOURCE_LOCAL">
 
-        <non-jta-data-source>jdbc/SimpleDS</non-jta-data-source>
+        <non-jta-data-source>jdbc/BooksDS</non-jta-data-source>
 
         <class>com.kumuluz.ee.samples.microservices.simple.models.Book</class>
         <class>com.kumuluz.ee.samples.microservices.simple.models.Order</class>
