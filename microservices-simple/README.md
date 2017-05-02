@@ -54,9 +54,10 @@ an instance using docker:
 
 The example uses docker to build and run the microservices.
 
-1. Build the samples using maven:
+1. Build the sample using maven:
 
     ```bash
+    $ cd servlet
     $ mvn clean package
     ```
 
@@ -68,8 +69,6 @@ The example uses docker to build and run the microservices.
     * `ORDERS.CATALOGUEURL` should contain the catalogue base url for the orders service
     
     ```bash
-    $ cd microservices-simple   
- 
     $ PORT=3000 java -cp "catalogue/target/classes:catalogue/target/dependency/*" com.kumuluz.ee.EeApplication
     
     $ PORT=3001 java -cp "orders/target/classes:orders/target/dependency/*" com.kumuluz.ee.EeApplication

@@ -37,16 +37,16 @@ This sample does not contain any prerequisites and can be started on its own.
 
 The example uses docker to build and run the microservices.
 
-1. Build the samples using maven:
+1. Build the sample using maven:
 
     ```bash
+    $ cd servlet
     $ mvn clean package
     ```
 
 2. Run the sample:
 
     ```bash
-    $ cd servlet
     $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
     ```
 
