@@ -12,6 +12,7 @@
         <module>microservices-simple</module>
         <module>servlet</module>
         <module>jsf</module>
+        <module>jpa</module>
     </modules>
     <packaging>pom</packaging>
 
