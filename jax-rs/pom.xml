@@ -10,10 +10,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>servlet</artifactId>
+    <artifactId>jax-rs</artifactId>
 
-    <name>KumuluzEE servlet sample</name>
-    <description>Servlet usage sample with KumuluzEE</description>
+    <name>KumuluzEE JAX-RS sample</name>
+    <description>JAX-RS usage sample with KumuluzEE</description>
 
     <dependencyManagement>
         <dependencies>
@@ -35,6 +35,10 @@
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-servlet-jetty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-jax-rs-jersey</artifactId>
         </dependency>
     </dependencies>
 
