@@ -10,10 +10,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jpa</artifactId>
+    <artifactId>jax-ws</artifactId>
 
-    <name>KumuluzEE JPA and CDI sample</name>
-    <description>JPA and CDI usage sample with KumuluzEE</description>
+    <name>KumuluzEE JAX-WS sample</name>
+    <description>JAX-WS usage sample with KumuluzEE</description>
 
     <dependencyManagement>
         <dependencies>
@@ -38,21 +38,7 @@
         </dependency>
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-jax-rs-jersey</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-cdi-weld</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-jpa-eclipselink</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.0.0</version>
+            <artifactId>kumuluzee-jax-ws-metro</artifactId>
         </dependency>
     </dependencies>
 

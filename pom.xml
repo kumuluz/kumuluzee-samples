@@ -9,10 +9,11 @@
     <version>2.3.0-SNAPSHOT</version>
     <modules>
         <module>jax-rs</module>
+        <module>jax-ws</module>
+        <module>jpa</module>
+        <module>jsf</module>
         <module>microservices-simple</module>
         <module>servlet</module>
-        <module>jsf</module>
-        <module>jpa</module>
     </modules>
     <packaging>pom</packaging>
 
