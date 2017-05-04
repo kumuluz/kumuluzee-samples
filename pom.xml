@@ -11,6 +11,7 @@
         <module>jax-rs</module>
         <module>microservices-simple</module>
         <module>servlet</module>
+        <module>jsf</module>
     </modules>
     <packaging>pom</packaging>
 
