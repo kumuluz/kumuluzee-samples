@@ -13,6 +13,7 @@
         <module>jax-ws</module>
         <module>jpa</module>
         <module>jsf</module>
+        <module>kumuluzee-config</module>
         <module>kumuluzee-logs</module>
         <module>microservices-simple</module>
         <module>servlet</module>
