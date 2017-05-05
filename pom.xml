@@ -16,6 +16,7 @@
         <module>kumuluzee-logs</module>
         <module>microservices-simple</module>
         <module>servlet</module>
+        <module>websocket</module>
     </modules>
     <packaging>pom</packaging>
 
