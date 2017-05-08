@@ -44,7 +44,15 @@ We recommend that use the tagged examples as the latest ones may not be finished
 
 The following examples are available:
 
-- sample1
+- JAX-RS
+- JAX-WS
+- JPA
+- JSP
+- JSF
+- Servlet
+- Websocket
+- KumuluzEE Config
+- KumuluzEE Logs
 
 ## Requirements
 

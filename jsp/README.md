@@ -1,8 +1,8 @@
 # KumuluzEE servlet sample
 
-> JSF usage sample with KumuluzEE
+> JSP usage sample with KumuluzEE
 
-This sample demonstrates how to configure and use Java EE JSF technologies using KumuluzEE.
+This sample demonstrates how to configure and use Java EE JSP technologies using KumuluzEE.
 
 ## Requirements
 
@@ -40,7 +40,7 @@ The example uses docker to build and run the microservices.
 1. Build the sample using maven:
 
     ```bash
-    $ cd jsf
+    $ cd jsp
     $ mvn clean package
     ```
 
@@ -66,6 +66,6 @@ The example uses docker to build and run the microservices.
 -->
     
 The application/service can be accessed on the following URL:
-* JSF page - http://localhost:8080
+* JSP page - http://localhost:8080
 
 To shut down the example simply stop the processes in the foreground.
