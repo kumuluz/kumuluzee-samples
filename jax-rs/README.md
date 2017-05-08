@@ -127,7 +127,7 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 
 ### Implement the service
 
-Register your module as JAX-RS service and define the application path. You can do that with for example with `@ApplicationPath` annotation:
+Register your module as JAX-RS service and define the application path. You could do that in web.xml or for example with `@ApplicationPath` annotation:
 
 ```java
 @ApplicationPath("v1")
@@ -135,7 +135,7 @@ public class CustomerApplication extends Application {
 }
 ```
 
-Implement JAX-RS resource, for example:
+Implement JAX-RS resource, for example, to implement resource `customers` which will return all customers by default on GET request:
 
 ```java
 @Consumes(MediaType.APPLICATION_JSON)
@@ -148,7 +148,11 @@ public class CustomerResource {
         List<Customer> customers = Database.getCustomers();
         return Response.ok(customers).build();
     }
+
+    //Additional resource methods and sub-resources
 }
 ```
 
-To run the example use the commands as described in previous sections.
+### Run the service
+
+To run the example, use the commands as described in previous sections.
