@@ -68,6 +68,7 @@ We will develop a simple Customer REST service with the following resources:
 * GET http://localhost:8080/v1/customers/{customerId} – details of customer with ID {customerId}
 * POST http://localhost:8080/v1/customers – add a customer
 * DELETE http://localhost:8080/v1/customers/{customerId} – delete customer with ID {customerId}
+
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
 * Add Maven dependencies to KumuluzEE and include KumuluzEE components (Core, Servlet and JAX-RS)
