@@ -49,8 +49,106 @@ The example uses maven to build and run the microservices.
     ```bash
     $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
     ```
+
+    in Windows environment use the command
+    ```
+    java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+    ```
     
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource - http://localhost:8080/v1/customers
 
 To shut down the example simply stop the processes in the foreground.
+
+## Tutorial
+
+This tutorial will guide you through the key steps taken, to create similar sample on your own.
+
+### Add Maven dependencies
+
+Add the KumuluzEE BOM module dependency to your `pom.xml` file:
+```xml
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-bom</artifactId>
+            <version>${kumuluz.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+```
+
+Add the `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` dependencies:
+```xml
+<dependencies>
+    <dependency>
+        <groupId>com.kumuluz.ee</groupId>
+         <artifactId>kumuluzee-core</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.kumuluz.ee</groupId>
+         <artifactId>kumuluzee-servlet-jetty</artifactId>
+    </dependency>
+    <dependency>
+         <groupId>com.kumuluz.ee</groupId>
+         <artifactId>kumuluzee-jax-rs-jersey</artifactId>
+    </dependency>
+</dependencies>
+```
+
+Add the `maven-dependency-plugin` build plugin to copy all the necessary dependencies into target folder:
+
+```xml
+<build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+```
+
+### Implement the service
+
+Register your module as JAX-RS service and define the application path. You can do that with for example with `@ApplicationPath` annotation:
+
+```java
+@ApplicationPath("v1")
+public class CustomerApplication extends Application {
+}
+```
+
+Implement JAX-RS resource, for example:
+
+```java
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("customers")
+public class CustomerResource {
+
+    @GET
+    public Response getAllCustomers() {
+        List<Customer> customers = Database.getCustomers();
+        return Response.ok(customers).build();
+    }
+}
+```
+
+To run the example
