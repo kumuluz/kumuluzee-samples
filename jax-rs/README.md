@@ -112,6 +112,8 @@ Add the `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey
 </dependencies>
 ```
 
+Alternatively, we could add the `kumuluzee-microProfile-1.0`, which adds the MicroProfile 1.0 dependencies (JAX-RS, CDI, JSON-P, and Servlet).
+
 Add the `maven-dependency-plugin` build plugin to copy all the necessary dependencies into target folder:
 
 ```xml
