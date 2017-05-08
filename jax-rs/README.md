@@ -35,7 +35,7 @@ This sample does not contain any prerequisites and can be started on its own.
 
 ## Usage
 
-The example uses docker to build and run the microservices.
+The example uses maven to build and run the microservices.
 
 1. Build the sample using maven:
 
@@ -49,21 +49,6 @@ The example uses docker to build and run the microservices.
     ```bash
     $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
     ```
-
-<!---
-2. Run each individual microservice separately (separate terminal) with a single command with the appropriate environment variables that serve as the applications config:
-    * `PORT` should containt the port on which the microservice will accept connections
-    * `DATABASE_UNIT` should contain the microservice persistence unit (defaults are obtained from the `persistence.xml` file)
-    * `DATABASE_URL` should contain the jdbc URL for the persistence unit specified above (defaults are obtained from the `persistence.xml` file)
-    * `DATABASE_USER` should contain the database username (defaults are obtained from the `persistence.xml` file)
-    * `DATABASE_PASS` should contain the database password (defaults are obtained from the `persistence.xml` file)
-    
-    ```bash
-    $ PORT=3000 java -cp catalogue/target/classes:catalogue/target/dependency/* com.kumuluz.ee.EeApplication
-    
-    $ PORT=3001 java -cp orders/target/classes:orders/target/dependency/* com.kumuluz.ee.EeApplication
-    ```
--->
     
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource - http://localhost:8080/v1/customers
