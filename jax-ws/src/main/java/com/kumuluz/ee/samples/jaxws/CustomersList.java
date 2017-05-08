@@ -28,7 +28,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Benjamin on 26. apr. 2017.
+ * @author Benjamin Kastelic
+ * @since 2.3.0
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(

@@ -22,12 +22,12 @@ package com.kumuluz.ee.samples.jsf;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.xml.crypto.Data;
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Benjamin on 26. apr. 2017.
+ * @author Benjamin Kastelic
+ * @since 2.3.0
  */
 @ManagedBean
 @SessionScoped

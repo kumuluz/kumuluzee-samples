@@ -18,15 +18,21 @@
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
 */
-package com.kumuluz.ee.samples.kumuluzee_logs;
+package com.kumuluz.ee.samples.websocket;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import javax.websocket.OnMessage;
+import javax.websocket.server.ServerEndpoint;
 
 /**
  * @author Benjamin Kastelic
  * @since 2.3.0
  */
-@ApplicationPath("v1")
-public class CustomerApplication extends Application {
+@ServerEndpoint("/customer")
+public class CustomerEndpoint {
+
+    @OnMessage
+    public String greetCustomer(String name) {
+        System.out.print("Preparing greeting for customer '" + name + "' ...");
+        return "Hello, " + name + "!";
+    }
 }

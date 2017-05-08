@@ -24,7 +24,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by Benjamin on 26. apr. 2017.
+ * @author Benjamin Kastelic
+ * @since 2.3.0
  */
 @Entity
 @Table(name = "customer")

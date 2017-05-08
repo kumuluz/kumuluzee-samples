@@ -28,7 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Benjamin on 26. apr. 2017.
+ * @author Benjamin Kastelic
+ * @since 2.3.0
  */
 @WebService(
         targetNamespace = "http://kumuluz.com/samples/jax-ws/customers/v1",

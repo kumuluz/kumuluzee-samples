@@ -21,7 +21,8 @@
 package com.kumuluz.ee.samples.kumuluzee_logs;
 
 /**
- * Created by Benjamin on 26. apr. 2017.
+ * @author Benjamin Kastelic
+ * @since 2.3.0
  */
 public class Customer {
 

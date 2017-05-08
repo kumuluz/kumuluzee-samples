@@ -20,8 +20,6 @@
 */
 package com.kumuluz.ee.samples.kumuluzee_logs;
 
-import com.kumuluz.ee.logs.LogManager;
-import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
 import com.kumuluz.ee.logs.cdi.LogParams;
 
@@ -31,7 +29,8 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
- * Created by Benjamin on 26. apr. 2017.
+ * @author Benjamin Kastelic
+ * @since 2.3.0
  */
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)

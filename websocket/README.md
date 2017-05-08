@@ -1,8 +1,8 @@
 # KumuluzEE JAX-RS sample
 
-> JAX-RS usage sample with KumuluzEE
+> Websocket usage sample with KumuluzEE
 
-This sample demonstrates how to configure and use Java EE JAX-RS technologies using KumuluzEE.
+This sample demonstrates how to configure and use Java EE Websockets using KumuluzEE.
 
 ## Requirements
 
@@ -40,7 +40,7 @@ The example uses docker to build and run the microservices.
 1. Build the sample using maven:
 
     ```bash
-    $ cd jax-rs
+    $ cd websocket
     $ mvn clean package
     ```
 
@@ -66,6 +66,7 @@ The example uses docker to build and run the microservices.
 -->
     
 The application/service can be accessed on the following URL:
-* JAX-RS REST resource - http://localhost:8080/v1/customers
+* HTML interface - http://localhost:8080
+* Websocket endpoint - http://localhost:8080/customer
 
 To shut down the example simply stop the processes in the foreground.
