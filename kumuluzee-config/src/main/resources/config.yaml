@@ -1,0 +1,4 @@
+rest-config:
+  string-property: Monday
+  boolean-property: true
+  integer-property: 23
