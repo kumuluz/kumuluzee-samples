@@ -151,4 +151,4 @@ public class CustomerResource {
 }
 ```
 
-To run the example
+To run the example use the commands as described in previous sections.
