@@ -1,9 +1,9 @@
-# KumuluzEE JAX-RS sample
+# KumuluzEE JAX-RS REST service sample
 
-> JAX-RS usage sample with KumuluzEE
+> Develop a REST service using standard JAX-RS 2 API and pack it as a KumuluzEE microservice
 
-This sample demonstrates how to configure and use Java EE JAX-RS technologies using KumuluzEE.
-
+The objective of this sample is to show how to develop a REST service using standard JAX-RS 2 API and pack it as a KumuluzEE microservice. The tutorial will guide you through the necessary steps. You will add KumuluzEE dependencies into pom.xml. To develop the rEST service, you will use the standard JAX-RS 2 API. 
+Required knowledge: basic familiarity with JAX-RS 2 and basic concepts of REST and JSON.
 ## Requirements
 
 In order to run this example you will need the following:
@@ -35,7 +35,7 @@ This sample does not contain any prerequisites and can be started on its own.
 
 ## Usage
 
-The example uses maven to build and run the microservices.
+The example uses maven to build and run the microservice.
 
 1. Build the sample using maven:
 
@@ -62,7 +62,19 @@ To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
 
-This tutorial will guide you through the key steps taken, to create similar sample on your own.
+This tutorial will guide you through the steps required to create a simple REST service using standard JAX-RS 2 API and pack it as a KumuluzEE microservice. 
+We will develop a simple Customer REST service with the following resources:
+* GET http://localhost:8080/v1/customers - list of all customers 
+* GET http://localhost:8080/v1/customers/{customerId} – details of customer with ID {customerId}
+* POST http://localhost:8080/v1/customers – add a customer
+* DELETE http://localhost:8080/v1/customers/{customerId} – delete customer with ID {customerId}
+We will follow these steps:
+* Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
+* Add Maven dependencies to KumuluzEE and include KumuluzEE components (Core, Servlet and JAX-RS)
+* Implement the service using standard JAX-RS 2
+* Build the microservice
+* Run it
+ 
 
 ### Add Maven dependencies
 
@@ -153,6 +165,6 @@ public class CustomerResource {
 }
 ```
 
-### Run the service
+### Build the microservice and run it
 
-To run the example, use the commands as described in previous sections.
+To build the microservice and run the example, use the commands as described in previous sections.
