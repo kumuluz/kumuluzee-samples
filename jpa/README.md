@@ -31,7 +31,13 @@ In order to run this example you will need the following:
 
 ## Prerequisites
 
-This sample does not contain any prerequisites and can be started on its own.
+In order to run this sample you will have to setup a local PostgreSQL database:
+- __database host__: localhost:5432
+- __database name__: customers
+- __user__: postgres
+- __password__: postgres
+
+The required tables will be created automatically upon running the sample.
 
 ## Usage
 
