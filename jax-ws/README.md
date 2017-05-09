@@ -239,7 +239,7 @@ public class CustomerEndpoint {
     public GetCustomersResponseMessage getCustomers() {
 
         List<Customer> customers = new ArrayList<>();
-        //add customers to list
+        //TODO: Add customers to list
 
         CustomersList customersList = new CustomersList();
         customersList.setCustomer(customers);
@@ -249,6 +249,20 @@ public class CustomerEndpoint {
 
         return message;
     }
+}
+```
+
+Customer is an Java POJO with get and set methods, for example:
+```java
+public class Customer {
+
+    private String id;
+
+    private String firstName;
+
+    private String lastName;
+
+    //get and set methods
 }
 ```
 
