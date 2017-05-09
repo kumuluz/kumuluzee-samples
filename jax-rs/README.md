@@ -75,7 +75,6 @@ We will follow these steps:
 * Implement the service using standard JAX-RS 2
 * Build the microservice
 * Run it
- 
 
 ### Add Maven dependencies
 
@@ -164,7 +163,27 @@ public class CustomerResource {
         return Response.ok(customers).build();
     }
 
-    //Additional resource methods and sub-resources
+    @GET
+    @Path("{customerId}")
+    public Response getCustomer(@PathParam("customerId") String customerId) {
+        Customer customer = Database.getCustomer(customerId);
+        return customer != null
+                ? Response.ok(customer).build()
+                : Response.status(Response.Status.NOT_FOUND).build();
+    }
+
+    @POST
+    public Response addNewCustomer(Customer customer) {
+        Database.addCustomer(customer);
+        return Response.noContent().build();
+    }
+
+    @DELETE
+    @Path("{customerId}")
+    public Response deleteCustomer(@PathParam("customerId") String customerId) {
+        Database.deleteCustomer(customerId);
+        return Response.noContent().build();
+    }
 }
 ```
 
