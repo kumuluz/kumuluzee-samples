@@ -62,10 +62,11 @@ The application/service can be accessed on the following URL:
 To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
-This tutorial will guide you through the steps required to create a simple REST microservice which uses JPA 2.1 and pack it as a KumuluzEE microservice. We will extend the [existing KumuluzEE JAX-RS REST sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs), with the access to database using JPA 2.1. Therefore, first complete the existing JAX-RS sample tutorial, or clone the JAX-RS sample code. We will use PostgreSQL in this tutorial.
+This tutorial will guide you through the steps required to create a simple REST microservice which uses JPA 2.1 and pack it as a KumuluzEE microservice. We will extend the existing [KumuluzEE JAX-RS REST sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs),
+ with access to the database using JPA 2.1. Therefore, first complete the existing JAX-RS sample tutorial, or clone the JAX-RS sample code. We will use PostgreSQL in this tutorial.
 
 We will follow these steps:
-* Complete the [tutorial for KumuluzEE JAX-RS REST sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs) or clone the existing sample
+* Complete the tutorial for [KumuluzEE JAX-RS REST sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs) or clone the existing sample
 * Ensure access to PostgreSQL database.
 * Add Maven dependencies
 * Implement the persistence using standard JPA
@@ -100,8 +101,8 @@ Add the `kumuluzee-cdi-weld`, `kumuluzee-jpa-eclipselink` and `postgresql` depen
 Enhance existing `Customer` class with JPA annotations:
 * Add `@Entity` and `@Table` to make it persistable. 
 * Add `Customer.findCustomers` named query for retrieving all customers from database
-* Mark attribute `id` as primary key.
-* Change the default database column mapping
+* Mark attribute `id` as a primary key.
+* Change the default database column mapping.
 
 ```java
 @Entity
@@ -129,10 +130,10 @@ public class Customer implements Serializable {
 Implement `CustomerService` class. Implement it as a `@RequestScoped` CDI bean, and inject `EntityManager`. Use `EntityManager` to implement the following methods:
 
 ```java
-public Customer getCustomer(String customerId) 
-public List<Customer> getCustomers() 
-public void saveCustomer(Customer customer)
-public void deleteCustomer(String customerId) 
+public Customer getCustomer(String customerId);
+public List<Customer> getCustomers(); 
+public void saveCustomer(Customer customer);
+public void deleteCustomer(String customerId); 
 ```
 Sample implementation of `CustomerService` class:
 
@@ -197,7 +198,7 @@ public class CustomerService {
 
 ### Implement REST Service
 
-Make `CustomerResource` class a CDI bean by adding `@RequestScoped` annotation. Inject newly, created `CustomerService` to `CustomerResource` using `@Inject` annotation. In every resource method implementation, replace the invocation of static `Database` class with invocation of injected `CustomerService` implementation. Sample implementation:
+Make `CustomerResource` class a CDI bean by adding `@RequestScoped` annotation. Inject created `CustomerService` to `CustomerResource` using `@Inject` annotation. Replace the invocation of static `Database` class with invocation of injected `CustomerService` implementation. Sample implementation:
 
 ```java
 @RequestScoped
@@ -242,7 +243,7 @@ public class CustomerResource {
 
 ### Configure CDI
 
-Create directory `resources/META-INF`. In this directory create file `beans.xml`, with the following content to enable CDI:
+Create the directory `resources/META-INF`. In this directory create the file `beans.xml` with the following content to enable CDI:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -256,7 +257,7 @@ Create directory `resources/META-INF`. In this directory create file `beans.xml`
 
 Make sure, that you have database server prepared, as described in Prerequisites section.
 
-In directory `resources/META-INF` create file `persistence.xml`: 
+In the directory `resources/META-INF` create the file `persistence.xml`: 
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -283,7 +284,7 @@ In directory `resources/META-INF` create file `persistence.xml`:
 
 Modify the element `class` in the above example, to reflect the package and class name of entity `Customer` in your source code structure.
 
-In directory `resources/META-INF` add file `config.xml` with database connectivity properties:
+In the directory `resources/META-INF` add the file `config.xml` with the following database connectivity properties:
 
 ```xml
 kumuluzee:
