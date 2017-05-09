@@ -187,16 +187,7 @@ public class CustomerResource {
 }
 ```
 
-In the example above, we use `Database` class to access data. This can be arbitrary implementation, which implements the following methods:
-
-```java
-    public static List<Customer> getCustomers();
-    public static Customer getCustomer(String customerId);
-    public static void addCustomer(Customer customer);
-    public static void deleteCustomer(String customerId);
-```
-
-Customer is an Java POJO with get and set methods, for example:
+Implement the `Customer` class, which is a Java POJO:
 ```java
 public class Customer {
 
@@ -206,7 +197,41 @@ public class Customer {
 
     private String lastName;
 
-    //get and set methods
+    //TODO: implement get and set methods
+}
+```
+
+In the example above, we use `Database` class to access data. A sample implementation which simulates persistance layer, can be implemented as follows:
+
+```java
+public class Database {
+    private static List<Customer> customers = new ArrayList<>();
+
+    public static List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public static Customer getCustomer(String customerId) {
+        for (Customer customer : customers) {
+            if (customer.getId().equals(customerId))
+                return customer;
+        }
+
+        return null;
+    }
+
+    public static void addCustomer(Customer customer) {
+        customers.add(customer);
+    }
+
+    public static void deleteCustomer(String customerId) {
+        for (Customer customer : customers) {
+            if (customer.getId().equals(customerId)) {
+                customers.remove(customer);
+                break;
+            }
+        }
+    }
 }
 ```
 
