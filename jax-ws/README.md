@@ -63,7 +63,16 @@ To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
 
-This tutorial will guide you through the key steps taken, to create similar sample on your own.
+This tutorial will guide you through the steps required to create a simple SOAP service using standard JAX-WS 2.2 API and pack it as a KumuluzEE microservice. 
+We will develop a simple Customer SOAP service with the following operation:
+* GetCustomers - list of all customers 
+
+We will follow these steps:
+* Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
+* Add Maven dependencies to KumuluzEE and include KumuluzEE components (Core, Servlet and JAX-WS)
+* Implement the service using standard JAX-WS 2.2 API
+* Build the microservice
+* Run it
 
 ### Add Maven dependencies
 
@@ -128,7 +137,7 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 
 ### Implement the service
 
-Typically, you should approach the implementation of a SOAP web service using the Top-Down approach by generating implementation from a WSDL file. For the sake of demonstration of JAX-WS usage, we will use the Bottom-Up approach in this tutorial. In case you are generating your implementation from a WSDL file, you can skip to point where  service is configured in file `sun-jaxws.xml`.
+Typical approach to the implementation of a SOAP web service using the Top-Down approach by generating implementation from a WSDL file. To demonstrate KumuluzEE microservice implementation with JAX-WS 2.2 API usage, we will use the Bottom-Up approach in this tutorial. In case you are generating your implementation from a WSDL file, you can skip to point where service is configured in file `sun-jaxws.xml`.
 
 For example, imagine that you are creating a SOAP web service, which returns all customers. First, let us create a sample Java class annotated with JAXB annotations which will hold a single customer, for example:
 
