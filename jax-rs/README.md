@@ -187,7 +187,7 @@ public class CustomerResource {
 }
 ```
 
-Implement the `Customer` class, which is a Java POJO:
+Implement the `Customer` Java class, which is a POJO:
 ```java
 public class Customer {
 

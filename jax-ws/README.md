@@ -137,7 +137,7 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 
 ### Implement the service
 
-Typical approach to the implementation of a SOAP web service using the Top-Down approach by generating implementation from a WSDL file. To demonstrate KumuluzEE microservice implementation with JAX-WS 2.2 API usage, we will use the Bottom-Up approach in this tutorial. In case you are generating your implementation from a WSDL file, you can skip to point where service is configured in file `sun-jaxws.xml`.
+Typical approach to the implementation of a SOAP web service is using the Top-Down approach by generating implementation from a WSDL file. To demonstrate KumuluzEE microservice implementation with JAX-WS 2.2 API usage, we will use the Bottom-Up approach in this tutorial. In case you are generating your implementation from a WSDL file, you can skip to point where service is configured in file `sun-jaxws.xml`.
 
 For example, imagine that you are creating a SOAP web service, which returns all customers. First, let us create a sample Java class annotated with JAXB annotations which will hold a single customer, for example:
 
@@ -239,7 +239,7 @@ public class CustomerEndpoint {
     public GetCustomersResponseMessage getCustomers() {
 
         List<Customer> customers = new ArrayList<>();
-        //TODO: Add customers to list
+        //TODO: Add sample customers to list
 
         CustomersList customersList = new CustomersList();
         customersList.setCustomer(customers);
@@ -252,7 +252,7 @@ public class CustomerEndpoint {
 }
 ```
 
-Customer is an Java POJO with get and set methods, for example:
+Customer is a POJO with get and set methods, for example:
 ```java
 public class Customer {
 
@@ -262,11 +262,11 @@ public class Customer {
 
     private String lastName;
 
-    //get and set methods
+    //TODO: implement get and set methods
 }
 ```
 
-Create directory `webapp/WEB-INF` in `resources` folder and in this directory file `sun-jaxws.xml`. The file should contain the configuration as shown below. Replace the name of your implementation class (com.kumuluz.ee.samples.jaxws.CustomerEndpoint). To modify the URL of your web service, you can change the `url-pattern` property.
+Create directory `webapp/WEB-INF` in `resources` folder and in this directory file `sun-jaxws.xml`. The file should contain the configuration as shown below. Replace the text attribute value `com.kumuluz.ee.samples.jaxws.CustomerEndpoint` with the name of your web service implementation class. To modify the URL of your web service, you can change the `url-pattern` property.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime"
