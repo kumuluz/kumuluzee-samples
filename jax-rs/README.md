@@ -2,7 +2,7 @@
 
 > Develop a REST service using standard JAX-RS 2 API and pack it as a KumuluzEE microservice
 
-The objective of this sample is to show how to develop a REST service using standard JAX-RS 2 API and pack it as a KumuluzEE microservice. The tutorial will guide you through the necessary steps. You will add KumuluzEE dependencies into pom.xml. To develop the rEST service, you will use the standard JAX-RS 2 API. 
+The objective of this sample is to show how to develop a REST service using standard JAX-RS 2 API and pack it as a KumuluzEE microservice. The tutorial will guide you through the necessary steps. You will add KumuluzEE dependencies into pom.xml. To develop the REST service, you will use the standard JAX-RS 2 API. 
 Required knowledge: basic familiarity with JAX-RS 2 and basic concepts of REST and JSON.
 ## Requirements
 
