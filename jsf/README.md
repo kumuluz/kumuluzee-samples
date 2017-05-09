@@ -59,9 +59,9 @@ To shut down the example simply stop the processes in the foreground.
 
 This tutorial will guide you through the steps required to create a servlet web module (with JSF 2.2) and pack it as a KumuluzEE microservice. 
 We will develop a simple front-end in JSF and required back-end with the following functionalities:
-* User interface and logic to add a customer.
-* User interface and logic to list all customer.
-* user interface with welcome page and list of options.
+* User interface and logic to add a customer
+* User interface and logic to list all customer
+* User interface with welcome page and list of options
 
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.).
@@ -138,7 +138,7 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 
 ### Implement backend beans
 
-First, let us create a POJO `Customer`:
+First, let us create a `Customer` POJO:
 
 ```java
 public class Customer {
@@ -185,7 +185,7 @@ public class Database {
 }
 
 ```
-Implement `CustomerBean` class. This class will serve as a bean supporting functionalities of user interface. Note that `@SessionScoped` and `@ManagedBean` are both imported from package `javax.faces.bean`. If needed, you can use CDI beans and scope as well. In that case, you need to add `beans.xml` to directory `resources/META-INF` file and `kumuluzee-cdi-weld` dependency to pom.xml. Sample for CDI configuration can be found in [KumuluzEE JPA sample documentation](https://github.com/kumuluz/kumuluzee-samples/tree/master/jpa).
+Implement the `CustomerBean` class. This class will serve as a bean supporting functionalities of the user interface. Note that `@SessionScoped` and `@ManagedBean` are both imported from the package `javax.faces.bean`. If needed, you can modify the code to use CDI beans and CDI scopes. In that case, you need to add the file `beans.xml` to the directory `resources/META-INF` file and add the `kumuluzee-cdi-weld` dependency to pom.xml. Sample for CDI configuration can be found in [KumuluzEE JPA sample documentation](https://github.com/kumuluz/kumuluzee-samples/tree/master/jpa).
 
 Implementation of `CustomerBean` class:
 
@@ -239,9 +239,9 @@ public class CustomerBean implements Serializable {
 ```
 ### Implement the views
 
-Create directory `resources/webapp` and add views `input.xhtml`, `list.xhtml` and `welcome.xhtml`.
+Create the directory `resources/webapp` and add the views `input.xhtml`, `list.xhtml` and `welcome.xhtml`.
 
-**input.xhtml**
+**welcome.xhtml**
 ```xhtml
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -326,7 +326,7 @@ Create directory `resources/webapp` and add views `input.xhtml`, `list.xhtml` an
 ```
 
 ### Configure web module
-In directory `resources/webapp/WEB-INF` add file `web.xml`:
+In the directory `resources/webapp/WEB-INF` add the file `web.xml`:
 
 ```xml
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
