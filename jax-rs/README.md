@@ -187,6 +187,29 @@ public class CustomerResource {
 }
 ```
 
+In the example above, we use `Database` class to access data. This can be arbitrary implementation, which implements the following methods:
+
+```java
+    public static List<Customer> getCustomers();
+    public static Customer getCustomer(String customerId);
+    public static void addCustomer(Customer customer);
+    public static void deleteCustomer(String customerId);
+```
+
+Customer is an Java POJO with get and set methods, for example:
+```java
+public class Customer {
+
+    private String id;
+
+    private String firstName;
+
+    private String lastName;
+
+    //get and set methods
+}
+```
+
 ### Build the microservice and run it
 
 To build the microservice and run the example, use the commands as described in previous sections.
