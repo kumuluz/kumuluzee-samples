@@ -266,7 +266,7 @@ public class Customer {
 }
 ```
 
-Create directory `webapp/WEB-INF` in `resources` folder and in this directory file `sun-jaxws.xml`. The file should contain the configuration as shown below. Replace the text attribute value `com.kumuluz.ee.samples.jaxws.CustomerEndpoint` with the name of your web service implementation class. To modify the URL of your web service, you can change the `url-pattern` property.
+Create directory `webapp/WEB-INF` in `resources` folder and in this directory file `sun-jaxws.xml`. The file should contain the configuration as shown below. Replace the text attribute value `com.kumuluz.ee.samples.jaxws.CustomerEndpoint` with the name of your web service implementation class. To modify the URL of your web service, you can change the `url-pattern` attribute.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime"
