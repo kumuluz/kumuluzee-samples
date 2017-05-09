@@ -30,7 +30,7 @@ import java.util.List;
  * @since 2.3.0
  */
 @RequestScoped
-public class CustomerBean {
+public class CustomerService {
 
     @PersistenceContext
     private EntityManager em;

@@ -38,7 +38,7 @@ import java.util.List;
 public class CustomerResource {
 
     @Inject
-    private CustomerBean customerBean;
+    private CustomerService customerBean;
 
     @GET
     public Response getAllCustomers() {
