@@ -1,9 +1,8 @@
 # KumuluzEE Java Server Faces (JSF) sample
 
-> Develop a sample JSF application and pack it as a KumuluzEE microservice
+> Develop a sample JSF application and pack it as a KumuluzEE microservice.
 
 The objective of this sample is to demonstrate how to develop a JSF application and pack it as a KumuluzEE microservice. The tutorial guides you through the development of a JSF application, including the development of a managed bean, JSF views, and configuring the web module. It shows how to pack a JSF application as a microservice. Required knowledge: basic familiarity with JSF.
-
 
 ## Requirements
 

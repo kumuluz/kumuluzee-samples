@@ -1,9 +1,8 @@
 # KumuluzEE Java Server Pages (JSP) and Servlet sample
 
-> Develop a sample JSP and Servlet and pack it as a KumuluzEE microservice
+> Develop a sample JSP and Servlet and pack it as a KumuluzEE microservice.
 
 The objective of this sample is to demonstrate how to develop JSP and Servlets and pack it as a KumuluzEE microservice. The tutorial guides you through the development of a JSP/Servlet application, including the development of a servlet, three different JPSs, and configuring the web module. It shows how to pack JSPs and Servlets as a microservice. Required knowledge: basic familiarity with JSP and Servlets.
-
 
 ## Requirements
 
@@ -144,7 +143,7 @@ public class Customer {
     private String firstName;
     private String lastName;
 
-    //TODO: add getters and setters
+    // TODO: add getters and setters
 }
 ```
 

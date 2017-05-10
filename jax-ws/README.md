@@ -1,9 +1,8 @@
 # KumuluzEE JAX-WS SOAP web service sample
 
-> Develop a SOAP web service using standard JAX-WS 2 API and pack it as a KumuluzEE microservice
+> Develop a SOAP web service using standard JAX-WS 2 API and pack it as a KumuluzEE microservice.
 
 The objective of this sample is to show how to develop a SOAP web service using standard JAX-WS 2 API and pack it as a KumuluzEE microservice. The tutorial will guide you through the necessary steps. You will add KumuluzEE dependencies into pom.xml. To develop the SOAP web service, you will use the standard JAX-WS 2.2. Required knowledge: basic familiarity with JAX-WS 2 and basic concepts of SOAP, WSDL and XML.
-
 
 ## Requirements
 
@@ -240,7 +239,7 @@ public class CustomerEndpoint {
     public GetCustomersResponseMessage getCustomers() {
 
         List<Customer> customers = new ArrayList<>();
-        //TODO: Add sample customers to list
+        // TODO: Add sample customers to list
 
         CustomersList customersList = new CustomersList();
         customersList.setCustomer(customers);
@@ -263,7 +262,7 @@ public class Customer {
 
     private String lastName;
 
-    //TODO: implement get and set methods
+    // TODO: implement get and set methods
 }
 ```
 

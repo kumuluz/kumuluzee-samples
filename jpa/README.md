@@ -1,6 +1,6 @@
 # KumuluzEE JPA and CDI sample
 
-> Develop JPA entities and use CDI within a REST service and pack it as a KumuluzEE microservice
+> Develop JPA entities and use CDI within a REST service and pack it as a KumuluzEE microservice.
 
 The objective of this sample is to demonstrate how to develop JPA entities and use CDI. The tutorial guides you through the development of JPA entities and CDI within a REST service and shows how to pack it as a KumuluzEE microservice. You will add KumuluzEE dependencies into pom.xml. To develop the JPA entities, you will create @Entity classes. You will implement a CustomerService CDI class. Finally, you will call this class from the REST service class. Required knowledge: basic familiarity with JPA, CDI and basic concepts of REST and JSON.
 
