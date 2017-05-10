@@ -27,8 +27,7 @@ In order to run this example you will need the following:
         ```
         git --version
         ```
-    
-
+   
 ## Prerequisites
 
 This sample does not contain any prerequisites and can be started on its own.
