@@ -1,9 +1,8 @@
 # KumuluzEE Java Server Pages (JSP) and Servlet sample
 
-> Develop a sample JSP and Servlet and pack it as a KumuluzEE microservice
+> Develop a sample JSP and Servlet and pack it as a KumuluzEE microservice.
 
 The objective of this sample is to demonstrate how to develop JSP and Servlets and pack it as a KumuluzEE microservice. The tutorial guides you through the development of a JSP/Servlet application, including the development of a servlet, three different JPSs, and configuring the web module. It shows how to pack JSPs and Servlets as a microservice. Required knowledge: basic familiarity with JSP and Servlets.
-
 
 ## Requirements
 
@@ -49,6 +48,11 @@ The example uses maven to build and run the microservices.
 
     ```bash
     $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
+    ```
+    
+    in Windows environment use the command
+    ```batch
+    java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
     
 The application/service can be accessed on the following URL:
@@ -111,26 +115,26 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 
 ```xml
 <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.10</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <includeScope>runtime</includeScope>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>2.10</version>
+            <executions>
+                <execution>
+                    <id>copy-dependencies</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                    <configuration>
+                        <includeScope>runtime</includeScope>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
 ```
 
 ### Implement backend beans
@@ -144,7 +148,7 @@ public class Customer {
     private String firstName;
     private String lastName;
 
-    //TODO: add getters and setters
+    // TODO: add getters and setters
 }
 ```
 

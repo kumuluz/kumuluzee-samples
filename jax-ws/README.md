@@ -1,9 +1,8 @@
 # KumuluzEE JAX-WS SOAP web service sample
 
-> Develop a SOAP web service using standard JAX-WS 2 API and pack it as a KumuluzEE microservice
+> Develop a SOAP web service using standard JAX-WS 2 API and pack it as a KumuluzEE microservice.
 
 The objective of this sample is to show how to develop a SOAP web service using standard JAX-WS 2 API and pack it as a KumuluzEE microservice. The tutorial will guide you through the necessary steps. You will add KumuluzEE dependencies into pom.xml. To develop the SOAP web service, you will use the standard JAX-WS 2.2. Required knowledge: basic familiarity with JAX-WS 2 and basic concepts of SOAP, WSDL and XML.
-
 
 ## Requirements
 
@@ -52,7 +51,7 @@ The example uses maven to build and run the microservices.
     ```
 
     in Windows environment use the command
-    ```
+    ```batch
     java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
     
@@ -113,27 +112,27 @@ Add the `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-ws-metro`
 Add the `maven-dependency-plugin` build plugin to copy all the necessary dependencies into target folder:
 
 ```xml
-   <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.10</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <includeScope>runtime</includeScope>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>2.10</version>
+            <executions>
+                <execution>
+                    <id>copy-dependencies</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                    <configuration>
+                        <includeScope>runtime</includeScope>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
 ```
 
 ### Implement the service
@@ -240,7 +239,7 @@ public class CustomerEndpoint {
     public GetCustomersResponseMessage getCustomers() {
 
         List<Customer> customers = new ArrayList<>();
-        //TODO: Add sample customers to list
+        // TODO: Add sample customers to list
 
         CustomersList customersList = new CustomersList();
         customersList.setCustomer(customers);
@@ -263,7 +262,7 @@ public class Customer {
 
     private String lastName;
 
-    //TODO: implement get and set methods
+    // TODO: implement get and set methods
 }
 ```
 

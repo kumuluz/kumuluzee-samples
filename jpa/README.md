@@ -1,6 +1,6 @@
 # KumuluzEE JPA and CDI sample
 
-> Develop JPA entities and use CDI within a REST service and pack it as a KumuluzEE microservice
+> Develop JPA entities and use CDI within a REST service and pack it as a KumuluzEE microservice.
 
 The objective of this sample is to demonstrate how to develop JPA entities and use CDI. The tutorial guides you through the development of JPA entities and CDI within a REST service and shows how to pack it as a KumuluzEE microservice. You will add KumuluzEE dependencies into pom.xml. To develop the JPA entities, you will create @Entity classes. You will implement a CustomerService CDI class. Finally, you will call this class from the REST service class. Required knowledge: basic familiarity with JPA, CDI and basic concepts of REST and JSON.
 
@@ -56,6 +56,11 @@ The example uses maven to build and run the microservices.
     $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
     ```
     
+    in Windows environment use the command
+    ```batch
+    java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+    ```
+    
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource page - http://localhost:8080/v1/customers
 
@@ -79,7 +84,6 @@ Since your existing starting point is the existing KumuluzEE JAX-RS REST sample,
 
 Add the `kumuluzee-cdi-weld`, `kumuluzee-jpa-eclipselink` and `postgresql` dependencies:
 ```xml
-   
 <dependency>
     <groupId>com.kumuluz.ee</groupId>
     <artifactId>kumuluzee-cdi-weld</artifactId>
@@ -93,7 +97,6 @@ Add the `kumuluzee-cdi-weld`, `kumuluzee-jpa-eclipselink` and `postgresql` depen
     <artifactId>postgresql</artifactId>
     <version>42.0.0</version>
 </dependency>
-    
 ```
 
 ### Implement database access layer
@@ -123,7 +126,7 @@ public class Customer implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
-    //TODO: get and set methods
+    // TODO: get and set methods
 }
 ```
 
@@ -277,7 +280,6 @@ In the directory `resources/META-INF` create the file `persistence.xml`:
             <property name="javax.persistence.schema-generation.create-source" value="metadata"/>
             <property name="javax.persistence.schema-generation.drop-source" value="metadata"/>
         </properties>
-
     </persistence-unit>
 </persistence>
 ```
@@ -286,7 +288,7 @@ Modify the element `class` in the above example, to reflect the package and clas
 
 In the directory `resources/META-INF` add the file `config.xml` with the following database connectivity properties:
 
-```xml
+```yaml
 kumuluzee:
   datasources:
     - jndi-name: jdbc/CustomersDS

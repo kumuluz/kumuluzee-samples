@@ -1,9 +1,8 @@
 # KumuluzEE Java Server Faces (JSF) sample
 
-> Develop a sample JSF application and pack it as a KumuluzEE microservice
+> Develop a sample JSF application and pack it as a KumuluzEE microservice.
 
 The objective of this sample is to demonstrate how to develop a JSF application and pack it as a KumuluzEE microservice. The tutorial guides you through the development of a JSF application, including the development of a managed bean, JSF views, and configuring the web module. It shows how to pack a JSF application as a microservice. Required knowledge: basic familiarity with JSF.
-
 
 ## Requirements
 
@@ -49,6 +48,11 @@ The example uses maven to build and run the microservices.
 
     ```bash
     $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
+    ```
+    
+    in Windows environment use the command
+    ```batch
+    java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
     
 The application/service can be accessed on the following URL:
@@ -115,26 +119,26 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 
 ```xml
 <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.10</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <includeScope>runtime</includeScope>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>2.10</version>
+            <executions>
+                <execution>
+                    <id>copy-dependencies</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                    <configuration>
+                        <includeScope>runtime</includeScope>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
 ```
 
 ### Implement backend beans
@@ -148,7 +152,7 @@ public class Customer {
     private String firstName;
     private String lastName;
 
-    //TODO: add getters and setters
+    // TODO: add getters and setters
 }
 ```
 
@@ -184,7 +188,6 @@ public class Database {
         }
     }
 }
-
 ```
 Implement the `CustomerBean` class. This class will serve as a bean supporting functionalities of the user interface. Note that `@SessionScoped` and `@ManagedBean` are both imported from the package `javax.faces.bean`. If needed, you can modify the code to use CDI beans and CDI scopes. In that case, you need to add the file `beans.xml` to the directory `resources/META-INF` file and add the `kumuluzee-cdi-weld` dependency to pom.xml. Sample for CDI configuration can be found in [KumuluzEE JPA sample documentation](https://github.com/kumuluz/kumuluzee-samples/tree/master/jpa).
 
@@ -208,7 +211,7 @@ public class CustomerBean implements Serializable {
         this.lastName = lastName;
     }
 
-    //TODO: implement getters and setters
+    // TODO: implement getters and setters
 
     public void addCustomer() {
         Customer customer = new Customer();
