@@ -1,8 +1,8 @@
 # KumuluzEE servlet sample
 
-> Develop a servlet using standard Servlet 3.0 API and pack it as a KumuluzEE microservice.
+> Develop a servlet using standard Servlet 3.1 API and pack it as a KumuluzEE microservice.
 
-The objective of this sample is to show how to develop a servlet using standard Servlet 3.0 API and pack it as a KumuluzEE microservice. The tutorial will guide you through the necessary steps. You will add KumuluzEE dependencies into pom.xml. To develop the servlet, you will use the standard Servlet 3.0 API. 
+The objective of this sample is to show how to develop a servlet using standard Servlet 3.1 API and pack it as a KumuluzEE microservice. The tutorial will guide you through the necessary steps. You will add KumuluzEE dependencies into pom.xml. To develop the servlet, you will use the standard Servlet 3.1 API. 
 Required knowledge: basic familiarity with servlets.
 
 ## Requirements
@@ -63,14 +63,14 @@ To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
 
-This tutorial will guide you through the steps required to create a simple servlet using standard Servlet 3.0 API and pack it as a KumuluzEE microservice. 
+This tutorial will guide you through the steps required to create a simple servlet using standard Servlet 3.1 API and pack it as a KumuluzEE microservice. 
 We will develop a simple Customer servlet with the following resources:
 * GET http://localhost:8080/CustomersServlet - list of all customers
 
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
 * Add Maven dependencies to KumuluzEE and include KumuluzEE components (Core, Servlet)
-* Implement the service using standard Servlet 3.0 API
+* Implement the service using standard Servlet 3.1 API
 * Build the microservice
 * Run it
 

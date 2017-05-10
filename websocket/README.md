@@ -1,8 +1,8 @@
 # KumuluzEE websocket sample
 
-> Develop a websocket endpoint using standard WebSocket API and pack it as a KumuluzEE microservice.
+> Develop a websocket endpoint using standard WebSocket 1.1 API and pack it as a KumuluzEE microservice.
 
-The objective of this sample is to show how to develop a websocket endpoint using standard WebSocket API and pack it as a KumuluzEE microservice. The tutorial will guide you through the necessary steps. You will add KumuluzEE dependencies into pom.xml. To develop the websocket endpoint, you will use the standard WebSocket API. 
+The objective of this sample is to show how to develop a websocket endpoint using standard WebSocket 1.1 API and pack it as a KumuluzEE microservice. The tutorial will guide you through the necessary steps. You will add KumuluzEE dependencies into pom.xml. To develop the websocket endpoint, you will use the standard WebSocket 1.1 API. 
 Required knowledge: basic familiarity with websockets.
 
 ## Requirements
@@ -64,13 +64,13 @@ To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
 
-This tutorial will guide you through the steps required to create a simple websocket endpoint with a simple web user interface using standard WebSocket API and pack it as a KumuluzEE microservice. 
+This tutorial will guide you through the steps required to create a simple websocket endpoint with a simple web user interface using standard WebSocket 1.1 API and pack it as a KumuluzEE microservice. 
 We will develop a simple customer websocket endpoint, that returns a greeting for a customer.
 
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
 * Add Maven dependencies to KumuluzEE and include KumuluzEE components (Core, Servlet and WebSocket)
-* Implement the websocket endpoint using standard WebSocket API
+* Implement the websocket endpoint using standard WebSocket 1.1 API
 * Build the microservice
 * Run it
 
