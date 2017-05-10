@@ -115,7 +115,7 @@ In the directory `resources` create the file `log4j2.xml`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration name="my-data-hub">
+<Configuration name="customers">
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
