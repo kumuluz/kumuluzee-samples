@@ -84,6 +84,7 @@ Add the `kumuluzee-cdi-weld` and `kumuluzee-logs-log4j2` dependencies:
 <dependency>
     <groupId>com.kumuluz.ee</groupId>
     <artifactId>kumuluzee-logs-log4j2</artifactId>
+    <version>1.1.0</version>
 </dependency>
 ```
 
