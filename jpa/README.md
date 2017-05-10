@@ -79,7 +79,6 @@ Since your existing starting point is the existing KumuluzEE JAX-RS REST sample,
 
 Add the `kumuluzee-cdi-weld`, `kumuluzee-jpa-eclipselink` and `postgresql` dependencies:
 ```xml
-   
 <dependency>
     <groupId>com.kumuluz.ee</groupId>
     <artifactId>kumuluzee-cdi-weld</artifactId>
@@ -93,7 +92,6 @@ Add the `kumuluzee-cdi-weld`, `kumuluzee-jpa-eclipselink` and `postgresql` depen
     <artifactId>postgresql</artifactId>
     <version>42.0.0</version>
 </dependency>
-    
 ```
 
 ### Implement database access layer
@@ -123,7 +121,7 @@ public class Customer implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
-    //TODO: get and set methods
+    // TODO: get and set methods
 }
 ```
 
@@ -277,7 +275,6 @@ In the directory `resources/META-INF` create the file `persistence.xml`:
             <property name="javax.persistence.schema-generation.create-source" value="metadata"/>
             <property name="javax.persistence.schema-generation.drop-source" value="metadata"/>
         </properties>
-
     </persistence-unit>
 </persistence>
 ```
@@ -286,7 +283,7 @@ Modify the element `class` in the above example, to reflect the package and clas
 
 In the directory `resources/META-INF` add the file `config.xml` with the following database connectivity properties:
 
-```xml
+```yaml
 kumuluzee:
   datasources:
     - jndi-name: jdbc/CustomersDS
