@@ -51,7 +51,7 @@ The example uses maven to build and run the microservices.
     ```
 
     in Windows environment use the command
-    ```
+    ```batch
     java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
     

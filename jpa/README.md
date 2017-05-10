@@ -56,6 +56,11 @@ The example uses maven to build and run the microservices.
     $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
     ```
     
+    in Windows environment use the command
+    ```batch
+    java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+    ```
+    
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource page - http://localhost:8080/v1/customers
 
