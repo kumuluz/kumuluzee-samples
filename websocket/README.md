@@ -58,23 +58,19 @@ The example uses maven to build and run the microservices.
     
 The application/service can be accessed on the following URL:
 * HTML interface - http://localhost:8080
-* Websocket endpoint - http://localhost:8080/customer
+* Websocket endpoint - ws://localhost:8080/customer
 
 To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
 
-This tutorial will guide you through the steps required to create a simple REST service using standard JAX-RS 2 API and pack it as a KumuluzEE microservice. 
-We will develop a simple Customer REST service with the following resources:
-* GET http://localhost:8080/v1/customers - list of all customers 
-* GET http://localhost:8080/v1/customers/{customerId} – details of customer with ID {customerId}
-* POST http://localhost:8080/v1/customers – add a customer
-* DELETE http://localhost:8080/v1/customers/{customerId} – delete customer with ID {customerId}
+This tutorial will guide you through the steps required to create a simple websocket endpoint with a simple web user interface using standard WebSocket API and pack it as a KumuluzEE microservice. 
+We will develop a simple customer websocket endpoint, that returns a greeting for a customer.
 
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
-* Add Maven dependencies to KumuluzEE and include KumuluzEE components (Core, Servlet and JAX-RS)
-* Implement the service using standard JAX-RS 2 API
+* Add Maven dependencies to KumuluzEE and include KumuluzEE components (Core, Servlet and WebSocket)
+* Implement the websocket endpoint using standard WebSocket API
 * Build the microservice
 * Run it
 
@@ -95,7 +91,7 @@ Add the KumuluzEE BOM module dependency to your `pom.xml` file:
 </dependencyManagement>
 ```
 
-Add the `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` dependencies:
+Add the `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-websocket-jetty` dependencies:
 ```xml
 <dependencies>
     <dependency>
@@ -108,12 +104,10 @@ Add the `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey
     </dependency>
     <dependency>
          <groupId>com.kumuluz.ee</groupId>
-         <artifactId>kumuluzee-jax-rs-jersey</artifactId>
+         <artifactId>kumuluzee-websocket-jetty</artifactId>
     </dependency>
 </dependencies>
 ```
-
-Alternatively, we could add the `kumuluzee-microProfile-1.0`, which adds the MicroProfile 1.0 dependencies (JAX-RS, CDI, JSON-P, and Servlet).
 
 Add the `maven-dependency-plugin` build plugin to copy all the necessary dependencies into target folder:
 
@@ -141,99 +135,90 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 </build>
 ```
 
-### Implement the service
+### Implement the websocket endpoint
 
-Register your module as JAX-RS service and define the application path. You could do that in web.xml or for example with `@ApplicationPath` annotation:
-
-```java
-@ApplicationPath("v1")
-public class CustomerApplication extends Application {
-}
-```
-
-Implement JAX-RS resource, for example, to implement resource `customers` which will return all customers by default on GET request:
+Implement the websocket example like so:
 
 ```java
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-@Path("customers")
-public class CustomerResource {
+@ServerEndpoint("/customer")
+public class CustomerEndpoint {
 
-    @GET
-    public Response getAllCustomers() {
-        List<Customer> customers = Database.getCustomers();
-        return Response.ok(customers).build();
-    }
-
-    @GET
-    @Path("{customerId}")
-    public Response getCustomer(@PathParam("customerId") String customerId) {
-        Customer customer = Database.getCustomer(customerId);
-        return customer != null
-                ? Response.ok(customer).build()
-                : Response.status(Response.Status.NOT_FOUND).build();
-    }
-
-    @POST
-    public Response addNewCustomer(Customer customer) {
-        Database.addCustomer(customer);
-        return Response.noContent().build();
-    }
-
-    @DELETE
-    @Path("{customerId}")
-    public Response deleteCustomer(@PathParam("customerId") String customerId) {
-        Database.deleteCustomer(customerId);
-        return Response.noContent().build();
+    @OnMessage
+    public String greetCustomer(String name) {
+        System.out.print("Preparing greeting for customer '" + name + "' ...");
+        return "Hello, " + name + "!";
     }
 }
 ```
 
-Implement the `Customer` Java class, which is a POJO:
-```java
-public class Customer {
+### Implement the web user interface
 
-    private String id;
+Create the directory `resources/webapp` and add the view `index.html` and some JavaScript `websocket.js`.
 
-    private String firstName;
-
-    private String lastName;
-
-    // TODO: implement get and set methods
-}
+**welcome.xhtml**
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Websocket sample</title>
+</head>
+<body>
+    <h1>Websocket sample</h1>
+    <div style="text-align: center;">
+        <form action="">
+            <table>
+                <tr>
+                    <td>
+                        Responses
+                        <br/>
+                        <textarea readonly="true" rows="6" cols="50" id="responseField"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input id="textField" name="name" type="text" placeholder="Enter name ...">
+                        <input onclick="sendMessage();" value="Send" type="button">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <br/>
+    <div id="output"></div>
+    <script language="javascript" type="text/javascript" src="websocket.js"></script>
+</body>
 ```
 
-In the example above, we use `Database` class to access data. A sample implementation which simulates persistance layer, can be implemented as follows:
+**websocket.js**
+```javascript
+var wsUri = "ws://" + document.location.hostname + ":" + document.location.port + document.location.pathname + "customer";
+var websocket = new WebSocket(wsUri);
 
-```java
-public class Database {
-    private static List<Customer> customers = new ArrayList<>();
+websocket.onopen = function(evt) { onOpen(evt) };
+websocket.onmessage = function(evt) { onMessage(evt) };
+websocket.onerror = function(evt) { onError(evt) };
+var output = document.getElementById("output");
 
-    public static List<Customer> getCustomers() {
-        return customers;
-    }
+function sendMessage() {
+    websocket.send(textField.value);
+}
 
-    public static Customer getCustomer(String customerId) {
-        for (Customer customer : customers) {
-            if (customer.getId().equals(customerId))
-                return customer;
-        }
+function onOpen() {
+    writeToScreen("Connected to " + wsUri);
+}
 
-        return null;
-    }
+function onMessage(event) {
+    console.log("onMessage: " + event.data);
+    responseField.innerHTML += event.data + "\n";
+}
 
-    public static void addCustomer(Customer customer) {
-        customers.add(customer);
-    }
+function onError(event) {
+    writeToScreen('<span style="color: red;">ERROR:</span> ' + event.data);
+}
 
-    public static void deleteCustomer(String customerId) {
-        for (Customer customer : customers) {
-            if (customer.getId().equals(customerId)) {
-                customers.remove(customer);
-                break;
-            }
-        }
-    }
+function writeToScreen(message) {
+    output.innerHTML += message + "<br>";
 }
 ```
 
