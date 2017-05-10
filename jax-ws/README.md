@@ -160,7 +160,7 @@ public class Customer implements Serializable {
     @XmlElement(required = true)
     private String lastName;
 
-    //get and set methods
+    // TODO: implement get and set methods
 }
 ```
 
@@ -179,7 +179,7 @@ public class CustomersList implements Serializable {
     @XmlElement(required = true)
     private List<Customer> customer;
 
-    //get and set methods
+    // TODO: implement get and set methods
 }
 ```
 
@@ -199,7 +199,8 @@ public class GetCustomersResponse implements Serializable {
     @XmlElement(required = true)
     private GetCustomersResponseMessage output;
 
-     //get and set methods
+    // TODO: implement get and set methods
+}
 ```
 
 ```java
@@ -215,7 +216,7 @@ public class GetCustomersResponseMessage implements Serializable {
     @XmlElement(required = true)
     private CustomersList customers;
 
- //get and set methods
+    // TODO: implement get and set methods
 }
 ```
 
@@ -239,7 +240,7 @@ public class CustomerEndpoint {
     public GetCustomersResponseMessage getCustomers() {
 
         List<Customer> customers = new ArrayList<>();
-        // TODO: Add sample customers to list
+        // TODO: add sample customers to list
 
         CustomersList customersList = new CustomersList();
         customersList.setCustomer(customers);

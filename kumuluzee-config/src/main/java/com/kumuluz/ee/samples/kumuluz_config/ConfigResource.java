@@ -47,16 +47,17 @@ public class ConfigResource {
     public Response test() {
         String response =
                 "{" +
-                        "\"stringProperty\": \"%s\"," +
-                        "\"booleanProperty\": %b," +
-                        "\"integerProperty\": %d" +
-                        "}";
+                    "\"stringProperty\": \"%s\"," +
+                    "\"booleanProperty\": %b," +
+                    "\"integerProperty\": %d" +
+                "}";
 
         response = String.format(
                 response,
                 properties.getStringProperty(),
                 properties.getBooleanProperty(),
-                properties.getIntegerProperty());
+                properties.getIntegerProperty()
+        );
 
         return Response.ok(response).build();
     }

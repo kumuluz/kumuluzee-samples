@@ -126,7 +126,7 @@ public class Customer implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
-    // TODO: get and set methods
+    // TODO: implement get and set methods
 }
 ```
 
