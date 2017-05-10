@@ -113,7 +113,7 @@ Add the `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-ws-metro`
 Add the `maven-dependency-plugin` build plugin to copy all the necessary dependencies into target folder:
 
 ```xml
-<build>
+   <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
