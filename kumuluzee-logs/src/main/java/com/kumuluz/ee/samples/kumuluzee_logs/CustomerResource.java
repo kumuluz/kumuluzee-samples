@@ -54,6 +54,7 @@ public class CustomerResource {
     }
 
     @POST
+    @Log(value = LogParams.METRICS, methodCall = false)
     public Response addNewCustomer(Customer customer) {
         Database.addCustomer(customer);
         return Response.noContent().build();
