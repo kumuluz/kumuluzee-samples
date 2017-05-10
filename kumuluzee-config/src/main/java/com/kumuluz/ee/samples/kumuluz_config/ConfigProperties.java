@@ -30,7 +30,7 @@ import javax.enterprise.context.ApplicationScoped;
  */
 @ApplicationScoped
 @ConfigBundle("rest-config")
-public class CustomerConfig {
+public class ConfigProperties {
 
     private String stringProperty;
 

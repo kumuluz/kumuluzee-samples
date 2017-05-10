@@ -34,23 +34,23 @@ import javax.ws.rs.core.Response;
  * @since 2.3.0
  */
 @RequestScoped
-@Path("/customers")
+@Path("/")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class CustomerResource {
+public class ConfigResource {
 
     @Inject
-    private CustomerConfig properties;
+    private ConfigProperties properties;
 
     @GET
     @Path("/config")
     public Response test() {
         String response =
                 "{" +
-                    "\"stringProperty\": \"%s\"," +
-                    "\"booleanProperty\": %b," +
-                    "\"integerProperty\": %d" +
-                "}";
+                        "\"stringProperty\": \"%s\"," +
+                        "\"booleanProperty\": %b," +
+                        "\"integerProperty\": %d" +
+                        "}";
 
         response = String.format(
                 response,

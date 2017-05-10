@@ -28,5 +28,5 @@ import javax.ws.rs.core.Application;
  * @since 2.3.0
  */
 @ApplicationPath("/v1")
-public class CustomerApplication extends Application {
+public class ConfigApplication extends Application {
 }
