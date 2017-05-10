@@ -153,7 +153,7 @@ public class CustomerEndpoint {
 
 ### Implement the web user interface
 
-Create the directory `resources/webapp` and add the view `index.html` and some JavaScript `websocket.js`.
+Create the directory `resources/webapp` and add the view `index.html` and the controller `websocket.js`.
 
 **welcome.xhtml**
 ```html
