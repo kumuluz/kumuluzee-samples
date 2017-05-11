@@ -39,7 +39,7 @@ In order to run this example you will need the following:
 
 To run this sample you will need an instance of etcd. Here is an example on how to run an etcd instance with docker:
 
-    ```bash
+   ```bash
     $ docker run -d --net=host \
         --name etcd \
         --volume=/tmp/etcd-data:/etcd-data \
