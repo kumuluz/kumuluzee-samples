@@ -57,6 +57,7 @@ To run this sample you will need an instance of etcd. Here is an example on how 
         --auto-compaction-retention 1
     ```
 
+
 ## Usage
 
 The example uses maven to build and run the microservice.
