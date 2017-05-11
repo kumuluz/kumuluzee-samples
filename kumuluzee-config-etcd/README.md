@@ -55,7 +55,7 @@ To run this sample you will need an instance of etcd. Here is an example on how 
         --initial-cluster-token my-etcd-token \
         --initial-cluster-state new \
         --auto-compaction-retention 1
-    ```
+   ```
 
 
 ## Usage
@@ -257,8 +257,8 @@ To build the microservice and run the example, use the commands as described in 
 Since we have not defined any configuration properties in etcd, GET http://localhost:8080/v1/config will return 
 configuration properties from configuraiton file. Lets add some values in etcd:
 
-    ```bash
+   ```bash
     $ docker exec etcd etcdctl --endpoints 192.168.99.100:2379 set /environments/dev/services/rest-config/string-property test_string
-    ```
+   ```
 
 Access the config endpoint again and you will get an updated value from etcd.
