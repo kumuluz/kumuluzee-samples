@@ -152,7 +152,7 @@ Add dependency to KumuluzEE Config extension:
         <version>${kumuluzee-config.version}</version>
     </dependency>
 ```
-
+ 
 Add the `maven-dependency-plugin` build plugin to copy all the necessary dependencies into target folder:
 
 ```xml
