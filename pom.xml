@@ -14,6 +14,7 @@
         <module>jsp</module>
         <module>jsf</module>
         <module>kumuluzee-config</module>
+        <module>kumuluzee-config-etcd</module>
         <module>kumuluzee-logs</module>
         <module>microservices-simple</module>
         <module>servlet</module>
