@@ -38,11 +38,12 @@ version of the framework.
 
 The following samples are available:
 
+- Bean Validation
 - JAX-RS
 - JAX-WS
 - JPA and CDI
-- JSP and Servlet
 - JSF
+- JSP and Servlet
 - Servlet
 - Websocket
 - KumuluzEE Config
