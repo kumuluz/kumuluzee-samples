@@ -37,7 +37,9 @@ In order to run this example you will need the following:
 
 ## Prerequisites
 
-To run this sample you will need an instance of etcd. Here is an example on how to run an etcd instance with docker:
+To run this sample you will need an etcd instance. Note that such setup with only one etcd node is not viable for 
+production environments, but only for developing purposes. Here is an example on how to quickly run an etcd instance 
+with docker:
 
    ```bash
     $ docker run -d --net=host \
@@ -88,14 +90,14 @@ To shut down the example simply stop the processes in the foreground.
 ## Tutorial
 
 This tutorial will guide you through the steps required to create a simple REST service that exposes configuration 
-properties retrieved with a built-in configuration framework and KumuluEE config extensions. We will develop a 
+properties retrieved with a built-in configuration framework and KumuluEE config extension. We will develop a 
 simple REST service with just one resource:
 * GET http://localhost:8080/v1/config - list of all configuration properties from configuration file 
 
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
 * Add Maven dependencies to KumuluzEE and include KumuluzEE components (Core, Servlet, JAX-RS and CDI)
-* Add Maven dependencies to KumuluzEE Config
+* Add Maven dependency to KumuluzEE Config
 * Define our configuration properties in configuration file
 * Implement the service using standard JAX-RS 2
 * Build the microservice
@@ -202,7 +204,8 @@ public class ConfigApplication extends Application {
 
 Implement an application scoped CDI bean that will automatically load and hold our configuration properties. It shall
 be annotated with `@ConfigBundle` annotation whose value represents the prefix for the configuration properties keys.
-Add a `@ConfigValue(watch = true)` to enable watch on the key.
+Add a `@ConfigValue(watch = true)` to enable watch on the key. This will monitor the changes of this key in etcd and 
+automatically update the value in the configuration bean. 
  
 ```java
 @ApplicationScoped
@@ -255,7 +258,9 @@ public class ConfigResource {
 To build the microservice and run the example, use the commands as described in previous sections.
 
 Since we have not defined any configuration properties in etcd, GET http://localhost:8080/v1/config will return 
-configuration properties from configuraiton file. Lets add some values in etcd:
+configuration properties from configuraiton file. We can now try and some values in etcd. Since we enabled watch on 
+the field `stringProperty`, it will be dynamically updated on any change in etcd. We can add a value to etcd with the
+following command:
 
    ```bash
     $ docker exec etcd etcdctl --endpoints 192.168.99.100:2379 set /environments/dev/services/rest-config/string-property test_string
