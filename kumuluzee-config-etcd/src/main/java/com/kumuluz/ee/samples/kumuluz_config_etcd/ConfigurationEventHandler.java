@@ -41,7 +41,7 @@ public class ConfigurationEventHandler {
 
         String watchedKey = "rest-config.maintenance";
 
-        ConfigurationUtil.getInstance().subscribe((String key, String value) -> {
+        ConfigurationUtil.getInstance().subscribe(watchedKey, (String key, String value) -> {
 
             if (watchedKey == key) {
 
@@ -53,7 +53,7 @@ public class ConfigurationEventHandler {
 
             }
 
-        }, watchedKey);
+        });
     }
 
 }
