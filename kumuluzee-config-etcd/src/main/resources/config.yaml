@@ -2,7 +2,7 @@ kumuluzee:
   env: dev
   config:
     etcd:
-      hosts: https://192.168.99.100:2379
+      hosts: http://192.168.99.100:2379
 #      username: root
 #      password: admin
 #      ca: -----BEGIN CERTIFICATE-----
