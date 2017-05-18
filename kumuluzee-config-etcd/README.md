@@ -67,7 +67,7 @@ The example uses maven to build and run the microservice.
 1. Build the sample using maven:
 
     ```bash
-    $ cd kumuluzee-config
+    $ cd kumuluzee-config-etcd
     $ mvn clean package
     ```
 
