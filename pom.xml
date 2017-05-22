@@ -20,6 +20,7 @@
         <module>microservices-simple</module>
         <module>servlet</module>
         <module>websocket</module>
+        <module>discovery-samples</module>
     </modules>
     <packaging>pom</packaging>
 
