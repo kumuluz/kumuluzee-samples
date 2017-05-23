@@ -53,12 +53,6 @@
             <artifactId>kumuluzee-oauth2-keycloak</artifactId>
             <version>${kumuluzee-oauth2.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.keycloak</groupId>-->
-            <!--<artifactId>keycloak-jetty92-adapter-dist</artifactId>-->
-            <!--<version>3.0.0.Final</version>-->
-            <!--<type>pom</type>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.slf4j</groupId>
