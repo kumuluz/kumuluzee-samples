@@ -17,6 +17,7 @@
         <module>kumuluzee-config</module>
         <module>kumuluzee-config-etcd</module>
         <module>kumuluzee-logs</module>
+        <module>kumuluzee-oauth2-keycloak</module>
         <module>microservices-simple</module>
         <module>servlet</module>
         <module>websocket</module>
@@ -27,7 +28,8 @@
 
     <inceptionYear>2017</inceptionYear>
     <description>
-        These samples demonstrate how to get started using KumuluzEE. They provide small, specific, working samples that can be used as a reference for your own projects.
+        These samples demonstrate how to get started using KumuluzEE. They provide small, specific, working samples
+        that can be used as a reference for your own projects.
     </description>
 
     <url>https://ee.kumuluz.com</url>
@@ -74,6 +76,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <kumuluzee.version>2.3.0-SNAPSHOT</kumuluzee.version>
+        <kumuluzee.version>2.2.0</kumuluzee.version>
     </properties>
 </project>
