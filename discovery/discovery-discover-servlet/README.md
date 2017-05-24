@@ -1,4 +1,4 @@
-# KumuluzEE Service Discovery discover servlet sample
+# KumuluzEE Discovery -- discover services in servlet 
 
 > Develop a KumuluzEE servlet, which discovers microservices, registered with etcd.
 

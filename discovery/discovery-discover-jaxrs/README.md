@@ -1,4 +1,4 @@
-# KumuluzEE Service Discovery discover JAX-RS sample
+# KumuluzEE Discovery -- discover services in JAX-RS service 
 
 > Develop a REST service, which discovers microservices, registered with etcd.
 

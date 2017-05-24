@@ -1,4 +1,4 @@
-# KumuluzEE Service Discovery register service sample
+# KumuluzEE Discovery -- register service 
 
 > Develop a REST KumuluzEE microservice and add automatic service registration with etcd.
 

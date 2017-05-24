@@ -6,15 +6,14 @@
         <artifactId>kumuluzee-samples</artifactId>
         <groupId>com.kumuluz.ee.samples</groupId>
         <version>2.3.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>discovery</artifactId>
     <packaging>pom</packaging>
 
-    <name>KumuluzEE Service Discovery samples</name>
-    <description>Service Discovery usage samples with KumuluzEE</description>
+    <name>KumuluzEE Discovery samples</name>
+    <description>Samples for swervice discovery with KumuluzEE</description>
 
     <modules>
         <module>discovery-register</module>
@@ -22,5 +21,8 @@
         <module>discovery-discover-jaxrs</module>
     </modules>
 
+    <properties>
+        <kumuluzee-discovery.version>1.0.0-SNAPSHOT</kumuluzee-discovery.version>
+    </properties>
 
 </project>
