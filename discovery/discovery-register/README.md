@@ -1,11 +1,11 @@
-# KumuluzEE Discovery -- register service 
+# KumuluzEE Discovery &mdash; register service with etcd 
 
-> Develop a REST KumuluzEE microservice and add automatic service registration with etcd.
+> Develop a REST KumuluzEE microservice and register it with etcd.
 
-The objective of this sample is to show how to register a REST service with etcd using KumuluzEE service discovery.
-The tutorial will guide you through the necessary steps. You will add KumuluzEE dependencies into pom.xml.
-You will use existing Jax-Rs sample, described [here](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs).
-Required knowledge: basic familiarity with JAX-RS 2 and basic concepts of REST and JSON; basic familarity with etcd.
+The objective of this sample is to show how to register a REST service with etcd using KumuluzEE Discovery extension.
+This tutorial will guide you through all the necessary steps. You will add KumuluzEE dependencies into pom.xml.
+You will use existing JAX-RS sample, described [here](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs).
+Required knowledge: basic familiarity with JAX-RS and basic concepts of REST and JSON; basic familiarity with etcd.
 
 ## Requirements
 
@@ -31,16 +31,29 @@ In order to run this example you will need the following:
         git --version
         ```
 
-4. etcd:
-    * If you have installed etcd, you can check the version by typing the following in a command line:
-    
-        ```
-        etcd --version
-        ```
-
 ## Prerequisites
 
-This sample does not contain any prerequisites and can be started on its own.
+To run this sample you will need an etcd instance. Note that such setup with only one etcd node is not viable for 
+production environments, but only for developing purposes. Here is an example on how to quickly run an etcd instance 
+with docker:
+
+   ```bash
+    $ docker run -d --net=host \
+        --name etcd \
+        --volume=/tmp/etcd-data:/etcd-data \
+        quay.io/coreos/etcd:v3.1.7 \
+        /usr/local/bin/etcd \
+        --name my-etcd-1 \
+        --data-dir /etcd-data \
+        --listen-client-urls http://0.0.0.0:2379 \
+        --advertise-client-urls http://0.0.0.0:2379 \
+        --listen-peer-urls http://0.0.0.0:2380 \
+        --initial-advertise-peer-urls http://0.0.0.0:2380 \
+        --initial-cluster my-etcd-1=http://0.0.0.0:2380 \
+        --initial-cluster-token my-etcd-token \
+        --initial-cluster-state new \
+        --auto-compaction-retention 1
+   ```
 
 ## Usage
 
@@ -65,9 +78,9 @@ The example uses maven to build and run the microservice.
     $ PORT=8081 java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
     ```
 
-    in Windows environment, set environment variable PORT to 8081 and use the command
+    in Windows environment use the command
     ```batch
-    java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+    $env:PORT=8087;java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
     
     Port 8081 is used because we want to run another microservice, which discovers this service.
@@ -76,8 +89,8 @@ The application/service can be accessed on the following URL:
 * JAX-RS REST resource - http://localhost:8081/v1/customers
 
 The application is registered with etcd. You can discover it using one of the discover samples:
-* [discover-servlet sample](http://TODO.url)
-* [discover-jaxrs sample](http://TODO.url)
+* [discover-servlet sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/discovery/discovery-discover-servlet)
+* [discover-jaxrs sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/discovery/discovery-discover-jaxrs)
 
 To shut down the example simply stop the processes in the foreground.
 
@@ -92,8 +105,8 @@ We will use existing [sample Customer REST service](https://github.com/kumuluz/k
 
 We will follow these steps:
 * Import a Maven sample, mentioned above, in the IDE of your choice (Eclipse, IntelliJ, etc.)
-* Add Maven dependencies to KumuluzEE and include KumuluzEE service discovery
-* Annotate JAX-RS Application class with RegisterService annotation
+* Add Maven dependencies to KumuluzEE Discovery extension
+* Annotate JAX-RS Application class with @RegisterService annotation
 * Build the microservice
 * Run it
 
@@ -107,17 +120,17 @@ Add the `kumuluzee-discovery-etcd` dependency to the sample:
     <dependency>
         <groupId>com.kumuluz.ee.discovery</groupId>
         <artifactId>kumuluzee-discovery-etcd</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>${kumuluzee-discovery.version}</version>
     </dependency>
 </dependencies>
 ```
 
 ### Annotate JAX-RS Application
 
-Add `@RegisterService` annotation to JAX-RS Application class (CustomerApplication.java):
+Add the `@RegisterService` annotation to JAX-RS Application class (CustomerApplication.java):
 
 ```java
-@RegisterService(value = "customer-service")
+@RegisterService("customer-service")
 @ApplicationPath("v1")
 public class CustomerApplication extends Application {
 }
@@ -136,8 +149,8 @@ kumuluzee:
   discovery:
     etcd:
       hosts: http://127.0.0.1:2379
-    ttl: 10
-    ping-interval: 5
+    ttl: 20
+    ping-interval: 15
 ```
 
 ### Build the microservice and run it
