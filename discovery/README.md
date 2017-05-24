@@ -1,15 +1,15 @@
-# KumuluzEE Service Discovery samples
+# KumuluzEE Discovery samples
 
-> Samples for KumuluzEE Service Discovery extension
+> Samples for KumuluzEE Discovery extension
 
 This module contains three samples, which will introduce you to KumuluzEE
 Service Discovery.
 
 Samples included:
-- `discovery-register` REST microservice, which registers to etcd
-- `discovery-discover-servlet` servlet microservice, which discovers
-and uses `discovery-register` microservice
-- `discovery-discover-jaxrs` REST microservice, which discovers
-and uses `discovery-register` microservice
+- `discovery-register` REST microservice that registers itself to etcd
+- `discovery-discover-servlet` servlet microservice that discovers
+and calls `discovery-register` microservice
+- `discovery-discover-jaxrs` REST microservice that discovers
+and calls `discovery-register` microservice
 
 More information about the samples can be found in the README of each sample.
