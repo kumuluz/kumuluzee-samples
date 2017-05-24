@@ -3,7 +3,7 @@
 > Samples for KumuluzEE Discovery extension
 
 This module contains three samples, which will introduce you to KumuluzEE
-Service Discovery.
+Discovery extension.
 
 Samples included:
 - [`discovery-register`](https://github.com/kumuluz/kumuluzee-samples/tree/master/discovery/discovery-register) JAX-RS microservice that registers itself to etcd
