@@ -95,9 +95,9 @@ To shut down the example simply stop the processes in the foreground.
 
 This tutorial will guide you through the steps required to create a service, which uses KumuluzEE Discovery extension.
 We will develop a simple REST service with the following resources:
-* GET http://localhost:8080/v1/discovery/url - discovered service's url
-* GET http://localhost:8080/v1/discovery - list of all customers from discovered service + discovered service's url
-* POST http://localhost:8080/v1/discovery - add a customer to discovered service
+* GET http://localhost:8080/v1/discover/url - discovered service's url
+* GET http://localhost:8080/v1/discover - list of all customers from discovered service + discovered service's url
+* POST http://localhost:8080/v1/discover - add a customer to discovered service
 * GET http://localhost:8080/v1/programmatic/{serviceName}/{serviceVersion}/{environment} - discovered service's url
 
 We will follow these steps:
