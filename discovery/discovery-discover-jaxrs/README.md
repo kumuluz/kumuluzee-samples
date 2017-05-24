@@ -103,7 +103,7 @@ We will develop a simple REST service with the following resources:
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
 * Add Maven dependencies to KumuluzEE and include KumuluzEE components (Core, Servlet, JAX-RS)
-* Add Maven dependencies to KumuluzEE Discovery extension
+* Add Maven dependency to KumuluzEE Discovery extension
 * Implement the service
 * Build the microservice
 * Run it

@@ -105,7 +105,7 @@ We will use existing [sample Customer REST service](https://github.com/kumuluz/k
 
 We will follow these steps:
 * Import a Maven sample, mentioned above, in the IDE of your choice (Eclipse, IntelliJ, etc.)
-* Add Maven dependencies to KumuluzEE Discovery extension
+* Add Maven dependency to KumuluzEE Discovery extension
 * Annotate JAX-RS Application class with @RegisterService annotation
 * Build the microservice
 * Run it
