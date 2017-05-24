@@ -1,6 +1,6 @@
 # KumuluzEE OAuth2 sample with Keycloak
 
-> Build a REST service which utilizes KumuluzEE OAuth2 to secure the resources with Keycloak using standard Java roles and pack it as a KumuluzEE microservice
+> Build a REST service which utilizes KumuluzEE OAuth2 to secure the resources with Keycloak using standard Java annotations and pack it as a KumuluzEE microservice
 
 The objective of this sample is to show how to develop a microservice that uses KumuluzEE OAuth2 extension to
 secure the REST resources. In this sample we develop a simple REST service, secure it using Keycloak and pack it as KumuluzEE microservice. This 
@@ -44,9 +44,9 @@ $ docker run \
 
 ## Usage
 
-The example uses maven to build and run the microservice.
+The example uses Maven to build and run the microservice.
 
-1. Build the sample using maven:
+1. Build the sample using Maven:
 
     ```bash
     $ cd kumuluzee-oauth2-keycloak
@@ -88,15 +88,11 @@ We will follow these steps:
 
 Since your existing starting point is the existing KumuluzEE JAX-RS REST sample, you should already have the dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` configured in `pom.xml`.
 
-Add the `kumuluzee-cdi-weld`, `kumuluzee-jpa-eclipselink` and `postgresql` dependencies:
+Add the `kumuluzee-cdi-weld` and `kumuluzee-oauth2-keycloak` dependencies:
 ```xml
 <dependency>
     <groupId>com.kumuluz.ee</groupId>
     <artifactId>kumuluzee-cdi-weld</artifactId>
-</dependency>
-<dependency>
-    <groupId>com.kumuluz.ee</groupId>
-    <artifactId>kumuluzee-jpa-eclipselink</artifactId>
 </dependency>
 <dependency>
     <groupId>com.kumuluz.ee.oauth2</groupId>
@@ -140,7 +136,7 @@ couple of roles and assign them to the new user. When finished, open up the new 
 
 ### Implement security
 
-First we have to enable the security using the @DeclaredRoles annotation on the main application class of the REST service:
+First we have to enable the security using the `@DeclareRoles` annotation on the main application class of the REST service:
 
 ```java
 @DeclareRoles({"user", "admin"})
@@ -152,7 +148,8 @@ public class CustomerApplication extends Application {
 Then take the Keycloak JSON configuration and set it as an environment variable by using the following key:
 
 `KUMULUZEE_OAUTH2_CONFIG`
-In this sample, we use the environment variable; however the configuration can be also stored in file or config server. Please refer to KumuluzEE Config for more information. 
+
+In this sample, we use environment variables to store the configuration; however the configuration can be also stored in a file or a config server. Please refer to KumuluzEE Config for more information. 
 
 Add security constraints on JAX-RS resource:
 
@@ -175,7 +172,7 @@ public class CustomerResource {
     }
 
     @POST
-    @RolesAllowed({"user"})
+    @RolesAllowed("user")
     public Response addNewCustomer(Customer customer) {
         ...
     }
@@ -210,7 +207,7 @@ $ curl -X POST \
 
 If everything works as intended you should receive a 401 response error.
 
-Now obtain an access token from Keycloak (**NOTE**: To do this, you will retrieve the client ID and the secret of your client on the Keycloak and the username and password of your Keycloak user):
+Now obtain an access token from Keycloak (**NOTE**: To do this, you will first have to retrieve the client ID and the secret of your client on the Keycloak and the username and password of your Keycloak user):
 
 ```bash
 $ curl -X POST \
