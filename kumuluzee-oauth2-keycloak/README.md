@@ -129,7 +129,10 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 
 ### Configure Keycloak
 
-Log into the Keycloak using your admin account and create a new realm, e.g. **customers-realm**. Then create a new client, 
+Log into the Keycloak using your admin account and create a new realm, e.g. **customers-realm**. Then create two new 
+clients. One will be used to retrieve access tokens and the other one wil be used only to verify issued tokens. The first 
+client, e.g. **customers-app**, should be of **public** type. Under **Valid redirect URIs** enter *http://localhost*. 
+The second client is a **bearer-only** client, e.g. **customers-api**.
 e.g. **customers-api** and set its access type to **bearer-only**. Create a user and set the credentials. Then create a 
 couple of roles and assign them to the new user. When finished, open up the new client and copy the configuration under 
 *Installation/Keycloak OIDC JSON* and save it for later.
@@ -207,13 +210,13 @@ $ curl -X POST \
 
 If everything works as intended you should receive a 401 response error.
 
-Now obtain an access token from Keycloak (**NOTE**: To do this, you will first have to retrieve the client ID and the secret of your client on the Keycloak and the username and password of your Keycloak user):
+Now obtain an access token from Keycloak (**NOTE**: To do this, you will first have to retrieve the client ID and the secret of your public client on Keycloak and the username and password of your Keycloak user):
 
 ```bash
 $ curl -X POST \
   http://localhost:8082/auth/realms/customers/protocol/openid-connect/token \
   -H 'content-type: application/x-www-form-urlencoded' \
-  -d 'grant_type=password&client_id=customers-api&client_secret=ffffffff-ffff-ffff-ffff-ffffffffffff&username=johndoe&password=abc123'
+  -d 'grant_type=password&client_id=customers-app&client_secret=ffffffff-ffff-ffff-ffff-ffffffffffff&username=johndoe&password=abc123'
 ```
 
 After receiving the access token try again by creating a new customer, now with the access token in the request:
