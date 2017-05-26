@@ -2,7 +2,11 @@ kumuluzee:
   env: dev
   config:
     etcd:
-      hosts: http://192.168.99.100:2379
+      hosts: http://192.168.29.168:2379,http://192.168.29.169:2379,http://192.168.29.170:2379
+      #hosts: http://192.168.99.100:2379
+      hosts: http://192.168.29.168:2379,http://192.168.29.169:2379,http://192.168.29.170:2379
+      start-retry-delay-ms: 500
+      max-retry-delay-ms: 900000
 #      username: root
 #      password: admin
 #      ca: -----BEGIN CERTIFICATE-----
