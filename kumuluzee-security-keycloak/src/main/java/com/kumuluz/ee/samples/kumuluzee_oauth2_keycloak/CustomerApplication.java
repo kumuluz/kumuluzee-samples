@@ -29,7 +29,7 @@ import javax.ws.rs.core.Application;
  * @since 2.3.0
  */
 @DeclareRoles({"user", "admin"})
-//@OAuth2(config =
+//@Keycloak(json =
 //        "{" +
 //        "  \"realm\": \"customers\"," +
 //        "  \"bearer-only\": true," +

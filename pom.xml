@@ -17,7 +17,7 @@
         <module>kumuluzee-config</module>
         <module>kumuluzee-config-etcd</module>
         <module>kumuluzee-logs</module>
-        <module>kumuluzee-oauth2-keycloak</module>
+        <module>kumuluzee-security-keycloak</module>
         <module>microservices-simple</module>
         <module>servlet</module>
         <module>websocket</module>

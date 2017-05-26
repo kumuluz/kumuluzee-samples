@@ -9,13 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>kumuluzee-oauth2-keycloak</artifactId>
+    <artifactId>kumuluzee-security-keycloak</artifactId>
 
-    <name>KumuluzEE OAuth2 sample</name>
-    <description>KumuluzEE OAuth2 extensions usage sample with KumuluzEE and Keycloak</description>
+    <name>KumuluzEE Security sample</name>
+    <description>KumuluzEE Security extensions usage sample with KumuluzEE and Keycloak</description>
 
     <properties>
-        <kumuluzee-oauth2.version>1.0.0-SNAPSHOT</kumuluzee-oauth2.version>
+        <kumuluzee-security.version>1.0.0-SNAPSHOT</kumuluzee-security.version>
+        <kumuluzee-config.version>1.0.0-SNAPSHOT</kumuluzee-config.version>
     </properties>
 
     <dependencyManagement>
@@ -49,9 +50,14 @@
         </dependency>
 
         <dependency>
-            <groupId>com.kumuluz.ee.oauth2</groupId>
-            <artifactId>kumuluzee-oauth2-keycloak</artifactId>
-            <version>${kumuluzee-oauth2.version}</version>
+            <groupId>com.kumuluz.ee.security</groupId>
+            <artifactId>kumuluzee-security-keycloak</artifactId>
+            <version>${kumuluzee-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.config</groupId>
+            <artifactId>kumuluzee-config-etcd</artifactId>
+            <version>${kumuluzee-config.version}</version>
         </dependency>
 
         <dependency>
