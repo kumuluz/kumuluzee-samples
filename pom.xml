@@ -21,7 +21,7 @@
         <module>microservices-simple</module>
         <module>servlet</module>
         <module>websocket</module>
-        <module>discovery</module>
+        <module>kumuluzee-discovery</module>
     </modules>
     <packaging>pom</packaging>
 

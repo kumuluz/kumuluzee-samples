@@ -20,6 +20,8 @@
 */
 package com.kumuluz.ee.samples.kumuluz_config_etcd;
 
+import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -59,5 +61,11 @@ public class ConfigResource {
                 properties.getIntegerProperty());
 
         return Response.ok(response).build();
+    }
+
+    @GET
+    @Path("/get")
+    public Response get() {
+        return Response.ok(ConfigurationUtil.getInstance().get("rest-config.string-property").orElse("nope")).build();
     }
 }
