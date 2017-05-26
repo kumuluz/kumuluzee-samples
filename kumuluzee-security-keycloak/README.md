@@ -216,14 +216,14 @@ $ curl -X POST \
 
 If everything was implemented correctly you should receive a 401 HTTP response error.
 
-Now obtain an access token from Keycloak (**NOTE**: To do this, you will first have to retrieve the client ID and the 
-secret of your public client on Keycloak and the username and password of your Keycloak user):
+Now obtain an access token from Keycloak (**NOTE**: To do this, you will first have to retrieve the client ID your 
+public client on Keycloak and the username and password of your Keycloak user):
 
 ```bash
 $ curl -X POST \
   http://localhost:8082/auth/realms/customers/protocol/openid-connect/token \
   -H 'content-type: application/x-www-form-urlencoded' \
-  -d 'grant_type=password&client_id=customers-app&client_secret=ffffffff-ffff-ffff-ffff-ffffffffffff&username=johndoe&password=abc123'
+  -d 'grant_type=password&client_id=customers-app&username=johndoe&password=abc123'
 ```
 
 After receiving the access token try again by creating a new customer, now with the access token in the request:
