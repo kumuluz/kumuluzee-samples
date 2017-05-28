@@ -7,10 +7,8 @@ public class TestConsumer {
 
     @KafkaListener(topics = {"test"})
     public void onMessage(ConsumerRecord<String, String> record) {
-        try {
-            System.out.printf("@KafkaListener - cosnumer - offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
+
+        System.out.printf("Consumed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
+
     }
 }

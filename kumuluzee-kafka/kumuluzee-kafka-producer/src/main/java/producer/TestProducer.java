@@ -25,7 +25,7 @@ public class TestProducer {
                         if(e != null) {
                             e.printStackTrace();
                         } else {
-                            System.out.println("TestProducer - send - The offset of the record we just sent is: " + metadata.offset());
+                            System.out.println("The offset of the produced message record is: " + metadata.offset());
                         }
                     }
                 });
