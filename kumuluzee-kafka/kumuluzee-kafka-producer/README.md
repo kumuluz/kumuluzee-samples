@@ -138,10 +138,6 @@ Add the `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluz-jax-rs-jersey` and
         <artifactId>kumuluzee-servlet-jetty</artifactId>
     </dependency>
     <dependency>
-        <groupId>com.kumuluz.ee</groupId>
-        <artifactId>kumuluzee-jax-rs-jersey</artifactId>
-    </dependency>
-    <dependency>
         <groupId>com.kumuluz.ee.kafka</groupId>
         <artifactId>kumuluzee-kafka</artifactId>
         <version>${kumuluzee-kafka.version}</version>
