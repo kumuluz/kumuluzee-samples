@@ -44,7 +44,7 @@ Here is an example on how to quickly run the Zookeeper and Kafka Docker:
    ```
 ## Usage
 
-The example uses maven to build and run the microservice.
+The example uses Docker to set up the Kafka and Zookeeper instances and maven to build and run the microservice.
 
 1. Start the Zookeeper and Kafka Docker:
 

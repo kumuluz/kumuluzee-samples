@@ -3,7 +3,7 @@
 > Develop a REST service that produces Kafka messages to selected topic
 
 The objective of this sample is to show how to consume Kafka messages.
- The tutorial will guide you through all the necessary steps. You will add KumuluzEE dependencies into pom
+The tutorial will guide you through all the necessary steps. You will add KumuluzEE dependencies into pom
 .xml. You will develop a simple annotated method, which uses KumuluzEE Kafka extension for consuming messages.
 Required knowledge: basic familiarity with Apache Kafka.
 
@@ -33,20 +33,19 @@ In order to run this example you will need the following:
 
 ## Prerequisites
 
-To run this sample you will need an Kafka and Zookeeper instance
-[Kafka Quickstart](https://kafka.apache.org/quickstart). 
-There are a lot of Kafka Docker available on the Docker hub, in this tutorial we use  
-[ches/kafka](https://hub.docker.com/r/ches/kafka/) and a separate Docker with the Zookeeper 
-instance [jplock/zookeeper](https://hub.docker.com/r/jplock/zookeeper/)
+To run this sample you will need a Kafka and Zookeeper instance [Kafka Quickstart](https://kafka.apache.org/quickstart). 
+There are a lot of Kafka Docker available on the Docker hub, in this tutorial we use [ches/kafka](https://hub.docker.com/r/ches/kafka/) 
+and a separate Docker with the Zookeeper instance [jplock/zookeeper](https://hub.docker.com/r/jplock/zookeeper/)
 Here is an example on how to quickly run the Zookeeper and Kafka Docker:
 
    ```bash
     $ docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
     $  docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
    ```
+   
 ## Usage
 
-The example uses maven to build and run the microservice.
+The example uses Docker to set up the Kafka and Zookeeper instances and maven to build and run the microservice.
 
 1. Start the Zookeeper and Kafka Docker:
 
