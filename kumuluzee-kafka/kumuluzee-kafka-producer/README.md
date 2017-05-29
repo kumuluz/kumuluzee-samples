@@ -174,38 +174,6 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 ### Implement the servlet
 
 
-Register your module as JAX-RS service and define the application path. You could do that in web.xml or
-for example with `@ApplicationPath` annotation:
-
-```java
-@ApplicationPath("v1")
-public class DiscoverApplication extends Application {
-}
-```
-
-Implement JAX-RS resource, which will use the injected TestProducer class for producing messages:
-
-```java
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-@Path("produce")
-@RequestScoped
-public class ProducerResource {
-
-    @Inject
-    private TestProducer producer;
-
-    @POST
-    public Response produceMessage(Message msg){
-
-        producer.send(msg.getTopic(), msg.getContent(), msg.getKey());
-
-        return Response.ok().build();
-
-    }
-}
-```
-
 We use a Message POJO in this example for receiving the message data from the POST request:
 
 ```java
@@ -240,18 +208,33 @@ public class Message {
 }
 ```
 
-Implement the Kafka message producing in the TestProducer class:
+Register your module as JAX-RS service and define the application path. You could do that in web.xml or
+for example with `@ApplicationPath` annotation:
 
 ```java
-@ApplicationScoped
-public class TestProducer {
+@ApplicationPath("v1")
+public class DiscoverApplication extends Application {
+}
+```
+
+Implement JAX-RS resource, with a POST method for producing messages. Inject the Kafka Producer with the `@KafkaProducer` 
+annotation and implement the producing of Kafka messages:
+
+```java
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/produce")
+@RequestScoped
+public class ProducerResource {
 
     @Inject
     @KafkaProducer
     private Producer producer;
 
-    public void send(String topic, String msg, String key) {
-        ProducerRecord<String,String> record = new ProducerRecord<String,String>(topic, key, msg);
+    @POST
+    public Response produceMessage(Message msg){
+
+        ProducerRecord<String,String> record = new ProducerRecord<String,String>( msg.getTopic(), msg.getKey(), msg.getContent());
 
         producer.send(record,
                 (metadata, e) -> {
@@ -261,14 +244,16 @@ public class TestProducer {
                         System.out.println("The offset of the produced message record is: " + metadata.offset());
                     }
                 });
-    }
 
+        return Response.ok().build();
+
+    }
 }
 ```
 
 In the example above, we inject the Kafka Producer with the `@Inject` and `@KafkaProducer` annotation. From the message data we create 
 a ProducerRecord `new ProducerRecord<String,String>(topic, key, msg)` and call the method send on the producer with the ProducerRecord 
-and the Callback parameters. In the Callback we receive the sent message metadata `RecordMetadata` or the Exception if an error occured.
+and the Callback parameters. In the Callback we receive the sent message metadata `RecordMetadata` or the Exception if an error occurred.
 
 ### Add required configuration for the Kafka Producer
 
@@ -277,14 +262,14 @@ You have to add the Kafka Producer configuration using any KumuluzEE configurati
 For example, you can use config.properties file, placed in resources folder:
 
 ```properties
-producer.bootstrap.servers=172.17.0.3:9092
-producer.acks=all
-producer.retries=0
-producer.batch.size=16384
-producer.linger.ms=1
-producer.buffer.memory=33554432
-producer.key.serializer=org.apache.kafka.common.serialization.StringSerializer
-producer.value.serializer=org.apache.kafka.common.serialization.StringSerializer
+kumuluzee.kafka.producer.bootstrap.servers=172.17.0.3:9092
+kumuluzee.kafka.producer.acks=all
+kumuluzee.kafka.producer.retries=0
+kumuluzee.kafka.producer.batch.size=16384
+kumuluzee.kafka.producer.linger.ms=1
+kumuluzee.kafka.producer.buffer.memory=33554432
+kumuluzee.kafka.producer.key.serializer=org.apache.kafka.common.serialization.StringSerializer 
+kumuluzee.kafka.producer.value.serializer=org.apache.kafka.common.serialization.StringSerializer
 ```
 
 ### Build the microservice and run it

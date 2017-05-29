@@ -40,7 +40,7 @@ Here is an example on how to quickly run the Zookeeper and Kafka Docker:
 
     ```bash
     $ docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
-    $  docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
+    $ docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
     ```
    
 ## Usage
@@ -173,13 +173,14 @@ The method takes for a parameter the `ConsumerRecord` that contains the data of 
 ```java
 public class TestConsumer {
 
+    private static final Logger log = Logger.getLogger(TestConsumer.class.getName());
+
     @KafkaListener(topics = {"test"})
     public void onMessage(ConsumerRecord<String, String> record) {
-        
-        System.out.printf("Consumed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
-        
-    }
 
+        log.info(String.format("Consumed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value()));
+
+    }
 }
 ```
 
@@ -193,13 +194,13 @@ You have to add the Kafka Consumer configuration using any KumuluzEE configurati
 For example, you can use config.properties file, placed in resources folder:
 
 ```properties
-consumer.bootstrap.servers=172.17.0.3:9092
-consumer.group.id=group1
-consumer.enable.auto.commit=true
-consumer.auto.commit.interval.ms=1000
-consumer.auto.offset.reset=earliest
-consumer.key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
-consumer.value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+kumuluzee.kafka.consumer.bootstrap.servers=172.17.0.3:9092
+kumuluzee.kafka.consumer.group.id=group1
+kumuluzee.kafka.consumer.enable.auto.commit=true
+kumuluzee.kafka.consumer.auto.commit.interval.ms=1000
+kumuluzee.kafka.consumer.auto.offset.reset=earliest
+kumuluzee.kafka.consumer.key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+kumuluzee.kafka.consumer.value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
 ```
 
 ### Build the microservice and run it
