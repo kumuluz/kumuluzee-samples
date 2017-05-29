@@ -38,10 +38,10 @@ There are a lot of Kafka Docker available on the Docker hub, in this tutorial we
 and a separate Docker with the Zookeeper instance [jplock/zookeeper](https://hub.docker.com/r/jplock/zookeeper/)
 Here is an example on how to quickly run the Zookeeper and Kafka Docker:
 
-   ```bash
+    ```bash
     $ docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
     $  docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
-   ```
+    ```
    
 ## Usage
 

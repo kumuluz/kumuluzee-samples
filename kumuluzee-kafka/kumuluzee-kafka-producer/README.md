@@ -38,10 +38,10 @@ There are a lot of Kafka Docker available on the Docker hub, in this tutorial we
 [ches/kafka](https://hub.docker.com/r/ches/kafka/) and a separate Docker with the Zookeeper instance [jplock/zookeeper](https://hub.docker.com/r/jplock/zookeeper/)
 Here is an example on how to quickly run the Zookeeper and Kafka Docker:
 
-   ```bash
+    ```bash
     $ docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
     $  docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
-   ```
+    ```
 ## Usage
 
 The example uses Docker to set up the Kafka and Zookeeper instances and maven to build and run the microservice.
@@ -254,13 +254,11 @@ public class TestProducer {
         ProducerRecord<String,String> record = new ProducerRecord<String,String>(topic, key, msg);
 
         producer.send(record,
-                new Callback() {
-                    public void onCompletion(RecordMetadata metadata, Exception e) {
-                        if(e != null) {
-                            e.printStackTrace();
-                        } else {
-                            System.out.println("The offset of the produced message record is: " + metadata.offset());
-                        }
+                (metadata, e) -> {
+                    if(e != null) {
+                        e.printStackTrace();
+                    } else {
+                        System.out.println("The offset of the produced message record is: " + metadata.offset());
                     }
                 });
     }

@@ -20,13 +20,11 @@ public class TestProducer {
         ProducerRecord<String,String> record = new ProducerRecord<String,String>( topic, key, msg);
 
         producer.send(record,
-                new Callback() {
-                    public void onCompletion(RecordMetadata metadata, Exception e) {
-                        if(e != null) {
-                            e.printStackTrace();
-                        } else {
-                            System.out.println("The offset of the produced message record is: " + metadata.offset());
-                        }
+                (metadata, e) -> {
+                    if(e != null) {
+                        e.printStackTrace();
+                    } else {
+                        System.out.println("The offset of the produced message record is: " + metadata.offset());
                     }
                 });
     }
