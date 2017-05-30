@@ -18,7 +18,7 @@
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
 */
-package com.kumuluz.ee.samples.kumuluzee_oauth2_keycloak;
+package com.kumuluz.ee.samples.kumuluzee_security_keycloak;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;

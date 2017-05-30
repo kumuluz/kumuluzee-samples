@@ -18,26 +18,41 @@
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
 */
-package com.kumuluz.ee.samples.kumuluzee_oauth2_keycloak;
+package com.kumuluz.ee.samples.kumuluzee_security_keycloak;
 
-import javax.annotation.security.DeclareRoles;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Benjamin Kastelic
  * @since 2.3.0
  */
-@DeclareRoles({"user", "admin"})
-//@Keycloak(json =
-//        "{" +
-//        "  \"realm\": \"customers\"," +
-//        "  \"bearer-only\": true," +
-//        "  \"auth-server-url\": \"https://localhost:8082/auth\"," +
-//        "  \"ssl-required\": \"external\"," +
-//        "  \"resource\": \"customers-api\"" +
-//        "}"
-//)
-@ApplicationPath("v1")
-public class CustomerApplication extends Application {
+public class Database {
+    private static List<Customer> customers = new ArrayList<>();
+
+    public static List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public static Customer getCustomer(String customerId) {
+        for (Customer customer : customers) {
+            if (customer.getId().equals(customerId))
+                return customer;
+        }
+
+        return null;
+    }
+
+    public static void addCustomer(Customer customer) {
+        customers.add(customer);
+    }
+
+    public static void deleteCustomer(String customerId) {
+        for (Customer customer : customers) {
+            if (customer.getId().equals(customerId)) {
+                customers.remove(customer);
+                break;
+            }
+        }
+    }
 }
