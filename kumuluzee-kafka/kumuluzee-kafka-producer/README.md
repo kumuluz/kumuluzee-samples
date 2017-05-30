@@ -38,10 +38,11 @@ There are a lot of Kafka Docker available on the Docker hub, in this tutorial we
 [ches/kafka](https://hub.docker.com/r/ches/kafka/) and a separate Docker with the Zookeeper instance [jplock/zookeeper](https://hub.docker.com/r/jplock/zookeeper/)
 Here is an example on how to quickly run the Zookeeper and Kafka Docker:
 
-    ```bash
-    $ docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
-    $  docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
-    ```
+```bash
+$ docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
+$ docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
+```
+    
 ## Usage
 
 The example uses Docker to set up the Kafka and Zookeeper instances and maven to build and run the microservice.
@@ -50,7 +51,7 @@ The example uses Docker to set up the Kafka and Zookeeper instances and maven to
 
     ```bash
     $ docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
-    $  docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
+    $ docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
     ```
     
     To consume messages in the terminal, you can use the Kafka CLI command:
@@ -82,7 +83,7 @@ The example uses Docker to set up the Kafka and Zookeeper instances and maven to
     ```
     
 4. The mesage producing service can be accessed on the following URL:
-* JAX-RS REST resource, for producing messages - http://localhost:8080/v1/produce
+    * JAX-RS REST resource, for producing messages - http://localhost:8080/v1/produce
     with a POST request with a json object, for example:
     
     ```javascript
@@ -126,16 +127,13 @@ Add the KumuluzEE BOM module dependency to your `pom.xml` file:
 </dependencyManagement>
 ```
 
-Add the `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluz-jax-rs-jersey` and `kumuluzee-kafka` dependencies:
+Add the `kumuluzee-microProfile-1.0` and `kumuluzee-kafka` dependencies:
 ```xml
 <dependencies>
     <dependency>
         <groupId>com.kumuluz.ee</groupId>
-        <artifactId>kumuluzee-core</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>com.kumuluz.ee</groupId>
-        <artifactId>kumuluzee-servlet-jetty</artifactId>
+        <artifactId>kumuluzee-microProfile-1.0</artifactId>
+        <version>2.2.0</version>
     </dependency>
     <dependency>
         <groupId>com.kumuluz.ee.kafka</groupId>
@@ -172,7 +170,6 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 ```
 
 ### Implement the servlet
-
 
 We use a Message POJO in this example for receiving the message data from the POST request:
 

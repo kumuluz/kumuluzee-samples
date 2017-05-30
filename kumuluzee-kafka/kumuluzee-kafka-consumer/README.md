@@ -38,10 +38,10 @@ There are a lot of Kafka Docker available on the Docker hub, in this tutorial we
 and a separate Docker with the Zookeeper instance [jplock/zookeeper](https://hub.docker.com/r/jplock/zookeeper/)
 Here is an example on how to quickly run the Zookeeper and Kafka Docker:
 
-    ```bash
-    $ docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
-    $ docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
-    ```
+```bash
+$ docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
+$ docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
+```
    
 ## Usage
 
@@ -116,7 +116,7 @@ Add the KumuluzEE BOM module dependency to your `pom.xml` file:
 </dependencyManagement>
 ```
 
-Add the `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluz-jax-rs-jersey` and `kumuluzee-kafka` dependencies:
+Add the `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-kafka` dependencies:
 ```xml
 <dependencies>
     <dependency>
@@ -129,7 +129,7 @@ Add the `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluz-jax-rs-jersey` and
     </dependency>
     <dependency>
         <groupId>com.kumuluz.ee</groupId>
-        <artifactId>kumuluzee-jax-rs-jersey</artifactId>
+        <artifactId>kumuluzee-cdi-weld</artifactId>
     </dependency>
     <dependency>
         <groupId>com.kumuluz.ee.kafka</groupId>
