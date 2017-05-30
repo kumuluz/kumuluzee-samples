@@ -48,7 +48,7 @@ The following samples are available:
 - Websocket
 - KumuluzEE Config
 - KumuluzEE Logs
-- KumuluzEE OAuth2
+- KumuluzEE Security
 
 ## Requirements
 
