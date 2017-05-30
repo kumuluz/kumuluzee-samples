@@ -18,6 +18,7 @@
         <module>kumuluzee-config-etcd</module>
         <module>kumuluzee-logs</module>
         <module>kumuluzee-security-keycloak</module>
+        <module>kumuluzee-security-cdi-keycloak</module>
         <module>microservices-simple</module>
         <module>servlet</module>
         <module>websocket</module>
