@@ -91,7 +91,8 @@ or clone the existing sample
 ### Add Maven dependencies
 
 Since your existing starting point is the existing KumuluzEE JAX-RS REST sample, you should already have the 
-dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` configured in `pom.xml`.
+dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` configured 
+in `pom.xml`.
 
 Add the `kumuluzee-cdi-weld` and `kumuluzee-security-keycloak` dependencies:
 ```xml
@@ -135,11 +136,12 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 ### Configure Keycloak
 
 Log into the Keycloak using your admin account and create a new realm, e.g. **customers-realm**. Then create two new 
-clients. One will be used to retrieve access tokens and the other one wil be used only to verify issued tokens. The first 
-client, e.g. **customers-app**, should be of **public** access type. Under **Valid redirect URIs** enter *http://localhost*. 
-Create the second client and set its access type to **bearer-only** and give it a name, e.g. **customers-api**. Create 
-a user and set the credentials. Then create a couple of roles and assign them to the new user. When finished, open up 
-the new client and copy the configuration under *Installation/Keycloak OIDC JSON* and save it for later.
+clients. One will be used to retrieve access tokens and the other one wil be used only to verify issued tokens. 
+The first client, e.g. **customers-app**, should be of **public** access type. Under **Valid redirect URIs** enter 
+*http://localhost*. Create the second client and set its access type to **bearer-only** and give it a name, e.g. 
+**customers-api**. Create a user and set the credentials. Then create a couple of roles and assign them to the new 
+user. When finished, open up the new client and copy the configuration under *Installation/Keycloak OIDC JSON* and save 
+it for later.
 
 ### Implement security
 
