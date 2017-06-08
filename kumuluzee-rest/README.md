@@ -2,7 +2,7 @@
 
 > Expand the KumuluzEE JPA and CDI sample with REST query parameters.
 
-The objective of this sample is to demonstrate how to expand your REST service to incorporate query parameters for automatic pagination, sorting and filtering of JPA entities. The tutorial expands the development of jpa sample. You will add KumuluzEE dependency into pom.xml. You will add query parameters parsing from the URI in the CustomerResource class and entity querying base on the parameters in the CustomerService CDI class. Required knowledge: basic familiarity with JPA, CDI and basic concepts of REST and JSON.
+The objective of this sample is to demonstrate how to expand your REST service to incorporate query parameters for automatic pagination, sorting and filtering of JPA entities. The tutorial expands the development of JPA sample. You will add KumuluzEE dependency into pom.xml. You will add query parameters parsing from the URI in the CustomerResource class and entity querying based on the parameters in the CustomerService CDI class. Required knowledge: basic familiarity with JPA, CDI and basic concepts of REST and JSON.
 
 ## Requirements
 
@@ -68,15 +68,14 @@ To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
 This tutorial will guide you through the steps required to extend a simple REST microservice with REST query 
-parameters and pack it as a KumuluzEE microservice. We will extend the existing [KumuluzEE JPA sample](https://github
-.com/kumuluz/kumuluzee-samples/tree/master/jpa), with REST query parameters. Therefore, first complete the existing 
+parameters and pack it as a KumuluzEE microservice. We will extend the existing [KumuluzEE JPA sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jpa), with REST query parameters. Therefore, first complete the existing 
 JPA sample tutorial, or clone the JPA sample code.
 
 We will follow these steps:
 * Complete the tutorial for [KumuluzEE JPA sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jpa) or clone the existing sample
 * Ensure access to PostgreSQL database.
 * Add Maven dependencies
-* Parse query parameters from URI in Rest resource
+* Parse query parameters from the URI in Rest resource
 * Query entities based on the extracted query parameters in the CDI bean
 * Build the microservice
 * Run it
@@ -94,7 +93,7 @@ Add the `kumuluzee-rest-core` dependency:
 </dependency>
 ```
 
-### Extend REST Service with parsing the query parameters from URI
+### Extend REST Service with parsing the query parameters from the URI
 
 First you will need to extend the existing CustomerResource with URI context information. The URI can be obtained by adding UriInfo context to selected Resource:
 
@@ -118,8 +117,7 @@ Using the URI context information the query parameters can be constructed by usi
 ```java
     @GET
     public Response getAllCustomers() {
-        QueryParameters query = QueryParameters.query(uriInfo.getRequestUri().getQuery()).build();
-        List<Customer> customers = customerBean.getCustomers(query);
+        List<Customer> customers = customerBean.getCustomers(createQuery());
         return Response.ok(customers).build();
     }
     
