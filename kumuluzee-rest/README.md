@@ -1,6 +1,6 @@
 # KumuluzEE REST sample
 
-> Expand the KumuluzEE JPA and CDI sample with REST query parameters.
+> Expand the KumuluzEE JPA and CDI sample with REST query parameters for automatic pagination, sorting and filtering.
 
 The objective of this sample is to demonstrate how to expand your REST service to incorporate query parameters for automatic pagination, sorting and filtering of JPA entities. The tutorial expands the development of JPA sample. You will add KumuluzEE dependency into pom.xml. You will add query parameters parsing from the URI in the CustomerResource class and entity querying based on the parameters in the CustomerService CDI class. Required knowledge: basic familiarity with JPA, CDI and basic concepts of REST and JSON.
 
