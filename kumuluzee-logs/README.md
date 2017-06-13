@@ -82,7 +82,7 @@ Add the `kumuluzee-cdi-weld` and `kumuluzee-logs-log4j2` dependencies:
     <artifactId>kumuluzee-cdi-weld</artifactId>
 </dependency>
 <dependency>
-    <groupId>com.kumuluz.ee</groupId>
+    <groupId>com.kumuluz.ee.logs</groupId>
     <artifactId>kumuluzee-logs-log4j2</artifactId>
     <version>1.1.0</version>
 </dependency>
