@@ -36,8 +36,9 @@ version of the framework.
 </repositories>
 ```
 
-The following samples are available:
+The following samples are available (list might not be up-to-date; please refer to the actual list above):
 
+Java EE samples:
 - Bean Validation
 - JAX-RS
 - JAX-WS
@@ -46,9 +47,16 @@ The following samples are available:
 - JSP and Servlet
 - Servlet
 - Websocket
+- Simple microservice tutorial (microservices-simple)
+
+KumuluzEE extensions:
 - KumuluzEE Config
+- KumuluzEE Config with etcd
+- KumuluzEE Discovery
 - KumuluzEE Logs
-- KumuluzEE Security
+- KumuluzEE REST
+- KumuluzEE Security with Keycloak
+
 
 ## Requirements
 
