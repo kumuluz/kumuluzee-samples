@@ -141,7 +141,7 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 
 1. Log into the Keycloak (open browser http://localhost:8082) using your admin account and create a new realm named: `customers-realm`.
 
-2. Create two new clients. One will be used to retrieve access tokens and the other one will be used only to verify issued tokens. Create the first client with Client ID `customers-app`. Leave the Protocol option set to openid-connect. After creating the client, verify, that the `Access Type` is set to `public`. Under `Root URL` and `Web origins` enter `http://localhost:8085`, under `Valid Redirect URIs` enter `http://localhost:8085/*`. Port 8085 should point to your sample application port.
+2. Create two new clients. One will be used to retrieve access tokens and the other one will be used only to verify issued tokens. Create the first client with Client ID `customers-app`. Leave the Protocol option set to openid-connect. After creating the client, verify, that the `Access Type` is set to `public`. Under `Root URL` and `Web origins` enter `http://localhost:8080`, under `Valid Redirect URIs` enter `http://localhost:8080/*`. Port 8080 points to your sample application port.
 
 3. Create the second client with Client ID `customers-api`. Change the `Access Type` to `bearer-only`.
 
