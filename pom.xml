@@ -23,6 +23,7 @@
         <module>servlet</module>
         <module>websocket</module>
         <module>kumuluzee-discovery</module>
+        <module>kumuluzee-circuit-breaker-hystrix</module>
     </modules>
     <packaging>pom</packaging>
 

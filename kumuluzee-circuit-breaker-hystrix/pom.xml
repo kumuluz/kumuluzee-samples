@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>kumuluzee-samples</artifactId>
+        <groupId>com.kumuluz.ee.samples</groupId>
+        <version>2.3.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>kumuluzee-circuit-breaker-hystrix</artifactId>
+    <packaging>pom</packaging>
+
+    <name>KumuluzEE Circuit Breaker Hystrix sample</name>
+    <description>KumuluzEE Circuit Breaker extensions usage sample with KumuluzEE and Hystrix</description>
+
+    <modules>
+        <module>customer-api</module>
+        <module>order-api</module>
+        <module>common</module>
+    </modules>
+
+    <properties>
+        <kumuluzee-circuit-breaker.version>1.0.0-SNAPSHOT</kumuluzee-circuit-breaker.version>
+        <kumuluzee-config.version>1.0.0-SNAPSHOT</kumuluzee-config.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-bom</artifactId>
+                <version>${kumuluzee.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kumuluz.ee.samples</groupId>
+                <artifactId>kumuluzee-circuit-breaker-hystrix-common</artifactId>
+                <version>2.3.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kumuluz.ee.circuit.breaker</groupId>
+                <artifactId>kumuluzee-circuit-breaker-hystrix</artifactId>
+                <version>${kumuluzee-circuit-breaker.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.config</groupId>
+                <artifactId>kumuluzee-config-etcd</artifactId>
+                <version>${kumuluzee-config.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.5.3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.8.8.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-jdk14</artifactId>
+                <version>1.7.25</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.25</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
