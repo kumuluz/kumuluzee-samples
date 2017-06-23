@@ -1,0 +1,23 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: discover-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: discover
+    spec:
+      containers:
+      - image: discover-sample:v1
+        name: discover
+        env:
+          - name: KUMULUZEE_DISCOVERY_CLUSTER
+            value: minikube
+          - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
+            value: http://etcd:2379
+        ports:
+        - containerPort: 8080
+          name: server
+          protocol: TCP
