@@ -46,10 +46,6 @@ public class ProducerResource {
     @KafkaProducer
     private Producer producer;
 
-    @Inject
-    @KafkaProducer(config = "producer1")
-    private Producer producer1;
-
     @POST
     public Response produceMessage(Message msg){
 

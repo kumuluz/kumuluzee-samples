@@ -39,8 +39,10 @@ There are a lot of Kafka Docker available on the Docker hub, in this tutorial we
 Here is an example on how to quickly run the Zookeeper and Kafka Docker:
 
 ```bash
-$ docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
-$ docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
+$ docker network create kafka-net
+  
+$ docker run -d -p 2181:2181 --name zookeeper --network kafka-net zookeeper:3.4
+$ docker run -d -p 9092:9092 --name kafka --network kafka-net --env ZOOKEEPER_IP=zookeeper ches/kafka
 ```
     
 ## Usage
@@ -50,17 +52,17 @@ The example uses Docker to set up the Kafka and Zookeeper instances and maven to
 1. Start the Zookeeper and Kafka Docker:
 
     ```bash
-    $ docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
-    $ docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
+    $ docker network create kafka-net
+      
+    $ docker run -d -p 2181:2181 --name zookeeper --network kafka-net zookeeper:3.4
+    $ docker run -d -p 9092:9092 --name kafka --network kafka-net --env ZOOKEEPER_IP=zookeeper ches/kafka
     ```
     
     To consume messages in the terminal, you can use the Kafka CLI command:
     
     ```bash
-    $ ZK_IP=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' zookeeper)
-    $ KAFKA_IP=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' kafka)
-    
-    $ docker run --rm ches/kafka kafka-console-consumer.sh --topic test --from-beginning --zookeeper $ZK_IP:2181
+    $ docker run --rm --network kafka-net ches/kafka \
+      kafka-console-consumer.sh --topic test --from-beginning --bootstrap-server kafka:9092
     ```
     
 
@@ -259,7 +261,7 @@ You have to add the Kafka Producer configuration using any KumuluzEE configurati
 For example, you can use config.properties file, placed in resources folder:
 
 ```properties
-kumuluzee.kafka.producer.bootstrap.servers=172.17.0.3:9092
+kumuluzee.kafka.producer.bootstrap.servers=localhost:9092
 kumuluzee.kafka.producer.acks=all
 kumuluzee.kafka.producer.retries=0
 kumuluzee.kafka.producer.batch.size=16384

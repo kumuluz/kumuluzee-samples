@@ -39,8 +39,10 @@ and a separate Docker with the Zookeeper instance [jplock/zookeeper](https://hub
 Here is an example on how to quickly run the Zookeeper and Kafka Docker:
 
 ```bash
-$ docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
-$ docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
+$ docker network create kafka-net
+          
+$ docker run -d -p 2181:2181 --name zookeeper --network kafka-net zookeeper:3.4
+$ docker run -d -p 9092:9092 --name kafka --network kafka-net --env ZOOKEEPER_IP=zookeeper ches/kafka
 ```
    
 ## Usage
@@ -50,17 +52,18 @@ The example uses Docker to set up the Kafka and Zookeeper instances and maven to
 1. Start the Zookeeper and Kafka Docker:
 
     ```bash
-    $ docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
-    $ docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
+    $ docker network create kafka-net
+          
+    $ docker run -d -p 2181:2181 --name zookeeper --network kafka-net zookeeper:3.4
+    $ docker run -d -p 9092:9092 --name kafka --network kafka-net --env ZOOKEEPER_IP=zookeeper ches/kafka
     ```
     
     To produce messages in the terminal, you can use the Kafka CLI command:
     
     ```bash
-    $ ZK_IP=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' zookeeper)
-    $ KAFKA_IP=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' kafka)
-    
-    $ docker run --rm --interactive ches/kafka kafka-console-producer.sh --topic test --broker-list $KAFKA_IP:9092
+    $ docker run --rm --interactive --network kafka-net ches/kafka \
+      kafka-console-producer.sh --topic test --broker-list kafka:9092
+    <type some messages followed by newline>
     ```
     
 
@@ -194,7 +197,7 @@ You have to add the Kafka Consumer configuration using any KumuluzEE configurati
 For example, you can use config.properties file, placed in resources folder:
 
 ```properties
-kumuluzee.kafka.consumer.bootstrap.servers=172.17.0.3:9092
+kumuluzee.kafka.consumer.bootstrap.servers=localhost:9092
 kumuluzee.kafka.consumer.group.id=group1
 kumuluzee.kafka.consumer.enable.auto.commit=true
 kumuluzee.kafka.consumer.auto.commit.interval.ms=1000
