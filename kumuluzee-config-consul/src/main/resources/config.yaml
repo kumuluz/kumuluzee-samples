@@ -1,0 +1,11 @@
+kumuluzee:
+  env: dev
+  config:
+    consul:
+      start-retry-delay-ms: 500
+      max-retry-delay-ms: 900000
+
+rest-config:
+  string-property: Monday
+  boolean-property: true
+  integer-property: 23
