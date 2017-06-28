@@ -28,7 +28,6 @@
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-microProfile-1.0</artifactId>
-            <version>2.2.0</version>
         </dependency>
 
         <dependency>

@@ -21,35 +21,12 @@
 
 package com.kumuluz.ee.samples.kafka.consumer;
 
-import com.kumuluz.ee.kafka.annotations.KafkaListener;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 
 /**
  * @author Matija Kljun
  */
-@ApplicationScoped
-public class TestConsumer {
-
-    private static final Logger log = Logger.getLogger(TestConsumer.class.getName());
-
-    private List<String> messages = new ArrayList<>();
-
-    @KafkaListener(topics = {"test"})
-    public void onMessage(ConsumerRecord<String, String> record) {
-
-        log.info(String.format("Consumed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value()));
-
-        messages.add(record.value());
-    }
-
-    public List<String> getLast5Messages() {
-        return messages.subList(messages.size()-5, messages.size());
-    }
+@ApplicationPath("v1")
+public class ConsumerApplication extends Application {
 }

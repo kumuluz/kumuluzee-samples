@@ -106,7 +106,7 @@ We will develop a simple REST service for producing Kafka messages:
 
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
-* Add Maven dependencies to KumuluzEE and include KumuluzEE components (Core, Servlet, JAX-RS)
+* Add Maven dependencies to KumuluzEE and include KumuluzEE components with the microProfile-1.0 dependency
 * Add Maven dependency to KumuluzEE Kafka extension
 * Implement the service
 * Build the microservice
@@ -212,7 +212,7 @@ for example with `@ApplicationPath` annotation:
 
 ```java
 @ApplicationPath("v1")
-public class DiscoverApplication extends Application {
+public class ProducerApplication extends Application {
 }
 ```
 

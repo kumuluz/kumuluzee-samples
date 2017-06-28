@@ -21,35 +21,31 @@
 
 package com.kumuluz.ee.samples.kafka.consumer;
 
-import com.kumuluz.ee.kafka.annotations.KafkaListener;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import java.util.ArrayList;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * @author Matija Kljun
  */
-@ApplicationScoped
-public class TestConsumer {
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/consume")
+@RequestScoped
+public class ConsumerResource {
 
-    private static final Logger log = Logger.getLogger(TestConsumer.class.getName());
+    @Inject
+    TestConsumer consumer;
 
-    private List<String> messages = new ArrayList<>();
+    @GET
+    public Response getLast5Messages(){
 
-    @KafkaListener(topics = {"test"})
-    public void onMessage(ConsumerRecord<String, String> record) {
-
-        log.info(String.format("Consumed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value()));
-
-        messages.add(record.value());
-    }
-
-    public List<String> getLast5Messages() {
-        return messages.subList(messages.size()-5, messages.size());
+        return Response.status(200).entity(consumer.getLast5Messages()).build();
     }
 }

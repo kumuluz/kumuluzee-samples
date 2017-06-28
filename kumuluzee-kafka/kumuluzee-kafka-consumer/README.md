@@ -92,13 +92,15 @@ To shut down the example simply stop the processes in the foreground.
 ## Tutorial
 
 This tutorial will guide you through the steps required to create a Kafka Consumer with the help of the KumuluzEE Kafka extension.
-We will develop a simple annotated method which will be invoked when the message is consumed.
+We will develop a simple annotated method which will be invoked when the message is consumed. We will also build a Rest 
+service that will display the last 5 received messages:
+* GET http://localhost:8080/v1/consume
 
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
-* Add Maven dependencies to KumuluzEE and include KumuluzEE components (Core, Servlet, JAX-RS)
+* Add Maven dependencies to KumuluzEE and include KumuluzEE components with the microProfile-1.0 dependency
 * Add Maven dependency to KumuluzEE Kafka extension
-* Implement the annotated method
+* Implement the annotated method and Rest service
 * Build the microservice
 * Run it
 
@@ -119,20 +121,12 @@ Add the KumuluzEE BOM module dependency to your `pom.xml` file:
 </dependencyManagement>
 ```
 
-Add the `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-kafka` dependencies:
+Add the `kumuluzee-microProfile-1.0` and `kumuluzee-kafka` dependencies:
 ```xml
 <dependencies>
     <dependency>
         <groupId>com.kumuluz.ee</groupId>
-        <artifactId>kumuluzee-core</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>com.kumuluz.ee</groupId>
-        <artifactId>kumuluzee-servlet-jetty</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>com.kumuluz.ee</groupId>
-        <artifactId>kumuluzee-cdi-weld</artifactId>
+        <artifactId>kumuluzee-microProfile-1.0</artifactId>
     </dependency>
     <dependency>
         <groupId>com.kumuluz.ee.kafka</groupId>
@@ -170,25 +164,63 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 
 ### Implement the onMessage method
 
+Register your module as JAX-RS service and define the application path. You could do that in web.xml or
+for example with `@ApplicationPath` annotation:
+
+```java
+@ApplicationPath("v1")
+public class ConsumerApplication extends Application {
+}
+```
+
 Implement class for example TestConsumer with a method annotated with `@KafkaListener(topics = {"test"})`. 
 The method takes for a parameter the `ConsumerRecord` that contains the data of the received message.
+We will store the received messages in a List. We also implemented a method `getLast5Messages` for getting the last 5 messages from the List.
 
 ```java
 public class TestConsumer {
 
     private static final Logger log = Logger.getLogger(TestConsumer.class.getName());
 
+    private List<String> messages = new ArrayList<>();
+    
     @KafkaListener(topics = {"test"})
     public void onMessage(ConsumerRecord<String, String> record) {
 
         log.info(String.format("Consumed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value()));
 
+        messages.add(record.value());
     }
+    
+    public List<String> getLast5Messages() {
+        return messages.subList(messages.size()-5, messages.size());
+        }
 }
 ```
 
 In the example above, we defined the topics names with the parameter of the `@KafkaListener` annotation, 
 but we could also rename the onMessage method to the desired topic name.
+
+Implement JAX-RS resource, with a GET method for displaying the last 5 received  messages. Inject the `TestConsumer` 
+and retrieve the Kafka messages:
+
+```java
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/consume")
+@RequestScoped
+public class ConsumerResource {
+
+    @Inject
+    TestConsumer consumer;
+
+    @GET
+    public Response getLast5Messages(){
+
+        return Response.status(200).entity(consumer.getLast5Messages()).build();
+    }
+}
+```
 
 ### Add required configuration for the Kafka Producer
 
