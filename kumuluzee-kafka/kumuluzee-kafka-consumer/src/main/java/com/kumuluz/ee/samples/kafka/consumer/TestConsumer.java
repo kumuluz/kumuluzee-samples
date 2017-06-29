@@ -50,6 +50,8 @@ public class TestConsumer {
     }
 
     public List<String> getLastFiveMessages() {
+        if(messages.size() < 5)
+            return messages;
         return messages.subList(messages.size()-5, messages.size());
     }
 }
