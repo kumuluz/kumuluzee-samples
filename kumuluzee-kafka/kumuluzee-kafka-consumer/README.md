@@ -135,6 +135,20 @@ Add the `kumuluzee-microProfile-1.0` and `kumuluzee-kafka` dependencies:
     </dependency>
 </dependencies>
 ```
+If you would like to receive Kafka logs, you have to include the following `slf4j` dependencies:
+```xml
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-api</artifactId>
+    <version>1.7.25</version>
+</dependency>
+
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-simple</artifactId>
+    <version>1.7.25</version>
+</dependency>
+```
 
 Add the `maven-dependency-plugin` build plugin to copy all the necessary dependencies into target folder:
 

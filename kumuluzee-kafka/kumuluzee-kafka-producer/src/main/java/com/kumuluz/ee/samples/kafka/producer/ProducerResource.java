@@ -32,6 +32,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.logging.Logger;
 
 /**
  * @author Matija Kljun
@@ -41,6 +42,8 @@ import javax.ws.rs.core.Response;
 @Path("/produce")
 @RequestScoped
 public class ProducerResource {
+
+    private static final Logger log = Logger.getLogger(ProducerResource.class.getName());
 
     @Inject
     @KafkaProducer
@@ -56,7 +59,7 @@ public class ProducerResource {
                     if(e != null) {
                         e.printStackTrace();
                     } else {
-                        System.out.println("The offset of the produced message record is: " + metadata.offset());
+                        log.info("The offset of the produced message record is: " + metadata.offset());
                     }
                 });
 

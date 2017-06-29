@@ -49,7 +49,7 @@ public class TestConsumer {
         messages.add(record.value());
     }
 
-    public List<String> getLast5Messages() {
+    public List<String> getLastFiveMessages() {
         return messages.subList(messages.size()-5, messages.size());
     }
 }

@@ -44,8 +44,8 @@ public class ConsumerResource {
     TestConsumer consumer;
 
     @GET
-    public Response getLast5Messages(){
+    public Response getLastFiveMessages(){
 
-        return Response.status(200).entity(consumer.getLast5Messages()).build();
+        return Response.status(200).entity(consumer.getLastFiveMessages()).build();
     }
 }
