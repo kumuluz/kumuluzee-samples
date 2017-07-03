@@ -57,7 +57,7 @@ with docker:
 
 
 You will also need a registered service instance. You can use the
- [discovery-register](https://github.com/kumuluz/kumuluzee-samples/tree/master/discovery/discovery-register) sample.
+ [discovery-register](http://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-discovery/discovery-register) sample.
 
 ## Usage
 

@@ -1,0 +1,27 @@
+kumuluzee:
+  env: dev
+  config:
+    etcd:
+      hosts: http://localhost:2379
+  circuit-breaker:
+    watch-enabled: true
+    watch-properties: timeout,failure-threshold,threads-max
+orders-api:
+  path: http://localhost:8081/v1/orders
+circuit-breaker:
+  commands:
+    http-find-order:
+      timeout: 1000ms
+      request-threshold: 10
+      failure-threshold: 30
+      open-circuit-wait: 3000ms
+      hystrix:
+        metrics-rolling-statistical-window: 5s
+        metrics-rolling-statistical-window-buckets: 5
+        thread-pool: orders-thread-pool
+  hystrix:
+    thread-pools:
+      orders-thread-pool:
+        threads-core: 3
+        threads-max: 5
+        threads-diverge-from-core: true

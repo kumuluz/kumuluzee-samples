@@ -3,31 +3,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>kumuluzee-samples</artifactId>
+        <artifactId>kumuluzee-circuit-breaker-hystrix</artifactId>
         <groupId>com.kumuluz.ee.samples</groupId>
         <version>2.3.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>kumuluzee-logs</artifactId>
+    <artifactId>kumuluzee-circuit-breaker-hystrix-customer-api</artifactId>
 
-    <name>KumuluzEE Logs sample</name>
-    <description>KumuluzEE Logs usage sample with KumuluzEE</description>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.kumuluz.ee</groupId>
-                <artifactId>kumuluzee-bom</artifactId>
-                <version>${kumuluzee.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <name>KumuluzEE Circuit Breaker Hystrix sample customers service</name>
+    <description>KumuluzEE Circuit Breaker customers service implementation</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.kumuluz.ee.samples</groupId>
+            <artifactId>kumuluzee-circuit-breaker-hystrix-common</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-core</artifactId>
@@ -44,10 +36,38 @@
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-cdi-weld</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>com.kumuluz.ee.logs</groupId>
-            <artifactId>kumuluzee-logs-log4j2</artifactId>
-            <version>1.2.0-SNAPSHOT</version>
+            <groupId>com.kumuluz.ee.circuit.breaker</groupId>
+            <artifactId>kumuluzee-circuit-breaker-hystrix</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.config</groupId>
+            <artifactId>kumuluzee-config-etcd</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.netflix.hystrix</groupId>
+            <artifactId>hystrix-metrics-event-stream</artifactId>
+            <version>1.5.12</version>
         </dependency>
     </dependencies>
 
@@ -72,4 +92,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
