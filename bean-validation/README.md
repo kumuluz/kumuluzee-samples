@@ -75,22 +75,15 @@ We will follow these steps:
 
 Since your existing starting point is the existing KumuluzEE JAX-RS REST sample, you should already have the dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` configured in `pom.xml`.
 
-Add the `kumuluzee-bean-validation-hibernate-validator` and `jersey-bean-validation` dependencies:
+Add the `kumuluz-el-uel` and `kumuluzee-bean-validation-hibernate-validator` dependencies:
 ```xml
 <dependency>
     <groupId>com.kumuluz.ee</groupId>
-    <artifactId>kumuluzee-bean-validation-hibernate-validator</artifactId>
+    <artifactId>kumuluzee-el-uel</artifactId>
 </dependency>
 <dependency>
-    <groupId>org.glassfish.jersey.ext</groupId>
-    <artifactId>jersey-bean-validation</artifactId>
-    <version>2.25.1</version>
-    <exclusions>
-        <exclusion>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </exclusion>
-    </exclusions>
+    <groupId>com.kumuluz.ee</groupId>
+    <artifactId>kumuluzee-bean-validation-hibernate-validator</artifactId>
 </dependency>
 ```
 
@@ -126,6 +119,21 @@ public class Customer {
     
     // get and set methods
 }
+```
+
+```java
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("customers")
+public class CustomerResource {
+  
+    @POST
+    public Response addNewCustomer(@Valid Customer customer) {
+        Database.addCustomer(customer);
+        return Response.noContent().build();
+    }
+    
+    ...
 ```
 
 ### Build the microservice and run it

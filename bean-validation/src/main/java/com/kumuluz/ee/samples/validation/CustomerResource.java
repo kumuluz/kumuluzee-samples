@@ -20,6 +20,7 @@
 */
 package com.kumuluz.ee.samples.validation;
 
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -50,7 +51,7 @@ public class CustomerResource {
     }
 
     @POST
-    public Response addNewCustomer(Customer customer) {
+    public Response addNewCustomer(@Valid Customer customer) {
         Database.addCustomer(customer);
         return Response.noContent().build();
     }
