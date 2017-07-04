@@ -1,6 +1,6 @@
 # KumuluzEE Kafka &mdash; consume Kafka messages
 
-> Develop a REST service that produces Kafka messages to selected topic
+> Develop a REST service that consumes Kafka messages of selected topic
 
 The objective of this sample is to show how to consume Kafka messages.
 The tutorial will guide you through all the necessary steps. You will add KumuluzEE dependencies into pom
@@ -176,7 +176,7 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 </build>
 ```
 
-### Implement the onMessage method
+### Implement the onMessage method and Rest service
 
 Register your module as JAX-RS service and define the application path. You could do that in web.xml or
 for example with `@ApplicationPath` annotation:
@@ -215,6 +215,20 @@ public class TestConsumer {
 In the example above, we defined the topics names with the parameter of the `@KafkaListener` annotation, 
 but we could also rename the onMessage method to the desired topic name.
 
+If you would like to consume a batch fo messages change the onMessage method like this:
+
+```java
+@KafkaListener(topics = {"test"})
+public void onMessage(List<ConsumerRecord<String, String>> records) {
+    
+    for (ConsumerRecord<String, String> record : records) {
+        log.info(String.format("Consumed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value()));
+        messages.add(record.value());
+    }
+    
+}
+```
+
 Implement JAX-RS resource, with a GET method for displaying the last 5 received  messages. Inject the `TestConsumer` 
 and retrieve the Kafka messages:
 
@@ -236,7 +250,21 @@ public class ConsumerResource {
 }
 ```
 
-### Add required configuration for the Kafka Producer
+To display the use of Kafka manual message offset committing we will implement another method in the `TestConsumer` class, 
+with an additional method parameter `Acknowledgement`, this consumer needs to have different configuration of 
+`enable.auto.commit=false`: 
+
+```java
+@KafkaListener(topics = {"test"}, config = "consumer2")
+public void manualCommitMessage(ConsumerRecord<String, String> record, Acknowledgement ack) {
+
+    log.info(String.format("Manual committed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value()));
+    ack.acknowledge(); // acknowledges the consumed messages
+
+}
+```
+
+### Add required configuration for the Kafka Consumer
 
 You have to add the Kafka Consumer configuration using any KumuluzEE configuration source.
 
@@ -250,6 +278,14 @@ kumuluzee.kafka.consumer.auto.commit.interval.ms=1000
 kumuluzee.kafka.consumer.auto.offset.reset=earliest
 kumuluzee.kafka.consumer.key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
 kumuluzee.kafka.consumer.value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+
+kumuluzee.kafka.consumer2.bootstrap.servers=localhost:9092
+kumuluzee.kafka.consumer2.group.id=group2
+kumuluzee.kafka.consumer2.enable.auto.commit=false
+kumuluzee.kafka.consumer2.auto.commit.interval.ms=1000
+kumuluzee.kafka.consumer2.auto.offset.reset=earliest
+kumuluzee.kafka.consumer2.key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+kumuluzee.kafka.consumer2.value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
 ```
 
 ### Build the microservice and run it

@@ -22,11 +22,9 @@
 package com.kumuluz.ee.samples.kafka.consumer;
 
 import com.kumuluz.ee.kafka.annotations.KafkaListener;
+import com.kumuluz.ee.kafka.utils.Acknowledgement;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -47,6 +45,15 @@ public class TestConsumer {
         log.info(String.format("Consumed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value()));
 
         messages.add(record.value());
+    }
+
+    @KafkaListener(topics = {"test"}, config = "consumer2")
+    public void manualCommitMessage(ConsumerRecord<String, String> record, Acknowledgement ack) {
+
+        log.info(String.format("Manual committed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value()));
+
+        ack.acknowledge();
+
     }
 
     public List<String> getLastFiveMessages() {
