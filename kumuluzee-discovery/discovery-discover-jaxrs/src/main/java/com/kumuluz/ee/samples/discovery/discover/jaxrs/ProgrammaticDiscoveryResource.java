@@ -20,6 +20,7 @@
 */
 package com.kumuluz.ee.samples.discovery.discover.jaxrs;
 
+import com.kumuluz.ee.discovery.enums.AccessType;
 import com.kumuluz.ee.discovery.utils.DiscoveryUtil;
 
 import javax.enterprise.context.RequestScoped;
@@ -49,7 +50,8 @@ public class ProgrammaticDiscoveryResource {
                                  @PathParam("serviceVersion") String serviceVersion,
                                  @PathParam("environment") String environment) {
 
-        Optional<List<URL>> instances = discoveryUtil.getServiceInstances(serviceName, serviceVersion, environment);
+        Optional<List<URL>> instances = discoveryUtil.getServiceInstances(serviceName, serviceVersion, environment,
+                AccessType.GATEWAY);
 
         if (instances.isPresent()) {
             return Response.ok(instances.get()).build();
