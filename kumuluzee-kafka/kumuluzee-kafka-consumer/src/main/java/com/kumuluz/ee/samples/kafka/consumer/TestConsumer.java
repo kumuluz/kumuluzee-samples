@@ -23,11 +23,12 @@ package com.kumuluz.ee.samples.kafka.consumer;
 
 import com.kumuluz.ee.kafka.annotations.KafkaListener;
 import com.kumuluz.ee.kafka.utils.Acknowledgement;
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * @author Matija Kljun
@@ -35,7 +36,7 @@ import java.util.logging.Logger;
 @ApplicationScoped
 public class TestConsumer {
 
-    private static final Logger log = Logger.getLogger(TestConsumer.class.getName());
+    private static final Logger log = LogManager.getLogger(TestConsumer.class.getName());
 
     private List<String> messages = new ArrayList<>();
 

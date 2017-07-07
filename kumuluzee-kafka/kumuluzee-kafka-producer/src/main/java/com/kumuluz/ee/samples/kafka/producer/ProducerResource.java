@@ -22,6 +22,8 @@
 package com.kumuluz.ee.samples.kafka.producer;
 
 import com.kumuluz.ee.kafka.annotations.KafkaProducer;
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import javax.enterprise.context.RequestScoped;
@@ -32,7 +34,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.logging.Logger;
 
 /**
  * @author Matija Kljun
@@ -43,7 +44,7 @@ import java.util.logging.Logger;
 @RequestScoped
 public class ProducerResource {
 
-    private static final Logger log = Logger.getLogger(ProducerResource.class.getName());
+    private static final Logger log = LogManager.getLogger(ProducerResource.class.getName());
 
     @Inject
     @KafkaProducer

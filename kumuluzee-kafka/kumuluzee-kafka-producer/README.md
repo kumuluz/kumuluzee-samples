@@ -144,22 +144,40 @@ Add the `kumuluzee-microProfile-1.0` and `kumuluzee-kafka` dependencies:
     </dependency>
 </dependencies>
 ```
-If you would like to receive Kafka logs, you have to include the following `slf4j` dependencies:
+We will use `kumuluzee-logs` for logging in this sample, so you need to include kumuluzee logs implementation dependency:
 ```xml
 <dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-api</artifactId>
-    <version>1.7.25</version>
-</dependency>
-
-<dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-simple</artifactId>
-    <version>1.7.25</version>
+    <artifactId>kumuluzee-logs-log4j2</artifactId>
+    <groupId>com.kumuluz.ee.logs</groupId>
+    <version>1.1.0</version>
 </dependency>
 ```
-
-
+For more information about the KumuluzEE Logs visit the [KumuluzEE Logs Github page](https://github.com/kumuluz/kumuluzee-logs). \
+Currently, Log4j2 is supported implementation of `kumuluzee-logs`, so you need to include a sample Log4j2 configuration, 
+which should be in a file named `log4j2.xml` and located in `src/main/resources`:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration name="config-name">
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="console"/>
+        </Root>
+    </Loggers>
+</Configuration>
+```
+If you would like to collect Kafka related logs through the KumuluzEE Logs, you have to include the following `slf4j` implementation as dependency:
+```xml
+<dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-slf4j-impl</artifactId>
+    <version>2.8.1</version>
+</dependency>
+```
 Add the `maven-dependency-plugin` build plugin to copy all the necessary dependencies into target folder:
 
 ```xml
