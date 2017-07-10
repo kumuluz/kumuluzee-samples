@@ -33,7 +33,7 @@ In order to run this example you will need the following:
 
 ## Prerequisites
 
-To run this sample you will need an Kafka and Zookeeper instance. 
+To run this sample you will need an Kafka and Zookeeper instance [Kafka Quickstart](https://kafka.apache.org/quickstart).
 There are a lot of Kafka Docker available on the Docker hub, in this tutorial we use  
 [ches/kafka](https://hub.docker.com/r/ches/kafka/) and a separate Docker with the Zookeeper instance [jplock/zookeeper](https://hub.docker.com/r/jplock/zookeeper/)
 Here is an example on how to quickly run the Zookeeper and Kafka Docker:
