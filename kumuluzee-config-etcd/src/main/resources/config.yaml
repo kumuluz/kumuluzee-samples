@@ -1,4 +1,6 @@
 kumuluzee:
+  service-name: customer-service
+  version: 1.0.0
   env: dev
   config:
     start-retry-delay-ms: 500

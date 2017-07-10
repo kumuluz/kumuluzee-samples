@@ -184,9 +184,20 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 
 ### Implement the service
 
-Define your configuration properties in a `config.yaml` configuration file:
+Define KumuluzEE configuration as well as your custom configuration properties in a `config.yaml` configuration 
+file:
 
 ```yaml
+kumuluzee:
+  service-name: customer-service
+  version: 1.0.0
+  env: dev
+  config:
+    start-retry-delay-ms: 500
+    max-retry-delay-ms: 900000
+    etcd:
+      hosts: http://192.168.99.100:2379
+
 rest-config:
   string-property: Monday
   boolean-property: true
@@ -263,7 +274,7 @@ the field `stringProperty`, it will be dynamically updated on any change in etcd
 following command:
 
    ```bash
-    $ docker exec etcd etcdctl --endpoints 192.168.99.100:2379 set /environments/dev/services/rest-config/string-property test_string
+    $ docker exec etcd etcdctl --endpoints //192.168.99.100:2379 set /environments/dev/services/customer-service/1.0.0/config/rest-config/string-property test_string
    ```
 
 Access the config endpoint again and you will get an updated value from etcd.
