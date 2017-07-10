@@ -177,9 +177,18 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 
 ### Implement the service
 
-Define your configuration properties in a `config.yaml` configuration file:
+Define KumuluzEE configuration as well as your custom configuration properties in a `config.yaml` configuration 
+file:
 
 ```yaml
+kumuluzee:
+  service-name: customer-service
+  version: 1.0.0
+  env: dev
+  config:
+    start-retry-delay-ms: 500
+    max-retry-delay-ms: 900000
+
 rest-config:
   string-property: Monday
   boolean-property: true
@@ -253,9 +262,10 @@ To build the microservice and run the example, use the commands as described in 
 Since we have not defined any configuration properties in Consul, GET http://localhost:8080/v1/config will return 
 configuration properties from configuraiton file. We can now try and some values in Consul. Since we enabled watch on 
 the field `stringProperty`, it will be dynamically updated on any change in Consul. We can add a value to Consul from
-the user interface, which can be accessed from `http://localhost:8500`.
+the user interface, which can be accessed at `http://localhost:8500`.
 
-To set a value, navigate to `KEY/VALUE` tab and create key `environments/dev/services/rest-config/string-property` with
-a value of your own choosing.
+To set a value, navigate to `KEY/VALUE` tab and create key 
+`environments/dev/services/customer-service/1.0.0/config/rest-config/string-property` 
+with a value of your own choosing.
 
 Access the config endpoint again and you will get an updated value from Consul.
