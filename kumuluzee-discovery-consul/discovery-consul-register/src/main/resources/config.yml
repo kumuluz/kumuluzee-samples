@@ -1,0 +1,7 @@
+kumuluzee:
+  service-name: customer-service
+  env: dev
+  version: 1.0.0
+  discovery:
+    ttl: 20
+    ping-interval: 15

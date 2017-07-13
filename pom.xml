@@ -16,6 +16,7 @@
         <module>jsf</module>
         <module>kumuluzee-config</module>
         <module>kumuluzee-config-etcd</module>
+        <module>kumuluzee-config-consul</module>
         <module>kumuluzee-logs</module>
 		<module>kumuluzee-rest</module>
         <module>kumuluzee-security-keycloak</module>
@@ -24,8 +25,8 @@
         <module>servlet</module>
         <module>websocket</module>
         <module>kumuluzee-discovery-etcd</module>
+        <module>kumuluzee-discovery-consul</module>
         <module>kumuluzee-circuit-breaker-hystrix</module>
-        <module>kumuluzee-config-consul</module>
     </modules>
     <packaging>pom</packaging>
 

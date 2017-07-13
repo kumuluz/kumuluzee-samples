@@ -1,11 +1,11 @@
 # KumuluzEE Discovery &mdash; discover services in servlet 
 
-> Develop a KumuluzEE servlet that discovers a microservice registered with etcd.
+> Develop a KumuluzEE servlet that discovers a microservice registered with Consul.
 
-The objective of this sample is to show how to discover a service, registered with etcd using KumuluzEE Discovery 
+The objective of this sample is to show how to discover a service, registered with Consul using KumuluzEE Discovery 
 extension. The tutorial will guide you through the necessary steps. You will add KumuluzEE dependencies into pom.xml.
 You will develop a simple servlet, which uses KumuluzEE Discovery extension for discovering registered services. 
-Required knowledge: basic familiarity with servlets and basic familarity with etcd.
+Required knowledge: basic familiarity with servlets and basic familiarity with Consul.
 
 ## Requirements
 
@@ -31,34 +31,19 @@ In order to run this example you will need the following:
         git --version
         ```
 
-
 ## Prerequisites
 
-To run this sample you will need an etcd instance. Note that such setup with only one etcd node is not viable for 
-production environments, but only for developing purposes. Here is an example on how to quickly run an etcd instance 
-with docker:
+To run this sample you will need a Consul instance. Note that such setup with only one node is not viable for 
+production environments, but only for developing purposes. Download Consul and run it in development mode with the 
+following command:
 
    ```bash
-    $ docker run -d --net=host \
-        --name etcd \
-        --volume=/tmp/etcd-data:/etcd-data \
-        quay.io/coreos/etcd:v3.1.7 \
-        /usr/local/bin/etcd \
-        --name my-etcd-1 \
-        --data-dir /etcd-data \
-        --listen-client-urls http://0.0.0.0:2379 \
-        --advertise-client-urls http://0.0.0.0:2379 \
-        --listen-peer-urls http://0.0.0.0:2380 \
-        --initial-advertise-peer-urls http://0.0.0.0:2380 \
-        --initial-cluster my-etcd-1=http://0.0.0.0:2380 \
-        --initial-cluster-token my-etcd-token \
-        --initial-cluster-state new \
-        --auto-compaction-retention 1
+    $ consul agent -dev
    ```
 
 
 You will also need a registered service instance. You can use the
- [discovery-etcd-register](http://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-discovery-etcd/discovery-etcd-register) sample.
+ [discovery-consul-register](http://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-discovery-consul/discovery-consul-register) sample.
  
 ## Usage
 
@@ -71,9 +56,9 @@ The example uses maven to build and run the microservice.
     $ mvn clean package
     ```
 
-2. Start local etcd instance and another microservice, which registers to etcd:
+2. Start local Consul instance and another microservice, which registers to Consul:
 
-    You can find instructions in discovery-register sample, mentioned above.
+    You can find instructions in discovery-consul-register sample, mentioned above.
 
 3. Run the sample:
 
@@ -139,7 +124,7 @@ Add the `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluzee-cdi-weld` and `k
     </dependency>
     <dependency>
         <groupId>com.kumuluz.ee.discovery</groupId>
-        <artifactId>kumuluzee-discovery-etcd</artifactId>
+        <artifactId>kumuluzee-discovery-consul</artifactId>
         <version>${kumuluzee-discovery.version}</version>
     </dependency>
 </dependencies>
@@ -207,20 +192,8 @@ public class DiscoverServlet extends HttpServlet {
 ```
 
 In the example above, we inject an `URL` resource using `@DiscoverService` annotation. KumuluzEE Discovery extension
-uses NPM-like versioning, so by specifying version "*", we always get the latest version of a microservice, registered with etcd.
-Servlet sends a GET request to the discovered URL and sends back the received response.
-
-### Add required configuration for the service discovery
-
-You can add configuration using any KumuluzEE configuration source.
-
-For example, you can use config.yml file, placed in resources folder:
-```yaml
-kumuluzee:
-  discovery:
-    etcd:
-      hosts: http://127.0.0.1:2379
-```
+uses NPM-like versioning, so by specifying version "*", we always get the latest version of a microservice, 
+registered with Consul. Servlet sends a GET request to the discovered URL and sends back the received response.
 
 ### Build the microservice and run it
 

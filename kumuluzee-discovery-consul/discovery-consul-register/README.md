@@ -1,11 +1,11 @@
-# KumuluzEE Discovery &mdash; register service with etcd 
+# KumuluzEE Discovery &mdash; register service with Consul
 
-> Develop a REST KumuluzEE microservice and register it with etcd.
+> Develop a REST KumuluzEE microservice and register it with Consul.
 
-The objective of this sample is to show how to register a REST service with etcd using KumuluzEE Discovery extension.
+The objective of this sample is to show how to register a REST service with Consul using KumuluzEE Discovery extension.
 This tutorial will guide you through all the necessary steps. You will add KumuluzEE dependencies into pom.xml.
 You will use existing JAX-RS sample, described [here](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs).
-Required knowledge: basic familiarity with JAX-RS and basic concepts of REST and JSON; basic familiarity with etcd.
+Required knowledge: basic familiarity with JAX-RS and basic concepts of REST and JSON; basic familiarity with Consul.
 
 ## Requirements
 
@@ -33,26 +33,12 @@ In order to run this example you will need the following:
 
 ## Prerequisites
 
-To run this sample you will need an etcd instance. Note that such setup with only one etcd node is not viable for 
-production environments, but only for developing purposes. Here is an example on how to quickly run an etcd instance 
-with docker:
+To run this sample you will need a Consul instance. Note that such setup with only one node is not viable for 
+production environments, but only for developing purposes. Download Consul and run it in development mode with the 
+following command:
 
    ```bash
-    $ docker run -d --net=host \
-        --name etcd \
-        --volume=/tmp/etcd-data:/etcd-data \
-        quay.io/coreos/etcd:v3.1.7 \
-        /usr/local/bin/etcd \
-        --name my-etcd-1 \
-        --data-dir /etcd-data \
-        --listen-client-urls http://0.0.0.0:2379 \
-        --advertise-client-urls http://0.0.0.0:2379 \
-        --listen-peer-urls http://0.0.0.0:2380 \
-        --initial-advertise-peer-urls http://0.0.0.0:2380 \
-        --initial-cluster my-etcd-1=http://0.0.0.0:2380 \
-        --initial-cluster-token my-etcd-token \
-        --initial-cluster-state new \
-        --auto-compaction-retention 1
+    $ consul agent -dev
    ```
 
 ## Usage
@@ -66,11 +52,7 @@ The example uses maven to build and run the microservice.
     $ mvn clean package
     ```
 
-2. Start local etcd instance in another terminal:
-
-    ```bash
-    $ etcd
-    ```
+2. Start local Consul instance:
 
 3. Run the sample:
 
@@ -88,15 +70,15 @@ The example uses maven to build and run the microservice.
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource - http://localhost:8081/v1/customers
 
-The application is registered with etcd. You can discover it using one of the discover samples:
-* [discover-etcd-servlet sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-etcd-discovery/discovery-etcd-discover-servlet)
-* [discover-etcd-jaxrs sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-discovery-etcd/discovery-etcd-discover-jaxrs)
+The application is registered with Consul. You can discover it using one of the discover samples:
+* [discover-consul-servlet sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-discovery-consul/discovery-consul-discover-servlet)
+* [discover-consul-jaxrs sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-discovery-consul/discovery-consul-discover-jaxrs)
 
 To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
 
-This tutorial will guide you through the steps required to register KumuluzEE microservice with etcd. 
+This tutorial will guide you through the steps required to register KumuluzEE microservice with Consul. 
 We will use existing [sample Customer REST service](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs) with the following resources:
 * GET http://localhost:8080/v1/customers - list of all customers 
 * GET http://localhost:8080/v1/customers/{customerId} – details of customer with ID {customerId}
@@ -112,14 +94,14 @@ We will follow these steps:
 
 ### Add Maven dependencies
 
-Add the `kumuluzee-discovery-etcd` dependency to the sample:
+Add the `kumuluzee-discovery-consul` dependency to the sample:
 ```xml
 <dependencies>
     ...
     
     <dependency>
         <groupId>com.kumuluz.ee.discovery</groupId>
-        <artifactId>kumuluzee-discovery-etcd</artifactId>
+        <artifactId>kumuluzee-discovery-consul</artifactId>
         <version>${kumuluzee-discovery.version}</version>
     </dependency>
 </dependencies>
@@ -146,10 +128,7 @@ kumuluzee:
   service-name: customer-service
   env: dev
   version: 1.0.0
-  base-url: http://localhost:8081
   discovery:
-    etcd:
-      hosts: http://127.0.0.1:2379
     ttl: 20
     ping-interval: 15
 ```
