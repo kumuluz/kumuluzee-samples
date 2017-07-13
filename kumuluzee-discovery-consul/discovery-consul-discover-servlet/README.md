@@ -165,28 +165,35 @@ Implement the servlet, which will return a response, received from discovered se
 public class DiscoverServlet extends HttpServlet {
 
     @Inject
-    @DiscoverService(value = "customer-service", version = "*", environment = "dev")
-    private URL url;
+    private DiscoveryUtil discoveryUtil;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
-        response.getWriter().println("Discovered instance on " + url);
 
-        response.getWriter().println("Sending request for customer list ...");
-        URL serviceUrl = new URL(url.toString() + "/v1/customers");
-        HttpURLConnection conn = (HttpURLConnection) serviceUrl.openConnection();
-        conn.setRequestMethod("GET");
+        URL url = discoveryUtil.getServiceInstance("customer-service", "*", "dev", AccessType.DIRECT).orElse(null);
 
-        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        StringBuilder receivedResponse = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            receivedResponse.append(line);
+        if (url != null) {
+            response.getWriter().println("Discovered instance on " + url);
+
+            response.getWriter().println("Sending request for customer list ...");
+            URL serviceUrl = new URL(url.toString() + "/v1/customers");
+            HttpURLConnection conn = (HttpURLConnection) serviceUrl.openConnection();
+            conn.setRequestMethod("GET");
+
+            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder receivedResponse = new StringBuilder();
+            String line;
+            while ((line = rd.readLine()) != null) {
+                receivedResponse.append(line);
+            }
+            rd.close();
+
+            response.getWriter().println("Received response: " + receivedResponse.toString());
+
+        } else {
+            response.getWriter().println("No service instances were discovered.");
         }
-        rd.close();
-
-        response.getWriter().println("Received response: " + receivedResponse.toString());
     }
 }
 ```

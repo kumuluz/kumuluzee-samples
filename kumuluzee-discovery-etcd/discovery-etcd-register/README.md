@@ -89,7 +89,7 @@ The application/service can be accessed on the following URL:
 * JAX-RS REST resource - http://localhost:8081/v1/customers
 
 The application is registered with etcd. You can discover it using one of the discover samples:
-* [discover-etcd-servlet sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-etcd-discovery/discovery-etcd-discover-servlet)
+* [discover-etcd-servlet sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-discovery-etcd/discovery-etcd-discover-servlet)
 * [discover-etcd-jaxrs sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-discovery-etcd/discovery-etcd-discover-jaxrs)
 
 To shut down the example simply stop the processes in the foreground.
