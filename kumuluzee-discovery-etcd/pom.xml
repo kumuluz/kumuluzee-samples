@@ -9,16 +9,16 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>discovery</artifactId>
+    <artifactId>kumuluzee-discovery-etcd</artifactId>
     <packaging>pom</packaging>
 
     <name>KumuluzEE Discovery samples</name>
     <description>Samples for swervice discovery with KumuluzEE</description>
 
     <modules>
-        <module>discovery-register</module>
-        <module>discovery-discover-servlet</module>
-        <module>discovery-discover-jaxrs</module>
+        <module>discovery-etcd-register</module>
+        <module>discovery-etcd-discover-servlet</module>
+        <module>discovery-etcd-discover-jaxrs</module>
     </modules>
 
     <properties>

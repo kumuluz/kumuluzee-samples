@@ -130,7 +130,7 @@ Add the `kumuluzee-discovery-etcd` dependency to the sample:
 Add the `@RegisterService` annotation to JAX-RS Application class (CustomerApplication.java):
 
 ```java
-@RegisterService("customer-service")
+@RegisterService
 @ApplicationPath("v1")
 public class CustomerApplication extends Application {
 }
@@ -143,6 +143,7 @@ You can add configuration using any KumuluzEE configuration source.
 For example, you can use config.yml file, placed in resources folder:
 ```yaml
 kumuluzee:
+  service-name: customer-service
   env: dev
   version: 1.0.0
   base-url: http://localhost:8081

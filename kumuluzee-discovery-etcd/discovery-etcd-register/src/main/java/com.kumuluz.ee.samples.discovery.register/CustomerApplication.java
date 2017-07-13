@@ -28,7 +28,7 @@ import javax.ws.rs.core.Application;
 /**
  * @author Urban Malc
  */
-@RegisterService(value = "customer-service")
+@RegisterService
 @ApplicationPath("v1")
 public class CustomerApplication extends Application {
 }

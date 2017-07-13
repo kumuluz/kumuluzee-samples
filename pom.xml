@@ -23,7 +23,7 @@
         <module>microservices-simple</module>
         <module>servlet</module>
         <module>websocket</module>
-        <module>kumuluzee-discovery</module>
+        <module>kumuluzee-discovery-etcd</module>
         <module>kumuluzee-circuit-breaker-hystrix</module>
         <module>kumuluzee-config-consul</module>
     </modules>

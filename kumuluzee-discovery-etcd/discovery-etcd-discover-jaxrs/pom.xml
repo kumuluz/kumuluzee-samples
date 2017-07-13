@@ -3,16 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>discovery</artifactId>
+        <artifactId>kumuluzee-discovery-etcd</artifactId>
         <groupId>com.kumuluz.ee.samples</groupId>
         <version>2.3.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>discovery-register</artifactId>
+    <artifactId>discovery-etcd-discover-jaxrs</artifactId>
 
     <name>KumuluzEE Discovery JAX-RS sample</name>
-    <description>Register JAX-RS service with KumuluzEE</description>
+    <description>Discover service with KumuluzEE JAX-RS service</description>
 
     <dependencyManagement>
         <dependencies>
@@ -72,5 +72,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>
