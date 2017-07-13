@@ -1,9 +1,8 @@
-# KumuluzEE Discovery samples
+# KumuluzEE Discovery with etcd
 
 > Samples for KumuluzEE Discovery extension
 
-This module contains four samples that will introduce you to KumuluzEE
-Discovery extension:
+This module contains four samples that will introduce you to KumuluzEE Discovery extension using etcd:
 
 - [`discovery-register`](http://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-discovery-etcd/discovery-etcd-register) JAX-RS microservice that registers itself to etcd
 - [`discovery-discover-servlet`](http://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-discovery-etcd/discovery-etcd-discover-servlet) servlet microservice that discovers
