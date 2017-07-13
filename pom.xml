@@ -28,6 +28,7 @@
         <module>kumuluzee-discovery-consul</module>
         <module>kumuluzee-circuit-breaker-hystrix</module>
         <module>https</module>
+        <module>kumuluzee-streaming-kafka</module>
     </modules>
     <packaging>pom</packaging>
 

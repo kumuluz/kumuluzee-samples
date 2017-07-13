@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>kumuluzee-samples</artifactId>
+        <groupId>com.kumuluz.ee.samples</groupId>
+        <version>2.3.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>kumuluzee-kafka</artifactId>
+    <packaging>pom</packaging>
+
+    <name>KumuluzEE Kafka sample</name>
+    <description>Kumuluz EE Kafka usage sample with KumuluzEE</description>
+
+    <properties>
+        <kumuluzee-streaming-kafka.version>1.0.0-SNAPSHOT</kumuluzee-streaming-kafka.version>
+    </properties>
+
+    <modules>
+        <module>kumuluzee-streaming-kafka-producer</module>
+        <module>kumuluzee-streaming-kafka-consumer</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-bom</artifactId>
+                <version>${kumuluzee.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
