@@ -274,7 +274,7 @@ public class ConsumerResource {
 
 To display the use of Kafka manual message offset committing we will implement another method in the `TestConsumer` class, 
 with an additional method parameter `Acknowledgement`, this consumer needs to have different configuration of 
-`enable.auto.commit=false`: 
+`enable-auto-commit: false`: 
 
 ```java
 @StreamListener(topics = {"test"}, config = "consumer2")
@@ -297,23 +297,13 @@ kumuluzee:
   streaming:
     kafka:
       consumer:
-        bootstrap:
-          servers: localhost:9092
-        group:
-          id: group1
-        enable:
-          auto:
-            commit: true
-        auto:
-          commit:
-            interval:
-              ms: 1000
-          offset:
-            reset: earliest
-        key:
-          deserializer: org.apache.kafka.common.serialization.StringDeserializer
-        value:
-          deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        bootstrap-servers: localhost:9092
+        group-id: group1
+        enable-auto-commit: true
+        auto-commit-interval-ms: 1000
+        auto-offset-reset: earliest
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 ```
 
 ### Build the microservice and run it

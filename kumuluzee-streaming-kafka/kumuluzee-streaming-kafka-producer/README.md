@@ -298,20 +298,14 @@ kumuluzee:
   streaming:
     kafka:
       producer:
-        bootstrap:
-          servers: localhost:9092
+        bootstrap-servers: localhost:9092
         acks: all
         retries: 0
-        batch:
-          size: 16384
-        linger:
-          ms: 1
-        buffer:
-          memory: 33554432
-        key:
-          serializer: org.apache.kafka.common.serialization.StringSerializer
-        value:
-          serializer: org.apache.kafka.common.serialization.StringSerializer
+        batch-size: 16384
+        linger-ms: 1
+        buffer-memory: 33554432
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
 ```
 
 ### Build the microservice and run it
