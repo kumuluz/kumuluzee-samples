@@ -41,7 +41,9 @@ In order to run this sample you will have to setup the following environment var
 If you wish to force SSL, you have to set the following environment variable:
 - __FORCE_SSL__: true
 
-You can also specify a different port for HTTPS:
+__NOTE__: this is the preferred setting when in production
+
+The default HTTPS port is 8443. To specify a different port use:
 - __SSL_PORT__: \<ssl_port\>
 
 ## Usage
