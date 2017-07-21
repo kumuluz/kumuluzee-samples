@@ -27,6 +27,7 @@
         <module>kumuluzee-discovery-etcd</module>
         <module>kumuluzee-discovery-consul</module>
         <module>kumuluzee-circuit-breaker-hystrix</module>
+        <module>https</module>
     </modules>
     <packaging>pom</packaging>
 
