@@ -52,7 +52,10 @@ Java EE samples:
 KumuluzEE extensions:
 - KumuluzEE Config
 - KumuluzEE Config with etcd
-- KumuluzEE Discovery
+- KumuluzEE Config with Consul
+- KumuluzEE Circuit Breaker with Hystrix
+- KumuluzEE Discovery with etcd
+- KumuluzEE Discovery with Consul
 - KumuluzEE Logs
 - KumuluzEE REST
 - KumuluzEE Security with Keycloak
