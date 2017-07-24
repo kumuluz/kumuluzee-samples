@@ -33,18 +33,18 @@ In order to run this example you will need the following:
 
 ## Prerequisites
 
-In order to run this sample you will have to setup the following environment variables:
-- __KEYSTORE_PATH__: \<path_to_project\>/src/main/resources/keystore.jks
-- __KEYSTORE_PASSWORD__: changeit
-- __ENABLE_SSL__: true
+In order to run this sample you will have to set the following configuration parameters:
+- __kumuluzee.server.keystore-path__: \<path_to_project\>/src/main/resources/keystore.jks
+- __kumuluzee.server.keystore-password__: changeit
+- __kumuluzee.server.enable-ssl__: true
 
-If you wish to force SSL, you have to set the following environment variable:
-- __FORCE_SSL__: true
+If you wish to force SSL, you have to set the following configuration parameter:
+- __kumuluzee.server.force-ssl__: true
 
 __NOTE__: this is the preferred setting when in production
 
 The default HTTPS port is 8443. To specify a different port use:
-- __SSL_PORT__: \<ssl_port\>
+- __kumuluzee.server.ssl-port__: \<ssl_port\>
 
 ## Usage
 
