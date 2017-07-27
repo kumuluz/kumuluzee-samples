@@ -1,10 +1,8 @@
-# KumuluzEE Streaming Kafka &mdash; produce Kafka messages
+# KumuluzEE Event Streaming Kafka &mdash; produce Kafka messages
 
 > Develop a REST service that produces Kafka messages to selected topic
 
-The objective of this sample is to show how to produce Kafka messages with a simple Rest service.
- The tutorial will guide you through all the necessary steps. You will add KumuluzEE dependencies into pom
-.xml. You will develop a simple REST service, which uses KumuluzEE Kafka extension for producing messages.
+The objective of this sample is to show how to produce Kafka messages with a simple Rest service using KumuluzEE Event Streming extension. The tutorial will guide you through all the necessary steps. You will add KumuluzEE dependencies into pom.xml. You will develop a simple REST service, which uses KumuluzEE Event Streaming Kafka extension for producing messages.
 Required knowledge: basic familiarity with JAX-RS and REST; basic familiarity with Apache Kafka.
 
 ## Requirements
@@ -100,14 +98,14 @@ To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
 
-This tutorial will guide you through the steps required to create a service, which uses KumuluzEE Kafka extension.
+This tutorial will guide you through the steps required to create a service, which uses KumuluzEE Event Streaming Kafka extension.
 We will develop a simple REST service for producing Kafka messages:
 * POST http://localhost:8080/v1/produce
 
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
 * Add Maven dependencies to KumuluzEE and include KumuluzEE components with the microProfile-1.0 dependency
-* Add Maven dependency to KumuluzEE Kafka extension
+* Add Maven dependency to KumuluzEE Event Streaming Kafka extension
 * Implement the service
 * Build the microservice
 * Run it
@@ -311,4 +309,4 @@ kumuluzee:
 ### Build the microservice and run it
 
 To build the microservice and run the example, use the commands as described in previous sections.
- 
+
