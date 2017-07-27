@@ -1,10 +1,9 @@
-# KumuluzEE Streaming Kafka &mdash; consume Kafka messages
+# KumuluzEE Event Streaming with Kafka &mdash; consume Kafka messages
 
 > Develop a REST service that consumes Kafka messages of selected topic
 
-The objective of this sample is to show how to consume Kafka messages.
-The tutorial will guide you through all the necessary steps. You will add KumuluzEE dependencies into pom
-.xml. You will develop a simple annotated method, which uses KumuluzEE Kafka extension for consuming messages.
+The objective of this sample is to show how to consume Kafka messages using KumuluzEE Event Streaming extension.
+The tutorial will guide you through all the necessary steps. You will add KumuluzEE dependencies into pom.xml. You will develop a simple annotated method, which uses the KumuluzEE Event Streaming Kafka extension for consuming messages.
 Required knowledge: basic familiarity with Apache Kafka.
 
 ## Requirements
@@ -91,15 +90,14 @@ To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
 
-This tutorial will guide you through the steps required to create a Kafka Consumer with the help of the KumuluzEE Kafka extension.
-We will develop a simple annotated method which will be invoked when the message is consumed. We will also build a Rest 
-service that will display the last 5 received messages:
+This tutorial will guide you through the steps required to create a Kafka Consumer with the help of the KumuluzEE Event Streaming Kafka extension.
+We will develop a simple annotated method which will be invoked when the message is consumed. We will also build a Rest service that will display the last 5 received messages:
 * GET http://localhost:8080/v1/consume
 
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
 * Add Maven dependencies to KumuluzEE and include KumuluzEE components with the microProfile-1.0 dependency
-* Add Maven dependency to KumuluzEE Kafka extension
+* Add Maven dependency to KumuluzEE Event Streaming Kafka extension
 * Implement the annotated method and Rest service
 * Build the microservice
 * Run it
@@ -200,8 +198,7 @@ Add the `maven-dependency-plugin` build plugin to copy all the necessary depende
 
 ### Implement the onMessage method and Rest service
 
-Register your module as JAX-RS service and define the application path. You could do that in web.xml or
-for example with `@ApplicationPath` annotation:
+Register your module as JAX-RS service and define the application path. You could do that in web.xml or for example with `@ApplicationPath` annotation:
 
 ```java
 @ApplicationPath("v1")
@@ -309,4 +306,4 @@ kumuluzee:
 ### Build the microservice and run it
 
 To build the microservice and run the example, use the commands as described in previous sections.
- 
+
