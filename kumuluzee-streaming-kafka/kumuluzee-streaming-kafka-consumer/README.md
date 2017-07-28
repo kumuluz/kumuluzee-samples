@@ -41,7 +41,7 @@ Here is an example on how to quickly run the Zookeeper and Kafka Docker:
 $ docker network create kafka-net
           
 $ docker run -d -p 2181:2181 --name zookeeper --network kafka-net zookeeper:3.4
-$ docker run -d -p 9092:9092 --name kafka --network kafka-net --env ZOOKEEPER_IP=zookeeper ches/kafka
+$ docker run -d -p 9092:9092 --name kafka --network kafka-net --env ZOOKEEPER_IP=zookeeper --env KAFKA_ADVERTISED_HOST_NAME={docker_host_ip} ches/kafka
 ```
    
 ## Usage
@@ -54,7 +54,7 @@ The example uses Docker to set up the Kafka and Zookeeper instances and maven to
     $ docker network create kafka-net
           
     $ docker run -d -p 2181:2181 --name zookeeper --network kafka-net zookeeper:3.4
-    $ docker run -d -p 9092:9092 --name kafka --network kafka-net --env ZOOKEEPER_IP=zookeeper ches/kafka
+    $ docker run -d -p 9092:9092 --name kafka --network kafka-net --env ZOOKEEPER_IP=zookeeper --env KAFKA_ADVERTISED_HOST_NAME={docker_host_ip} ches/kafka
     ```
     
     To produce messages in the terminal, you can use the Kafka CLI command:
