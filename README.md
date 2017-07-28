@@ -41,7 +41,7 @@ Java EE samples:
 - JSP and Servlet
 - Servlet
 - Websocket
-- REST service overt HTTPS
+- REST service over HTTPS
 - Simple microservice tutorial (microservices-simple)
 
 KumuluzEE extensions:
