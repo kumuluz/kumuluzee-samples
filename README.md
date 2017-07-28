@@ -4,8 +4,7 @@
 
 These samples and quickstarts contain several working projects that demonstrate how to use [KumuluzEE](https://github.com/kumuluz/kumuluzee) microservices. They also serve as test projects for the framework itself.
 
-We recommend that you go through some of these samples to get a better understanding of the framework and use them
-as a reference for your own projects.
+We recommend that you go through some of these samples to get a better understanding of the framework and use them as a reference for your own projects.
 
 Keep in mind that while projects containing multiple microservices are located in the same repository in order to simplify things, is is often recommended that you separate microservices by repository as well.
 
@@ -13,16 +12,11 @@ Samples will be constantly added over time.
 
 ## About
 
-The samples demonstrate many different use cases for using KumuluzEE to create self-sustaining microservices. The latest
-version of the samples will always use the latest version of the KumuluzEE framework. Therefore, it is recommended to use the latest version of the KumuluzEE framework for these samples. This way, you will also get all the latest features of the KumuluzEE. Refer to the usage section on how to build and run the samples.
+The samples demonstrate many different use cases for using KumuluzEE to create self-sustaining microservices. The latest version of the samples will always use the latest version of the KumuluzEE framework. Therefore, it is recommended to use the latest version of the KumuluzEE framework for these samples. This way, you will also get all the latest features of the KumuluzEE. Refer to the usage section on how to build and run the samples.
 
-Some samples are tagged as well. The tags (eg. `v2.2.0`) will correspond to the KumuluzEE release version in order to easily access the
-desired version of the framework that is used in the examples. Tha `master` branch will always use the latest snapshot version of the framework
-and the latest samples.
+Some samples are tagged as well. The tags (eg. `v2.2.0`) will correspond to the KumuluzEE release version in order to easily access the desired version of the framework that is used in the examples. Tha `master` branch will always use the latest snapshot version of the framework and the latest samples.
 
-If you wish to use a snapshot version of KumuluzEE when running the samples, you must make sure you add the Sonatype snapshots
-repository to your `pom.xml`. The `master` branch already contains the repository as it's targeted against the snapshot
-version of the framework.
+If you wish to use a snapshot version of KumuluzEE when running the samples, you must make sure you add the Sonatype snapshots repository to your `pom.xml`. The `master` branch already contains the repository as it's targeted against the snapshot version of the framework.
 
 ```xml
 <repositories>
@@ -47,19 +41,21 @@ Java EE samples:
 - JSP and Servlet
 - Servlet
 - Websocket
+- REST service overt HTTPS
 - Simple microservice tutorial (microservices-simple)
 
 KumuluzEE extensions:
 - KumuluzEE Config
 - KumuluzEE Config with etcd
 - KumuluzEE Config with Consul
-- KumuluzEE Circuit Breaker with Hystrix
+- KumuluzEE Fault Tolerance - Circuit Breaker with Hystrix
 - KumuluzEE Discovery with etcd
 - KumuluzEE Discovery with Consul
 - KumuluzEE Logs
 - KumuluzEE REST
-- KumuluzEE Security with Keycloak
-
+- KumuluzEE Security with Keycloak for REST services
+- KumuluzEE Security with Keycloak for CDI
+- KumuluzEE Event Streaming with Kafka
 
 ## Requirements
 
