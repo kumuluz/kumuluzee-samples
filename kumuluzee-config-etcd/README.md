@@ -189,9 +189,10 @@ file:
 
 ```yaml
 kumuluzee:
-  service-name: customer-service
+  name: customer-service
   version: 1.0.0
-  env: dev
+  env:
+    name: dev
   config:
     start-retry-delay-ms: 500
     max-retry-delay-ms: 900000
