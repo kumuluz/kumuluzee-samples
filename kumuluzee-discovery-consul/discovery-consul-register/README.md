@@ -125,8 +125,9 @@ You can add configuration using any KumuluzEE configuration source.
 For example, you can use config.yml file, placed in resources folder:
 ```yaml
 kumuluzee:
-  service-name: customer-service
-  env: dev
+  name: customer-service
+  env:
+    name: dev
   version: 1.0.0
   discovery:
     ttl: 20
