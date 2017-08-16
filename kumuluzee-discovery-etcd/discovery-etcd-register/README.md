@@ -154,7 +154,7 @@ kumuluzee:
     ping-interval: 15
 ```
 
-Port 8081 is used because we want to run another microservice, which discovers this service on port 8080.
+Port 8081 is used because we want to run another microservice on default port, which discovers this service on port 8080.
 
 ### Build the microservice and run it
 

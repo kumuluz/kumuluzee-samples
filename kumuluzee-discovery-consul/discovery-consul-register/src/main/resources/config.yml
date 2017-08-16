@@ -3,6 +3,9 @@ kumuluzee:
   env:
     name: dev
   version: 1.0.0
+  server:
+    http:
+      port: 8081
   discovery:
     ttl: 20
     ping-interval: 15

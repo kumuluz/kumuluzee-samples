@@ -57,15 +57,13 @@ The example uses maven to build and run the microservice.
 3. Run the sample:
 
     ```bash
-    $ PORT=8081 java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
+    $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
     ```
 
     in Windows environment use the command
     ```batch
-    $env:PORT=8087;java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+    $ java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
-    
-    Port 8081 is used because we want to run another microservice, which discovers this service.
     
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource - http://localhost:8081/v1/customers
@@ -129,10 +127,15 @@ kumuluzee:
   env:
     name: dev
   version: 1.0.0
+  server:
+    http:
+      port: 8081
   discovery:
     ttl: 20
     ping-interval: 15
 ```
+
+Port 8081 is used because we want to run another microservice on default port, which discovers this service.
 
 ### Build the microservice and run it
 
