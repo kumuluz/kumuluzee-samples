@@ -147,6 +147,8 @@ kumuluzee:
   version: 1.0.0
   server:
     base-url: http://localhost:8081
+    http:
+      port: 8081
   discovery:
     etcd:
       hosts: http://192.168.99.100:2379
