@@ -290,7 +290,7 @@ spec:
       - image: register-sample:v1
         name: register
         env:
-#          - name: KUMULUZEE_BASEURL
+#          - name: KUMULUZEE_SERVER_BASEURL
 #            value: http://NODE-IP:SERVICE-NODEPORT
           - name: KUMULUZEE_DISCOVERY_CLUSTER
             value: minikube
@@ -305,8 +305,8 @@ spec:
 We use the same environment variables in this deployment.
 
 If you want your service to be accessible outside the cluster, you should also specify environment
-variable `KUMULUZEE_BASEURL` (commented lines above). Services outside your cluster will then access your service by
-`KUMULUZEE_BASEURL`, services inside your cluster will access your service by its pod IP.
+variable `KUMULUZEE_SERVER_BASEURL` (commented lines above). Services outside your cluster will then access your service by
+`KUMULUZEE_SERVER_BASEURL`, services inside your cluster will access your service by its pod IP.
 
 Use commands, described in the Usage section step 3 to create the deployment.
 

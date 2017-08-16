@@ -75,15 +75,13 @@ The example uses maven to build and run the microservice.
 3. Run the sample:
 
     ```bash
-    $ PORT=8081 java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
+    $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
     ```
 
     in Windows environment use the command
     ```batch
-    $env:PORT=8087;java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+    $ java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
-    
-    Port 8081 is used because we want to run another microservice, which discovers this service.
     
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource - http://localhost:8081/v1/customers
@@ -98,10 +96,10 @@ To shut down the example simply stop the processes in the foreground.
 
 This tutorial will guide you through the steps required to register KumuluzEE microservice with etcd. 
 We will use existing [sample Customer REST service](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs) with the following resources:
-* GET http://localhost:8080/v1/customers - list of all customers 
-* GET http://localhost:8080/v1/customers/{customerId} – details of customer with ID {customerId}
-* POST http://localhost:8080/v1/customers – add a customer
-* DELETE http://localhost:8080/v1/customers/{customerId} – delete customer with ID {customerId}
+* GET http://localhost:8081/v1/customers - list of all customers 
+* GET http://localhost:8081/v1/customers/{customerId} – details of customer with ID {customerId}
+* POST http://localhost:8081/v1/customers – add a customer
+* DELETE http://localhost:8081/v1/customers/{customerId} – delete customer with ID {customerId}
 
 We will follow these steps:
 * Import a Maven sample, mentioned above, in the IDE of your choice (Eclipse, IntelliJ, etc.)
@@ -143,16 +141,22 @@ You can add configuration using any KumuluzEE configuration source.
 For example, you can use config.yml file, placed in resources folder:
 ```yaml
 kumuluzee:
-  service-name: customer-service
-  env: dev
+  name: customer-service
+  env:
+    name: dev
   version: 1.0.0
-  base-url: http://localhost:8081
+  server:
+    base-url: http://localhost:8081
+    http:
+      port: 8081
   discovery:
     etcd:
-      hosts: http://127.0.0.1:2379
+      hosts: http://192.168.99.100:2379
     ttl: 20
     ping-interval: 15
 ```
+
+Port 8081 is used because we want to run another microservice on default port, which discovers this service on port 8080.
 
 ### Build the microservice and run it
 
