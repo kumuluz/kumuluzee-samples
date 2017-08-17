@@ -18,6 +18,7 @@
         <module>kumuluzee-config-etcd</module>
         <module>kumuluzee-config-consul</module>
         <module>kumuluzee-logs</module>
+        <module>kumuluzee-logs-simple</module>
 		<module>kumuluzee-rest</module>
         <module>kumuluzee-security-keycloak</module>
         <module>kumuluzee-security-cdi-keycloak</module>
