@@ -57,7 +57,7 @@ The example uses maven to build and run the microservices.
     java -Djava.util.logging.config.file=<path>\kumuluzee-samples\kumuluzee-logs-simple\src\main\resources\logging.properties -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
     
-    and replace the <path> with appropriate directory path.
+    and replace the `<path>` with appropriate directory path.
     
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource - http://localhost:8080/v1/customers
