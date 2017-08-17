@@ -1,9 +1,10 @@
 # KumuluzEE simple logging sample
 
-> Build a REST service which utilizes the default logging implementation to log basic metrics and pack it as a 
-KumuluzEE microservice
+> Build a REST service which utilizes the default logging implementation by java.util.logging to log basic metrics and 
+pack it as a KumuluzEE microservice
 
-The objective of this sample is to demonstrate how to use the default logging implementation to log basic metrics.
+The objective of this sample is to demonstrate how to use the default logging implementation by java.util.logging to 
+log basic metrics.
 
 ## Requirements
 
@@ -48,13 +49,15 @@ The example uses maven to build and run the microservices.
 2. Run the sample:
 
     ```bash
-    $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
+    $ java -Djava.util.logging.config.file=**<path>**/kumuluzee-samples/kumuluzee-logs-simple/src/main/resources/logging.properties -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
     ```
     
     in Windows environment use the command
     ```batch
-    java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+    java -Djava.util.logging.config.file=**<path>**\kumuluzee-samples\kumuluzee-logs-simple\src\main\resources\logging.properties -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
+    
+    and replace the **<path>** with appropriate directory path.
     
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource - http://localhost:8080/v1/customers
@@ -69,6 +72,7 @@ We will follow these steps:
 * Complete the tutorial for [KumuluzEE JAX-RS REST sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs) or clone the existing sample
 * Add Maven dependencies
 * Add KumuluzEE Logs support
+* Configure java.util.logging configuration
 * Build the microservice
 * Run it
 
@@ -128,16 +132,4 @@ java.util.logging.ConsoleHandler.formatter=java.util.logging.SimpleFormatter
 
 ### Build the microservice and run it
 
-To build the microservice and run the example, use the commands as described in previous sections, but provide the 
-system property **-Djava.util.logging.config.file**. 
-
-For example:
-
-    ```bash
-    $ java -Djava.util.logging.config.file=/home/usr/kumuluzee-samples/kumuluzee-logs-simple/src/main/resources/logging.propertie -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
-    ```
-    
-    in Windows environment use the command
-    ```batch
-    java -Djava.util.logging.config.file=C:\user\kumuluzee-samples\kumuluzee-logs-simple\src\main\resources\logging.properties -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
-    ```
+To build the microservice and run the example, use the commands as described in previous sections.
