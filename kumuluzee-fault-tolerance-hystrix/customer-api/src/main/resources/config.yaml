@@ -1,0 +1,25 @@
+kumuluzee:
+  env: dev
+  config:
+    etcd:
+      hosts: http://localhost:2379
+orders-api:
+  path: http://localhost:8081/v1/orders
+fault-tolerance:
+  config:
+    watch-enabled: true
+    watch-properties: timeout.value,circuit-breaker.failure-ratio,bulkhead.value
+  orders:
+    bulkhead:
+      value: 5
+    http-find-order:
+      timeout:
+        value: 1000ms
+      circuit-breaker:
+        request-threshold: 10
+        failure-ratio: 0.3
+        delay: 3000ms
+        metrics:
+          rolling-window:
+            size: 5s
+            buckets: 5
