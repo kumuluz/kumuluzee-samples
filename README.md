@@ -48,7 +48,7 @@ KumuluzEE extensions:
 - KumuluzEE Config
 - KumuluzEE Config with etcd
 - KumuluzEE Config with Consul
-- KumuluzEE Fault Tolerance - Circuit Breaker with Hystrix
+- KumuluzEE Fault Tolerance with Hystrix
 - KumuluzEE Discovery with etcd
 - KumuluzEE Discovery with Consul
 - KumuluzEE Logs
