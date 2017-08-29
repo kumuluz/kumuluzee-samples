@@ -106,15 +106,15 @@ java.util.logging.ConsoleHandler.formatter=java.util.logging.SimpleFormatter
 ```
 
 To use this configuration instead of the default one provide system property `-Djava.util.logging.config.file` when 
-running the applicaiton:
+running the application:
 
 ```bash
-$ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
+$ java -Djava.util.logging.config.file=<path>/kumuluzee-samples/kumuluzee-logs-simple/src/main/resources/logging.properties -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
 ```
 
 in Windows environment use the command
 ```batch
-java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+java -Djava.util.logging.config.file=<path>\kumuluzee-samples\kumuluzee-logs-simple\src\main\resources\logging.properties -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
 ```
 
 and replace the `<path>` with appropriate directory path.
