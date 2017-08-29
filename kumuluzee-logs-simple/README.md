@@ -49,15 +49,13 @@ The example uses maven to build and run the microservices.
 2. Run the sample:
 
     ```bash
-    $ java -Djava.util.logging.config.file=<path>/kumuluzee-samples/kumuluzee-logs-simple/src/main/resources/logging.properties -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
+    $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
     ```
     
     in Windows environment use the command
     ```batch
-    java -Djava.util.logging.config.file=<path>\kumuluzee-samples\kumuluzee-logs-simple\src\main\resources\logging.properties -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+    java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
-    
-    and replace the `<path>` with appropriate directory path.
     
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource - http://localhost:8080/v1/customers
@@ -71,7 +69,6 @@ Therefore, first complete the existing JAX-RS sample tutorial, or clone the JAX-
 We will follow these steps:
 * Complete the tutorial for [KumuluzEE JAX-RS REST sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs) or clone the existing sample
 * Add Maven dependencies
-* Add KumuluzEE Logs support
 * Configure java.util.logging configuration
 * Build the microservice
 * Run it
@@ -88,28 +85,6 @@ Add the `kumuluzee-cdi-weld` dependency:
 </dependency>
 ```
 
-### Add KumuluzEE Logs support
-
-Enhance `CustomerResource` class by adding KumuluzEE Logs annotations:
-
-```java
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-@Path("customers")
-@Log(LogParams.METRICS)
-public class CustomerResource {
-
-    ...
-
-    @POST
-    @Log(value = LogParams.METRICS, methodCall = false)
-    public Response addNewCustomer(Customer customer) {
-        Database.addCustomer(customer);
-        return Response.noContent().build();
-    }
-}
-```
-
 ### Configure java.util.logging configuration
 
 The java.util.logging can be configured by changing the JRE logging configuration file located in 
@@ -120,15 +95,29 @@ In this sample in directory `resources` create file `logging.properties`:
 
 ```
 # Default global logging level
-.level=ALL
+.level=INFO
 
 # ConsoleHandler definition
 handlers=java.util.logging.ConsoleHandler
 
 # ConsoleHandler configuration settings
-java.util.logging.ConsoleHandler.level=ALL
+java.util.logging.ConsoleHandler.level=INFO
 java.util.logging.ConsoleHandler.formatter=java.util.logging.SimpleFormatter
 ```
+
+To use this configuration instead of the default one provide system property `-Djava.util.logging.config.file` when 
+running the applicaiton:
+
+```bash
+$ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
+```
+
+in Windows environment use the command
+```batch
+java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+```
+
+and replace the `<path>` with appropriate directory path.
 
 ### Build the microservice and run it
 

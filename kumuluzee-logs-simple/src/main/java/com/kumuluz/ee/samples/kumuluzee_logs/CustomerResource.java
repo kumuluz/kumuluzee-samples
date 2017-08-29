@@ -20,9 +20,6 @@
 */
 package com.kumuluz.ee.samples.kumuluzee_logs;
 
-import com.kumuluz.ee.logs.cdi.Log;
-import com.kumuluz.ee.logs.cdi.LogParams;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -35,7 +32,6 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("customers")
-@Log(LogParams.METRICS)
 public class CustomerResource {
 
     @GET
@@ -54,7 +50,6 @@ public class CustomerResource {
     }
 
     @POST
-    @Log(value = LogParams.METRICS, methodCall = false)
     public Response addNewCustomer(Customer customer) {
         Database.addCustomer(customer);
         return Response.noContent().build();
