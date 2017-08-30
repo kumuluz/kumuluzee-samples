@@ -1,8 +1,8 @@
-# KumuluzEE Logs sample
+# KumuluzEE Logs sample with Log4j2 implementation
 
-> Build a REST service which utilizes a built-in logging framework to log basic metrics and pack it as a KumuluzEE microservice
+> Build a REST service which utilizes a built-in logging framework with Log4j2 implementation to log basic metrics and pack it as a KumuluzEE microservice
 
-The objective of this sample is to demonstrate how to use the built-in logging framework to log basic metrics.
+The objective of this sample is to demonstrate how to use the built-in logging framework with Log4j2 implementation to log basic metrics.
 
 ## Requirements
 
@@ -40,7 +40,7 @@ The example uses maven to build and run the microservices.
 1. Build the sample using maven:
 
     ```bash
-    $ cd kumuluzee-logs
+    $ cd kumuluzee-logs-log4j2
     $ mvn clean package
     ```
 
