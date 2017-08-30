@@ -68,6 +68,7 @@ We will follow these steps:
 * Complete the tutorial for [KumuluzEE JAX-RS REST sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs) or clone the existing sample
 * Add Maven dependencies
 * Add KumuluzEE Logs support
+* Add log4j2 logging configuration
 * Build the microservice
 * Run it
 
