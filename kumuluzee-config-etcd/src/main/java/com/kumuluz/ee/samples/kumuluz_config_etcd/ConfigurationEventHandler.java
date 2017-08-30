@@ -43,7 +43,7 @@ public class ConfigurationEventHandler {
 
         ConfigurationUtil.getInstance().subscribe(watchedKey, (String key, String value) -> {
 
-            if (watchedKey == key) {
+            if (watchedKey.equals(key)) {
 
                 if ("true".equals(value.toLowerCase())) {
                     log.info("Maintenence mode enabled.");
