@@ -1,10 +1,10 @@
 # KumuluzEE simple logging sample
 
-> Build a REST service which utilizes the default logging implementation by java.util.logging to log basic metrics and 
-pack it as a KumuluzEE microservice
+> Build a REST service which utilizes the default logging implementation by java.util.logging to log basic information 
+and pack it as a KumuluzEE microservice
 
 The objective of this sample is to demonstrate how to use the default logging implementation by java.util.logging to 
-log basic metrics.
+log basic information. No additional dependencies are needed to enable simple logging.
 
 ## Requirements
 
@@ -68,28 +68,14 @@ Therefore, first complete the existing JAX-RS sample tutorial, or clone the JAX-
 
 We will follow these steps:
 * Complete the tutorial for [KumuluzEE JAX-RS REST sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs) or clone the existing sample
-* Add Maven dependencies
 * Configure java.util.logging configuration
 * Build the microservice
 * Run it
 
-### Add Maven dependencies
-
-Since your existing starting point is the existing KumuluzEE JAX-RS REST sample, you should already have the dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` configured in `pom.xml`.
-
-Add the `kumuluzee-cdi-weld` dependency:
-```xml
-<dependency>
-    <groupId>com.kumuluz.ee</groupId>
-    <artifactId>kumuluzee-cdi-weld</artifactId>
-</dependency>
-```
-
 ### Configure java.util.logging configuration
 
-The java.util.logging can be configured by changing the JRE logging configuration file located in 
-`JRE_DIRECTORY/lib/logging.properties` or by providing the location of the custom configuration file with system 
-property `-Djava.util.logging.config.file`.
+The default java.util.logging configuration can be configured by providing the location of the custom configuration 
+file with system property `-Djava.util.logging.config.file`.
 
 In this sample in directory `resources` create file `logging.properties`: 
 
