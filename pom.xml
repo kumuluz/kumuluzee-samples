@@ -8,28 +8,9 @@
     <artifactId>kumuluzee-samples</artifactId>
     <version>2.4.0-SNAPSHOT</version>
     <modules>
-        <module>bean-validation</module>
-        <module>jax-rs</module>
-        <module>jax-ws</module>
-        <module>jpa</module>
-        <module>jsp</module>
-        <module>jsf</module>
-        <module>kumuluzee-config</module>
-        <module>kumuluzee-config-etcd</module>
-        <module>kumuluzee-config-consul</module>
-        <module>kumuluzee-logs</module>
+        <module>kumuluzee-logs-jul</module>
+        <module>kumuluzee-logs-log4j2</module>
         <module>kumuluzee-logs-simple</module>
-		<module>kumuluzee-rest</module>
-        <module>kumuluzee-security-keycloak</module>
-        <module>kumuluzee-security-cdi-keycloak</module>
-        <module>microservices-simple</module>
-        <module>servlet</module>
-        <module>websocket</module>
-        <module>kumuluzee-discovery-etcd</module>
-        <module>kumuluzee-discovery-consul</module>
-        <module>kumuluzee-fault-tolerance-hystrix</module>
-        <module>https</module>
-        <module>kumuluzee-streaming-kafka</module>
     </modules>
     <packaging>pom</packaging>
 

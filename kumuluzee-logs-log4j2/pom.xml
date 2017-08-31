@@ -9,10 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>kumuluzee-logs</artifactId>
+    <artifactId>kumuluzee-logs-log4j2</artifactId>
 
-    <name>KumuluzEE Logs sample</name>
-    <description>KumuluzEE Logs usage sample with KumuluzEE</description>
+    <name>KumuluzEE Logs JUL sample</name>
+    <description>KumuluzEE Logs JUL usage sample with KumuluzEE</description>
 
     <dependencyManagement>
         <dependencies>

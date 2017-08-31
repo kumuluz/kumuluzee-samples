@@ -100,7 +100,7 @@ $ java -Djava.util.logging.config.file=<path>/kumuluzee-samples/kumuluzee-logs-s
 
 in Windows environment use the command
 ```batch
-java -Djava.util.logging.config.file=<path>\kumuluzee-samples\kumuluzee-logs-simple\src\main\resources\logging.properties -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+java -Djava.util.logging.config.file=<path>/kumuluzee-samples/kumuluzee-logs-simple/src/main/resources/logging.properties -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
 ```
 
 and replace the `<path>` with appropriate directory path.

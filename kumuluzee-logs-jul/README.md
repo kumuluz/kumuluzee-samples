@@ -1,8 +1,8 @@
-# KumuluzEE Logs sample
+# KumuluzEE Logs sample with JUL implementation
 
-> Build a REST service which utilizes a built-in logging framework to log basic metrics and pack it as a KumuluzEE microservice
+> Build a REST service which utilizes a built-in logging framework with JUL implementation to log basic metrics and pack it as a KumuluzEE microservice
 
-The objective of this sample is to demonstrate how to use the built-in logging framework to log basic metrics.
+The objective of this sample is to demonstrate how to use the built-in logging framework with JUL implementation to log basic metrics.
 
 ## Requirements
 
@@ -40,7 +40,7 @@ The example uses maven to build and run the microservices.
 1. Build the sample using maven:
 
     ```bash
-    $ cd kumuluzee-logs
+    $ cd kumuluzee-logs-jul
     $ mvn clean package
     ```
 
@@ -66,8 +66,9 @@ Therefore, first complete the existing JAX-RS sample tutorial, or clone the JAX-
 
 We will follow these steps:
 * Complete the tutorial for [KumuluzEE JAX-RS REST sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs) or clone the existing sample
-* Add Maven dependency
+* Add Maven dependencies
 * Add KumuluzEE Logs support
+* Add JUL logging configuration
 * Build the microservice
 * Run it
 
@@ -75,11 +76,15 @@ We will follow these steps:
 
 Since your existing starting point is the existing KumuluzEE JAX-RS REST sample, you should already have the dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` configured in `pom.xml`.
 
-Add the `kumuluzee-logs-log4j2` dependency:
+Add the `kumuluzee-cdi-weld` and `kumuluzee-logs-jul` dependencies:
 ```xml
 <dependency>
+    <groupId>com.kumuluz.ee</groupId>
+    <artifactId>kumuluzee-cdi-weld</artifactId>
+</dependency>
+<dependency>
     <groupId>com.kumuluz.ee.logs</groupId>
-    <artifactId>kumuluzee-logs-log4j2</artifactId>
+    <artifactId>kumuluzee-logs-jul</artifactId>
     <version>1.3.0-SNAPSHOT</version>
 </dependency>
 ```
@@ -106,31 +111,39 @@ public class CustomerResource {
 }
 ```
 
-### Add log4j2 logging configuration
+### Add JUL logging configuration
 
-In the directory `resources` create the file `log4j2.xml`: 
+The java.util.logging can be configured by changing the JRE logging configuration file located in 
+`JRE_DIRECTORY/lib/logging.properties` or by providing the location of the custom configuration file with system 
+property `-Djava.util.logging.config.file`.
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<Configuration name="customers">
-    <Appenders>
-        <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
-        </Console>
-    </Appenders>
-    <Loggers>
-        <!-- Resources (REST) -->
-        <Logger name="com.kumuluz.ee.samples.kumuluzee_logs.CustomerResource" level="trace" additivity="false">
-            <AppenderRef ref="console"/>
-        </Logger>
+In the directory `resources` create the file `logging.properties`: 
 
-        <!-- Default logger -->
-        <Root level="info">
-            <AppenderRef ref="console"/>
-        </Root>
-    </Loggers>
-</Configuration>
 ```
+# Default global logging level
+.level=FINER
+
+# ConsoleHandler definition
+handlers=java.util.logging.ConsoleHandler
+
+# ConsoleHandler configuration settings
+java.util.logging.ConsoleHandler.level=FINER
+java.util.logging.ConsoleHandler.formatter=java.util.logging.SimpleFormatter
+```
+
+To use this configuration instead of the default one provide system property `-Djava.util.logging.config.file` when 
+running the application:
+
+```bash
+$ java -Djava.util.logging.config.file=<path>/kumuluzee-samples/kumuluzee-logs-jul/src/main/resources/logging.properties -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
+```
+
+in Windows environment use the command
+```batch
+java -Djava.util.logging.config.file=<path>/kumuluzee-samples/kumuluzee-logs-jul/src/main/resources/logging.properties -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+```
+
+and replace the `<path>` with appropriate directory path.
 
 ### Build the microservice and run it
 
