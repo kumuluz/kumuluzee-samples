@@ -85,7 +85,7 @@ Add the `kumuluzee-cdi-weld` and `kumuluzee-logs-jul` dependencies:
 <dependency>
     <groupId>com.kumuluz.ee.logs</groupId>
     <artifactId>kumuluzee-logs-jul</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>${kumuluz-logs.version}</version>
 </dependency>
 ```
 
