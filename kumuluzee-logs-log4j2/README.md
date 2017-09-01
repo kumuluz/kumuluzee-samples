@@ -66,7 +66,7 @@ Therefore, first complete the existing JAX-RS sample tutorial, or clone the JAX-
 
 We will follow these steps:
 * Complete the tutorial for [KumuluzEE JAX-RS REST sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs) or clone the existing sample
-* Add Maven dependencies
+* Add Maven dependency
 * Add KumuluzEE Logs support
 * Add log4j2 logging configuration
 * Build the microservice
@@ -76,12 +76,8 @@ We will follow these steps:
 
 Since your existing starting point is the existing KumuluzEE JAX-RS REST sample, you should already have the dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` configured in `pom.xml`.
 
-Add the `kumuluzee-cdi-weld` and `kumuluzee-logs-log4j2` dependencies:
+Add the `kumuluzee-logs-log4j2` dependency:
 ```xml
-<dependency>
-    <groupId>com.kumuluz.ee</groupId>
-    <artifactId>kumuluzee-cdi-weld</artifactId>
-</dependency>
 <dependency>
     <groupId>com.kumuluz.ee.logs</groupId>
     <artifactId>kumuluzee-logs-log4j2</artifactId>

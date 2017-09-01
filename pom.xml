@@ -8,9 +8,29 @@
     <artifactId>kumuluzee-samples</artifactId>
     <version>2.4.0-SNAPSHOT</version>
     <modules>
+        <module>bean-validation</module>
+        <module>https</module>
+        <module>jax-rs</module>
+        <module>jax-ws</module>
+        <module>jpa</module>
+        <module>jsf</module>
+        <module>jsp</module>
+        <module>kumuluzee-config</module>
+        <module>kumuluzee-config-consul</module>
+        <module>kumuluzee-config-etcd</module>
+        <module>kumuluzee-discovery-consul</module>
+        <module>kumuluzee-discovery-etcd</module>
+        <module>kumuluzee-fault-tolerance-hystrix</module>
         <module>kumuluzee-logs-jul</module>
         <module>kumuluzee-logs-log4j2</module>
         <module>kumuluzee-logs-simple</module>
+        <module>kumuluzee-rest</module>
+        <module>kumuluzee-security-cdi-keycloak</module>
+        <module>kumuluzee-security-keycloak</module>
+        <module>kumuluzee-streaming-kafka</module>
+        <module>microservices-simple</module>
+        <module>servlet</module>
+        <module>websocket</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -56,8 +76,12 @@
             <id>sonatype-snapshots</id>
             <name>Sonatype Snapshots</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases><enabled>false</enabled></releases>
-            <snapshots><enabled>true</enabled></snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
 

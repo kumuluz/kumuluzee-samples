@@ -21,13 +21,14 @@
 
 package com.kumuluz.ee.samples.kafka.consumer;
 
-import com.kumuluz.ee.logs.LogManager;
-import com.kumuluz.ee.logs.Logger;
+
 import com.kumuluz.ee.streaming.common.annotations.StreamListener;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+
 import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author Matija Kljun
@@ -35,21 +36,22 @@ import java.util.List;
 @ApplicationScoped
 public class TestConsumer {
 
-    private static final Logger log = LogManager.getLogger(TestConsumer.class.getName());
+    private static final Logger log = Logger.getLogger(TestConsumer.class.getName());
 
     private List<String> messages = new ArrayList<>();
 
     @StreamListener(topics = {"test"})
     public void onMessage(ConsumerRecord<String, String> record) {
 
-        log.info(String.format("Consumed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value()));
+        log.info(String.format("Consumed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key()
+                , record.value()));
 
         messages.add(record.value());
     }
 
     public List<String> getLastFiveMessages() {
-        if(messages.size() < 5)
+        if (messages.size() < 5)
             return messages;
-        return messages.subList(messages.size()-5, messages.size());
+        return messages.subList(messages.size() - 5, messages.size());
     }
 }
