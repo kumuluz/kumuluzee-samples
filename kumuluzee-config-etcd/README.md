@@ -42,10 +42,10 @@ production environments, but only for developing purposes. Here is an example on
 with docker:
 
    ```bash
-    $ docker run -d --net=host \
+    $ docker run -d -p 2379:2379 \
         --name etcd \
         --volume=/tmp/etcd-data:/etcd-data \
-        quay.io/coreos/etcd:v3.1.7 \
+        quay.io/coreos/etcd:latest \
         /usr/local/bin/etcd \
         --name my-etcd-1 \
         --data-dir /etcd-data \
@@ -56,7 +56,8 @@ with docker:
         --initial-cluster my-etcd-1=http://0.0.0.0:2380 \
         --initial-cluster-token my-etcd-token \
         --initial-cluster-state new \
-        --auto-compaction-retention 1
+        --auto-compaction-retention 1 \
+        -cors="*"
    ```
 
 
