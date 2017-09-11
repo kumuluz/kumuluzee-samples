@@ -47,12 +47,12 @@ The example uses maven to build and run the microservices.
 * Uber-jar:
 
     ```bash
-        $ java -jar target/${project.build.finalName}.jar.jar
+    $ java -jar target/${project.build.finalName}.jar.jar
     ```
     
     in Windows environemnt use the command
     ```batch
-        java -jar target/${project.build.finalName}.jar.jar
+    java -jar target/${project.build.finalName}.jar.jar
     ```
 
 * Exploded:
