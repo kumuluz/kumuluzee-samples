@@ -56,6 +56,7 @@ KumuluzEE extensions:
 - KumuluzEE Security with Keycloak for REST services
 - KumuluzEE Security with Keycloak for CDI
 - KumuluzEE Event Streaming with Kafka
+- KumuluzEE Cors
 
 ## Requirements
 

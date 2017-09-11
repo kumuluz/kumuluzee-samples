@@ -55,15 +55,28 @@ The example uses maven to build and run the microservice.
 2. Start local Consul instance:
 
 3. Run the sample:
+* Uber-jar:
+
+    ```bash
+        $ java -jar target/${project.build.finalName}.jar.jar
+    ```
+    
+    in Windows environemnt use the command
+    ```batch
+        java -jar target/${project.build.finalName}.jar.jar
+    ```
+
+* Exploded:
 
     ```bash
     $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
     ```
-
+    
     in Windows environment use the command
     ```batch
-    $ java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+    java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
+    
     
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource - http://localhost:8081/v1/customers

@@ -1,0 +1,6 @@
+kumuluzee:
+  cors-filter:
+    annotations:
+      customer-servlet:
+        allow-origin: "http://origin2.kumuluz.com"
+        allow-subdomains: false

@@ -51,6 +51,18 @@ The example uses maven to build and run the microservices.
     ```
 
 2. Run the sample:
+* Uber-jar:
+
+    ```bash
+        $ java -jar target/${project.build.finalName}.jar.jar
+    ```
+    
+    in Windows environemnt use the command
+    ```batch
+        java -jar target/${project.build.finalName}.jar.jar
+    ```
+
+* Exploded:
 
     ```bash
     $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
@@ -60,6 +72,7 @@ The example uses maven to build and run the microservices.
     ```batch
     java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
+    
     
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource page - http://localhost:8080/v1/customers

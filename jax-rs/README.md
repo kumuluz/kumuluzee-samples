@@ -46,15 +46,28 @@ The example uses maven to build and run the microservice.
     ```
 
 2. Run the sample:
+* Uber-jar:
+
+    ```bash
+        $ java -jar target/${project.build.finalName}.jar.jar
+    ```
+    
+    in Windows environemnt use the command
+    ```batch
+        java -jar target/${project.build.finalName}.jar.jar
+    ```
+
+* Exploded:
 
     ```bash
     $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
     ```
-
+    
     in Windows environment use the command
     ```batch
     java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
+    
     
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource - http://localhost:8080/v1/customers
@@ -114,27 +127,51 @@ Add the `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey
 
 Alternatively, we could add the `kumuluzee-microProfile-1.0`, which adds the MicroProfile 1.0 dependencies (JAX-RS, CDI, JSON-P, and Servlet).
 
-Add the `maven-dependency-plugin` build plugin to copy all the necessary dependencies into target folder:
+Add the `kumuluzee-maven-plugin` build plugin to package microservice as uber-jar:
 
 ```xml
 <build>
     <plugins>
         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <version>2.10</version>
-            <executions>
-                <execution>
-                    <id>copy-dependencies</id>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>copy-dependencies</goal>
-                    </goals>
-                    <configuration>
-                        <includeScope>runtime</includeScope>
-                    </configuration>
-                </execution>
-            </executions>
+            <plugin>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-maven-plugin</artifactId>
+                <version>${kumuluzee.version}</version>
+                <executions>
+                    <execution>
+                        <id>package</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugin>
+    </plugins>
+</build>
+```
+
+or exploded:
+
+Add the `kumuluzee-maven-plugin` build plugin to package microservice as exploded:
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <plugin>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-maven-plugin</artifactId>
+                <version>${kumuluzee.version}</version>
+                <executions>
+                    <execution>
+                        <id>package</id>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugin>
     </plugins>
 </build>
