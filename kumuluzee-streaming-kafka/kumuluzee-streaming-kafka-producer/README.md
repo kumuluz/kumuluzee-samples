@@ -75,12 +75,12 @@ The example uses Docker to set up the Kafka and Zookeeper instances and maven to
 * Uber-jar:
 
     ```bash
-    $ java -jar target/${project.build.finalName}.jar.jar
+    $ java -jar target/${project.build.finalName}.jar
     ```
     
     in Windows environemnt use the command
     ```batch
-    java -jar target/${project.build.finalName}.jar.jar
+    java -jar target/${project.build.finalName}.jar
     ```
 
 * Exploded:
