@@ -1,4 +1,4 @@
 kumuluzee:
   discovery:
     etcd:
-      hosts: http://192.168.99.100:2379
+      hosts: http://localhost:2379
