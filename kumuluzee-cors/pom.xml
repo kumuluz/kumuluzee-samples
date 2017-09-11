@@ -76,7 +76,7 @@
                     <execution>
                         <id>package</id>
                         <goals>
-                            <goal>copy-dependencies</goal>
+                            <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>

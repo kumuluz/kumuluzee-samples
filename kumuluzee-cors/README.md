@@ -136,6 +136,32 @@ Add the `kumuluzee-cors` dependency:
 </dependency>
 ```
 
+Add the `kumuluzee-maven-plugin` build plugin to package microservice as uber-jar:
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <plugin>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-maven-plugin</artifactId>
+                <version>${kumuluzee.version}</version>
+                <executions>
+                    <execution>
+                        <id>package</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugin>
+    </plugins>
+</build>
+```
+
+or exploded:
+
 Add the `kumuluzee-maven-plugin` build plugin to package microservice as exploded:
 
 ```xml
