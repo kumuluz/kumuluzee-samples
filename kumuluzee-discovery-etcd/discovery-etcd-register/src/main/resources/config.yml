@@ -9,6 +9,6 @@ kumuluzee:
       port: 8081
   discovery:
     etcd:
-      hosts: http://192.168.99.100:2379
+      hosts: http://localhost:2379
     ttl: 20
     ping-interval: 15
