@@ -76,6 +76,21 @@ The example uses Maven to build and run the microservices.
 
 2. Run the sample customer-api:
 
+- Uber-jar:
+
+    ```bash
+    $ export PORT=8080
+    $ java -jar customer-api/target/${project.build.finalName}.jar
+    ```
+
+    in Windows environment use the command
+    ```
+    set PORT=8080
+    java -cp customer-api/target/${project.build.finalName}.jar
+    ```
+
+- Exploded:
+
     ```bash
     $ export PORT=8080
     $ java -cp customer-api/target/classes:customer-api/target/dependency/* com.kumuluz.ee.EeApplication
@@ -88,6 +103,21 @@ The example uses Maven to build and run the microservices.
     ```
     
 2. Run the sample order-api in separate terminal:
+
+- Uber-jar:
+
+    ```bash
+    $ export PORT=8081
+    $ java -jar order-api/target/${project.build.finalName}.jar
+    ```
+
+    in Windows environment use the command
+    ```
+    set PORT=8081
+    java -cp order-api/target/${project.build.finalName}.jar
+    ```
+
+- Exploded:
 
     ```bash
     $ export PORT=8081
