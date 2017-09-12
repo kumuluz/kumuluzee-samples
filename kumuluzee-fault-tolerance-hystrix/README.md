@@ -86,7 +86,7 @@ The example uses Maven to build and run the microservices.
     in Windows environment use the command
     ```
     set PORT=8080
-    java -cp customer-api/target/${project.build.finalName}.jar
+    java -jar customer-api/target/${project.build.finalName}.jar
     ```
 
 - Exploded:
@@ -114,7 +114,7 @@ The example uses Maven to build and run the microservices.
     in Windows environment use the command
     ```
     set PORT=8081
-    java -cp order-api/target/${project.build.finalName}.jar
+    java -jar order-api/target/${project.build.finalName}.jar
     ```
 
 - Exploded:
