@@ -100,6 +100,52 @@ Add the `kumuluz-el-uel` and `kumuluzee-bean-validation-hibernate-validator` dep
 </dependency>
 ```
 
+Add the `kumuluzee-maven-plugin` build plugin to package microservice as uber-jar:
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-maven-plugin</artifactId>
+            <version>${kumuluzee.version}</version>
+            <executions>
+                <execution>
+                    <id>package</id>
+                    <goals>
+                        <goal>repackage</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+```
+
+or exploded:
+
+Add the `kumuluzee-maven-plugin` build plugin to package microservice as exploded:
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-maven-plugin</artifactId>
+            <version>${kumuluzee.version}</version>
+            <executions>
+                <execution>
+                    <id>package</id>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+```
+
 ### Add bean validation annotations
 
 Add bean validation annotations, such as `@NotNull`, `@Size`, `@Min` ... to the `Customer` class.

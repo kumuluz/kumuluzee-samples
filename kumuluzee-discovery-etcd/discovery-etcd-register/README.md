@@ -135,6 +135,51 @@ Add the `kumuluzee-discovery-etcd` dependency to the sample:
     </dependency>
 </dependencies>
 ```
+Add the `kumuluzee-maven-plugin` build plugin to package microservice as uber-jar:
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-maven-plugin</artifactId>
+            <version>${kumuluzee.version}</version>
+            <executions>
+                <execution>
+                    <id>package</id>
+                    <goals>
+                        <goal>repackage</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+```
+
+or exploded:
+
+Add the `kumuluzee-maven-plugin` build plugin to package microservice as exploded:
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-maven-plugin</artifactId>
+            <version>${kumuluzee.version}</version>
+            <executions>
+                <execution>
+                    <id>package</id>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+```
 
 ### Annotate JAX-RS Application
 

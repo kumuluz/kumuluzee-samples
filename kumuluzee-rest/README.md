@@ -106,6 +106,52 @@ Add the `kumuluzee-rest-core` dependency:
 </dependency>
 ```
 
+Add the `kumuluzee-maven-plugin` build plugin to package microservice as uber-jar:
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-maven-plugin</artifactId>
+            <version>${kumuluzee.version}</version>
+            <executions>
+                <execution>
+                    <id>package</id>
+                    <goals>
+                        <goal>repackage</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+```
+
+or exploded:
+
+Add the `kumuluzee-maven-plugin` build plugin to package microservice as exploded:
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-maven-plugin</artifactId>
+            <version>${kumuluzee.version}</version>
+            <executions>
+                <execution>
+                    <id>package</id>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+```
+
 ### Extend REST Service with parsing the query parameters from the URI
 
 First you will need to extend the existing CustomerResource with URI context information. The URI can be obtained by adding UriInfo context to selected Resource:
