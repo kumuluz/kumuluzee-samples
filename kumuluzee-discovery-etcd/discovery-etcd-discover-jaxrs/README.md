@@ -167,19 +167,17 @@ Add the `kumuluzee-maven-plugin` build plugin to package microservice as uber-ja
 <build>
     <plugins>
         <plugin>
-            <plugin>
-                <groupId>com.kumuluz.ee</groupId>
-                <artifactId>kumuluzee-maven-plugin</artifactId>
-                <version>${kumuluzee.version}</version>
-                <executions>
-                    <execution>
-                        <id>package</id>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-maven-plugin</artifactId>
+            <version>${kumuluzee.version}</version>
+            <executions>
+                <execution>
+                    <id>package</id>
+                    <goals>
+                        <goal>repackage</goal>
+                    </goals>
+                </execution>
+            </executions>
         </plugin>
     </plugins>
 </build>
@@ -193,19 +191,17 @@ Add the `kumuluzee-maven-plugin` build plugin to package microservice as explode
 <build>
     <plugins>
         <plugin>
-            <plugin>
-                <groupId>com.kumuluz.ee</groupId>
-                <artifactId>kumuluzee-maven-plugin</artifactId>
-                <version>${kumuluzee.version}</version>
-                <executions>
-                    <execution>
-                        <id>package</id>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-maven-plugin</artifactId>
+            <version>${kumuluzee.version}</version>
+            <executions>
+                <execution>
+                    <id>package</id>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                </execution>
+            </executions>
         </plugin>
     </plugins>
 </build>
