@@ -3,5 +3,5 @@
 kumuluzee:
   server:
     enable-ssl: true
-    keystore-path: C:\projects\kumuluzee-samples\https\src\main\resources\keystore.jks
+    keystore-path: keystore.jks
     keystore-password: changeit
