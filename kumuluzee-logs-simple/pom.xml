@@ -11,7 +11,7 @@
 
     <artifactId>kumuluzee-logs-simple</artifactId>
 
-    <name>KumuluzEE simple logging sample</name>
+    <name>KumuluzEE Simple Logging sample</name>
     <description>KumuluzEE simple logging usage sample</description>
 
     <dependencyManagement>

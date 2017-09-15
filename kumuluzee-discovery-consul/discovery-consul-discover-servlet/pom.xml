@@ -11,7 +11,7 @@
 
     <artifactId>discovery-consul-discover-servlet</artifactId>
 
-    <name>KumuluzEE Discovery servlet sample</name>
+    <name>KumuluzEE Consul Discovery servlet sample</name>
     <description>Discover service with KumuluzEE servlet service</description>
 
     <dependencyManagement>

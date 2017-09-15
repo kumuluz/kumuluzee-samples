@@ -12,7 +12,7 @@
     <artifactId>kumuluzee-discovery-etcd</artifactId>
     <packaging>pom</packaging>
 
-    <name>KumuluzEE Discovery samples</name>
+    <name>KumuluzEE ETCD Discovery samples</name>
     <description>Samples for service discovery with KumuluzEE</description>
 
     <modules>

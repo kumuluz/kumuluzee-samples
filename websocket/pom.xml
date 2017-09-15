@@ -11,7 +11,7 @@
 
     <artifactId>websocket</artifactId>
 
-    <name>KumuluzEE websocket sample</name>
+    <name>KumuluzEE Websocket sample</name>
     <description>Websocket usage sample with KumuluzEE</description>
 
     <dependencyManagement>

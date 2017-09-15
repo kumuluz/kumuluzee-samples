@@ -11,7 +11,7 @@
 
     <artifactId>servlet</artifactId>
 
-    <name>KumuluzEE servlet sample</name>
+    <name>KumuluzEE Servlet sample</name>
     <description>Servlet usage sample with KumuluzEE</description>
 
     <dependencyManagement>

@@ -12,7 +12,7 @@
     <artifactId>kumuluzee-discovery-consul</artifactId>
     <packaging>pom</packaging>
 
-    <name>KumuluzEE Discovery samples</name>
+    <name>KumuluzEE Consul Discovery samples</name>
     <description>Samples for service discovery with KumuluzEE</description>
 
     <modules>

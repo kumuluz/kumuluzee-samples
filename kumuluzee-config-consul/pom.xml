@@ -11,7 +11,7 @@
 
     <artifactId>kumuluzee-config-consul</artifactId>
 
-    <name>KumuluzEE Config sample</name>
+    <name>KumuluzEE Config Consul sample</name>
     <description>KumuluzEE Config extensions usage sample with KumuluzEE and Consul</description>
 
     <properties>

@@ -11,7 +11,7 @@
 
     <artifactId>bean-validation</artifactId>
 
-    <name>KumuluzEE bean validation sample</name>
+    <name>KumuluzEE Bean Validation sample</name>
     <description>Bean validation usage sample with KumuluzEE</description>
 
     <dependencyManagement>

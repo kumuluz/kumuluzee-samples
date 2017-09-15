@@ -2,6 +2,8 @@
 
 kumuluzee:
   server:
-    enable-ssl: true
-    keystore-path: keystore.jks
-    keystore-password: changeit
+    https:
+      enabled: true
+      keystore-path: \<path_to_project\>/src/main/resources/keystore.jks
+      keystore-password: changeit
+      key-password: changeit

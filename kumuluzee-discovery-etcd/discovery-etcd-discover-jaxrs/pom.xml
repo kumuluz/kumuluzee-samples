@@ -11,7 +11,7 @@
 
     <artifactId>discovery-etcd-discover-jaxrs</artifactId>
 
-    <name>KumuluzEE Discovery JAX-RS sample</name>
+    <name>KumuluzEE ETCD Discovery JAX-RS sample</name>
     <description>Discover service with KumuluzEE JAX-RS service</description>
 
     <dependencyManagement>

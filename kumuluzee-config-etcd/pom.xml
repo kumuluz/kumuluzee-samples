@@ -11,7 +11,7 @@
 
     <artifactId>kumuluzee-config-etcd</artifactId>
 
-    <name>KumuluzEE Config sample</name>
+    <name>KumuluzEE Config ETCD sample</name>
     <description>KumuluzEE Config extensions usage sample with KumuluzEE and etcd</description>
 
     <properties>
