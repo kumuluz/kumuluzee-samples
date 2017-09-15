@@ -94,3 +94,90 @@ The application/service can be accessed on the following URL:
     - https://localhost:\<ssl_port\>/v1/customers
 
 To shut down the example simply stop the processes in the foreground.
+
+##Tutorial
+
+We will follow these steps:
+* Add maven dependencies
+* Implement microservice
+* Build
+* Run microservice
+
+### Add maven dependencies
+
+To implement microservice add the following dependencies
+```xml
+  <dependencies>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-servlet-jetty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-jax-rs-jersey</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+    </dependencies>
+ ```
+ 
+ Add the `kumuluzee-maven-plugin` build plugin to package microservice as uber-jar:
+ 
+ ```xml
+ <build>
+     <plugins>
+         <plugin>
+             <groupId>com.kumuluz.ee</groupId>
+             <artifactId>kumuluzee-maven-plugin</artifactId>
+             <version>${kumuluzee.version}</version>
+             <executions>
+                 <execution>
+                     <id>package</id>
+                     <goals>
+                         <goal>repackage</goal>
+                     </goals>
+                 </execution>
+             </executions>
+         </plugin>
+     </plugins>
+ </build>
+ ```
+ 
+ or exploded:
+ 
+ ```xml
+ <build>
+     <plugins>
+         <plugin>
+             <groupId>com.kumuluz.ee</groupId>
+             <artifactId>kumuluzee-maven-plugin</artifactId>
+             <version>${kumuluzee.version}</version>
+             <executions>
+                 <execution>
+                     <id>package</id>
+                     <goals>
+                         <goal>copy-dependencies</goal>
+                     </goals>
+                 </execution>
+             </executions>
+         </plugin>
+     </plugins>
+ </build>
+ ```
+ 
+ ### Build the microservice and run it
+ 
+ To build the microservice and run the example, use the commands as described in previous sections.

@@ -189,6 +189,7 @@ If you would like to collect Kafka related logs through the KumuluzEE Logs, you 
     <version>2.8.1</version>
 </dependency>
 ```
+
 Add the `kumuluzee-maven-plugin` build plugin to package microservice as uber-jar:
 
 ```xml
@@ -212,8 +213,6 @@ Add the `kumuluzee-maven-plugin` build plugin to package microservice as uber-ja
 ```
 
 or exploded:
-
-Add the `kumuluzee-maven-plugin` build plugin to package microservice as exploded:
 
 ```xml
 <build>

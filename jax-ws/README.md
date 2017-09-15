@@ -144,8 +144,6 @@ Add the `kumuluzee-maven-plugin` build plugin to package microservice as uber-ja
 
 or exploded:
 
-Add the `kumuluzee-maven-plugin` build plugin to package microservice as exploded:
-
 ```xml
 <build>
     <plugins>
