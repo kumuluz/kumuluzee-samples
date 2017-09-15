@@ -34,17 +34,24 @@ In order to run this example you will need the following:
 ## Prerequisites
 
 In order to run this sample you will have to set the following configuration parameters:
-- __kumuluzee.server.keystore-path__: \<path_to_project\>/src/main/resources/keystore.jks
-- __kumuluzee.server.keystore-password__: changeit
-- __kumuluzee.server.enable-ssl__: true
-
-If you wish to force SSL, you have to set the following configuration parameter:
-- __kumuluzee.server.force-ssl__: true
-
-__NOTE__: this is the preferred setting when in production
+- __kumuluzee.server.https.keystore-path__: \<path_to_project\>/src/main/resources/keystore.jks
+- __kumuluzee.server.https.keystore-password__: changeit
+- __kumuluzee.server.https.key-password__: changeit
+- __kumuluzee.server.https.enabled__: true
 
 The default HTTPS port is 8443. To specify a different port use:
-- __kumuluzee.server.ssl-port__: \<ssl_port\>
+- __kumuluzee.server.https.ssl-port__: \<ssl_port\>
+
+Other TLS/SSL configuration properties:
+- __kumuluzee.server.https.http2__: true
+- __kumuluzee.server.https.key-aliase__: test
+- __kumuluzee.server.https.ssl_protocols__: TLSv1.1,TLSv1.2
+- __kumuluzee.server.https.ssl-ciphers__: > 
+        TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,
+        TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
+        TLS_DHE_RSA_WITH_AES_128_CBC_SHA256
+
+More details [KumuluzEE TLS/SSL support](https://github.com/kumuluz/kumuluzee/wiki/TLS-SSL-support).
 
 ## Usage
 

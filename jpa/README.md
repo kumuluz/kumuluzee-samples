@@ -218,42 +218,20 @@ public class CustomerService {
         return customers;
     }
 
+    @Transactional
     public void saveCustomer(Customer customer) {
-        try {
-            beginTx();
+        if (customer != null) {
             em.persist(customer);
-            commitTx();
-        } catch (Exception e) {
-            rollbackTx();
         }
+
     }
 
+    @Transactional(Transactional.TxType.REQUIRED)
     public void deleteCustomer(String customerId) {
         Customer customer = em.find(Customer.class, customerId);
         if (customer != null) {
-            try {
-                beginTx();
-                em.remove(customer);
-                commitTx();
-            } catch (Exception e) {
-                rollbackTx();
-            }
+            em.remove(customer);
         }
-    }
-
-    private void beginTx() {
-        if (!em.getTransaction().isActive())
-            em.getTransaction().begin();
-    }
-
-    private void commitTx() {
-        if (em.getTransaction().isActive())
-            em.getTransaction().commit();
-    }
-
-    private void rollbackTx() {
-        if (em.getTransaction().isActive())
-            em.getTransaction().rollback();
     }
 }
 ```
@@ -302,7 +280,6 @@ public class CustomerResource {
 }
 ```
 
-
 ### Configure CDI
 
 Create the directory `resources/META-INF`. In this directory create the file `beans.xml` with the following content to enable CDI:
@@ -328,9 +305,9 @@ In the directory `resources/META-INF` create the file `persistence.xml`:
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
-    <persistence-unit name="kumuluzee-samples-jpa" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="kumuluzee-samples-jpa" transaction-type="JTA">
 
-        <non-jta-data-source>jdbc/CustomersDS</non-jta-data-source>
+        <jta-data-source>jdbc/CustomersDS</jta-data-source>
 
         <class>com.kumuluz.ee.samples.jpa.Customer</class>
 
