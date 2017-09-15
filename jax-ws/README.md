@@ -66,8 +66,6 @@ The example uses maven to build and run the microservices.
     java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
     
-    ```
-    
 The application/service can be accessed on the following URL:
 * JAX-WS SOAP endpoint - http://localhost:8080/CustomerEndpoint
 * JAX-WS SOAP WSDL - http://localhost:8080/CustomerEndpoint?WSDL
