@@ -95,7 +95,7 @@ The application/service can be accessed on the following URL:
 
 To shut down the example simply stop the processes in the foreground.
 
-##Tutorial
+## Tutorial
 
 We will follow these steps:
 * Add maven dependencies
