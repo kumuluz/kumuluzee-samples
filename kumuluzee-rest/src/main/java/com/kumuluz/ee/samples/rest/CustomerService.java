@@ -26,6 +26,7 @@ import com.kumuluz.ee.rest.utils.JPAUtils;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -53,42 +54,19 @@ public class CustomerService {
         return count;
     }
 
+    @Transactional
     public void saveCustomer(Customer customer) {
-        try {
-            beginTx();
+        if (customer != null) {
             em.persist(customer);
-            commitTx();
-        } catch (Exception e) {
-            rollbackTx();
         }
     }
 
+    @Transactional
     public void deleteCustomer(String customerId) {
         Customer customer = em.find(Customer.class, customerId);
         if (customer != null) {
-            try {
-                beginTx();
-                em.remove(customer);
-                commitTx();
-            } catch (Exception e) {
-                rollbackTx();
-            }
+            em.remove(customer);
         }
-    }
-
-    private void beginTx() {
-        if (!em.getTransaction().isActive())
-            em.getTransaction().begin();
-    }
-
-    private void commitTx() {
-        if (em.getTransaction().isActive())
-            em.getTransaction().commit();
-    }
-
-    private void rollbackTx() {
-        if (em.getTransaction().isActive())
-            em.getTransaction().rollback();
     }
 
 }
