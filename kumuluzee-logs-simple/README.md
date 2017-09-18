@@ -152,7 +152,7 @@ or exploded:
 
 ### Configure java.util.logging configuration
 
-The default java.util.logging configuration can be configured by providing the location of the custom configuration 
+The default java.util.logging configuration can be overridden by providing the location of the custom configuration 
 file with system property `-Djava.util.logging.config.file`.
 
 In this sample in directory `resources` create file `logging.properties`: 
