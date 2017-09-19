@@ -24,6 +24,7 @@
         <module>kumuluzee-logs-jul</module>
         <module>kumuluzee-logs-log4j2</module>
         <module>kumuluzee-logs-simple</module>
+        <module>kumuluzee-metrics</module>
         <module>kumuluzee-rest</module>
         <module>kumuluzee-security-cdi-keycloak</module>
         <module>kumuluzee-security-keycloak</module>
