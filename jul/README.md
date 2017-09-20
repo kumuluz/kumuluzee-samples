@@ -1,4 +1,4 @@
-# KumuluzEE simple logging sample
+# KumuluzEE JUL sample
 
 > Build a REST service which utilizes the default logging implementation by java.util.logging to log basic information 
 and pack it as a KumuluzEE microservice
@@ -37,12 +37,12 @@ This sample does not contain any prerequisites and can be started on its own.
 
 ## Usage
 
-The example uses maven to build and run the microservices.
+The example uses maven to build and run the microservice.
 
 1. Build the sample using maven:
 
     ```bash
-    $ cd kumuluzee-logs-simple
+    $ cd jul
     $ mvn clean package
     ```
 
@@ -84,71 +84,6 @@ We will follow these steps:
 * Configure java.util.logging configuration
 * Build the microservice
 * Run it
-
-### Add maven dependencies
-
-The following dependencies are required for implementation:
-
-```xml
-    <dependencies>
-        <dependency>
-            <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-servlet-jetty</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-jax-rs-jersey</artifactId>
-        </dependency>
-    </dependencies>
-```
-
-Add the `kumuluzee-maven-plugin` build plugin to package microservice as uber-jar:
-
-```xml
-<build>
-    <plugins>
-        <plugin>
-            <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-maven-plugin</artifactId>
-            <version>${kumuluzee.version}</version>
-            <executions>
-                <execution>
-                    <id>package</id>
-                    <goals>
-                        <goal>repackage</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
-</build>
-```
-
-or exploded:
-
-```xml
-<build>
-    <plugins>
-        <plugin>
-            <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-maven-plugin</artifactId>
-            <version>${kumuluzee.version}</version>
-            <executions>
-                <execution>
-                    <id>package</id>
-                    <goals>
-                        <goal>copy-dependencies</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
-</build>
-```
 
 ### Configure java.util.logging configuration
 

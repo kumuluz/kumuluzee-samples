@@ -15,6 +15,7 @@
         <module>jpa</module>
         <module>jsf</module>
         <module>jsp</module>
+        <module>jul</module>
         <module>kumuluzee-config</module>
         <module>kumuluzee-config-consul</module>
         <module>kumuluzee-config-etcd</module>
@@ -23,7 +24,6 @@
         <module>kumuluzee-fault-tolerance-hystrix</module>
         <module>kumuluzee-logs-jul</module>
         <module>kumuluzee-logs-log4j2</module>
-        <module>kumuluzee-logs-simple</module>
         <module>kumuluzee-metrics</module>
         <module>kumuluzee-rest</module>
         <module>kumuluzee-security-cdi-keycloak</module>
