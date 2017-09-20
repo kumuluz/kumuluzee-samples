@@ -1,6 +1,6 @@
 kumuluzee:
   name: metrics-sample
-  version: 0.0.12
+  version: 1.0.0
   env:
     name: dev
   discovery:

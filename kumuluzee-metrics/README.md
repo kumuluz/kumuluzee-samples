@@ -195,7 +195,7 @@ Here is a sample config file that sets a few service parameters:
 ```yaml
 kumuluzee:
   name: metrics-sample
-  version: 0.0.1
+  version: 1.0.0
 ```
 
 You can also change the name of a default registry, by setting the `kumuluzee.metrics.genericregistryname` parameter. 
@@ -239,7 +239,7 @@ Here is an example output:
     "environment" : "dev",
     "name" : "metrics-sample",
     "version" : "0.0.7",
-    "instance" : "instance1",
+    "instance" : "da13c65e-8357-44a5-ba25-466868cd205c",
     "availableRegistries" : [ "jvm", "default", "registry3" ]
   },
   "registries" : {
@@ -319,8 +319,8 @@ A reporter for automatically reporting metrics to the log using KumuluzEE Logs c
 </dependency>
 ```
 
-You can set it up in the config file, by enabling it (kumuluzee.metrics.logs.enabled) and defining the logging level (kumuluzee.metrics.logstash.level) and the time period 
-(kumuluzee.metrics.logstash.period-s).
+You can set it up in the config file, by enabling it (`kumuluzee.metrics.logs.enabled`) and defining the logging level (`kumuluzee.metrics.logstash.level`) and the time period 
+(`kumuluzee.metrics.logstash.period-s`).
 
 ### Configure Logstash reporter
 
@@ -334,9 +334,9 @@ A reporter for automatically reporting metrics to Logstash can be configured. Le
 </dependency>
 ```
 
-You can set it up in the config file, by enabling it (kumuluzee.metrics.logstash.enabled) and defining the address 
-(kumuluzee.metrics.logstash.address), the port (kumuluzee.metrics.logstash.port) and the time period 
-(kumuluzee.metrics.logstash.period-s).
+You can set it up in the config file, by enabling it (`kumuluzee.metrics.logstash.enabled`) and defining the address 
+(`kumuluzee.metrics.logstash.address`), the port (`kumuluzee.metrics.logstash.port`) and the time period 
+(`kumuluzee.metrics.logstash.period-s`).
 
 ### Build the microservice and run it
 
