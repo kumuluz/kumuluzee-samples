@@ -88,7 +88,7 @@ We will follow these steps:
 sample
 * Add Maven dependencies
 * Add metrics collectors (counters, meters, timers,...)
-* Add a config file
+* Add configuration
 * Add Web Application Instrumentation
 * Add JVM instrumentation
 * Configure a servlet
@@ -187,10 +187,10 @@ public class CustomerResource {
 }
 ```
 
-### Add a config file
+### Add configuration
 
-Most of the metrics components can be configured in the configuration file. 
-Here is a sample config file that sets a few service parameters:
+Most of the metrics components can be configured though configuration. 
+Here is a sample config that sets a few service parameters:
 
 ```yaml
 kumuluzee:
@@ -205,7 +205,7 @@ The default name is `default`.
 
 Let's add the web instrumentation, that monitors requests and responses at a certain url. We will define two endpoints;
 one monitoring `/metrics` endpoint and one monitoring `/prometheus` endpoint. We can do that by simply adding the 
-following lines to theconfig file:
+following lines to the config:
 
 ```yaml
 kumuluzee:
@@ -220,16 +220,16 @@ kumuluzee:
 
 ### Add JVM instrumentation
 
-The module includes a lot of monitroing tools collecting JVM metrics that can be enabled in the config file. 
-You can enable/disable JVM monitoring by setting the `kumuluzee.metrics.jvm.enabled` parameter, which is set to `true` 
-by default. You can also change the name of the registry that JVM metrics are grouped under by setting the `kumuluzee
+The module includes monitroing tools collecting JVM metrics that can be enabled in the config. 
+You can enable/disable JVM monitoring by setting the `kumuluzee.metrics.jvm.enabled` parameter, which is set to `true` by default. 
+You can also change the name of the registry that JVM metrics are grouped under by setting the `kumuluzee
 .metrics.jvm.registry` parameter.
 
 ### Configure a servlet
 
 It's time to look at the metrics we collected. The servlet for exporting metrics is already built in and enabled by 
 default, so the metrics can be seen at http://localhost:8080/metrics. The servlet can also be disabled or remapped in
-the config file by setting the `kumuluzee.metrics.servlet.enabled` and `kumuluzee.metrics.servlet.mapping` respectively.
+the config by setting the `kumuluzee.metrics.servlet.enabled` and `kumuluzee.metrics.servlet.mapping` respectively.
 
 Here is an example output:
 ```json
@@ -285,7 +285,7 @@ The reporter can export metrics in the Prometheus format. First add a dependency
 </dependency>
 ```
 
-The servlet can be disabled or remapped in the config file by setting the `kumuluzee.metrics.prometheus.enabled` and 
+The servlet can be disabled or remapped in the configuration by setting the `kumuluzee.metrics.prometheus.enabled` and 
 `kumuluzee.metrics.prometheus.mapping` respectively.
 
 Prometheus has to be configured to collect the exported metrics.
@@ -301,7 +301,7 @@ A reporter for Graphite can be configured. We first add a dependency:
 </dependency>
 ```
 
-You can set it up in the config file, by enabling it (`kumuluzee.metrics.graphite.enabled`) and defining its address 
+You can set it up in the configuration, by enabling it (`kumuluzee.metrics.graphite.enabled`) and defining its address 
 (`kumuluzee.metrics.graphite.address`), the time period (`kumuluzee.metrics.graphite.periods`) and whether or not you 
 want to use the [pickle protocol](http://graphite.readthedocs.io/en/latest/feeding-carbon.html#the-pickle-protocol) 
 (`kumuluzee.metrics.graphite.pickle`). You can also define graphite port (`kumuluzee.metrics.graphite.port`), otherwise 
@@ -319,7 +319,7 @@ A reporter for automatically reporting metrics to the log using KumuluzEE Logs c
 </dependency>
 ```
 
-You can set it up in the config file, by enabling it (`kumuluzee.metrics.logs.enabled`) and defining the logging level (`kumuluzee.metrics.logstash.level`) and the time period 
+You can set it up in the configuration by enabling it (`kumuluzee.metrics.logs.enabled`) and defining the logging level (`kumuluzee.metrics.logstash.level`) and the time period 
 (`kumuluzee.metrics.logstash.period-s`).
 
 ### Configure Logstash reporter
@@ -334,7 +334,7 @@ A reporter for automatically reporting metrics to Logstash can be configured. Le
 </dependency>
 ```
 
-You can set it up in the config file, by enabling it (`kumuluzee.metrics.logstash.enabled`) and defining the address 
+You can set it up in the configuration by enabling it (`kumuluzee.metrics.logstash.enabled`) and defining the address 
 (`kumuluzee.metrics.logstash.address`), the port (`kumuluzee.metrics.logstash.port`) and the time period 
 (`kumuluzee.metrics.logstash.period-s`).
 
