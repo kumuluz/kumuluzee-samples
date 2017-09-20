@@ -201,7 +201,7 @@ kumuluzee:
 You can also change the name of a default registry, by setting the `kumuluzee.metrics.genericregistryname` parameter. 
 The default name is `default`.
 
-### Add Web Application Instrumentation
+### Add web application instrumentation
 
 Let's add the web instrumentation, that monitors requests and responses at a certain url. We will define two endpoints;
 one monitoring `/metrics` endpoint and one monitoring `/prometheus` endpoint. We can do that by simply adding the 
@@ -274,9 +274,25 @@ Here is an example output:
 }
 ```
 
-### Configure Graphite
+### Configure Prometheus reporter
 
-A reporter for Graphite also comes included. We first add a dependency:
+The reporter can export metrics in the Prometheus format. First add a dependency:
+```xml
+<dependency>
+    <groupId>com.kumuluz.ee.metrics</groupId>
+    <artifactId>kumuluzee-metrics-prometheus</artifactId>
+    <version>${kumuluzee-metrics.version}</version>
+</dependency>
+```
+
+The servlet can be disabled or remapped in the config file by setting the `kumuluzee.metrics.prometheus.enabled` and 
+`kumuluzee.metrics.prometheus.mapping` respectively.
+
+Prometheus has to be configured to collect the exported metrics.
+
+### Configure Graphite reporter
+
+A reporter for Graphite can be configured. We first add a dependency:
 ```xml
 <dependency>
     <groupId>com.kumuluz.ee.metrics</groupId>
@@ -291,25 +307,24 @@ want to use the [pickle protocol](http://graphite.readthedocs.io/en/latest/feedi
 (`kumuluzee.metrics.graphite.pickle`). You can also define graphite port (`kumuluzee.metrics.graphite.port`), otherwise 
 the port will be set to `2003` or `2004` if `pickle` is set to true.
 
-### Configure Prometheus
+### Configure KumuluzEE Logs
 
-The module can also export metrics in the Prometheus format. First add a dependency:
+A reporter for automatically reporting metrics to the log using KumuluzEE Logs can be configured. Lets first add a dependency:
+
 ```xml
 <dependency>
     <groupId>com.kumuluz.ee.metrics</groupId>
-    <artifactId>kumuluzee-metrics-prometheus</artifactId>
+    <artifactId>kumuluzee-metrics-logs</artifactId>
     <version>${kumuluzee-metrics.version}</version>
 </dependency>
 ```
 
-The servlet can be disabled or remapped in the config file by setting the `kumuluzee.metrics.prometheus.enabled` and 
-`kumuluzee.metrics.prometheus.mapping` respectively.
+You can set it up in the config file, by enabling it (kumuluzee.metrics.logs.enabled) and defining the logging level (kumuluzee.metrics.logstash.level) and the time period 
+(kumuluzee.metrics.logstash.period-s).
 
-Prometheus has to be configured to collect the exported metrics.
+### Configure Logstash reporter
 
-### Configure Logstash
-
-The module also includes a Logstash reporter. Lets first add a dependency:
+A reporter for automatically reporting metrics to Logstash can be configured. Lets first add a dependency:
 
 ```xml
 <dependency>
@@ -321,21 +336,6 @@ The module also includes a Logstash reporter. Lets first add a dependency:
 
 You can set it up in the config file, by enabling it (kumuluzee.metrics.logstash.enabled) and defining the address 
 (kumuluzee.metrics.logstash.address), the port (kumuluzee.metrics.logstash.port) and the time period 
-(kumuluzee.metrics.logstash.period-s).
-
-### Configure Logs
-
-The module also includes a Logs reporter. Lets first add a dependency:
-
-```xml
-<dependency>
-    <groupId>com.kumuluz.ee.metrics</groupId>
-    <artifactId>kumuluzee-metrics-logs</artifactId>
-    <version>${kumuluzee-metrics.version}</version>
-</dependency>
-```
-
-You can set it up in the config file, by enabling it (kumuluzee.metrics.logs.enabled) and defining the logging level (kumuluzee.metrics.logstash.level) and the time period 
 (kumuluzee.metrics.logstash.period-s).
 
 ### Build the microservice and run it
