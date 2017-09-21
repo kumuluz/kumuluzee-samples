@@ -1,0 +1,137 @@
+# KumuluzEE Health sample
+
+> Build a REST service which utilizes a built-in health framework to expose a health check and pack it as a KumuluzEE 
+microservice
+
+The objective of this sample is to demonstrate how to use the built-in health framework to expose basic health check.
+
+## Requirements
+
+In order to run this example you will need the following:
+
+1. Java 8 (or newer), you can use any implementation:
+    * If you have installed Java, you can check the version by typing the following in a command line:
+        
+        ```
+        java -version
+        ```
+
+2. Maven 3.2.1 (or newer):
+    * If you have installed Maven, you can check the version by typing the following in a command line:
+        
+        ```
+        mvn -version
+        ```
+3. Git:
+    * If you have installed Git, you can check the version by typing the following in a command line:
+    
+        ```
+        git --version
+        ```
+    
+
+
+## Prerequisites
+
+In order to run this sample you will have to setup a local PostgreSQL database:
+- __database host__: localhost:5432
+- __database name__: customers
+- __user__: postgres
+- __password__: postgres
+
+The required tables will be created automatically upon running the sample.
+
+## Usage
+
+The example uses maven to build and run the microservices.
+
+1. Build the sample using maven:
+
+    ```bash
+    $ cd kumuluzee-health-sample
+    $ mvn clean package
+    ```
+
+2. Run the sample:
+
+    ```bash
+    $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
+    ```
+    
+    in Windows environment use the command
+    ```batch
+    java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+    ```
+    
+The application/service can be accessed on the following URL:
+* JAX-RS REST resource - http://localhost:8080/v1/customers
+* Health servlet - http://localhost:8080/health
+
+To shut down the example simply stop the processes in the foreground.
+
+## Tutorial
+This tutorial will guide you through the steps required to use KumuluzEE Health and pack the application as a KumuluzEE 
+microservice. We will extend the existing [KumuluzEE JPA and CDI sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jpa). 
+Therefore, first complete the existing KumuluzEE JPA and CDI sample tutorial, or clone the KumuluzEE JPA and CDI sample code.
+
+We will follow these steps:
+* Complete the tutorial for [KumuluzEE JPA and CDI sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jpa) or clone the existing sample
+* Add Maven dependencies
+* Add Health configuration
+* Build the microservice
+* Run it
+
+### Add Maven dependencies
+
+Since your existing starting point is the existing KumuluzEE JPA and CDI sample, you should already have the dependencies 
+for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluzee-jax-rs-jersey`, `kumuluzee-cdi-weld`, 
+`kumuluzee-jpa-eclipselink` and `org.postgresql` configured `pom.xml`.
+
+Add the `kumuluzee-health` dependency:
+```xml
+<dependency>
+    <groupId>com.kumuluz.ee.health</groupId>
+    <artifactId>kumuluzee-health</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+</dependency>
+```
+
+### Add Health configuration
+
+For registering disk space and postgres data source health checks replace config.yaml file content with the folowing 
+content:
+```yaml
+kumuluzee:
+  datasources:
+    - jndi-name: jdbc/CustomersDS
+      connection-url: jdbc:postgresql://localhost:5432/customers
+      username: postgres
+      password: postgres
+      max-pool-size: 20
+  health:
+    servlet:
+      mapping: /health
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/CustomersDS
+      disk-space-health-check:
+        threshold: 100000000
+```
+
+### Build the microservice and run it
+
+To build the microservice and run the example, use the commands as described in previous sections.
+
+The json output (http://localhost:8080/health) should look similar to the one bellow:
+```json
+{
+  "outcome" : "UP",
+  "checks" : [ {
+    "id" : "DataSourceHealthCheck",
+    "result" : "UP"
+  }, {
+    "id" : "DiskSpaceHealthCheck",
+    "result" : "UP"
+  } ]
+}
+```

@@ -21,7 +21,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <kumuluzee-metrics.version>1.0.0-SNAPSHOT</kumuluzee-metrics.version>
-        <kumuluzee-logs.version>1.3.0</kumuluzee-logs.version>
     </properties>
 
     <dependencyManagement>

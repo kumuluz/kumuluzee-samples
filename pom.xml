@@ -33,6 +33,7 @@
         <module>servlet</module>
         <module>websocket</module>
         <module>kumuluzee-cors</module>
+        <module>kumuluzee-health</module>
     </modules>
     <packaging>pom</packaging>
 

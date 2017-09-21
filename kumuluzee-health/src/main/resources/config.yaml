@@ -1,0 +1,21 @@
+kumuluzee:
+  debug: true
+  datasources:
+    - jndi-name: jdbc/CustomersDS
+      connection-url: jdbc:postgresql://localhost:5432/customers
+      username: postgres
+      password: postgres
+      max-pool-size: 20
+  health:
+    servlet:
+      mapping: /health
+      enabled: false
+    logs:
+      enabled: true
+      level: ERROR
+      period-s: 5
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/CustomersDS
+      disk-space-health-check:
+        threshold: 100000000
