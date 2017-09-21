@@ -191,11 +191,14 @@ The json output (http://localhost:8080/health) should look similar to the one be
 {
   "outcome" : "UP",
   "checks" : [ {
-    "id" : "DataSourceHealthCheck",
-    "result" : "UP"
+    "name" : "DiskSpaceHealthCheck",
+    "state" : "UP"
   }, {
-    "id" : "DiskSpaceHealthCheck",
-    "result" : "UP"
+    "name" : "DataSourceHealthCheck",
+    "state" : "UP"
+  }, {
+    "name" : "GithubHealthCheckBean",
+    "state" : "UP"
   } ]
 }
 ```
