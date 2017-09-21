@@ -130,7 +130,7 @@ dependencies:
     <dependency>
         <groupId>com.kumuluz.ee.config</groupId>
         <artifactId>kumuluzee-config-mp</artifactId>
-        <version>1.1</version>
+        <version>1.1.0</version>
     </dependency>
 </dependencies>
 ```

@@ -17,6 +17,7 @@
         <module>jsp</module>
         <module>jul</module>
         <module>kumuluzee-config</module>
+        <module>kumuluzee-config-mp</module>
         <module>kumuluzee-config-consul</module>
         <module>kumuluzee-config-etcd</module>
         <module>kumuluzee-discovery-consul</module>
@@ -34,7 +35,6 @@
         <module>websocket</module>
         <module>kumuluzee-cors</module>
         <module>kumuluzee-health</module>
-        <module>kumuluzee-microProfile-config</module>
     </modules>
     <packaging>pom</packaging>
 
