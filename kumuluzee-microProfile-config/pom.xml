@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>kumuluzee-microProfile-config</artifactId>
+    <artifactId>kumuluzee-config-mp</artifactId>
 
     <name>KumuluzEE MicroProfile Config sample</name>
     <description>MicroProfile Config usage sample with KumuluzEE</description>
