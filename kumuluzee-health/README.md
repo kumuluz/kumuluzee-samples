@@ -3,7 +3,7 @@
 > Build a REST service which utilizes a built-in health framework to expose a health check and pack it as a KumuluzEE 
 microservice
 
-The objective of this sample is to demonstrate how to use the built-in health framework to expose basic health check.
+The objective of this sample is to demonstrate how to use the built-in health framework to expose basic health checks.
 
 ## Requirements
 
@@ -48,11 +48,23 @@ The example uses maven to build and run the microservices.
 1. Build the sample using maven:
 
     ```bash
-    $ cd kumuluzee-health-sample
+    $ cd kumuluzee-health
     $ mvn clean package
     ```
 
 2. Run the sample:
+* Uber-jar:
+
+    ```bash
+    $ java -jar target/${project.build.finalName}.jar
+    ```
+    
+    in Windows environemnt use the command
+    ```batch
+    java -jar target/${project.build.finalName}.jar
+    ```
+
+* Exploded:
 
     ```bash
     $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
@@ -77,6 +89,7 @@ Therefore, first complete the existing KumuluzEE JPA and CDI sample tutorial, or
 We will follow these steps:
 * Complete the tutorial for [KumuluzEE JPA and CDI sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jpa) or clone the existing sample
 * Add Maven dependencies
+* Implement Health Check Bean
 * Add Health configuration
 * Build the microservice
 * Run it
@@ -96,10 +109,56 @@ Add the `kumuluzee-health` dependency:
 </dependency>
 ```
 
+### Implement Health Check Bean
+
+Implement a class which implements `HealthCheck` and is annotated with `@Health` and `@ApplicationScoped`. The bean 
+should contain a method call() which executes health check. The bean will be registered to the HealthRegistry 
+automatically and called either by accessing health servlet or by periodic health checks which are logged to the logs.
+
+Sample implementation of such a class:
+
+```java
+import org.eclipse.microprofile.health.Health;
+import org.eclipse.microprofile.health.HealthCheck;
+import org.eclipse.microprofile.health.HealthCheckResponse;
+
+import javax.enterprise.context.ApplicationScoped;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.logging.Logger;
+
+@Health
+@ApplicationScoped
+public class GithubHealthCheckBean implements HealthCheck {
+
+    private static final String url = "https://github.com/kumuluz/kumuluzee";
+
+    private static final Logger LOG = Logger.getLogger(GithubHealthCheckBean.class.getSimpleName());
+
+    @Override
+    public HealthCheckResponse call() {
+        try {
+
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("HEAD");
+
+            if (connection.getResponseCode() == 200) {
+                return HealthCheckResponse.named(GithubHealthCheckBean.class.getSimpleName()).up().build();
+            }
+        } catch (Exception exception) {
+            LOG.severe(exception.getMessage());
+        }
+        return HealthCheckResponse.named(GithubHealthCheckBean.class.getSimpleName()).down().build();
+    }
+}
+```
+
 ### Add Health configuration
 
-For registering disk space and postgres data source health checks replace config.yaml file content with the folowing 
+For registering built in disk space and postgres data source health checks replace config.yaml file content with the 
+following 
 content:
+
 ```yaml
 kumuluzee:
   datasources:
@@ -111,6 +170,11 @@ kumuluzee:
   health:
     servlet:
       mapping: /health
+      enabled: true
+    logs:
+      enabled: true
+      level: INFO
+      period-s: 30
     checks:
       data-source-health-check:
         jndi-name: jdbc/CustomersDS
