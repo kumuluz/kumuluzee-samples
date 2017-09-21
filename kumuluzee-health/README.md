@@ -88,13 +88,13 @@ Therefore, first complete the existing KumuluzEE JPA and CDI sample tutorial, or
 
 We will follow these steps:
 * Complete the tutorial for [KumuluzEE JPA and CDI sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jpa) or clone the existing sample
-* Add Maven dependencies
+* Add Maven dependency
 * Implement Health Check Bean
 * Add Health configuration
 * Build the microservice
 * Run it
 
-### Add Maven dependencies
+### Add Maven dependency
 
 Since your existing starting point is the existing KumuluzEE JPA and CDI sample, you should already have the dependencies 
 for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluzee-jax-rs-jersey`, `kumuluzee-cdi-weld`, 
@@ -105,7 +105,7 @@ Add the `kumuluzee-health` dependency:
 <dependency>
     <groupId>com.kumuluz.ee.health</groupId>
     <artifactId>kumuluzee-health</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>${kumuluz-health.version}</version>
 </dependency>
 ```
 
