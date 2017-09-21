@@ -309,7 +309,7 @@ the port will be set to `2003` or `2004` if `pickle` is set to true.
 
 ### Configure KumuluzEE Logs
 
-A reporter for automatically reporting metrics to the log using KumuluzEE Logs can be configured. Lets first add a dependency:
+A reporter for automatically reporting metrics to the log can be configured. Lets first add a dependency:
 
 ```xml
 <dependency>
