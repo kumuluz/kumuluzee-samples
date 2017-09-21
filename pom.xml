@@ -34,6 +34,7 @@
         <module>websocket</module>
         <module>kumuluzee-cors</module>
         <module>kumuluzee-health</module>
+        <module>kumuluzee-microProfile-config</module>
     </modules>
     <packaging>pom</packaging>
 
