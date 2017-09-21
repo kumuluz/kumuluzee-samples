@@ -79,11 +79,6 @@
             <artifactId>kumuluzee-metrics-logs</artifactId>
             <version>${kumuluzee-metrics.version}</version>
         </dependency>
-        <dependency>
-            <artifactId>kumuluzee-logs-log4j2</artifactId>
-            <groupId>com.kumuluz.ee.logs</groupId>
-            <version>${kumuluzee-logs.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>com.kumuluz.ee.discovery</groupId>
