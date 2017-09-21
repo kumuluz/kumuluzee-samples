@@ -1,5 +1,4 @@
 kumuluzee:
-  debug: true
   datasources:
     - jndi-name: jdbc/CustomersDS
       connection-url: jdbc:postgresql://localhost:5432/customers
@@ -9,11 +8,11 @@ kumuluzee:
   health:
     servlet:
       mapping: /health
-      enabled: false
+      enabled: true
     logs:
       enabled: true
-      level: ERROR
-      period-s: 5
+      level: INFO
+      period-s: 30
     checks:
       data-source-health-check:
         jndi-name: jdbc/CustomersDS
