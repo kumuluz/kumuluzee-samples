@@ -1,13 +1,14 @@
 # KumuluzEE MicroProfile Config sample
 
-> Build a Servlet which utilizes the KumuluzEE MicroProfile configuration to access configuration values through 
+> Build a JAX-RS service which utilizes the KumuluzEE MicroProfile configuration to access configuration values through 
 MicroProfile Config API and pack it as a KumuluzEE microservice
 
 The objective of this sample is to show how to develop a microservice that uses the MicroProfile Config API to
-access configuration values. In this sample we develop a simple Servlet that returns
+access configuration values. In this sample we develop a simple JAX-RS service that returns
 a list of configuration properties from configuration file and pack it as KumuluzEE microservice. This tutorial will 
 guide you through all the necessary steps. You will first add KumuluzEE dependencies into pom.xml. You will then
-implement a Servlet, which will expose some configuration values. Required knowledge: basic familiarity with Servlet.
+implement a JAX-RS Resource, which will expose some configuration values. Required knowledge: basic familiarity with
+JAX-RS 2.
 
 ## Requirements
 
@@ -45,7 +46,7 @@ The example uses maven to build and run the microservice.
 1. Build the sample using maven:
 
     ```bash
-    $ cd kumuluzee-microProfile-config
+    $ cd kumuluzee-config-mp
     $ mvn clean package
     ```
 
@@ -74,22 +75,22 @@ The example uses maven to build and run the microservice.
     
     
 The application/service can be accessed on the following URL:
-* Servlet - http://localhost:8080/configServlet
+* JAX-RS Resource - http://localhost:8080/v1/config
 
 To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
 
-This tutorial will guide you through the steps required to create a simple Servlet that exposes configuration 
+This tutorial will guide you through the steps required to create a simple JAX-RS service that exposes configuration 
 properties retrieved with the MicroProfile Config API and pack it as a KumuluzEE microservice. We will develop a 
-simple Servlet:
-* GET http://localhost:8080/configServlet - list of configuration properties from configuration file 
+simple JAX-RS Resource:
+* GET http://localhost:8080/v1/config - list of configuration properties from configuration file 
 
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
-* Add Maven dependencies to KumuluzEE and include KumuluzEE components (Core, Servlet, CDI and MicroProfile Config)
+* Add Maven dependencies to KumuluzEE and include KumuluzEE components (Core, Servlet, CDI, JAX-RS and MicroProfile Config)
 * Define our configuration properties in configuration file
-* Implement the Servlet
+* Implement the JAX-RS service
 * Add a custom Converter
 * Build the microservice
 * Run it
@@ -111,8 +112,8 @@ Add the KumuluzEE BOM module dependency to your `pom.xml` file:
 </dependencyManagement>
 ```
 
-Add the `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluzee-cdi-weld` and `kumuluzee-config-mp`
-dependencies:
+Add the `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluzee-cdi-weld`, `kumuluzee-jax-rs-jersey` and
+`kumuluzee-config-mp` dependencies:
 ```xml
 <dependencies>
     <dependency>
@@ -126,6 +127,10 @@ dependencies:
     <dependency>
         <groupId>com.kumuluz.ee</groupId>
         <artifactId>kumuluzee-cdi-weld</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.kumuluz.ee</groupId>
+        <artifactId>kumuluzee-jax-rs-jersey</artifactId>
     </dependency>
     <dependency>
         <groupId>com.kumuluz.ee.config</groupId>
@@ -192,52 +197,63 @@ mp.exampleBoolean = true
 mp.exampleCustomer = John:Doe
 ```
 
-### Implement the Servlet
+### Implement the JAX-RS service
 
-Implement the Servlet, which will read the configuration values through various mechanisms, offered by the MicroProfile
-Config API.
+Register your module as JAX-RS service and define the application path. You could do that in web.xml or for example 
+with the `@ApplicationPath` annotation:
 
 ```java
-@WebServlet(urlPatterns = {"/configServlet"})
+@ApplicationPath("/v1")
+public class ConfigApplication extends Application {
+}
+```
+
+Implement the JAX-RS Resource, which will read the configuration values through various mechanisms, offered by the
+MicroProfile Config API.
+
+```java
 @RequestScoped
-public class ConfigServlet extends HttpServlet {
+@Produces(MediaType.TEXT_PLAIN)
+@Path("config")
+public class ConfigResource {
 
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @GET
+    public Response testConfig() {
+        StringBuilder response = new StringBuilder();
 
-        response.setContentType("text/html");
-        PrintWriter res = response.getWriter();
+
+
+        return Response.ok(response.toString()).build();
     }
 }
 ```
 
 Configuration values can be accessed through the `Config` object. You can get the `Config` object programmatically.
-To do so, add the following lines to the `doGet` method:
+To do so, add the following lines to the `testConfig` method:
 
 ```java
 Config config = ConfigProvider.getConfig();
-res.println(config.getValue("mp.exampleString", String.class));
+response.append(config.getValue("mp.exampleString", String.class)).append('\n');
 ```
 
-The `Config` object can also be acquired with CDI injection. Add the following lines to your Servlet implementation:
+The `Config` object can also be acquired with CDI injection. Add the following lines to your Resource implementation:
 
 ```java
 @Inject
 private Config injectedConfig;
 ```
 
-To use the injected `Config` object, add the following line to the `doGet` method:
+To use the injected `Config` object, add the following line to the `testConfig` method:
 
 ```java
-res.println(injectedConfig.getValue("mp.exampleBoolean", boolean.class));
+response.append(injectedConfig.getValue("mp.exampleBoolean", boolean.class)).append('\n');
 ```
 
 You can also use the `@ConfigProperty` annotation to inject configuration values directly.
 Injection is supported for all types, listed in MicroProfile Config specification.
 Annotation also supports the `defaultValue` parameter, which is used, when configuration property in not present.
 If `defaultValue` is not specified and configuration property is not present, injection will throw
-`DeploymentException`. Add the following lines to your Servlet implementation:
+`DeploymentException`. Add the following lines to your Resource implementation:
 
 ```java
 @Inject
@@ -249,15 +265,15 @@ private String injectedString;
 private String nonExistentString;
 ```
 
-To output the injected values, add the following lines to the `doGet` method:
+To output the injected values, add the following lines to the `testConfig` method:
 
 ```java
-res.println(injectedString);
-res.println(nonExistentString);
+response.append(injectedString).append('\n');
+response.append(nonExistentString).append('\n');
 ```
 
 Alternatively to `defaultValue` parameter, you can inject configuration values as an `Optional` object. Add the
-following lines to your Servlet implementation:
+following lines to your Resource implementation:
 
 ```java
 @Inject
@@ -265,10 +281,10 @@ following lines to your Servlet implementation:
 private Optional<String> nonExistentStringOpt;
 ```
 
-To output the injected value, add the following line to the `doGet` method:
+To output the injected value, add the following line to the `testConfig` method:
 
 ```java
-res.println(nonExistentStringOpt.orElse("Empty Optional"));
+response.append(nonExistentStringOpt.orElse("Empty Optional")).append('\n');
 ```
 
 ### Add custom Converter
@@ -343,17 +359,17 @@ In order for Converter to be discovered, you need to register it in the
 com.kumuluz.ee.samples.converters.CustomerConverter
 ```
 
-Inject a `Customer` instance in your Servlet implementation:
+Inject a `Customer` instance in your Resource implementation:
 ```java
 @Inject
 @ConfigProperty(name = "mp.exampleCustomer")
 private Customer customer;
 ```
 
-To output the injected `Customer`, add the following line to the `doGet` method:
+To output the injected `Customer`, add the following line to the `testConfig` method:
 
 ```java
-res.println(customer);
+response.append(customer).append('\n');
 ```
 
 ### Build the microservice and run it

@@ -27,24 +27,22 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Optional;
-
 
 /**
  * @author Urban Malc
  * @author Jan Meznarič
  * @since 2.5.0
  */
-@WebServlet(urlPatterns = {"/configServlet"})
 @RequestScoped
-public class ConfigServlet extends HttpServlet {
+@Produces(MediaType.TEXT_PLAIN)
+@Path("config")
+public class ConfigResource {
 
     @Inject
     private Config injectedConfig;
@@ -65,23 +63,22 @@ public class ConfigServlet extends HttpServlet {
     @ConfigProperty(name = "mp.exampleCustomer")
     private Customer customer;
 
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        response.setContentType("text/html");
-        PrintWriter res = response.getWriter();
+    @GET
+    public Response testConfig() {
+        StringBuilder response = new StringBuilder();
 
         Config config = ConfigProvider.getConfig();
-        res.println(config.getValue("mp.exampleString", String.class));
+        response.append(config.getValue("mp.exampleString", String.class)).append('\n');
 
-        res.println(injectedConfig.getValue("mp.exampleBoolean", boolean.class));
+        response.append(injectedConfig.getValue("mp.exampleBoolean", boolean.class)).append('\n');
 
-        res.println(injectedString);
-        res.println(nonExistentString);
+        response.append(injectedString).append('\n');
+        response.append(nonExistentString).append('\n');
 
-        res.println(nonExistentStringOpt.orElse("Empty Optional"));
+        response.append(nonExistentStringOpt.orElse("Empty Optional")).append('\n');
 
-        res.println(customer);
+        response.append(customer).append('\n');
+
+        return Response.ok(response.toString()).build();
     }
 }
