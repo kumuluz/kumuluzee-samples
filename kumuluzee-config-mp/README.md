@@ -92,6 +92,7 @@ We will follow these steps:
 * Define our configuration properties in configuration file
 * Implement the JAX-RS service
 * Add a custom Converter
+* Add custom configuration sources
 * Build the microservice
 * Run it
 
@@ -370,6 +371,113 @@ To output the injected `Customer`, add the following line to the `testConfig` me
 
 ```java
 response.append(customer).append('\n');
+```
+
+### Add custom configuration source
+
+Create a custom configuration source by implementing the `ConfigSource` interface. Our configuration source will
+containe a single value `mp.customSourceValue`.
+
+```java
+public class ExampleConfigSource implements ConfigSource {
+    @Override
+    public Map<String, String> getProperties() {
+        return null;
+    }
+
+    @Override
+    public int getOrdinal() {
+        return 120;
+    }
+
+    @Override
+    public String getValue(String s) {
+        if ("mp.customSourceValue".equals(s)) {
+            return "Hello from custom ConfigSource";
+        }
+
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return "ExampleConfigSource";
+    }
+}
+```
+
+Register the implementation in the
+`/META-INF/services/org.eclipse.microprofile.config.spi.ConfigSource` file with the fully qualified class name:
+
+```text
+com.kumuluz.ee.samples.configsources.ExampleConfigSource
+```
+
+To output the value from custom configuration source in your JAX-RS Resource, add the following line to the
+`testConfig` method:
+
+```java
+response.append(config.getValue("mp.customSourceValue", String.class));
+```
+
+To add custom configuration sources dynamically, implement the `ConfigSourceProvider` interface. Our provider will
+generate 10 configuration sources, each will provide the `mp.customSourceOrdinal` configuration property. Their
+ordinals will range from 150 to 159, so the `mp.customSourceOrdinal` configuration property will be supplied from
+the configuration source with ordinal 159.
+
+```java
+public class ExampleConfigSourceProvider implements ConfigSourceProvider {
+    @Override
+    public Iterable<ConfigSource> getConfigSources(ClassLoader classLoader) {
+        List<ConfigSource> csList = new LinkedList<>();
+
+        for (int i = 150; i < 160; i++) {
+            int finalI = i;
+            csList.add(new ConfigSource() {
+                @Override
+                public Map<String, String> getProperties() {
+                    return null;
+                }
+
+                @Override
+                public String getValue(String s) {
+                    if ("mp.customSourceOrdinal".equals(s)) {
+                        return "Hello from custom ConfigSource, generated from ConfigSourceProvider." +
+                                " Ordinal: " + finalI;
+                    }
+
+                    return null;
+                }
+
+                @Override
+                public String getName() {
+                    return "ExampleConfigSourceFromProvider_" + finalI;
+                }
+
+                @Override
+                public int getOrdinal() {
+                    return finalI;
+                }
+            });
+        }
+
+        return csList;
+    }
+}
+```
+
+Register the implementation in the
+`/META-INF/services/org.eclipse.microprofile.config.spi.ConfigSourceProvider` file with the fully qualified class name:
+
+```text
+com.kumuluz.ee.samples.configsources.ExampleConfigSourceProvider
+```
+
+To output the value of `mp.customSourceValue` in your JAX-RS Resource, add the following line to the
+`testConfig` method:
+
+```java
+response.append(config.getValue("mp.customSourceOrdinal", String.class));
 ```
 
 ### Build the microservice and run it

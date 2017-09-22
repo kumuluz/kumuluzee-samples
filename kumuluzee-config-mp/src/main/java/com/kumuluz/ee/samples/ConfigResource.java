@@ -79,6 +79,10 @@ public class ConfigResource {
 
         response.append(customer).append('\n');
 
+        response.append(config.getValue("mp.customSourceValue", String.class));
+
+        response.append(config.getValue("mp.customSourceOrdinal", String.class));
+
         return Response.ok(response.toString()).build();
     }
 }
