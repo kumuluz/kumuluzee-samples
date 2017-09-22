@@ -266,8 +266,7 @@ Here is an example output:
           "m5_rate" : 0.006296838645263653,
           "mean_rate" : 0.0015924774955522764,
           "units" : "events/second"
-        },
-        ...
+        }
         }
     }
 }
