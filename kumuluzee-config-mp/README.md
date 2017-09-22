@@ -1,14 +1,14 @@
 # KumuluzEE MicroProfile Config sample
 
-> Build a JAX-RS service which utilizes the KumuluzEE MicroProfile configuration to access configuration values through 
-MicroProfile Config API and pack it as a KumuluzEE microservice
+> Build a JAX-RS service that utilizes the KumuluzEE MicroProfile Config API implementation to access configuration 
+values and pack it as a KumuluzEE microservice
 
 The objective of this sample is to show how to develop a microservice that uses the MicroProfile Config API to
 access configuration values. In this sample we develop a simple JAX-RS service that returns
 a list of configuration properties from configuration file and pack it as KumuluzEE microservice. This tutorial will 
 guide you through all the necessary steps. You will first add KumuluzEE dependencies into pom.xml. You will then
 implement a JAX-RS Resource, which will expose some configuration values. Required knowledge: basic familiarity with
-JAX-RS 2.
+JAX-RS 2.0.
 
 ## Requirements
 
@@ -59,7 +59,7 @@ The example uses maven to build and run the microservice.
     
     in Windows environment use the command
     ```batch
-    java -Dcom.kumuluz.ee.configuration.file="META-INF/microprofile-config.properties" -jar target/${project.build.finalName}.jar
+    java -D'com.kumuluz.ee.configuration.file'='META-INF/microprofile-config.properties' -jar target/${project.build.finalName}.jar
     ```
 
 * Exploded:
@@ -70,7 +70,7 @@ The example uses maven to build and run the microservice.
     
     in Windows environment use the command
     ```batch
-    java -Dcom.kumuluz.ee.configuration.file="META-INF/microprofile-config.properties" -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+    java -D'com.kumuluz.ee.configuration.file'='META-INF/microprofile-config.properties' -cp 'target/classes;target/dependency/*' com.kumuluz.ee.EeApplication
     ```
     
     
@@ -84,7 +84,7 @@ To shut down the example simply stop the processes in the foreground.
 This tutorial will guide you through the steps required to create a simple JAX-RS service that exposes configuration 
 properties retrieved with the MicroProfile Config API and pack it as a KumuluzEE microservice. We will develop a 
 simple JAX-RS Resource:
-* GET http://localhost:8080/v1/config - list of configuration properties from configuration file 
+* GET http://localhost:8080/v1/config - list of configuration properties from a configuration file 
 
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
@@ -193,14 +193,14 @@ or exploded:
 Define your configuration properties in a `META-INF/microprofile-config.properties` configuration file:
 
 ```properties
-mp.exampleString = Hello MicroProfile Config!
-mp.exampleBoolean = true
-mp.exampleCustomer = John:Doe
+mp.example-string=Hello MicroProfile Config!
+mp.example-boolean=true
+mp.example-customer=John:Doe
 ```
 
 ### Implement the JAX-RS service
 
-Register your module as JAX-RS service and define the application path. You could do that in web.xml or for example 
+Register your module as a JAX-RS service and define the application path. You could do that in web.xml or for example 
 with the `@ApplicationPath` annotation:
 
 ```java
@@ -214,17 +214,14 @@ MicroProfile Config API.
 
 ```java
 @RequestScoped
-@Produces(MediaType.TEXT_PLAIN)
+@Produces(MediaType.APPLICATION_JSON)
 @Path("config")
 public class ConfigResource {
 
     @GET
     public Response testConfig() {
-        StringBuilder response = new StringBuilder();
 
-
-
-        return Response.ok(response.toString()).build();
+        return Response.ok().build();
     }
 }
 ```
@@ -234,7 +231,7 @@ To do so, add the following lines to the `testConfig` method:
 
 ```java
 Config config = ConfigProvider.getConfig();
-response.append(config.getValue("mp.exampleString", String.class)).append('\n');
+String exampleString = config.getValue("mp.example-string", String.class);
 ```
 
 The `Config` object can also be acquired with CDI injection. Add the following lines to your Resource implementation:
@@ -247,30 +244,25 @@ private Config injectedConfig;
 To use the injected `Config` object, add the following line to the `testConfig` method:
 
 ```java
-response.append(injectedConfig.getValue("mp.exampleBoolean", boolean.class)).append('\n');
+Boolean exampleBoolean = injectedConfig.getValue("mp.example-boolean", boolean.class);
 ```
 
 You can also use the `@ConfigProperty` annotation to inject configuration values directly.
-Injection is supported for all types, listed in MicroProfile Config specification.
+Injection is supported for all types listed in MicroProfile Config specification.
 Annotation also supports the `defaultValue` parameter, which is used, when configuration property in not present.
 If `defaultValue` is not specified and configuration property is not present, injection will throw
-`DeploymentException`. Add the following lines to your Resource implementation:
+`DeploymentException`. 
+
+To inject configuration values, add the following lines to your Resource implementation:
 
 ```java
 @Inject
-@ConfigProperty(name = "mp.exampleString")
+@ConfigProperty(name = "mp.example-string")
 private String injectedString;
 
 @Inject
 @ConfigProperty(name = "mp.non-existent-string", defaultValue = "Property does not exist!")
 private String nonExistentString;
-```
-
-To output the injected values, add the following lines to the `testConfig` method:
-
-```java
-response.append(injectedString).append('\n');
-response.append(nonExistentString).append('\n');
 ```
 
 Alternatively to `defaultValue` parameter, you can inject configuration values as an `Optional` object. Add the
@@ -282,11 +274,6 @@ following lines to your Resource implementation:
 private Optional<String> nonExistentStringOpt;
 ```
 
-To output the injected value, add the following line to the `testConfig` method:
-
-```java
-response.append(nonExistentStringOpt.orElse("Empty Optional")).append('\n');
-```
 
 ### Add custom Converter
 
@@ -363,20 +350,14 @@ com.kumuluz.ee.samples.converters.CustomerConverter
 Inject a `Customer` instance in your Resource implementation:
 ```java
 @Inject
-@ConfigProperty(name = "mp.exampleCustomer")
+@ConfigProperty(name = "mp.example-customer")
 private Customer customer;
-```
-
-To output the injected `Customer`, add the following line to the `testConfig` method:
-
-```java
-response.append(customer).append('\n');
 ```
 
 ### Add custom configuration source
 
 Create a custom configuration source by implementing the `ConfigSource` interface. Our configuration source will
-containe a single value `mp.customSourceValue`.
+containe a single value `mp.custom-source-value`.
 
 ```java
 public class ExampleConfigSource implements ConfigSource {
@@ -392,7 +373,7 @@ public class ExampleConfigSource implements ConfigSource {
 
     @Override
     public String getValue(String s) {
-        if ("mp.customSourceValue".equals(s)) {
+        if ("mp.custom-source-value".equals(s)) {
             return "Hello from custom ConfigSource";
         }
 
@@ -413,16 +394,16 @@ Register the implementation in the
 com.kumuluz.ee.samples.configsources.ExampleConfigSource
 ```
 
-To output the value from custom configuration source in your JAX-RS Resource, add the following line to the
-`testConfig` method:
-
+Inject the value from custom configuration source in your Resource implementation:
 ```java
-response.append(config.getValue("mp.customSourceValue", String.class));
+@Inject
+@ConfigProperty(name = "mp.custom-source-value")
+private String customSourceValue;
 ```
 
 To add custom configuration sources dynamically, implement the `ConfigSourceProvider` interface. Our provider will
-generate 10 configuration sources, each will provide the `mp.customSourceOrdinal` configuration property. Their
-ordinals will range from 150 to 159, so the `mp.customSourceOrdinal` configuration property will be supplied from
+generate 10 configuration sources, each will provide the `mp.custom-source-ordinal` configuration property. Their
+ordinals will range from 150 to 159, so the `mp.custom-source-ordinal` configuration property will be supplied from
 the configuration source with ordinal 159.
 
 ```java
@@ -441,7 +422,7 @@ public class ExampleConfigSourceProvider implements ConfigSourceProvider {
 
                 @Override
                 public String getValue(String s) {
-                    if ("mp.customSourceOrdinal".equals(s)) {
+                    if ("mp.custom-source-ordinal".equals(s)) {
                         return "Hello from custom ConfigSource, generated from ConfigSourceProvider." +
                                 " Ordinal: " + finalI;
                     }
@@ -473,11 +454,84 @@ Register the implementation in the
 com.kumuluz.ee.samples.configsources.ExampleConfigSourceProvider
 ```
 
-To output the value of `mp.customSourceValue` in your JAX-RS Resource, add the following line to the
-`testConfig` method:
+Inject the value of `mp.custom-source-ordinal` custom configuration source in your Resource implementation:s
+```java
+@Inject
+@ConfigProperty(name = "mp.custom-source-ordinal")
+private String customSourceOrdinal;
+```
+
+
+Final version of the resource should look something like:
 
 ```java
-response.append(config.getValue("mp.customSourceOrdinal", String.class));
+@RequestScoped
+@Produces(MediaType.APPLICATION_JSON)
+@Path("config")
+public class ConfigResource {
+
+    @Inject
+    private Config injectedConfig;
+
+    @Inject
+    @ConfigProperty(name = "mp.example-string")
+    private String injectedString;
+
+    @Inject
+    @ConfigProperty(name = "mp.non-existent-string", defaultValue = "Property does not exist!")
+    private String nonExistentString;
+
+    @Inject
+    @ConfigProperty(name = "mp.non-existent-string")
+    private Optional<String> nonExistentStringOpt;
+
+    @Inject
+    @ConfigProperty(name = "mp.example-customer")
+    private Customer customer;
+
+    @Inject
+    @ConfigProperty(name = "mp.custom-source-value")
+    private String customSourceValue;
+
+    @Inject
+    @ConfigProperty(name = "mp.custom-source-ordinal")
+    private String customSourceOrdinal;
+
+    @GET
+    public Response testConfig() {
+
+        Config config = ConfigProvider.getConfig();
+
+        String exampleString = config.getValue("mp.example-string", String.class);
+        Boolean exampleBoolean = injectedConfig.getValue("mp.example-boolean", boolean.class);
+
+        String response =
+                "{" +
+                        "\"exampleString\": \"%s\"," +
+                        "\"exampleBoolean\": %b," +
+                        "\"injectedString\": \"%s\"," +
+                        "\"nonExistentString\": \"%s\"," +
+                        "\"nonExistentStringOpt\": \"%s\"," +
+                        "\"customer\": \"%s\"," +
+                        "\"customSourceValue\": \"%s\"," +
+                        "\"customSourceOrdinal\": \"%s\"" +
+                        "}";
+
+        response = String.format(
+                response,
+                exampleString,
+                exampleBoolean,
+                injectedString,
+                nonExistentString,
+                nonExistentStringOpt.orElse("Empty Optional"),
+                customer,
+                customSourceValue,
+                customSourceOrdinal
+        );
+
+        return Response.ok(response).build();
+    }
+}
 ```
 
 ### Build the microservice and run it

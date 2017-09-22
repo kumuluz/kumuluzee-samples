@@ -47,7 +47,7 @@ public class ExampleConfigSourceProvider implements ConfigSourceProvider {
 
                 @Override
                 public String getValue(String s) {
-                    if ("mp.customSourceOrdinal".equals(s)) {
+                    if ("mp.custom-source-ordinal".equals(s)) {
                         return "Hello from custom ConfigSource, generated from ConfigSourceProvider." +
                                 " Ordinal: " + finalI;
                     }

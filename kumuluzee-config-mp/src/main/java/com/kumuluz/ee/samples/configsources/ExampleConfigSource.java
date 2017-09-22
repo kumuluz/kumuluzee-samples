@@ -42,7 +42,7 @@ public class ExampleConfigSource implements ConfigSource {
 
     @Override
     public String getValue(String s) {
-        if ("mp.customSourceValue".equals(s)) {
+        if ("mp.custom-source-value".equals(s)) {
             return "Hello from custom ConfigSource";
         }
 
