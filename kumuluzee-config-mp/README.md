@@ -1,14 +1,14 @@
 # KumuluzEE MicroProfile Config sample
 
-> Build a JAX-RS service which utilizes the KumuluzEE MicroProfile configuration to access configuration values through 
-MicroProfile Config API and pack it as a KumuluzEE microservice
+> Build a JAX-RS service that utilizes the KumuluzEE MicroProfile Config API implementation to access configuration 
+values and pack it as a KumuluzEE microservice
 
 The objective of this sample is to show how to develop a microservice that uses the MicroProfile Config API to
 access configuration values. In this sample we develop a simple JAX-RS service that returns
 a list of configuration properties from configuration file and pack it as KumuluzEE microservice. This tutorial will 
 guide you through all the necessary steps. You will first add KumuluzEE dependencies into pom.xml. You will then
 implement a JAX-RS Resource, which will expose some configuration values. Required knowledge: basic familiarity with
-JAX-RS 2.
+JAX-RS 2.0.
 
 ## Requirements
 
@@ -59,7 +59,7 @@ The example uses maven to build and run the microservice.
     
     in Windows environment use the command
     ```batch
-    java -Dcom.kumuluz.ee.configuration.file="META-INF/microprofile-config.properties" -jar target/${project.build.finalName}.jar
+    java -D'com.kumuluz.ee.configuration.file'='META-INF/microprofile-config.properties' -jar target/${project.build.finalName}.jar
     ```
 
 * Exploded:
@@ -70,7 +70,7 @@ The example uses maven to build and run the microservice.
     
     in Windows environment use the command
     ```batch
-    java -Dcom.kumuluz.ee.configuration.file="META-INF/microprofile-config.properties" -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
+    java -D'com.kumuluz.ee.configuration.file'='META-INF/microprofile-config.properties' -cp 'target/classes;target/dependency/*' com.kumuluz.ee.EeApplication
     ```
     
     
@@ -84,7 +84,7 @@ To shut down the example simply stop the processes in the foreground.
 This tutorial will guide you through the steps required to create a simple JAX-RS service that exposes configuration 
 properties retrieved with the MicroProfile Config API and pack it as a KumuluzEE microservice. We will develop a 
 simple JAX-RS Resource:
-* GET http://localhost:8080/v1/config - list of configuration properties from configuration file 
+* GET http://localhost:8080/v1/config - list of configuration properties from a configuration file 
 
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
@@ -199,7 +199,7 @@ mp.example-customer=John:Doe
 
 ### Implement the JAX-RS service
 
-Register your module as JAX-RS service and define the application path. You could do that in web.xml or for example 
+Register your module as a JAX-RS service and define the application path. You could do that in web.xml or for example 
 with the `@ApplicationPath` annotation:
 
 ```java
@@ -247,10 +247,12 @@ Boolean exampleBoolean = injectedConfig.getValue("mp.example-boolean", boolean.c
 ```
 
 You can also use the `@ConfigProperty` annotation to inject configuration values directly.
-Injection is supported for all types, listed in MicroProfile Config specification.
+Injection is supported for all types listed in MicroProfile Config specification.
 Annotation also supports the `defaultValue` parameter, which is used, when configuration property in not present.
 If `defaultValue` is not specified and configuration property is not present, injection will throw
-`DeploymentException`. Add the following lines to your Resource implementation:
+`DeploymentException`. 
+
+To inject configuration values, add the following lines to your Resource implementation:
 
 ```java
 @Inject
@@ -351,7 +353,7 @@ Inject a `Customer` instance in your Resource implementation:
 private Customer customer;
 ```
 
-Resource should now look something like:
+Final version of the resource should look something like:
 
 ```java
 @RequestScoped
