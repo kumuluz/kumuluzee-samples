@@ -248,8 +248,7 @@ Here is an example output:
       "gauges" : {
         "GarbageCollector.PS-MarkSweep.count" : {
           "value" : 1
-        },
-        ...
+        }
       }
     },
     "default" : {
@@ -307,9 +306,9 @@ want to use the [pickle protocol](http://graphite.readthedocs.io/en/latest/feedi
 (`kumuluzee.metrics.graphite.pickle`). You can also define graphite port (`kumuluzee.metrics.graphite.port`), otherwise 
 the port will be set to `2003` or `2004` if `pickle` is set to true.
 
-### Configure KumuluzEE Logs
+### Configure Logs
 
-A reporter for automatically reporting metrics to the log can be configured. Lets first add a dependency:
+A reporter for automatically reporting metrics to the available logging framework can be configured. Lets first add a dependency:
 
 ```xml
 <dependency>
