@@ -192,9 +192,9 @@ or exploded:
 Define your configuration properties in a `META-INF/microprofile-config.properties` configuration file:
 
 ```properties
-mp.exampleString = Hello MicroProfile Config!
-mp.exampleBoolean = true
-mp.exampleCustomer = John:Doe
+mp.example-string=Hello MicroProfile Config!
+mp.example-boolean=true
+mp.example-customer=John:Doe
 ```
 
 ### Implement the JAX-RS service
@@ -213,17 +213,14 @@ MicroProfile Config API.
 
 ```java
 @RequestScoped
-@Produces(MediaType.TEXT_PLAIN)
+@Produces(MediaType.APPLICATION_JSON)
 @Path("config")
 public class ConfigResource {
 
     @GET
     public Response testConfig() {
-        StringBuilder response = new StringBuilder();
 
-
-
-        return Response.ok(response.toString()).build();
+        return Response.ok().build();
     }
 }
 ```
@@ -233,7 +230,7 @@ To do so, add the following lines to the `testConfig` method:
 
 ```java
 Config config = ConfigProvider.getConfig();
-response.append(config.getValue("mp.exampleString", String.class)).append('\n');
+String exampleString = config.getValue("mp.example-string", String.class);
 ```
 
 The `Config` object can also be acquired with CDI injection. Add the following lines to your Resource implementation:
@@ -246,7 +243,7 @@ private Config injectedConfig;
 To use the injected `Config` object, add the following line to the `testConfig` method:
 
 ```java
-response.append(injectedConfig.getValue("mp.exampleBoolean", boolean.class)).append('\n');
+Boolean exampleBoolean = injectedConfig.getValue("mp.example-boolean", boolean.class);
 ```
 
 You can also use the `@ConfigProperty` annotation to inject configuration values directly.
@@ -257,19 +254,12 @@ If `defaultValue` is not specified and configuration property is not present, in
 
 ```java
 @Inject
-@ConfigProperty(name = "mp.exampleString")
+@ConfigProperty(name = "mp.example-string")
 private String injectedString;
 
 @Inject
 @ConfigProperty(name = "mp.non-existent-string", defaultValue = "Property does not exist!")
 private String nonExistentString;
-```
-
-To output the injected values, add the following lines to the `testConfig` method:
-
-```java
-response.append(injectedString).append('\n');
-response.append(nonExistentString).append('\n');
 ```
 
 Alternatively to `defaultValue` parameter, you can inject configuration values as an `Optional` object. Add the
@@ -281,11 +271,6 @@ following lines to your Resource implementation:
 private Optional<String> nonExistentStringOpt;
 ```
 
-To output the injected value, add the following line to the `testConfig` method:
-
-```java
-response.append(nonExistentStringOpt.orElse("Empty Optional")).append('\n');
-```
 
 ### Add custom Converter
 
@@ -362,14 +347,68 @@ com.kumuluz.ee.samples.converters.CustomerConverter
 Inject a `Customer` instance in your Resource implementation:
 ```java
 @Inject
-@ConfigProperty(name = "mp.exampleCustomer")
+@ConfigProperty(name = "mp.example-customer")
 private Customer customer;
 ```
 
-To output the injected `Customer`, add the following line to the `testConfig` method:
+Resource should now look something like:
 
 ```java
-response.append(customer).append('\n');
+@RequestScoped
+@Produces(MediaType.APPLICATION_JSON)
+@Path("config")
+public class ConfigResource {
+
+    @Inject
+    private Config injectedConfig;
+
+    @Inject
+    @ConfigProperty(name = "mp.example-string")
+    private String injectedString;
+
+    @Inject
+    @ConfigProperty(name = "mp.non-existent-string", defaultValue = "Property does not exist!")
+    private String nonExistentString;
+
+    @Inject
+    @ConfigProperty(name = "mp.non-existent-string")
+    private Optional<String> nonExistentStringOpt;
+
+    @Inject
+    @ConfigProperty(name = "mp.example-customer")
+    private Customer customer;
+
+    @GET
+    public Response testConfig() {
+
+        Config config = ConfigProvider.getConfig();
+
+        String exampleString = config.getValue("mp.example-string", String.class);
+        Boolean exampleBoolean = injectedConfig.getValue("mp.example-boolean", boolean.class);
+
+        String response =
+                "{" +
+                        "\"exampleString\": \"%s\"," +
+                        "\"exampleBoolean\": %b," +
+                        "\"injectedString\": \"%s\"," +
+                        "\"nonExistentString\": \"%s\"," +
+                        "\"nonExistentStringOpt\": \"%s\"," +
+                        "\"customer\": \"%s\"" +
+                        "}";
+
+        response = String.format(
+                response,
+                exampleString,
+                exampleBoolean,
+                injectedString,
+                nonExistentString,
+                nonExistentStringOpt.orElse("Empty Optional"),
+                customer
+        );
+
+        return Response.ok(response).build();
+    }
+}
 ```
 
 ### Build the microservice and run it

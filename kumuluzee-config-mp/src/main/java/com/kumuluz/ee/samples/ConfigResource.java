@@ -40,7 +40,7 @@ import java.util.Optional;
  * @since 2.5.0
  */
 @RequestScoped
-@Produces(MediaType.TEXT_PLAIN)
+@Produces(MediaType.APPLICATION_JSON)
 @Path("config")
 public class ConfigResource {
 
@@ -48,7 +48,7 @@ public class ConfigResource {
     private Config injectedConfig;
 
     @Inject
-    @ConfigProperty(name = "mp.exampleString")
+    @ConfigProperty(name = "mp.example-string")
     private String injectedString;
 
     @Inject
@@ -60,25 +60,37 @@ public class ConfigResource {
     private Optional<String> nonExistentStringOpt;
 
     @Inject
-    @ConfigProperty(name = "mp.exampleCustomer")
+    @ConfigProperty(name = "mp.example-customer")
     private Customer customer;
 
     @GET
     public Response testConfig() {
-        StringBuilder response = new StringBuilder();
 
         Config config = ConfigProvider.getConfig();
-        response.append(config.getValue("mp.exampleString", String.class)).append('\n');
 
-        response.append(injectedConfig.getValue("mp.exampleBoolean", boolean.class)).append('\n');
+        String exampleString = config.getValue("mp.example-string", String.class);
+        Boolean exampleBoolean = injectedConfig.getValue("mp.example-boolean", boolean.class);
 
-        response.append(injectedString).append('\n');
-        response.append(nonExistentString).append('\n');
+        String response =
+                "{" +
+                        "\"exampleString\": \"%s\"," +
+                        "\"exampleBoolean\": %b," +
+                        "\"injectedString\": \"%s\"," +
+                        "\"nonExistentString\": \"%s\"," +
+                        "\"nonExistentStringOpt\": \"%s\"," +
+                        "\"customer\": \"%s\"" +
+                        "}";
 
-        response.append(nonExistentStringOpt.orElse("Empty Optional")).append('\n');
+        response = String.format(
+                response,
+                exampleString,
+                exampleBoolean,
+                injectedString,
+                nonExistentString,
+                nonExistentStringOpt.orElse("Empty Optional"),
+                customer
+        );
 
-        response.append(customer).append('\n');
-
-        return Response.ok(response.toString()).build();
+        return Response.ok(response).build();
     }
 }
