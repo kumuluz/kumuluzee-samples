@@ -228,8 +228,9 @@ You can also change the name of the registry that JVM metrics are grouped under 
 ### Configure a servlet
 
 It's time to look at the metrics we collected. The servlet for exporting metrics is already built in and enabled by 
-default, so the metrics can be seen at http://localhost:8080/metrics. The servlet can also be disabled or remapped in
-the config by setting the `kumuluzee.metrics.servlet.enabled` and `kumuluzee.metrics.servlet.mapping` respectively.
+default in development environment or in debug mode. The metrics can be seen at http://localhost:8080/metrics. The 
+servlet can also be disabled or remapped in the config by setting the `kumuluzee.metrics.servlet.enabled` and 
+`kumuluzee.metrics.servlet.mapping` respectively.
 
 Here is an example output:
 ```json
