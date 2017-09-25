@@ -20,15 +20,7 @@
 */
 package com.kumuluz.ee.samples.kumuluzee_metrics;
 
-import com.codahale.metrics.Counter;
-import com.codahale.metrics.Histogram;
-import com.codahale.metrics.Meter;
-import com.codahale.metrics.annotation.Gauge;
-import com.codahale.metrics.annotation.Metered;
-import com.codahale.metrics.annotation.Metric;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -38,33 +30,22 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("customers")
-@ApplicationScoped
+@RequestScoped
 public class CustomerResource {
 
     @Inject
-    @Metric(name = "customer_counter")
-    private Counter customerCounter;
-
-    @Inject
-    @Metric(name = "first_name_length_histogram")
-    private Histogram nameLength;
-
-    @Inject
-    @Metric(name = "customer_adding_meter")
-    private Meter addMeter;
+    private CustomerBean customerBean;
 
     @GET
     public Response getAllCustomers() {
-        List<Customer> customers = Database.getCustomers();
-        getCustomerCount();
+        List<Customer> customers = customerBean.getAllCustomers();
         return Response.ok(customers).build();
     }
 
     @GET
     @Path("{customerId}")
     public Response getCustomer(@PathParam("customerId") int customerId) {
-        Customer customer = Database.getCustomer(customerId);
-        nameLength.update(customer.getFirstName().length());
+        Customer customer = customerBean.getCustomer(customerId);
         return customer != null
                 ? Response.ok(customer).build()
                 : Response.status(Response.Status.NOT_FOUND).build();
@@ -72,38 +53,21 @@ public class CustomerResource {
 
     @GET
     @Path("add-sample-names")
-    @Timed(name = "add-sample-names-timer")
     public Response addSampleNames() {
-        Database.addCustomer(new Customer(Database.getCustomers().size(), "Daniel", "Ornelas"));
-        Database.addCustomer(new Customer(Database.getCustomers().size(), "Dennis", "McBride"));
-        Database.addCustomer(new Customer(Database.getCustomers().size(), "Walter", "Wright"));
-        Database.addCustomer(new Customer(Database.getCustomers().size(), "Mitchell", "Kish"));
-        Database.addCustomer(new Customer(Database.getCustomers().size(), "Tracy", "Edwards"));
-        addMeter.mark(5);
-        customerCounter.inc(5);
-
+        customerBean.addSampleNames();
         return Response.noContent().build();
     }
 
     @POST
     public Response addNewCustomer(Customer customer) {
-        addMeter.mark();
-        customerCounter.inc();
-        Database.addCustomer(customer);
+        customerBean.addNewCustomer(customer);
         return Response.noContent().build();
-    }
-
-    @Gauge(name = "customer_count_gauge")
-    private int getCustomerCount() {
-        return Database.getCustomers().size();
     }
 
     @DELETE
     @Path("{customerId}")
-    @Metered(name = "customer_deleting_meter")
     public Response deleteCustomer(@PathParam("customerId") int customerId) {
-        customerCounter.dec();
-        Database.deleteCustomer(customerId);
+        customerBean.deleteCustomer(customerId);
         return Response.noContent().build();
     }
 }

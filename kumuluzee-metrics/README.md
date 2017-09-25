@@ -119,19 +119,19 @@ Add the `kumuluzee-cdi-weld` and `kumuluzee-metrics` dependencies:
 
 ### Add metrics colectors (counters, meters, timers,...)
 
-Let's first define some monitoring tools to collect a few of the metrics in our `CustomerResource` class. We'll add two
+Our application will consist of two beans: `CustomerBean` will implement business logic and `CustomerResource` will 
+implement REST resource that exposes business logic. 
+
+Let's first define some monitoring tools to collect a few of the metrics in our `CustomerBean` class. We'll add two
 meters, that monitor the rate at which the customers are being added and removed. We define them either by annotating
 the method with `@Metered`, or by creating a `Meter` object and then calling the `mark()` method every time the add or
 remove methods are being called. Let's also measure the time it takes for the method to execute. We can do that by
 adding the `@Timed` annotation to the method. We'll also add two more tools in this example, a counter and a histogram.
-Here is a shortened code of the example project, which illustrates the usage of mentioned tools:
+Here is a code snippet of the example bean, which illustrates the usage of mentioned tools:
 
 ```java
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-@Path("customers")
 @ApplicationScoped
-public class CustomerResource {
+public class CustomerBean {
 
     @Inject
     @Metric(name = "customer_counter")
@@ -145,31 +145,33 @@ public class CustomerResource {
     @Metric(name = "customer_adding_meter")
     private Meter addMeter;
 
-    @GET
-    @Path("{customerId}")
-    public Response getCustomer(@PathParam("customerId") int customerId) {
+    public List getAllCustomers() {
+        List<Customer> customers = Database.getCustomers();
+        getCustomerCount();
+        return customers;
+    }
+
+    public Customer getCustomer(int customerId) {
         Customer customer = Database.getCustomer(customerId);
         nameLength.update(customer.getFirstName().length());
-        ...
+        return customer;
     }
 
-    @GET
-    @Path("add-sample-names")
     @Timed(name = "add-sample-names-timer")
-    public Response addSampleNames() {
-        if (getCustomerCount() < 10) {
-            ...
-            addMeter.mark(5);
-            customerCounter.inc(5);
-        }
-        ...
+    public void addSampleNames() {
+        Database.addCustomer(new Customer(Database.getCustomers().size(), "Daniel", "Ornelas"));
+        Database.addCustomer(new Customer(Database.getCustomers().size(), "Dennis", "McBride"));
+        Database.addCustomer(new Customer(Database.getCustomers().size(), "Walter", "Wright"));
+        Database.addCustomer(new Customer(Database.getCustomers().size(), "Mitchell", "Kish"));
+        Database.addCustomer(new Customer(Database.getCustomers().size(), "Tracy", "Edwards"));
+        addMeter.mark(5);
+        customerCounter.inc(5);
     }
 
-    @POST
-    public Response addNewCustomer(Customer customer) {
+    public void addNewCustomer(Customer customer) {
         addMeter.mark();
         customerCounter.inc();
-       ...
+        Database.addCustomer(customer);
     }
 
     @Gauge(name = "customer_count_gauge")
@@ -177,12 +179,60 @@ public class CustomerResource {
         return Database.getCustomers().size();
     }
 
+    @Metered(name = "customer_deleting_meter")
+    public void deleteCustomer(int customerId) {
+        customerCounter.dec();
+        Database.deleteCustomer(customerId);
+    }
+}
+```
+
+Class `CustomerResource` exposes business logic in form of REST endpoints. Its implementation is shown in the snippet 
+bellow. 
+
+```java
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("customers")
+@RequestScoped
+public class CustomerResource {
+
+    @Inject
+    private CustomerBean customerBean;
+
+    @GET
+    public Response getAllCustomers() {
+        List<Customer> customers = customerBean.getAllCustomers();
+        return Response.ok(customers).build();
+    }
+
+    @GET
+    @Path("{customerId}")
+    public Response getCustomer(@PathParam("customerId") int customerId) {
+        Customer customer = customerBean.getCustomer(customerId);
+        return customer != null
+                ? Response.ok(customer).build()
+                : Response.status(Response.Status.NOT_FOUND).build();
+    }
+
+    @GET
+    @Path("add-sample-names")
+    public Response addSampleNames() {
+        customerBean.addSampleNames();
+        return Response.noContent().build();
+    }
+
+    @POST
+    public Response addNewCustomer(Customer customer) {
+        customerBean.addNewCustomer(customer);
+        return Response.noContent().build();
+    }
+
     @DELETE
     @Path("{customerId}")
-    @Metered(name = "customer_deleting_meter")
     public Response deleteCustomer(@PathParam("customerId") int customerId) {
-        customerCounter.dec();
-        ...
+        customerBean.deleteCustomer(customerId);
+        return Response.noContent().build();
     }
 }
 ```
