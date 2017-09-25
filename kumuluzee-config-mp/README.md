@@ -141,8 +141,8 @@ Add the `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluzee-cdi-weld`, `kumu
 </dependencies>
 ```
 
-Alternatively, we could add the `kumuluzee-microProfile-1.0`, which adds the MicroProfile 1.0 dependencies (JAX-RS, CDI,
-JSON-P, and Servlet).
+Alternatively, we could add the `kumuluzee-microProfile-1.1`, which adds the MicroProfile 1.1 dependencies (JAX-RS, CDI,
+JSON-P, Servlet and MicroProfile Config 1.1).
 
 Add the `kumuluzee-maven-plugin` build plugin to package microservice as uber-jar:
 
@@ -357,7 +357,7 @@ private Customer customer;
 ### Add custom configuration source
 
 Create a custom configuration source by implementing the `ConfigSource` interface. Our configuration source will
-containe a single value `mp.custom-source-value`.
+contain a single value `mp.custom-source-value`.
 
 ```java
 public class ExampleConfigSource implements ConfigSource {
@@ -403,8 +403,8 @@ private String customSourceValue;
 
 To add custom configuration sources dynamically, implement the `ConfigSourceProvider` interface. Our provider will
 generate 10 configuration sources, each will provide the `mp.custom-source-ordinal` configuration property. Their
-ordinals will range from 150 to 159, so the `mp.custom-source-ordinal` configuration property will be supplied from
-the configuration source with ordinal 159.
+ordinals will range from 150 to 159. The `mp.custom-source-ordinal` configuration property will be supplied from
+the configuration source with the highest priority, which is the source with ordinal 159.
 
 ```java
 public class ExampleConfigSourceProvider implements ConfigSourceProvider {

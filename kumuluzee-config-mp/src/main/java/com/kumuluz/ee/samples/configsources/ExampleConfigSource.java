@@ -30,6 +30,7 @@ import java.util.Map;
  * @since 2.5.0
  */
 public class ExampleConfigSource implements ConfigSource {
+
     @Override
     public Map<String, String> getProperties() {
         return null;
@@ -42,6 +43,7 @@ public class ExampleConfigSource implements ConfigSource {
 
     @Override
     public String getValue(String s) {
+
         if ("mp.custom-source-value".equals(s)) {
             return "Hello from custom ConfigSource";
         }

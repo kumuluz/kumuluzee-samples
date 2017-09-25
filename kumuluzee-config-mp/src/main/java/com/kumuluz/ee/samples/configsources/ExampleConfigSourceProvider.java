@@ -33,13 +33,15 @@ import java.util.Map;
  * @since 2.5.0
  */
 public class ExampleConfigSourceProvider implements ConfigSourceProvider {
+
     @Override
     public Iterable<ConfigSource> getConfigSources(ClassLoader classLoader) {
-        List<ConfigSource> csList = new LinkedList<>();
+
+        List<ConfigSource> configSources = new LinkedList<>();
 
         for (int i = 150; i < 160; i++) {
             int finalI = i;
-            csList.add(new ConfigSource() {
+            configSources.add(new ConfigSource() {
                 @Override
                 public Map<String, String> getProperties() {
                     return null;
@@ -67,6 +69,6 @@ public class ExampleConfigSourceProvider implements ConfigSourceProvider {
             });
         }
 
-        return csList;
+        return configSources;
     }
 }
