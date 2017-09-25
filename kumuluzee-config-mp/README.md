@@ -54,23 +54,23 @@ The example uses maven to build and run the microservice.
 * Uber-jar:
 
     ```bash
-    $ java -Dcom.kumuluz.ee.configuration.file="META-INF/microprofile-config.properties" -jar target/${project.build.finalName}.jar
+    $ java -jar target/${project.build.finalName}.jar
     ```
     
     in Windows environment use the command
     ```batch
-    java -D'com.kumuluz.ee.configuration.file'='META-INF/microprofile-config.properties' -jar target/${project.build.finalName}.jar
+    java -jar target/${project.build.finalName}.jar
     ```
 
 * Exploded:
 
     ```bash
-    $ java -Dcom.kumuluz.ee.configuration.file="META-INF/microprofile-config.properties" -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
+    $ java -cp target/classes:target/dependency/* com.kumuluz.ee.EeApplication
     ```
     
     in Windows environment use the command
     ```batch
-    java -D'com.kumuluz.ee.configuration.file'='META-INF/microprofile-config.properties' -cp 'target/classes;target/dependency/*' com.kumuluz.ee.EeApplication
+    java -cp 'target/classes;target/dependency/*' com.kumuluz.ee.EeApplication
     ```
     
     
