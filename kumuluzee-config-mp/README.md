@@ -99,6 +99,7 @@ We will follow these steps:
 ### Add Maven dependencies
 
 Add the KumuluzEE BOM module dependency to your `pom.xml` file:
+
 ```xml
 <dependencyManagement>
     <dependencies>
@@ -113,8 +114,38 @@ Add the KumuluzEE BOM module dependency to your `pom.xml` file:
 </dependencyManagement>
 ```
 
-Add the `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluzee-cdi-weld`, `kumuluzee-jax-rs-jersey` and
-`kumuluzee-config-mp` dependencies:
+Add the `kumuluzee-microProfile-1.1` dependency, which adds the MicroProfile 1.1 dependencies: JAX-RS, CDI,
+JSON-P, Servlet and MicroProfile Config 1.1.
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>com.kumuluz.ee</groupId>
+        <artifactId>kumuluzee-microProfile-1.1</artifactId>
+    </dependency>
+</dependencies>
+```
+
+Alternatively, we could add the dependencies `kumuluzee-microProfile-1.0` and `KumuluzEE MicroProfile Config` 
+separately:
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>com.kumuluz.ee</groupId>
+        <artifactId>kumuluzee-microProfile-1.0</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.kumuluz.ee.config</groupId>
+        <artifactId>kumuluzee-config-mp</artifactId>
+        <version>1.1.0</version>
+    </dependency>
+</dependencies>
+```
+
+We could also add all the following dependencies separately: `kumuluzee-core`, `kumuluzee-servlet-jetty`, 
+`kumuluzee-cdi-weld`, `kumuluzee-jax-rs-jersey` and `kumuluzee-config-mp`:
+
 ```xml
 <dependencies>
     <dependency>
@@ -140,9 +171,6 @@ Add the `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluzee-cdi-weld`, `kumu
     </dependency>
 </dependencies>
 ```
-
-Alternatively, we could add the `kumuluzee-microProfile-1.1`, which adds the MicroProfile 1.1 dependencies (JAX-RS, CDI,
-JSON-P, Servlet and MicroProfile Config 1.1).
 
 Add the `kumuluzee-maven-plugin` build plugin to package microservice as uber-jar:
 
