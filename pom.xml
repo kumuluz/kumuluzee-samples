@@ -17,6 +17,7 @@
         <module>jsp</module>
         <module>jul</module>
         <module>kumuluzee-config</module>
+        <module>kumuluzee-config-mp</module>
         <module>kumuluzee-config-consul</module>
         <module>kumuluzee-config-etcd</module>
         <module>kumuluzee-discovery-consul</module>
