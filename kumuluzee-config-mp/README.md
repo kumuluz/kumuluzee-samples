@@ -114,15 +114,26 @@ Add the KumuluzEE BOM module dependency to your `pom.xml` file:
 </dependencyManagement>
 ```
 
-Add the `kumuluzee-microProfile-1.1` dependency, which adds the MicroProfile 1.1 dependencies that are available in 
-KumuluzEE microservice framework: JAX-RS, CDI, JSON-P and Servlet. You have to add MicroProfile Config 1.1 separately, 
-as it is available as a KumuluzEE extension.
+Add the `kumuluzee-microProfile-1.1` dependency, which adds the MicroProfile 1.1 dependencies: JAX-RS, CDI,
+JSON-P, Servlet and MicroProfile Config 1.1.
 
 ```xml
 <dependencies>
     <dependency>
         <groupId>com.kumuluz.ee</groupId>
         <artifactId>kumuluzee-microProfile-1.1</artifactId>
+    </dependency>
+</dependencies>
+```
+
+Alternatively, we could add the dependencies `kumuluzee-microProfile-1.0` and `KumuluzEE MicroProfile Config` 
+separately:
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>com.kumuluz.ee</groupId>
+        <artifactId>kumuluzee-microProfile-1.0</artifactId>
     </dependency>
     <dependency>
         <groupId>com.kumuluz.ee.config</groupId>
@@ -132,7 +143,7 @@ as it is available as a KumuluzEE extension.
 </dependencies>
 ```
 
-Alternatively, we could add all the following dependencies separately: `kumuluzee-core`,`kumuluzee-servlet-jetty`, 
+We could also add all the following dependencies separately: `kumuluzee-core`,`kumuluzee-servlet-jetty`, 
 `kumuluzee-cdi-weld`, `kumuluzee-jax-rs-jersey` and `kumuluzee-config-mp`:
 
 ```xml
