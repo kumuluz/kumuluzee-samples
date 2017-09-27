@@ -1,33 +1,25 @@
 # Cloud-native Java EE Microservices with KumuluzEE: REST service using config, discovery, security, metrics, logging and fault tolerance
 
-A goal of this tutorial is to develop a cloud-native Java EE microservice application, using KumuluzEE microservice 
-framework and KumuluzEE extensions. Application will consist of two microservices which will work together to provide wanted 
-functionalities.  
+A goal of this tutorial is to develop a cloud-native Java EE microservice application, using KumuluzEE microservice framework and KumuluzEE extensions. 
 
-We will develop a sample application for managing customers and their orders. Developed application will consist of 
-two microservices; one for managing customer entities and one for managing order entities. We will implement all 
-important concepts and functionalities that are essential in microservice architecture, such as dynamic 
-configuration, service discovery, fault tolerance, centralized log collection, performance metrics collections and 
-security mechanisms. 
+We will develop a sample application for managing customers and their orders. The application consists of two microservices; one for managing customer entities and one for managing order entities. We will demonstrate important cloud-native concepts and functionalities that are essential in microservice architecture, such as dynamic configuration (with config server), service discovery, fault tolerance, centralized logging, performance metrics collection, and security mechanisms. 
 
 We will use the following KumuluzEE extensions:
 - KumuluzEE REST for implementation of filtering, sorting and pagination on REST resources,
 - KumuluzEE Config for dynamic reconfiguration of microservices with the use of configuration servers, 
 - KumuluzEE Discovery for service registration and service discovery, 
 - KumuluzEE Fault Tolerance for improving the resilience of microservices,
-- KumuluzEE Logs for advanced centralised logging, 
+- KumuluzEE Logs for advanced centralized logging, 
 - KumuluzEE Metrics for collection of performance metrics, 
 - KumuluzEE Security for securing developed REST endpoints.
 
-First, we will create a maven project that will hold both our microservices. We will then implements both 
-microservices and use KumuluzEE extensions to implement configuration, service discovery, fault tolerance, logging, 
-metrics collection and security mechanisms.
+First, we will create a Maven project that will contain both our microservices. We will then implement both microservices and use the KumuluzEE extensions to implement configuration, service discovery, fault tolerance, logging, metrics and security mechanisms.
 
-Complete source code can be found in the git repository.  
+Complete source code can be found on the GitHub repository.  
 
-## Create maven project
+## Create Maven project
 
-The root maven project will hold both developed microservices. Each microservice will be splitted into three modules; 
+The root Maven project will hold both developed microservices. Each microservice will be structured into three modules; 
 persistence, with JPA Entities and database access logic, business-logic, with CDI beans holding implementation of 
 business logic, and api module, exposing business logic in form of RESTful services. The full structure should be as 
 follows:
@@ -42,8 +34,8 @@ follows:
         - orders-business-logic
         - orders-persistence 
 
-We will use `pom.xml` file of the root project (kumuluzee-tutorial) to define all properties and dependencies which 
-will be used in other modules. It should look something like:
+We will use the `pom.xml` file of the root project (kumuluzee-tutorial) to define all properties and dependencies which 
+will be used in other modules. It should look like this:
 
 ```xml
 <properties>
@@ -74,16 +66,16 @@ will be used in other modules. It should look something like:
 
 ## Customer microservice
 
-First, we will implement customer service that will provide CRUD functionalities for custumer objects. 
+First, we will implement the customer microservice that will provide CRUD functionalities for the custumer objects. 
 
 ### Maven dependencies
 
-Before we start writing code, we must first add all Maven dependencies that we will need in this microservice.
+Before we start writing code, we have to add all the Maven dependencies that we will need in this microservice.
 
 #### Persistence module
 
-In the persistence module we will need JPA dependency for accessing the database. We will use postgresql database, 
-hence we also need postgresql JDBC driver.
+In the persistence module we will need the JPA dependency for accessing the database. We will use Postgresql database, 
+hence we also need the Postgresql JDBC driver.
 
 ```xml
 <dependencies>
@@ -100,8 +92,8 @@ hence we also need postgresql JDBC driver.
 
 #### Business-logic module 
 
-Business logic module will implement business logic in CDI beans, hence we need to add a CDI implementation, which is 
-available in `kumuluzee-cdi-weld` module. We will also need JPA entities and DB access logic, defined in our 
+Business logic module will implement the business logic in CDI beans. We need to add a CDI implementation, which is 
+available in the `kumuluzee-cdi-weld` module. We will also need JPA entities and DB access logic, defined in our 
 `persistence` module.
 
 ```xml
@@ -117,12 +109,11 @@ available in `kumuluzee-cdi-weld` module. We will also need JPA entities and DB 
 </dependencies>
 ```
 
-#### Api module
+#### API module
 
-Api module will be the core module of our microservice that will be executed, hence it needs `kumuluzee-core` 
-and `kumuluzee-servlet-jetty` modules. It will expose business logic as RESTful services, hence the `business-logic` 
-and `kumuluzee-jax-rs-jersey` modules. We will also add `kumuluzee-maven-plugin` to package our microservice in a 
-uber JAR.
+API module will be the core module of our microservice that will be executed. It needs `kumuluzee-core` 
+and `kumuluzee-servlet-jetty` dependecies. It will expose business logic as a RESTful services, so it requires the `kumuluzee-jax-rs-jersey` dependency and the `business-logic` module. We will also add the `kumuluzee-maven-plugin` to package our microservice in a 
+Uber JAR.
 
 ```xml
 <dependencies>
@@ -164,16 +155,16 @@ uber JAR.
 </build>
 ```
 
-### Develop a microservice
+### Develop microservice
 
 Now it is time to implement our microservice.
 
 #### Add config
 
-First, we will add basic KumuluzEE configuration in a `config.yml` configuration file. You can read more about 
+First, we will add the basic KumuluzEE configuration in a `config.yml` configuration file. You can read more about 
 KumuluzEE configuration framework [here](https://github.com/kumuluz/kumuluzee/wiki/Configuration). In our case, we 
-will specify service name, version, environment, in which microservice is deployed, and set the server http port and 
-base-url. 
+will specify service name, version, environment in which the microservice is deployed, and set the server http port and 
+the base-url. 
 
 ```bash
 kumuluzee:
@@ -187,10 +178,10 @@ kumuluzee:
       port: 8080
 ```
 
-#### Develop a persistence module
+#### Develop persistence module
 
-Before we implement a persistance module, we have to run a database instance. We will use docker to achieve that. To 
-run a new postgresql instance in docker, use the following command.  
+Before we implement the persistance module, we have to run the database instance. We will use Docker to achieve that. To 
+run a new Postgresql instance in Docker, use the following command:  
 
 ```bash
 docker run -d --name postgres-customers -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=customer -p 5432:5432 postgres:latest
@@ -198,7 +189,7 @@ docker run -d --name postgres-customers -e POSTGRES_PASSWORD=postgres -e POSTGRE
 
 ##### Create entity
 
-In this step, we will define a JPA entity that will be used to represent customers. We create the following class:
+In this step, we will define a JPA entity that will be used to represent the customers. We will create the following class:
 
 ```bash
 @Entity(name = "customer")
@@ -231,7 +222,7 @@ public class Customer {
 
 ##### Define JDBC datasource in config 
 
-A JDBC datasource have to be defined with KumuluzeEE configuration framework. We specify datasource name and database 
+A JDBC datasource has to be defined with KumuluzeEE configuration framework. We have to specify the datasource name and the database 
 connection properties with the following configuration keys:
 
 ```bash
@@ -246,9 +237,9 @@ kumuluzee:
 
 ##### Define persistance.xml
 
-In order for our application to connect to defined datasource, we have to specify a persistence unit in 
-`persistence.xml`. The following configuration will automatically execute a SQL script on microservice startup to 
-populate database with development data. Such configuration is useful for development purposes, but not for 
+In order for our application to connect to the defined datasource, we have to specify a persistence unit in 
+the `persistence.xml`. The following configuration will automatically execute a SQL script on microservice startup to 
+populate the database with the development data. Such configuration is useful for development purposes, but not for 
 production environments. 
 
 ```xml
@@ -272,8 +263,8 @@ production environments.
 #### Develop business logic module 
 
 Business logic module will implement CRUD operations for managing customer entities. It will be implemented as an 
-application scoped CDI bean. A `beans.xml` file have to be placed in `resources/META-INF` folder in order to enable CDI. 
-A CDI bean with business logic should look something like:
+application scoped CDI bean. A `beans.xml` file has to be placed in `resources/META-INF` folder in order to enable CDI. 
+A CDI bean with business logic should look like this:
 
 ```java
 @RequestScoped
@@ -357,7 +348,7 @@ public class CustomersBean {
 
 #### Develop API module
 
-An API module will expose business logic as a set of RESTful services. First, add `beans.xml` file to 
+The API module will expose the business logic as a set of RESTful services. First, add `beans.xml` file to 
 `resources/META-INF` in order to enable CDI. 
 
 ##### Application class
@@ -373,7 +364,7 @@ public class CustomerApplication extends Application {
 
 ##### JAX-RS resource 
 
-In the next step, we add a resource class that will expose business logic. It should look like:
+In the next step, we add a resource class that will expose the business logic. It should look like this:
 
 ```java
 @RequestScoped
@@ -456,7 +447,7 @@ public class CustomersResource {
 
 ##### KumuluzEE Rest
 
-Now it is time to add our first KumuluzEE extension. We will use KumuluzEE Rest to add best practices of developing 
+Now it is time to add our first KumuluzEE extension. We will use KumuluzEE Rest to add best practices for developing 
 RESTful services, such as sorting, filtering and pagination. 
 
 First, we add a maven dependency:
@@ -469,15 +460,15 @@ First, we add a maven dependency:
 </dependency>
 ```
 
-Then, we inject `UriInfo` object into REST resource. `UriInfo` holds the data about the request's URL and will we used as
-an input to KumuluzEE REST extension. We inject is as:
+Then, we inject `UriInfo` object into the REST resource. `UriInfo` holds the data about the request's URL and will be used as
+an input to the KumuluzEE REST extension. We inject it as:
 
 ```java
 @Context
 protected UriInfo uriInfo;
 ```
 
-We add a new REST endpoint which will be used to get filtered, sorted or paginated requests:
+We add a new REST endpoint, which will be used to get filtered, sorted or paginated requests:
 
 ```java
 @GET
@@ -492,7 +483,7 @@ public Response getCustomersFiltered() {
 }
 ```
 
-We also add a method to the CDI bean. It uses `JPAUtils` object to query filtered entities:
+We also add a method to the CDI bean. It uses the `JPAUtils` object to query filtered entities:
 
 ```java
 public List<Customer> getCustomersFilter(UriInfo uriInfo) {
@@ -508,7 +499,7 @@ public List<Customer> getCustomersFilter(UriInfo uriInfo) {
 
 ###### Test
 
-We can test new endpoint with the following URLs.
+We can test the new endpoint with the following URLs.
 
 Pagination: 
 - localhost:8080/v1/customers/filtered?offset=1&limit=1
@@ -528,7 +519,7 @@ In this section we will add some additional JAX-RS features to our microservice.
 
 ###### Configure Jackson serializer
 
-A Jackson serializer will be used to correctly display dates in our microservice. We implement is as a provider class
+A Jackson serializer will be used to correctly display dates in our microservice. We implement it as a provider class
  that extends `javax.ws.rs.ext.ContextResolver`:
 
 ```java
@@ -572,7 +563,7 @@ public class Error {
 }
 ```
 
-Then we add a mapper that will wrap NotFoundExceptions into newly defined Error objects:
+Then we add a mapper that will wrap the `NotFoundExceptions` into newly defined Error objects:
 
 ```java
 @Provider
@@ -599,10 +590,10 @@ public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundExceptio
 
 We have two options for running our microservice:
 
-1. We can use an IDE of our choice to run our microservice. We simply run it as Java application, with main class set 
+1. We can use an IDE of our choice to run our microservice. We simply run it as Java application, with the main class set 
 to `com.kumuluz.ee.EeApplication`.
 
-2. We can use maven to build it and then use java to run the jar.
+2. We can use Maven to build it and `java` to run the Uber JAR.
 
 ```bash
 mvn clean package
@@ -614,10 +605,10 @@ java -jar target/customers-api-1.0.0-SNAPSHOT.jar
 
 We can test our microservice by accessing the following URL: http://localhost:8080/v1/customers
 
-### Package microservice as docker image and run it
+### Package microservice as Docker image and run it
 
-Now, it is time to package our microservice as a docker image and run it as a docker container. First, we will 
-specify a dockerfile with information on image-building process:
+Now, it is time to package our microservice as a Docker image and run it as a Docker container. First, we will 
+specify a dockerfile with the information on image-building process:
 
 ```yaml
 FROM openjdk:8-jre-alpine
@@ -633,17 +624,17 @@ EXPOSE 8080
 CMD ["java", "-jar", "customers-api-1.0.0-SNAPSHOT.jar"]
 ```
 
-To create docker image, perform the folowig steps:
-- build microservice with `mvn clean package`.
-- build docker image with `docker build -t customers-api:1.00 .`.
+To create the Docker image, perform the folowig steps:
+- build the microservice with `mvn clean package`.
+- build the Docker image with `docker build -t customers-api:1.00 .`.
 
-To run a docker container from the built image run: `docker run -e 
+To run the Docker container from the built image run: `docker run -e 
 KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://databaseUrl:5432/customer -p 8080:8080 customers-api:1.00`
 
 #### Docker compose
 
-Instead of running postgresql and microservice seperately, we could package them as a docker compose application with
- he following configuration:
+Instead of running Postgresql and microservice seperately, we could package them as a Docker compose application with 
+the following configuration:
 
 ```yaml
 version: "3"
@@ -668,36 +659,36 @@ services:
 
 ## Order microservice
 
-Now we will develop a second microservice that will be used for managing data about orders. Each order will be 
+Now we will develop the second microservice that will be used for managing the data about orders. Each order will be 
 related to one customer. 
 
-### Develop a microservice
+### Develop microservice
 
-To develop an order microservice, we have to repeat similar steps as with customer microservice. 
+To develop the order microservice, we have to repeat similar steps as with the customer microservice. 
 
-First, we run annother postgresql instance for storing order data: 
+First, we run another Postgresql database instance for storing the order data: 
 
 ```bash
 docker run -d --name postgres-orders -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=order -p 5433:5432 postgres:latest
 ```
 
-Then we define an `Order` JPA entity. We extend `Customer` entity with data about its orders: 
+Then we define the `Order` JPA entity. We extend the `Customer` entity with the data about its orders: 
 
 ```java
 @Transient
 private List<Order> orders;
 ```
 
-Since the orders field is annotated with `@Transient`, orders will not get fetched and stored into the database by JPA. 
+Since the orders field is annotated with `@Transient`, the orders will not get fetched and stored into the database by JPA. 
 Instead, we will retrieve them from the order microservice.
 
-All the other steps of developing an order microservice are very similar as in customer service and will not be 
+All the other steps of developing the order microservice are very similar to the customer microservice and will not be 
 repeated here.
 
 ## Connect the two microservices 
 
-We will now extend the customer microservice so that it will return orders of each queried customer. We will extend 
-the business logic CDI bean with remote http call to order service. We have to add the following fields and methods:
+We will now extend the customer microservice so that it will return the orders of each queried customer. We will extend 
+the business logic CDI bean with the remote http call to the order service. We have to add the following fields and methods:
 
 ```java
 private ObjectMapper objectMapper;
@@ -761,12 +752,11 @@ public List<Order> getOrders(String customerId) {
 ```
 
 We can test the newly developed feature by accessing the following URL: localhost:8080/v1/customers/1 It should 
-return a customer object with two orders.
+see the customer object with two orders.
 
 ## KumuluzEE Config
 
-We will now add an option to disable remote calls to order service using KumuluzEE configuration framework and 
-KumuluzEE Config to integrate configuration servers. First, we add a configuration key into `config.yml` file:
+We will now add the option to disable the remote calls to the order service using KumuluzEE configuration framework. We will also  integrate a configuration server (etcd and Consul are supported). First, we add a configuration key into the `config.yml` file:
 
 ```yalm
 rest-properties:
@@ -775,7 +765,7 @@ rest-properties:
       enabled: true
 ```
 
-In the next step we add a properties bean that will load, hold and update configuration properties at runtime.
+In the next step we add a properties bean that will load, hold and update the configuration properties at runtime.
 
 ```java
 @ApplicationScoped
@@ -789,7 +779,7 @@ public class RestProperties {
 }
 ```
 
-We add an if statement to a `CustomerBean` class:
+We add an if statement to the `CustomerBean` class:
 
 ```java
 if (restProperties.isOrderServiceEnabled()) {
@@ -800,8 +790,8 @@ if (restProperties.isOrderServiceEnabled()) {
 
 ### Configuration server
 
-Now it is time to add a configuration server. First, we add a KumuluzEE Config extension that will add configuration 
-server as one of the available configuration sources:
+Now it is time to add the configuration server, which will store the configuration remotely in the server instead of the file (or environemnt settings or properties). First, we add the KumuluzEE Config extension that will add the configuration 
+server as one of the available configuration sources. We use etcd in this example, although Conusl is also supported:
 
 ```bash
 <dependency>
@@ -814,7 +804,7 @@ server as one of the available configuration sources:
 We will use etcd as configuration server. We could replace it with Consul by just replacing the Maven dependency to 
 `kumuluzee-config-consul`.
 
-We can now run etcd server instance with the following docker command:
+We can now run etcd server instance with the following Docker command:
 
 ```bash
 $ docker run -d -p 2379:2379 \
@@ -837,7 +827,7 @@ $ docker run -d -p 2379:2379 \
 
 We can edit the values inside etcd with the following [editor](henszey.github.io/etcd-browser/).
 
-Before we can access configuration server, we have to provide access configuration in `config.yml` file:
+Before we can access the configuration server, we have to provide access configuration in the `config.yml` file:
 
 ```yaml
 config:
@@ -845,15 +835,16 @@ config:
     hosts: http://192.168.99.100:2379
 ```
 
-We can now override the configuration from configuration file and disable external dependency calls by setting the 
+We can now override the configuration from the configuration file and disable the external dependency calls by setting the 
 following etcd key to `false`: 
 - /environments/dev/services/customer-service/1.0.0/config/rest-properties/external-dependencies/order-service/enabled
 
 ## KumuluzEE Discovery
 
-In this step, we will add KumuluzEE Discovery extension to enable service registration and discovery instead of 
-manually wiring the microservice. We will register the order microservice and use service discovery in the customers 
-microservice.
+In this step, we will add the KumuluzEE Discovery extension to enable service registration and dynamic discovery instead of 
+manually wiring the microservice URL. This is particularly useful in Kubernetes and other container orchestration environments. We will register the order microservice and use service discovery in the customer microservice.
+
+In this example, we will use etcd for service discovery. Consul is supported as well. 
 
 Add the following dependency:
 
@@ -865,7 +856,7 @@ Add the following dependency:
 </dependency>
 ```
 
-We have to provide configuration to access the etcd server:
+We have to provide the configuration to access the etcd server:
 
 ```yaml
 discovery:
@@ -914,9 +905,9 @@ We will use KumuluzEE Fault Tolerance extension. First, add the following Maven 
 
 ### Adding fallback mechanisms
 
-The most critical point of failure in our application is the communication between microservices. We do not want the 
-customer microservice to be unavailable if order service fails. To achieve that, we will add fault tolerance 
-mechanisms to the `getOrders` method:  
+The most critical point of failure in our application is the communication between the two microservices. We do not want the 
+customer microservice to be unavailable if the order microservice fails. To achieve this, we will add the fault tolerance 
+fallback mechanisms to the `getOrders` method, We will enable cirrcuit breaker, fallback and timeout:  
 
 ```java
 @RequestScoped
@@ -941,7 +932,7 @@ public class CustomersBean {
 }
 ```
 
-We enabled fault tolerance with annotation `@GroupKey` on the class. We added annotations on the `getOrders` method. 
+We enabled fault tolerance with the annotation `@GroupKey` on the class. We added annotations on the `getOrders` method. 
 Annotation `@CircuitBreaker` opens circuit breaker if the request rate is higher than 30%. `@Timeout` prevents the 
 method to wait for the response longer than 500 ms. With `@Fallback` we defined a method that will be called in case 
 errors occcur. 
@@ -949,8 +940,8 @@ errors occcur.
 
 ## Logging
 
-In microservice architecture, logs are collected in the central log management system. We will use KumuluzEE Logs to 
-enable advanced logging mechanisms and send logs to Logstash. First, add the following Maven dependency:
+In the microservice architecture, logs should be collected in the central log management system. We will use the KumuluzEE Logs to 
+enable advanced logging mechanisms and send logs to elastic Stack using Logstash. First, add the following Maven dependency:
 
 ```xml
 <dependency>
@@ -991,7 +982,7 @@ kumuluzee:
            </Configuration>'
 ```
 
-This configuration outputs logs to the console and to the Logstash instance on specified address.
+This configuration outputs logs to the console and to the Logstash instance on the specified address.
 
 ### Log endpoint calls
 
@@ -1036,7 +1027,7 @@ TRACE ENTRY[ METHOD ] Entering method. {applicationName=customer-service, applic
 
 ## Metrics
 
-If we want to monitor the performance of our microservices, we can add KumuluzEE Metrics extension: 
+If we want to monitor the performance of our microservices, we can add the KumuluzEE Metrics extension: 
 
 ```xml
 <dependency>
@@ -1046,12 +1037,12 @@ If we want to monitor the performance of our microservices, we can add KumuluzEE
 </dependency>
 ```
 
-It collects the performance metrics of JVM, http calls to specified endpoints and other user-defined metrics. Collected 
-metrics are available on localhost:8080/metrics
+KumuluzEE Metrics automatically collects the performance metrics of JVM, http calls to specified endpoints and other user-defined metrics. Collected 
+metrics are available on the following URL: http://localhost:8080/metrics
 
 ### Web instrumentation
 
-To enable monitoring of REST calls on customer endpoint, we add the following configuraion:
+To enable monitoring of REST calls on the customer endpoint, we add the following configuration:
 
 ```yaml
 metrics:
@@ -1066,9 +1057,12 @@ metrics:
 We can monitor the number of deleted customers by annotating the `deleteCustomer` method with 
 `@Metered(name = "delete-requests")`.
 
+Collected 
+metrics are available on the following URL: http://localhost:8080/metrics
+
 ## Security
 
-We can restrict the access to REST endpoint with KumuluzEE Security extension. To include it, add the following 
+We can restrict access to the REST endpoint with the KumuluzEE Security extension. We will use Keycloak in this sample. To include it, add the following 
 dependency: 
 
 ```xml
@@ -1081,7 +1075,7 @@ dependency:
 
 To start and configure a Keycloak instance follow the tutorial on [KumuluzEE Security sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-security-keycloak#set-up-keycloack).
 
-Add the keycloak configuration into configuration file:
+Add the Keycloak configuration into the configuration file:
 
 ```yaml
 kumuluzee:
@@ -1097,7 +1091,7 @@ kumuluzee:
 
 ### Implement security
 
-First we have to enable the security using the `@DeclareRoles` annotation on the main application class of the REST 
+First, we have to enable the security using the `@DeclareRoles` annotation on the main application class of the REST 
 service:
 
 ```java
@@ -1117,10 +1111,8 @@ To restrict the access on the selected REST endpoint, use the `@RolesAllowed ` a
 public Response deleteCustomer(@PathParam("customerId") String customerId)
 ```
 
-To get access token, that you will then use for accessing secured endpoints, follow the [KumuluzEE Security sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-security-keycloak#test-security).
+To get the access token that you will use for accessing secured endpoints, follow the [KumuluzEE Security sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-security-keycloak#test-security).
 
 ## Conclusion
 
-In this tutorial we used KumuluzEE framework to build a microservice application composed of two microservices. We 
-used KumuluzEE extensions to provide functionalities for configuration, service discovery, fault tolerance, logging, 
-metrics collection and security. Complete source code can be found in the git repository.  
+In this tutorial, we have used the KumuluzEE framework to build a cloud-native microservice application composed of two microservices. We demonstrated how to use KumuluzEE extensions to provide microservice configuration, discovery, fault tolerance, logging, metrics collection and security. Source code can be found on the Github repository.  
