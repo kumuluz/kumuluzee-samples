@@ -17,7 +17,7 @@ We will use the following KumuluzEE extensions:
 - KumuluzEE Fault Tolerance for improving the resilience of microservices,
 - KumuluzEE Logs for advanced centralised logging, 
 - KumuluzEE Metrics for collection of performance metrics, 
-- KumuluzEE Security for securing developed REST endpoint.
+- KumuluzEE Security for securing developed REST endpoints.
 
 First, we will create a maven project that will hold both our microservices. We will then implements both 
 microservices and use KumuluzEE extensions to implement configuration, service discovery, fault tolerance, logging, 
