@@ -1079,8 +1079,7 @@ dependency:
 </dependency>
 ```
 
-To start and configure a Keycloak instance follow the tutorial on [KumuluzEE Security sample]
-(https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-security-keycloak#set-up-keycloack).
+To start and configure a Keycloak instance follow the tutorial on [KumuluzEE Security sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-security-keycloak#set-up-keycloack).
 
 Add the keycloak configuration into configuration file:
 
@@ -1118,8 +1117,7 @@ To restrict the access on the selected REST endpoint, use the `@RolesAllowed ` a
 public Response deleteCustomer(@PathParam("customerId") String customerId)
 ```
 
-To get access token, that you will then use for accessing secured endpoints, follow the [KumuluzEE Security sample]
-(https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-security-keycloak#test-security).
+To get access token, that you will then use for accessing secured endpoints, follow the [KumuluzEE Security sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-security-keycloak#test-security).
 
 ## Conclusion
 
