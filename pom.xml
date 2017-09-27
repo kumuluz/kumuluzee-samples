@@ -35,6 +35,7 @@
         <module>websocket</module>
         <module>kumuluzee-cors</module>
         <module>kumuluzee-health</module>
+        <module>tutorial-microservice-config-discovery-faulttolerance-logs-metrics-security</module>
     </modules>
     <packaging>pom</packaging>
 

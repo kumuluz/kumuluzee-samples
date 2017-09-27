@@ -1,0 +1,17 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=customer
+    ports:
+      - "5432:5432"
+  customer-service:
+    image: customer-service:1.0.0
+    environment:
+      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres:5432/customer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres

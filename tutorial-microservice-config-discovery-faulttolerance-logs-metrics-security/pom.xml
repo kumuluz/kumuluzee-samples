@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.kumuluz.ee.samples.tutorial</groupId>
+    <artifactId>kumuluzee-tutorial</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>customers</module>
+        <module>orders</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <kumuluzee.version>2.4.1</kumuluzee.version>
+        <kumuluzee-rest.version>1.1.0</kumuluzee-rest.version>
+        <kumuluzee-logs.version>1.3.0</kumuluzee-logs.version>
+        <kumuluzee-cors.version>1.0.0-SNAPSHOT</kumuluzee-cors.version>
+        <kumuluzee-config.version>1.0.0</kumuluzee-config.version>
+        <kumuluzee-discovery.version>1.1.0-SNAPSHOT</kumuluzee-discovery.version>
+        <kumuluzee-fault-tolerance.version>1.0.0-SNAPSHOT</kumuluzee-fault-tolerance.version>
+        <kumuluzee-metrics.version>1.0.0-SNAPSHOT</kumuluzee-metrics.version>
+        <kumuluzee-security.version>1.1.0-SNAPSHOT</kumuluzee-security.version>
+
+        <postgresql.version>42.1.4</postgresql.version>
+        <swagger.version>1.5.16</swagger.version>
+        <httpclient.version>4.5.3</httpclient.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>sonatype-snapshots</id>
+            <name>Sonatype Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+
+        <!-- KumuluzEE dependencies -->
+        <dependencies>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-bom</artifactId>
+                <version>${kumuluzee.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kumuluz.ee.rest</groupId>
+                <artifactId>kumuluzee-rest-core</artifactId>
+                <version>${kumuluzee-rest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.logs</groupId>
+                <artifactId>kumuluzee-logs-log4j2</artifactId>
+                <version>${kumuluzee-logs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.cors</groupId>
+                <artifactId>kumuluzee-cors</artifactId>
+                <version>${kumuluzee-cors.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.config</groupId>
+                <artifactId>kumuluzee-config-etcd</artifactId>
+                <version>${kumuluzee-config.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.discovery</groupId>
+                <artifactId>kumuluzee-discovery-etcd</artifactId>
+                <version>${kumuluzee-discovery.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.fault.tolerance</groupId>
+                <artifactId>kumuluzee-fault-tolerance-hystrix</artifactId>
+                <version>${kumuluzee-fault-tolerance.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.metrics</groupId>
+                <artifactId>kumuluzee-metrics-core</artifactId>
+                <version>${kumuluzee-metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.security</groupId>
+                <artifactId>kumuluzee-security-keycloak</artifactId>
+                <version>${kumuluzee-security.version}</version>
+            </dependency>
+
+            <!-- External dependencies -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-core</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-jersey2-jaxrs</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+
+            <!-- Project modules dependencies -->
+            <dependency>
+                <groupId>com.kumuluz.ee.samples.tutorial</groupId>
+                <artifactId>customers-api</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.samples.tutorial</groupId>
+                <artifactId>customers-business-logic</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.samples.tutorial</groupId>
+                <artifactId>customers-persistence</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.samples.tutorial</groupId>
+                <artifactId>orders-api</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.samples.tutorial</groupId>
+                <artifactId>orders-business-logic</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.samples.tutorial</groupId>
+                <artifactId>orders-persistence</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
