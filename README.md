@@ -34,6 +34,7 @@ The following samples are available (list might not be up-to-date; please refer 
 
 Tutorial:
 - Simple microservice tutorial (microservices-simple)
+- Cloud-native Java EE Microservices with KumuluzEE: REST service using config, discovery, security, metrics, logging and fault tolerance (tutorial-microservice-config-discovery-faulttolerance-logs-metrics-security)
 
 Java EE samples:
 - Bean Validation
@@ -51,6 +52,7 @@ KumuluzEE extensions - samples:
 - KumuluzEE Config
 - KumuluzEE Config with etcd
 - KumuluzEE Config with Consul
+- KumuluzEE MicroProfile Config
 - KumuluzEE Discovery with etcd
 - KumuluzEE Discovery with Consul
 - KumuluzEE Logs with Log4j2
