@@ -29,6 +29,7 @@ import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RequestScoped
@@ -46,7 +47,7 @@ public class CustomersBean {
 
     @Inject
     @DiscoverService(value = "order-service", environment = "dev", version = "*")
-    private String basePath;
+    private Optional<String> basePath;
 
     @Inject
     private RestProperties restProperties;
@@ -151,30 +152,33 @@ public class CustomersBean {
     @Timeout(value = 500)
     public List<Order> getOrders(String customerId) {
 
-        try {
-            HttpGet request = new HttpGet(basePath + "/v1/orders?where=customerId:EQ:" + customerId);
-            HttpResponse response = httpClient.execute(request);
+        if (basePath.isPresent()) {
+            try {
+                HttpGet request = new HttpGet(basePath.get() + "/v1/orders?where=customerId:EQ:" + customerId);
+                HttpResponse response = httpClient.execute(request);
 
-            int status = response.getStatusLine().getStatusCode();
+                int status = response.getStatusLine().getStatusCode();
 
-            if (status >= 200 && status < 300) {
-                HttpEntity entity = response.getEntity();
+                if (status >= 200 && status < 300) {
+                    HttpEntity entity = response.getEntity();
 
-                if (entity != null)
-                    return getObjects(EntityUtils.toString(entity));
-            } else {
-                String msg = "Remote server '" + basePath + "' is responded with status " + status + ".";
+                    if (entity != null)
+                        return getObjects(EntityUtils.toString(entity));
+                } else {
+                    String msg = "Remote server '" + basePath.get() + "' is responded with status " + status + ".";
+                    log.error(msg);
+                    throw new InternalServerErrorException(msg);
+                }
+
+            } catch (IOException e) {
+                String msg = e.getClass().getName() + " occured: " + e.getMessage();
                 log.error(msg);
                 throw new InternalServerErrorException(msg);
             }
-
-        } catch (IOException e) {
-            String msg = e.getClass().getName() + " occured: " + e.getMessage();
-            log.error(msg);
-            throw new InternalServerErrorException(msg);
+        } else {
+            log.error("Orders service not available");
         }
         return new ArrayList<>();
-
     }
 
     public List<Order> getOrdersFallback(String customerId) {
