@@ -32,6 +32,8 @@
         <module>servlet</module>
         <module>websocket</module>
         <module>kumuluzee-cors</module>
+        <module>kumuluzee-swagger</module>
+        <module>kumuluzee-openapi</module>
     </modules>
     <packaging>pom</packaging>
 
