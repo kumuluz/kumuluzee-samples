@@ -170,11 +170,10 @@ public class CustomerResource {
 
 ### Add JUL logging configuration
 
-The java.util.logging can be configured by changing the JRE logging configuration file located in 
-`JRE_DIRECTORY/lib/logging.properties` or by providing the location of the custom configuration file with system 
-property `-Djava.util.logging.config.file`.
+The default java.util.logging configuration can be overridden by providing the location of the custom configuration 
+file with system property `-Djava.util.logging.config.file`.
 
-In the directory `resources` create the file `logging.properties`: 
+In this sample in directory `resources` create file `logging.properties`: 
 
 ```
 # Default global logging level

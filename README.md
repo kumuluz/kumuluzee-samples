@@ -32,6 +32,10 @@ If you wish to use a snapshot version of KumuluzEE when running the samples, you
 
 The following samples are available (list might not be up-to-date; please refer to the actual list above):
 
+Tutorial:
+- Simple microservice tutorial (microservices-simple)
+- Cloud-native Java EE Microservices with KumuluzEE: REST service using config, discovery, security, metrics, logging and fault tolerance (tutorial-microservice-config-discovery-faulttolerance-logs-metrics-security)
+
 Java EE samples:
 - Bean Validation
 - JAX-RS
@@ -42,21 +46,26 @@ Java EE samples:
 - Servlet
 - Websocket
 - REST service over HTTPS
-- Simple microservice tutorial (microservices-simple)
+- Logging with JUL and KumuluzEE
 
-KumuluzEE extensions:
+KumuluzEE extensions - samples:
 - KumuluzEE Config
 - KumuluzEE Config with etcd
 - KumuluzEE Config with Consul
-- KumuluzEE Fault Tolerance with Hystrix
+- KumuluzEE MicroProfile Config
 - KumuluzEE Discovery with etcd
 - KumuluzEE Discovery with Consul
-- KumuluzEE Logs
+- KumuluzEE Logs with Log4j2
+- KumuluzEE Logs with JUL
 - KumuluzEE REST
 - KumuluzEE Security with Keycloak for REST services
 - KumuluzEE Security with Keycloak for CDI
+- KumuluzEE Fault Tolerance with Hystrix
 - KumuluzEE Event Streaming with Kafka
 - KumuluzEE Cors
+- KumuluzEE Metrics
+- KumuluzEE Health
+
 
 ## Requirements
 

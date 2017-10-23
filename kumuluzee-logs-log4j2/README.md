@@ -79,7 +79,7 @@ Therefore, first complete the existing JAX-RS sample tutorial, or clone the JAX-
 
 We will follow these steps:
 * Complete the tutorial for [KumuluzEE JAX-RS REST sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs) or clone the existing sample
-* Add Maven dependency
+* Add Maven dependencies
 * Add KumuluzEE Logs support
 * Add log4j2 logging configuration
 * Build the microservice
@@ -89,12 +89,16 @@ We will follow these steps:
 
 Since your existing starting point is the existing KumuluzEE JAX-RS REST sample, you should already have the dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` configured in `pom.xml`.
 
-Add the `kumuluzee-logs-log4j2` dependency:
+Add the `kumuluzee-cdi-weld` and `kumuluzee-logs-log4j2` dependencies:
 ```xml
+<dependency>
+    <groupId>com.kumuluz.ee</groupId>
+    <artifactId>kumuluzee-cdi-weld</artifactId>
+</dependency>
 <dependency>
     <groupId>com.kumuluz.ee.logs</groupId>
     <artifactId>kumuluzee-logs-log4j2</artifactId>
-     <version>${kumuluz-logs.version}</version>
+    <version>${kumuluz-logs.version}</version>
 </dependency>
 ```
 
@@ -166,7 +170,9 @@ public class CustomerResource {
 
 ### Add log4j2 logging configuration
 
-In the directory `resources` create the file `log4j2.xml`: 
+The default Log4j2 configuration can be overridden by providing custom configuration file.
+
+In this sample in directory `resources` create file `log4j2.xml`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
