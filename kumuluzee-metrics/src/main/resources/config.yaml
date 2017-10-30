@@ -3,37 +3,13 @@ kumuluzee:
   version: 1.0.0
   env:
     name: dev
-  discovery:
-    etcd:
-      hosts: http://192.168.29.181:2379
   metrics:
-    generic-registry-name: default
-    #enabled-registries: [default]
-    jvm:
-      enabled: true
-      registry-name: jvm
-    servlet:
-      enabled: true
-      mapping: /metrics
-    graphite:
-      address: 192.168.29.181
-      #port: 2003
-      period-s: 15
-      pickle: true
     logstash:
-      address: 192.168.29.181
+      enabled: false
+      address: 127.0.0.1
       port: 5043
       period-s: 15
-    prometheus:
-      mapping: /prometheus
     logs:
+      enabled: false
       period-s: 30
       level: INFO
-    web-instrumentation:
-      - name: metrics-endpoint
-        url-pattern: /metrics/*
-        registry-name: default
-      - name: prometheus-endpoint
-        url-pattern: /prometheus/*
-      - name: customers-endpoint
-        url-pattern: /v1/customers/*
