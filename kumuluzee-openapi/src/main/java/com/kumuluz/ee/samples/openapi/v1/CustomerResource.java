@@ -1,9 +1,10 @@
-package com.kumuluz.ee.samples.swagger.v1;
+package com.kumuluz.ee.samples.openapi.v1;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import com.kumuluz.ee.samples.openapi.Customer;
+import io.swagger.oas.annotations.Operation;
+import io.swagger.oas.annotations.media.Content;
+import io.swagger.oas.annotations.media.Schema;
+import io.swagger.oas.annotations.responses.ApiResponse;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,13 +21,14 @@ import java.util.List;
  * @since 2.5.0
  */
 @Path("customer")
-@Api
 @Produces(MediaType.APPLICATION_JSON)
 public class CustomerResource {
 
     @GET
-    @ApiOperation(value = "Get customers list", tags = {"customers"}, notes = "Returns a list of customers.")
-    @ApiResponses(value = {@ApiResponse(message = "List of customers", code = 200, response = Customer.class)})
+    @Operation(summary = "Get customers list", tags = {"customers"}, description = "Returns a list of customers.", responses = {
+            @ApiResponse(description = "List of customers", responseCode = "200", content = @Content(schema = @Schema(implementation =
+                    Customer.class)))
+    })
     public Response getCustomers() {
 
         List<Customer> customers = new ArrayList<>();
@@ -36,4 +38,5 @@ public class CustomerResource {
 
         return Response.status(Response.Status.OK).entity(customers).build();
     }
+
 }

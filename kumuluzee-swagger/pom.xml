@@ -17,7 +17,7 @@
     <description>KumuluzEE Swagger usage sample with KumuluzEE</description>
 
     <properties>
-        <kumuluzee-openAPI.varsion>1.0.0-SNAPSHOT</kumuluzee-openAPI.varsion>
+        <kumuluzee-swagger.varsion>1.0.0-SNAPSHOT</kumuluzee-swagger.varsion>
     </properties>
 
     <dependencyManagement>
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>com.kumuluz.ee.swagger</groupId>
             <artifactId>kumuluzee-swagger</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${kumuluzee-swagger.varsion}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -77,102 +77,30 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!--<plugin>
-                <groupId>com.github.kongchen</groupId>
-                <artifactId>swagger-maven-plugin</artifactId>
-                <version>3.1.5</version>
                 <configuration>
-                    <apiSources>
-                        <apiSource>
-                            <locations>com.kumuluz.ee.samples.swagger</locations>
-                            <info>
-                                <title>CustomerAPI</title>
-                                <version>1.0.0</version>
-                            </info>
-                            <basePath>/v1</basePath>
-                            <outputFormats>json,yaml</outputFormats>
-                            <swaggerFileName>swagger</swaggerFileName>
-                            <swaggerDirectory>${project.basedir}/src/main/resources/webapp/api-specs/v1</swaggerDirectory>
-                        </apiSource>
-                    </apiSources>
+                    <specificationConfig>
+                        <includeSwaggerUI>true</includeSwaggerUI>
+                        <apiSpecifications>
+                            <apiSpecification>
+                                <applicationPath>
+                                    v1
+                                </applicationPath>
+                                <resourcePackages>
+                                    com.kumuluz.ee.samples.swagger.v1
+                                </resourcePackages>
+                            </apiSpecification>
+                            <apiSpecification>
+                                <applicationPath>
+                                    v2
+                                </applicationPath>
+                                <resourcePackages>
+                                    com.kumuluz.ee.samples.swagger.v2
+                                </resourcePackages>
+                            </apiSpecification>
+                        </apiSpecifications>
+                    </specificationConfig>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>-->
-
-            <!--<plugin>
-                <groupId>com.googlecode.maven-download-plugin</groupId>
-                <artifactId>download-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <executions>
-                    <execution>
-                        <id>swagger-ui</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>wget</goal>
-                        </goals>
-                        <configuration>
-                            <url>https://github.com/swagger-api/swagger-ui/archive/v3.2.1.tar.gz</url>
-                            <unpack>true</unpack>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.7</version>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>src/main/resources/webapp/api-specs/ui</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.build.directory}/swagger-ui-3.2.1/dist</directory>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>-->
-            <!--<plugin>
-                <groupId>com.google.code.maven-replacer-plugin</groupId>
-                <artifactId>replacer</artifactId>
-                <version>1.5.3</version>
-                <executions>
-                    <execution>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>replace</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <ignoreMissingFile>false</ignoreMissingFile>
-                    <file>${basedir}/src/main/resources/webapp/swagger/index.html</file>
-                    <outputFile>${basedir}/src/main/resources/webapp/swagger/index.html</outputFile>
-                    <regex>false</regex>
-                    <replacements>
-                        <replacement>
-                            <token>http://petstore.swagger.io/v2/swagger.json</token>
-                            <value>/api-specs/v1/openapi.json</value>
-                        </replacement>
-                    </replacements>
-                </configuration>
-            </plugin>-->
         </plugins>
     </build>
 
