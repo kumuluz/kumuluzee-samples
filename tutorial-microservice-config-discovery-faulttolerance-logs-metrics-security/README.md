@@ -883,7 +883,7 @@ URL with simple injection:
 ```java
 @Inject
 @DiscoverService(value = "order-service", environment = "dev", version = "*")
-private String basePath;
+private Optional<String> basePath;
 ```
 
 We can now remove manual wiring from the `init()` method.
