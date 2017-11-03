@@ -13,3 +13,8 @@ kumuluzee:
       enabled: false
       period-s: 30
       level: INFO
+    web-instrumentation:
+      - name: metricsEndpoint
+        url-pattern: /metrics/*
+      - name: customersEndpoint
+        url-pattern: /v1/customers/*

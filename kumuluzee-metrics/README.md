@@ -89,6 +89,7 @@ sample
 * Add Maven dependencies
 * Add metrics collectors (counters, meters, timers,...)
 * Add configuration
+* Add Web Application Instrumentation
 * Configure the servlet
 * Configure the Logstash reporter
 * Configure the Logs reporter
@@ -208,6 +209,22 @@ kumuluzee:
   version: 1.0.0
   environment:
     name: dev
+```
+
+### Add web application instrumentation
+
+Let's add web instrumentation, that monitors requests and responses at a certain url. We will define two endpoints;
+one monitoring `/metrics` endpoint and one monitoring `/v1/customers` endpoint. We can do that by simply adding the 
+following lines to the config file:
+
+```yaml
+kumuluzee:
+    metrics:
+        webinstrumentation:
+          - name: metricsEndpoint
+            url-pattern: /metrics/*
+          - name: customersEndpoint
+            url-pattern: /v1/customers/*
 ```
 
 ### Configure the servlet
