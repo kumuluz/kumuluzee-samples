@@ -101,7 +101,7 @@ Since your existing starting point is the existing KumuluzEE JAX-RS REST sample,
 dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` configured
 in `pom.xml`.
 
-Add the `kumuluzee-cdi-weld` and `kumuluzee-metrics` dependencies:
+Add the `kumuluzee-cdi-weld` and `kumuluzee-metrics-core` dependencies:
 ```xml
 <dependency>
     <groupId>com.kumuluz.ee</groupId>
@@ -109,7 +109,7 @@ Add the `kumuluzee-cdi-weld` and `kumuluzee-metrics` dependencies:
 </dependency>
 <dependency>
     <groupId>com.kumuluz.ee.metrics</groupId>
-    <artifactId>kumuluzee-metrics</artifactId>
+    <artifactId>kumuluzee-metrics-core</artifactId>
     <version>${kumuluzee-metrics.version}</version>
 </dependency>
 ```
