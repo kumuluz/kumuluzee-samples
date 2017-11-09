@@ -159,7 +159,7 @@ More information about [KumuluzEE Config MicroProfile](https://github.com/kumulu
 ### Add metrics collectors 
 
 In this step we will use Eclipse MicroProfile Metrics API to equip or microservice with a few metrics collectors. We 
-will use annotations `@Timed`, `@Metered` and `@Gauge` to collect metrics on selected methods in CustomerResource class.
+will use annotations `@Timed`, `@Metered` and `@Gauge` to collect metrics on selected methods in `CustomerResource` class.
 
 ```java
 @Consumes(MediaType.APPLICATION_JSON)
