@@ -1,4 +1,4 @@
-# KumuluzEE Config sample for built-in configuration sources
+# KumuluzEE JWT Auth sample
 
 > Build a REST service which utilizes a build-in configuration framework to access environmental variables and 
 configuration files and pack it as a KumuluzEE microservice
