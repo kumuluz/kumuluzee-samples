@@ -18,11 +18,38 @@
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
 */
-package com.kumuluz.ee.samples.kumuluzee_metrics;
+package com.kumuluz.ee.samples.kumuluzee_microProfile_12;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import java.util.ArrayList;
+import java.util.List;
 
-@ApplicationPath("v1")
-public class CustomerApplication extends Application {
+public class Database {
+    private static List<Customer> customers = new ArrayList<>();
+
+    public static List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public static Customer getCustomer(int customerId) {
+        for (Customer customer : customers) {
+            if (customer.getId() == customerId)
+                return customer;
+        }
+
+        return null;
+    }
+
+    public static Customer addCustomer(Customer customer) {
+        customers.add(customer);
+        return customer;
+    }
+
+    public static void deleteCustomer(int customerId) {
+        for (Customer customer : customers) {
+            if (customer.getId() == customerId) {
+                customers.remove(customer);
+                break;
+            }
+        }
+    }
 }

@@ -34,9 +34,12 @@
         <module>servlet</module>
         <module>websocket</module>
         <module>kumuluzee-cors</module>
+        <module>kumuluzee-swagger</module>
+        <module>kumuluzee-openapi</module>
         <module>kumuluzee-health</module>
         <module>tutorial-microservice-config-discovery-faulttolerance-logs-metrics-security</module>
         <module>kumuluzee-jwt-auth</module>
+        <module>kumuluzee-microProfile-1.2</module>
     </modules>
     <packaging>pom</packaging>
 

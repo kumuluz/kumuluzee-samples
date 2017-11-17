@@ -71,7 +71,7 @@ The example uses maven to build and run the microservices.
     
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource - http://localhost:8080/v1/customers
-* Metrics JSON - http://localhost:8080/metrics
+* Metrics JSON & Prometheus - http://localhost:8080/metrics
 
 To shut down the example simply stop the processes in the foreground.
 
@@ -90,12 +90,9 @@ sample
 * Add metrics collectors (counters, meters, timers,...)
 * Add configuration
 * Add Web Application Instrumentation
-* Add JVM instrumentation
-* Configure a servlet
-* Configure Graphite
-* Configure Prometheus
-* Configure Logstash
-* Configure Logs
+* Configure the servlet
+* Configure the Logstash reporter
+* Configure the Logs reporter
 * Build the microservice and run it
 
 ### Add Maven dependencies
@@ -104,7 +101,7 @@ Since your existing starting point is the existing KumuluzEE JAX-RS REST sample,
 dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` configured
 in `pom.xml`.
 
-Add the `kumuluzee-cdi-weld` and `kumuluzee-metrics` dependencies:
+Add the `kumuluzee-cdi-weld` and `kumuluzee-metrics-core` dependencies:
 ```xml
 <dependency>
     <groupId>com.kumuluz.ee</groupId>
@@ -112,26 +109,26 @@ Add the `kumuluzee-cdi-weld` and `kumuluzee-metrics` dependencies:
 </dependency>
 <dependency>
     <groupId>com.kumuluz.ee.metrics</groupId>
-    <artifactId>kumuluzee-metrics</artifactId>
+    <artifactId>kumuluzee-metrics-core</artifactId>
     <version>${kumuluzee-metrics.version}</version>
 </dependency>
 ```
 
 ### Add metrics colectors (counters, meters, timers,...)
 
-Our application will consist of two beans: `CustomerBean` will implement business logic and `CustomerResource` will 
-implement REST resource that exposes business logic. 
-
-Let's first define some monitoring tools to collect a few of the metrics in our `CustomerBean` class. We'll add two
+Let's first define some monitoring tools to collect a few of the metrics in our `CustomerResource` class. We'll add two
 meters, that monitor the rate at which the customers are being added and removed. We define them either by annotating
 the method with `@Metered`, or by creating a `Meter` object and then calling the `mark()` method every time the add or
 remove methods are being called. Let's also measure the time it takes for the method to execute. We can do that by
 adding the `@Timed` annotation to the method. We'll also add two more tools in this example, a counter and a histogram.
-Here is a code snippet of the example bean, which illustrates the usage of mentioned tools:
+Here is a code snippet of the example resource bean, which illustrates the usage of mentioned tools:
 
 ```java
-@ApplicationScoped
-public class CustomerBean {
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("customers")
+@RequestScoped
+public class CustomerResource {
 
     @Inject
     @Metric(name = "customer_counter")
@@ -145,94 +142,58 @@ public class CustomerBean {
     @Metric(name = "customer_adding_meter")
     private Meter addMeter;
 
-    public List getAllCustomers() {
-        List<Customer> customers = Database.getCustomers();
-        getCustomerCount();
-        return customers;
-    }
-
-    public Customer getCustomer(int customerId) {
-        Customer customer = Database.getCustomer(customerId);
-        nameLength.update(customer.getFirstName().length());
-        return customer;
-    }
-
-    @Timed(name = "add-sample-names-timer")
-    public void addSampleNames() {
-        Database.addCustomer(new Customer(Database.getCustomers().size(), "Daniel", "Ornelas"));
-        Database.addCustomer(new Customer(Database.getCustomers().size(), "Dennis", "McBride"));
-        Database.addCustomer(new Customer(Database.getCustomers().size(), "Walter", "Wright"));
-        Database.addCustomer(new Customer(Database.getCustomers().size(), "Mitchell", "Kish"));
-        Database.addCustomer(new Customer(Database.getCustomers().size(), "Tracy", "Edwards"));
-        addMeter.mark(5);
-        customerCounter.inc(5);
-    }
-
-    public void addNewCustomer(Customer customer) {
-        addMeter.mark();
-        customerCounter.inc();
-        Database.addCustomer(customer);
-    }
-
-    @Gauge(name = "customer_count_gauge")
-    private int getCustomerCount() {
-        return Database.getCustomers().size();
-    }
-
-    @Metered(name = "customer_deleting_meter")
-    public void deleteCustomer(int customerId) {
-        customerCounter.dec();
-        Database.deleteCustomer(customerId);
-    }
-}
-```
-
-Class `CustomerResource` exposes business logic in form of REST endpoints. Its implementation is shown in the snippet 
-bellow. 
-
-```java
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-@Path("customers")
-@RequestScoped
-public class CustomerResource {
-
-    @Inject
-    private CustomerBean customerBean;
-
     @GET
     public Response getAllCustomers() {
-        List<Customer> customers = customerBean.getAllCustomers();
+        List<Customer> customers = Database.getCustomers();
+        getCustomerCount();
         return Response.ok(customers).build();
     }
 
     @GET
     @Path("{customerId}")
     public Response getCustomer(@PathParam("customerId") int customerId) {
-        Customer customer = customerBean.getCustomer(customerId);
-        return customer != null
-                ? Response.ok(customer).build()
-                : Response.status(Response.Status.NOT_FOUND).build();
+        Customer customer = Database.getCustomer(customerId);
+        if(customer != null) {
+            return Response.ok(customer).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @GET
     @Path("add-sample-names")
+    @Timed(name = "add-sample-names-timer")
     public Response addSampleNames() {
-        customerBean.addSampleNames();
+        addNewCustomer(new Customer(Database.getCustomers().size(), "Daniel", "Ornelas"));
+        addNewCustomer(new Customer(Database.getCustomers().size(), "Dennis", "McBride"));
+        addNewCustomer(new Customer(Database.getCustomers().size(), "Walter", "Wright"));
+        addNewCustomer(new Customer(Database.getCustomers().size(), "Mitchell", "Kish"));
+        addNewCustomer(new Customer(Database.getCustomers().size(), "Tracy", "Edwards"));
+
         return Response.noContent().build();
     }
 
     @POST
     public Response addNewCustomer(Customer customer) {
-        customerBean.addNewCustomer(customer);
+        addMeter.mark();
+        customerCounter.inc();
+        nameLength.update(customer.getFirstName().length());
+        Database.addCustomer(customer);
         return Response.noContent().build();
     }
 
     @DELETE
     @Path("{customerId}")
+    @Metered(name = "customer_deleting_meter")
     public Response deleteCustomer(@PathParam("customerId") int customerId) {
-        customerBean.deleteCustomer(customerId);
+        customerCounter.dec();
+        Database.deleteCustomer(customerId);
         return Response.noContent().build();
+    }
+
+    @Gauge(name = "customer_count_gauge", unit = MetricUnits.NONE)
+    private int getCustomerCount() {
+        return Database.getCustomers().size();
     }
 }
 ```
@@ -246,119 +207,162 @@ Here is a sample config that sets a few service parameters:
 kumuluzee:
   name: metrics-sample
   version: 1.0.0
+  environment:
+    name: dev
 ```
-
-You can also change the name of a default registry, by setting the `kumuluzee.metrics.genericregistryname` parameter. 
-The default name is `default`.
 
 ### Add web application instrumentation
 
-Let's add the web instrumentation, that monitors requests and responses at a certain url. We will define two endpoints;
-one monitoring `/metrics` endpoint and one monitoring `/prometheus` endpoint. We can do that by simply adding the 
-following lines to the config:
+Let's add web instrumentation, that monitors requests and responses at a certain url. We will define two endpoints;
+one monitoring `/metrics` endpoint and one monitoring `/v1/customers` endpoint. We can do that by simply adding the 
+following lines to the config file:
 
 ```yaml
 kumuluzee:
     metrics:
         webinstrumentation:
-          - name: metrics-endpoint
-            urlpattern: /metrics/*
-            registryname: default
-          - name: prometheus-endpoint
-            urlpattern: /prometheus/*
+          - name: metricsEndpoint
+            url-pattern: /metrics/*
+          - name: customersEndpoint
+            url-pattern: /v1/customers/*
 ```
 
-### Add JVM instrumentation
-
-The module includes monitroing tools collecting JVM metrics that can be enabled in the config. 
-You can enable/disable JVM monitoring by setting the `kumuluzee.metrics.jvm.enabled` parameter, which is set to `true` by default. 
-You can also change the name of the registry that JVM metrics are grouped under by setting the `kumuluzee
-.metrics.jvm.registry` parameter.
-
-### Configure a servlet
+### Configure the servlet
 
 It's time to look at the metrics we collected. The servlet for exporting metrics is already built in and enabled by 
 default in development environment or in debug mode. The metrics can be seen at http://localhost:8080/metrics. The 
 servlet can also be disabled or remapped in the config by setting the `kumuluzee.metrics.servlet.enabled` and 
 `kumuluzee.metrics.servlet.mapping` respectively.
 
-Here is an example output:
+Servlet exposes the following endpoints:
+- GET /metrics - All collected metrics. If the `Accept` header is set to `application/json`, servlet returns metrics in
+  JSON format. Otherwise, servlet returns metrics in Prometheus format.
+- OPTIONS /metrics - Metadata about the collected metrics.
+
+Here is an example output of GET request on the `/metrics` endpoint with the `Accept` header set to `application/json`:
 ```json
 {
-  "service" : {
-    "timestamp" : "2017-07-13T16:12:07.309Z",
-    "environment" : "dev",
-    "name" : "metrics-sample",
-    "version" : "0.0.7",
-    "instance" : "da13c65e-8357-44a5-ba25-466868cd205c",
-    "availableRegistries" : [ "jvm", "default", "registry3" ]
-  },
-  "registries" : {
-    "jvm" : {
-      "version" : "3.1.3",
-      "gauges" : {
-        "GarbageCollector.PS-MarkSweep.count" : {
-          "value" : 1
+    "application": {
+        "com.kumuluz.ee.samples.kumuluzee_metrics.CustomerResource.add-sample-names-timer": {
+            "count": 3,
+            "meanRate": 0.01609796426559552,
+            "oneMinRate": 0.029872241020718428,
+            "fiveMinRate": 0.32928698165641596,
+            "fifteenMinRate": 0.4912384518467888,
+            "min": 156867,
+            "max": 3457480,
+            "mean": 1271679,
+            "stddev": 1545698.2505290825,
+            "p50": 200690,
+            "p75": 3457480,
+            "p95": 3457480,
+            "p98": 3457480,
+            "p99": 3457480,
+            "p999": 3457480
+        },
+        "com.kumuluz.ee.samples.kumuluzee_metrics.CustomerResource.customer_deleting_meter": {
+            "count": 1,
+            "meanRate": 0.05720811542737377,
+            "oneMinRate": 0.16929634497812282,
+            "fiveMinRate": 0.1934432200964012,
+            "fifteenMinRate": 0.19779007785878447
+        },
+        "com.kumuluz.ee.samples.kumuluzee_metrics.CustomerResource.customer_count_gauge": 14,
+        "com.kumuluz.ee.samples.kumuluzee_metrics.CustomerResource.customer_adding_meter": {
+            "count": 15,
+            "meanRate": 0.08048839766795181,
+            "oneMinRate": 0.1493612051035921,
+            "fiveMinRate": 1.6464349082820788,
+            "fifteenMinRate": 2.456192259233944
+        },
+        "com.kumuluz.ee.samples.kumuluzee_metrics.CustomerResource.customer_counter": 14,
+        "com.kumuluz.ee.samples.kumuluzee_metrics.CustomerResource.first_name_length_histogram": {
+            "count": 15,
+            "min": 5,
+            "max": 8,
+            "mean": 6.199999999999999,
+            "stddev": 0.9797958971132713,
+            "p50": 6,
+            "p75": 6,
+            "p95": 8,
+            "p98": 8,
+            "p99": 8,
+            "p999": 8
         }
-      }
     },
-    "default" : {
-      "version" : "3.1.3",
-      "gauges" : {
-        "com.kumuluz.ee.samples.kumuluzee_metrics.CustomerResource.customer_count_gauge" : {
-          "value" : 5
-        }
-      },
-      "meters" : {
-        "ServletMetricsFilter.metrics-endpoint.responseCodes.ok" : {
-          "count" : 2,
-          "m15_rate" : 0.002179735240776932,
-          "m1_rate" : 0.025690219862652606,
-          "m5_rate" : 0.006296838645263653,
-          "mean_rate" : 0.0015924774955522764,
-          "units" : "events/second"
-        }
-        }
+    "base": {
+        "memory.committedHeap": 304611328,
+        "thread.daemon.count": 12,
+        "gc.PS-MarkSweep.count": 1,
+        "classloader.totalLoadedClass.count": 4402,
+        "thread.count": 18,
+        "gc.PS-Scavenge.count": 3,
+        "classloader.totalUnloadedClass.count": 0,
+        "memory.maxHeap": 3713531904,
+        "gc.PS-Scavenge.time": 42,
+        "gc.PS-MarkSweep.time": 44,
+        "memory.usedHeap": 34963072,
+        "jvm.uptime": 200420
     }
 }
 ```
 
-### Configure Prometheus reporter
+As you can see, our custom defined metrics are reported in the `application` registry. Metrics about the JVM, memory
+usage and other system metrics are automatically collected and reported in the `base` registry.
 
-The reporter can export metrics in the Prometheus format. First add a dependency:
-```xml
-<dependency>
-    <groupId>com.kumuluz.ee.metrics</groupId>
-    <artifactId>kumuluzee-metrics-prometheus</artifactId>
-    <version>${kumuluzee-metrics.version}</version>
-</dependency>
+More information about the metrics can be acquired by making an OPTIONS request on the `/metrics` endpoint with the
+`Accept` header set to `application/json`. Here is an example output:
+
+```json
+{
+    "application": {
+        "com.kumuluz.ee.samples.kumuluzee_metrics.CustomerResource.add-sample-names-timer": {
+            "unit": "nanoseconds",
+            "type": "counter",
+            "description": "",
+            "displayName": "",
+            "tags": ""
+        },
+        "com.kumuluz.ee.samples.kumuluzee_metrics.CustomerResource.customer_deleting_meter": {
+            "unit": "per_second",
+            "type": "counter",
+            "description": "",
+            "displayName": "",
+            "tags": ""
+        },
+        ...
+    },
+    "base": {
+        "memory.committedHeap": {
+            "unit": "bytes",
+            "type": "gauge",
+            "description": "Displays the amount of memory in bytes that is committed for the Java virtual machine to use. This amount of memory is guaranteed for the Java virtual machine to use.",
+            "displayName": "Committed Heap Memory",
+            "tags": ""
+        },
+        "thread.count": {
+            "unit": "none",
+            "type": "counter",
+            "description": "Displays the current number of live threads including both daemon and non-daemon threads",
+            "displayName": "Thread Count",
+            "tags": ""
+        },
+        "jvm.uptime": {
+            "unit": "milliseconds",
+            "type": "gauge",
+            "description": "Displays the start time of the Java virtual machine in milliseconds. This attribute displays the approximate time when the Java virtual machine started.",
+            "displayName": "JVM Uptime",
+            "tags": ""
+        },
+        ...
+    }
+}
 ```
 
-The servlet can be disabled or remapped in the configuration by setting the `kumuluzee.metrics.prometheus.enabled` and 
-`kumuluzee.metrics.prometheus.mapping` respectively.
+### Configure the Logs reporter
 
-Prometheus has to be configured to collect the exported metrics.
-
-### Configure Graphite reporter
-
-A reporter for Graphite can be configured. We first add a dependency:
-```xml
-<dependency>
-    <groupId>com.kumuluz.ee.metrics</groupId>
-    <artifactId>kumuluzee-metrics-graphite</artifactId>
-    <version>${kumuluzee-metrics.version}</version>
-</dependency>
-```
-
-You can set it up in the configuration, by enabling it (`kumuluzee.metrics.graphite.enabled`) and defining its address 
-(`kumuluzee.metrics.graphite.address`), the time period (`kumuluzee.metrics.graphite.periods`) and whether or not you 
-want to use the [pickle protocol](http://graphite.readthedocs.io/en/latest/feeding-carbon.html#the-pickle-protocol) 
-(`kumuluzee.metrics.graphite.pickle`). You can also define graphite port (`kumuluzee.metrics.graphite.port`), otherwise 
-the port will be set to `2003` or `2004` if `pickle` is set to true.
-
-### Configure Logs
-
-A reporter for automatically reporting metrics to the available logging framework can be configured. Lets first add a dependency:
+A reporter that automatically reports metrics to the available logging framework can be configured.
+Lets first add a dependency:
 
 ```xml
 <dependency>
@@ -368,10 +372,10 @@ A reporter for automatically reporting metrics to the available logging framewor
 </dependency>
 ```
 
-You can set it up in the configuration by enabling it (`kumuluzee.metrics.logs.enabled`) and defining the logging level (`kumuluzee.metrics.logstash.level`) and the time period 
-(`kumuluzee.metrics.logstash.period-s`).
+You can set it up in the configuration by enabling it (`kumuluzee.metrics.logs.enabled`) and defining the logging
+level (`kumuluzee.metrics.logstash.level`) and the time period (`kumuluzee.metrics.logstash.period-s`).
 
-### Configure Logstash reporter
+### Configure the Logstash reporter
 
 A reporter for automatically reporting metrics to Logstash can be configured. Lets first add a dependency:
 

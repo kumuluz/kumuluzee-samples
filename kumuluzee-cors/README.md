@@ -1,6 +1,6 @@
 # KumuluzEE CORS sample
 
-> Develop a microservice application with suport fot Cross Origin.
+> Develop a microservice application with support for Cross Origin.
 
 The objective of this sample is to show how to develop a servlet or JAX-RS application with support for Cross Origin Access. The tutorial will guide you through the necessary steps. You will add KumuluzEE dependencies into pom.xml. To enable support for CORS you will use kumuluzee-cors extension. 
 Required knowledge: basic familiarity with servlets and JAX-RS.

@@ -1,11 +1,12 @@
 package com.kumuluz.ee.samples.tutorial.customers.api.v1.resources;
 
-import com.codahale.metrics.annotation.Metered;
+
 import com.kumuluz.ee.logs.cdi.Log;
 import com.kumuluz.ee.samples.tutorial.customers.Customer;
 import com.kumuluz.ee.samples.tutorial.customers.cdi.CustomersBean;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.eclipse.microprofile.metrics.annotation.Metered;
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;

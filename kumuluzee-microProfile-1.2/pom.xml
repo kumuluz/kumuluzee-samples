@@ -9,13 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>kumuluzee-cors</artifactId>
-
-    <name>KumuluzEE CORS sample</name>
-    <description>KumuluzEE CORS usage sample with KumuluzEE</description>
+    <artifactId>kumuluzee-microProfile-1.2</artifactId>
 
     <properties>
-        <kumuluzee-cors.varsion>1.0.0-SNAPSHOT</kumuluzee-cors.varsion>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencyManagement>
@@ -33,36 +32,7 @@
     <dependencies>
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-servlet-jetty</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-jax-rs-jersey</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-cdi-weld</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.kumuluz.ee.cors</groupId>
-            <artifactId>kumuluzee-cors</artifactId>
-            <version>${kumuluzee-cors.varsion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
-            <version>1.7.25</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
+            <artifactId>kumuluzee-microProfile-1.2</artifactId>
         </dependency>
     </dependencies>
 

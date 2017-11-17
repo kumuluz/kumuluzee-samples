@@ -18,16 +18,16 @@
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
 */
-package com.kumuluz.ee.samples.kumuluzee_metrics;
+package com.kumuluz.ee.samples.kumuluzee_microProfile_12;
 
-
-import org.eclipse.microprofile.metrics.Counter;
-import org.eclipse.microprofile.metrics.Histogram;
-import org.eclipse.microprofile.metrics.Meter;
+import com.kumuluz.ee.fault.tolerance.annotations.CircuitBreaker;
+import com.kumuluz.ee.fault.tolerance.annotations.CommandKey;
+import com.kumuluz.ee.fault.tolerance.annotations.GroupKey;
+import com.kumuluz.ee.fault.tolerance.annotations.Timeout;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Gauge;
 import org.eclipse.microprofile.metrics.annotation.Metered;
-import org.eclipse.microprofile.metrics.annotation.Metric;
 import org.eclipse.microprofile.metrics.annotation.Timed;
 
 import javax.enterprise.context.RequestScoped;
@@ -35,38 +35,27 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("customers")
 @RequestScoped
+@GroupKey("customers")
 public class CustomerResource {
 
     @Inject
-    @Metric(name = "customer_counter")
-    private Counter customerCounter;
-
-    @Inject
-    @Metric(name = "first_name_length_histogram")
-    private Histogram nameLength;
-
-    @Inject
-    @Metric(name = "customer_adding_meter")
-    private Meter addMeter;
+    private JsonWebToken principal;
 
     @GET
     public Response getAllCustomers() {
-        List<Customer> customers = Database.getCustomers();
-        getCustomerCount();
-        return Response.ok(customers).build();
+        return Response.ok(Database.getCustomers()).build();
     }
 
     @GET
     @Path("{customerId}")
     public Response getCustomer(@PathParam("customerId") int customerId) {
         Customer customer = Database.getCustomer(customerId);
-        if(customer != null) {
+        if (customer != null) {
             return Response.ok(customer).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -87,10 +76,10 @@ public class CustomerResource {
     }
 
     @POST
+    @CommandKey("add-customer")
+    @Timeout
+    @CircuitBreaker
     public Response addNewCustomer(Customer customer) {
-        addMeter.mark();
-        customerCounter.inc();
-        nameLength.update(customer.getFirstName().length());
         Database.addCustomer(customer);
         return Response.noContent().build();
     }
@@ -99,7 +88,6 @@ public class CustomerResource {
     @Path("{customerId}")
     @Metered(name = "customer_deleting_meter")
     public Response deleteCustomer(@PathParam("customerId") int customerId) {
-        customerCounter.dec();
         Database.deleteCustomer(customerId);
         return Response.noContent().build();
     }

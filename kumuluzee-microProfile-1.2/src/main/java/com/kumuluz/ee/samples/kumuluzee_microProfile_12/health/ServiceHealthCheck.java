@@ -18,11 +18,33 @@
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
 */
-package com.kumuluz.ee.samples.kumuluzee_metrics;
+package com.kumuluz.ee.samples.kumuluzee_microProfile_12.health;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.health.Health;
+import org.eclipse.microprofile.health.HealthCheck;
+import org.eclipse.microprofile.health.HealthCheckResponse;
 
-@ApplicationPath("v1")
-public class CustomerApplication extends Application {
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+@Health
+@ApplicationScoped
+public class ServiceHealthCheck implements HealthCheck {
+
+    @Inject
+    @ConfigProperty(name = "healthy")
+    private Provider<Boolean> isHealthy;
+
+    @Override
+    public HealthCheckResponse call() {
+
+        if (isHealthy.get()) {
+            return HealthCheckResponse.named(ServiceHealthCheck.class.getSimpleName()).up().build();
+        } else {
+            return HealthCheckResponse.named(ServiceHealthCheck.class.getSimpleName()).down().build();
+        }
+
+    }
 }

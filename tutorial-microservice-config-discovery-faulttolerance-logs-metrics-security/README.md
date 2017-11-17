@@ -883,7 +883,7 @@ URL with simple injection:
 ```java
 @Inject
 @DiscoverService(value = "order-service", environment = "dev", version = "*")
-private String basePath;
+private Optional<String> basePath;
 ```
 
 We can now remove manual wiring from the `init()` method.
@@ -1027,7 +1027,9 @@ TRACE ENTRY[ METHOD ] Entering method. {applicationName=customer-service, applic
 
 ## Metrics
 
-If we want to monitor the performance of our microservices, we can add the KumuluzEE Metrics extension: 
+If we want to monitor the performance of our microservices, we can add the KumuluzEE Metrics extension, which implements
+the [Eclipse MicroProfile Metrics](https://github.com/eclipse/microprofile-metrics) specification. To enable metrics 
+collection include the following dependency: 
 
 ```xml
 <dependency>
@@ -1037,8 +1039,9 @@ If we want to monitor the performance of our microservices, we can add the Kumul
 </dependency>
 ```
 
-KumuluzEE Metrics automatically collects the performance metrics of JVM, http calls to specified endpoints and other user-defined metrics. Collected 
-metrics are available on the following URL: http://localhost:8080/metrics
+KumuluzEE Metrics automatically collects the performance metrics of JVM, http calls to specified endpoints and other 
+user-defined metrics. Collected metrics are available on the following URL: `http://localhost:8080/metrics`. By default, 
+metrics are exposed in a Prometheus format. To get metrics as a JSON object, add header `Accept: application/json`.
 
 ### Web instrumentation
 
@@ -1049,16 +1052,12 @@ metrics:
   web-instrumentation:
     - name: customers-endpoint
       url-pattern: /v1/customers/*
-      registry-name: customersRegistry
 ```
 
 ### Custom metrics
 
 We can monitor the number of deleted customers by annotating the `deleteCustomer` method with 
 `@Metered(name = "delete-requests")`.
-
-Collected 
-metrics are available on the following URL: http://localhost:8080/metrics
 
 ## Security
 

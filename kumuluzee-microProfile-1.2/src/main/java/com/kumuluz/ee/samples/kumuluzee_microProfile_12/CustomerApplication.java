@@ -18,7 +18,7 @@
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
 */
-package com.kumuluz.ee.samples.kumuluzee_metrics;
+package com.kumuluz.ee.samples.kumuluzee_microProfile_12;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

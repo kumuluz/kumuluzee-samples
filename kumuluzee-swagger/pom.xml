@@ -9,13 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>kumuluzee-cors</artifactId>
+    <artifactId>kumuluzee-swagger</artifactId>
 
-    <name>KumuluzEE CORS sample</name>
-    <description>KumuluzEE CORS usage sample with KumuluzEE</description>
+    <packaging>jar</packaging>
+
+    <name>KumuluzEE Swagger sample</name>
+    <description>KumuluzEE Swagger usage sample with KumuluzEE</description>
 
     <properties>
-        <kumuluzee-cors.varsion>1.0.0-SNAPSHOT</kumuluzee-cors.varsion>
+        <kumuluzee-swagger.varsion>1.0.0-SNAPSHOT</kumuluzee-swagger.varsion>
     </properties>
 
     <dependencyManagement>
@@ -43,17 +45,12 @@
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-jax-rs-jersey</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-cdi-weld</artifactId>
-        </dependency>
 
         <dependency>
-            <groupId>com.kumuluz.ee.cors</groupId>
-            <artifactId>kumuluzee-cors</artifactId>
-            <version>${kumuluzee-cors.varsion}</version>
+            <groupId>com.kumuluz.ee.swagger</groupId>
+            <artifactId>kumuluzee-swagger</artifactId>
+            <version>${kumuluzee-swagger.varsion}</version>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
@@ -80,6 +77,29 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <specificationConfig>
+                        <includeSwaggerUI>true</includeSwaggerUI>
+                        <apiSpecifications>
+                            <apiSpecification>
+                                <applicationPath>
+                                    v1
+                                </applicationPath>
+                                <resourcePackages>
+                                    com.kumuluz.ee.samples.swagger.v1
+                                </resourcePackages>
+                            </apiSpecification>
+                            <apiSpecification>
+                                <applicationPath>
+                                    v2
+                                </applicationPath>
+                                <resourcePackages>
+                                    com.kumuluz.ee.samples.swagger.v2
+                                </resourcePackages>
+                            </apiSpecification>
+                        </apiSpecifications>
+                    </specificationConfig>
+                </configuration>
             </plugin>
         </plugins>
     </build>

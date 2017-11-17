@@ -1,0 +1,13 @@
+kumuluzee:
+  name: microProfile-1.2-sample
+  version: 1.0.0
+  env:
+    name: dev
+  metrics:
+    web-instrumentation:
+      - name: customersEndpoint
+        url-pattern: /v1/customers/*
+  jwt-auth:
+      public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnOTgnGBISzm3pKuG8QXMVm6eEuTZx8Wqc8D9gy7vArzyE5QC/bVJNFwlz...
+      issuer: http://example.org/auth
+healthy: true
