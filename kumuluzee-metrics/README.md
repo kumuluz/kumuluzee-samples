@@ -220,7 +220,7 @@ following lines to the config file:
 ```yaml
 kumuluzee:
     metrics:
-        webinstrumentation:
+        web-instrumentation:
           - name: metricsEndpoint
             url-pattern: /metrics/*
           - name: customersEndpoint
