@@ -115,7 +115,7 @@ Implement a class which implements `HealthCheck` and is annotated with `@Health`
 should contain a method call() which executes health check. The bean will be registered to the HealthRegistry 
 automatically and called either by accessing health servlet or by periodic health checks which are logged to the logs.
 
-Sample implementation of such a class:
+Sample implementation of such a class (which could also be checked by a built in RestHealthCheck):
 
 ```java
 import org.eclipse.microprofile.health.Health;
