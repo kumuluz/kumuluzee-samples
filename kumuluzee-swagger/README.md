@@ -253,6 +253,10 @@ By default Swagger-UI (visualization of specification) is not included in the bu
 http://localhost:8080/api-specs/ui
 
 
+### Runtime configuration
+By default api-specs will be generated and exposed on /api-specs url. To disable swagger definitions and UI in runtime you can use configuration property **kumuluzee.swagger.enabled** and set it to false (see example in **config.yaml**).
+
+
 ### Build the microservice and run it
 
 To build the microservice and run the example, use the commands as described in previous sections.

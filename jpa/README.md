@@ -320,7 +320,7 @@ In the directory `resources/META-INF` create the file `persistence.xml`:
 
 Modify the element `class` in the above example, to reflect the package and class name of entity `Customer` in your source code structure.
 
-In the directory `resources/META-INF` add the file `config.xml` with the following database connectivity properties:
+In the directory `resources` add the file `config.yaml` with the following database connectivity properties:
 
 ```yaml
 kumuluzee:
