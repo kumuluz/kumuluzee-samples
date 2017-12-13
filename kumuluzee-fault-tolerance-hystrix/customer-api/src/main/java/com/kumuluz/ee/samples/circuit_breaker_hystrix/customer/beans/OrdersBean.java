@@ -17,18 +17,20 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
+ */
 package com.kumuluz.ee.samples.circuit_breaker_hystrix.customer.beans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
-import com.kumuluz.ee.fault.tolerance.annotations.*;
+import com.kumuluz.ee.fault.tolerance.annotations.CommandKey;
+import com.kumuluz.ee.fault.tolerance.annotations.GroupKey;
 import com.kumuluz.ee.samples.circuit_breaker_hystrix.models.Order;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
+import org.eclipse.microprofile.faulttolerance.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,7 +124,8 @@ public class OrdersBean {
 
         return json == null ?
                 new ArrayList<>() :
-                objectMapper.readValue(json, objectMapper.getTypeFactory().constructCollectionType(List.class, Order.class));
+                objectMapper.readValue(json, objectMapper.getTypeFactory().constructCollectionType(List.class, Order
+                        .class));
     }
 
 }

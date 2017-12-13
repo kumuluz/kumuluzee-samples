@@ -17,13 +17,13 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
+ */
 package com.kumuluz.ee.samples.kumuluzee_microProfile_12;
 
-import com.kumuluz.ee.fault.tolerance.annotations.CircuitBreaker;
 import com.kumuluz.ee.fault.tolerance.annotations.CommandKey;
 import com.kumuluz.ee.fault.tolerance.annotations.GroupKey;
-import com.kumuluz.ee.fault.tolerance.annotations.Timeout;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Gauge;
