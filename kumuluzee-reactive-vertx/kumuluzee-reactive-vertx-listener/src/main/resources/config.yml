@@ -1,0 +1,15 @@
+kumuluzee:
+  name: vertx-listener
+  version: 1.0.0
+  env:
+    name: dev
+  server:
+    http:
+      port: 8081
+    ttl: 20
+    ping-interval: 15
+  reactive:
+    vertx:
+      clustered: true
+      cluster-host: localhost
+      cluster-port: 0
