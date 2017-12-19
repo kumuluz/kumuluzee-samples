@@ -40,6 +40,7 @@
         <module>tutorial-microservice-config-discovery-faulttolerance-logs-metrics-security</module>
         <module>kumuluzee-jwt-auth</module>
         <module>kumuluzee-microProfile-1.2</module>
+        <module>kumuluzee-reactive-vertx</module>
     </modules>
     <packaging>pom</packaging>
 

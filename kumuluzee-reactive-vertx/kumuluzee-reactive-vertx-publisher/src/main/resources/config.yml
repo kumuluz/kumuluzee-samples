@@ -1,0 +1,11 @@
+kumuluzee:
+  name: vertx-publisher
+  version: 1.0.0
+  server:
+    http:
+      port: 8080
+  reactive:
+    vertx:
+      clustered: true
+      cluster-host: localhost
+      cluster-port: 0
