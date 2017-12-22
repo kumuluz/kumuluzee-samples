@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>kumuluzee-samples</artifactId>
+        <groupId>com.kumuluz.ee.samples</groupId>
+        <version>2.5.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>kumuluzee-reactive-vertx</artifactId>
+    <packaging>pom</packaging>
+
+    <name>KumuluzEE Reactive samples using Vert.x</name>
+    <description>Samples for KumuluzEE Reactive Vert.x extension</description>
+
+    <modules>
+        <module>kumuluzee-reactive-vertx-bridge</module>
+        <module>kumuluzee-reactive-vertx-listener</module>
+        <module>kumuluzee-reactive-vertx-publisher</module>
+        <module>simple-verticles</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.version>3.7.0</maven.compiler.version>
+
+        <maven.shade.version>3.1.0</maven.shade.version>
+        <maven.exec.version>1.6.0</maven.exec.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <kumuluzee.version>2.5.0-SNAPSHOT</kumuluzee.version>
+        <kumuluzee-reactive-vertx.version>1.0.0-SNAPSHOT</kumuluzee-reactive-vertx.version>
+        <kumuluzee-discovery.version>1.1.0-SNAPSHOT</kumuluzee-discovery.version>
+
+        <vertx.version>3.5.0</vertx.version>
+    </properties>
+
+</project>
