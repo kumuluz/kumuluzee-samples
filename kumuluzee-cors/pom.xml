@@ -15,7 +15,7 @@
     <description>KumuluzEE CORS usage sample with KumuluzEE</description>
 
     <properties>
-        <kumuluzee-cors.varsion>1.0.0-SNAPSHOT</kumuluzee-cors.varsion>
+        <kumuluzee-cors.varsion>1.1.0-SNAPSHOT</kumuluzee-cors.varsion>
     </properties>
 
     <dependencyManagement>

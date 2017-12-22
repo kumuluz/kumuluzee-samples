@@ -218,40 +218,30 @@ public class CustomerResource {
  
 ### Configure Swagger extension
  
-In case only one JAX-RS application is present in project no further configuration is necessary to make API specification accessible. 
+By default Swagger extension will expose API specification, however this can be disabled by property **kumuluzee.swagger.spec.enabled** in config.
 
-However, if we have two or more JAX-RS applications we have to provide additional information regarding resource packages for each application.
-This is configured in ```xml<configuration>``` section of **kumuluzee-maven-plugin** by providing:
-
-```xml
-<configuration>
-    <specificationConfig>
-        <includeSwaggerUI>true</includeSwaggerUI>
-        <apiSpecifications>
-            <apiSpecification>
-                <applicationPath>/v1</applicationPath>
-                <resourcePackages>
-                    com.kumuluz.ee.samples.openapi.v1
-                </resourcePackages>
-            </apiSpecification>
-            <apiSpecification>
-                <applicationPath>/v2</applicationPath>
-                <resourcePackages>
-                    com.kumuluz.ee.samples.openapi.v2
-                </resourcePackages>
-            </apiSpecification>
-        </apiSpecifications>
-    </specificationConfig>
-</configuration>
+```yaml
+kumuluzee:
+  swagger:
+    spec:
+      enabled: false
 ```
 
 #### Swagger-UI
 
-By default Swagger-UI (visualization of specification) is not included in the build artifacts. To enable Swagger-UI set ```xml<includeSwaggerUI>true</includeSwaggerUI>``` inside ```xml<specificationConfig>true</specificationConfig>```.
+By default Swagger-UI (visualization of specification) is not included. To enable Swagger-UI set **kumuluzee.swagger.ui.enabled** to true:
+
+```yaml
+kumuluzee:
+  swagger:
+    ui:
+      enabled: true
+```
 
 **Swagger-UI** is accessible at:
 http://localhost:8080/api-specs/ui
 
+If serving of the API specification is disabled the Swagger-UI will not be available.
 
 ### Runtime configuration
 By default api-specs will be generated and exposed on /api-specs url. To disable swagger definitions and UI in runtime you can use configuration property **kumuluzee.swagger.enabled** and set it to false (see example in **config.yaml**).

@@ -77,29 +77,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <specificationConfig>
-                        <includeSwaggerUI>true</includeSwaggerUI>
-                        <apiSpecifications>
-                            <apiSpecification>
-                                <applicationPath>
-                                    v1
-                                </applicationPath>
-                                <resourcePackages>
-                                    com.kumuluz.ee.samples.swagger.v1
-                                </resourcePackages>
-                            </apiSpecification>
-                            <apiSpecification>
-                                <applicationPath>
-                                    v2
-                                </applicationPath>
-                                <resourcePackages>
-                                    com.kumuluz.ee.samples.swagger.v2
-                                </resourcePackages>
-                            </apiSpecification>
-                        </apiSpecifications>
-                    </specificationConfig>
-                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -1,8 +1,8 @@
 package com.kumuluz.ee.samples.openapi.v2;
 
-import io.swagger.oas.annotations.OpenAPIDefinition;
-import io.swagger.oas.annotations.info.Info;
-import io.swagger.oas.annotations.servers.Server;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.servers.Server;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

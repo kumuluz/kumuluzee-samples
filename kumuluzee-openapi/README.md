@@ -74,8 +74,7 @@ The application/service can be accessed on the following URL:
 
 ### OpenAPI specification
 
-OpenAPI specification for APIs can be access on the following URL:
-* API v1 - http://localhost:8080/api-specs/v1/openapi.json
+OpenAPI specification for API can be access on the following URL:
 * API v2 - http://localhost:8080/api-specs/v2/openapi.json
 
 OpenAPI specification URL always follows the following URL template:
@@ -85,15 +84,7 @@ OpenAPI specification URL always follows the following URL template:
 
 This tutorial will guide you through the steps required to document JAX-RS application using OpenAPI annotations. 
 
-Package contains two versions of JAX-RS application CustomerAPI.
-
-**CustomerAPI v1**
-JAX-RS resource:
-* GET http://localhost:8080/v1/customer - list of all customers.
-
-OpenAPI specification:
-* GET http://localhost:8080/api-specs/v1/openapi.json
-
+Package contains the following JAX-RS application CustomerAPI.
 
 **CustomerAPI v2**
 JAX-RS resource:
@@ -101,7 +92,6 @@ JAX-RS resource:
 
 OpenAPI specification:
 * GET http://localhost:8080/api-specs/v2/openapi.json
-
 
 
 We will follow these steps:
@@ -191,49 +181,6 @@ Tutorial for the implementation of JAX-RS is described in **jax-rs** sample.
 
 KumuluzEE-OpenAPI extension brings OpenAPI v3 compliant annotations for documenting APIs.
 
-#### Documenting CustomerAPI v1
-
-##### Application class
-
-```java
-@ApplicationPath("v1")
-@OpenAPIDefinition(info = @Info(title = "CustomerApi", version = "v1.0.0"), servers = @Server(url = "http://localhost:8080/v1"))
-public class CustomerApplication extends Application {
-    @Override
-    public Set<Class<?>> getClasses() {
-        Set<Class<?>> classes = new HashSet<>();
-
-        classes.add(CustomerResource.class);
-
-        return classes;
-    }
-}
-```
-
-##### Resources
-
-```java
-@Path("customer")
-@Produces(MediaType.APPLICATION_JSON)
-public class CustomerResource {
-
-    @GET
-    @Operation(summary = "Get customers list", tags = {"customers"}, description = "Returns a list of customers.", responses = {
-            @ApiResponse(description = "List of customers", responseCode = "200", content = @Content(schema = @Schema(implementation =
-                    Customer.class)))
-    })
-    public Response getCustomers() {
-
-        List<Customer> customers = new ArrayList<>();
-        Customer c = new Customer("1", "John", "Doe");
-
-        customers.add(c);
-
-        return Response.status(Response.Status.OK).entity(customers).build();
-    }
-}
-```
-
 #### Documenting CustomerAPI v2
 
 ##### Application class
@@ -293,39 +240,30 @@ public class CustomerResource {
  
 ### Configure OpenAPI extension
  
-In case only one JAX-RS application is present in project no further configuration is necessary to make API specification accessible. 
+By default OpenAPI extension will automatically expose API specification, however this can be disabled by property **kumuluzee.openapi.spec.enabled** in config.
 
-However, if we have two or more JAX-RS applications we have to provide additional information regarding resource packages for each application.
-This is configured in ```xml<configuration>``` section of **kumuluzee-maven-plugin** by providing:
-
-```xml
-<configuration>
-    <specificationConfig>
-        <includeSwaggerUI>true</includeSwaggerUI>
-        <apiSpecifications>
-            <apiSpecification>
-                <applicationPath>/v1</applicationPath>
-                <resourcePackages>
-                    com.kumuluz.ee.samples.openapi.v1
-                </resourcePackages>
-            </apiSpecification>
-            <apiSpecification>
-                <applicationPath>/v2</applicationPath>
-                <resourcePackages>
-                    com.kumuluz.ee.samples.openapi.v2
-                </resourcePackages>
-            </apiSpecification>
-        </apiSpecifications>
-    </specificationConfig>
-</configuration>
+```yaml
+kumuluzee:
+  openapi:
+    spec:
+      enabled: false
 ```
 
 #### Swagger-UI
 
-By default Swagger-UI (visualization of specification) is not included in the build artifacts. To enable Swagger-UI set ```xml<includeSwaggerUI>true</includeSwaggerUI>``` inside ```xml<specificationConfig>true</specificationConfig>```.
+By default Swagger-UI (visualization of specification) is not served. To enable Swagger-UI set **kumuluzee.openapi.ui.enabled** inside to true:
+
+```yaml
+kumuluzee:
+  openapi:
+    ui:
+      enabled: true
+```
 
 **Swagger-UI** is accessible at:
 http://localhost:8080/api-specs/ui
+
+If serving of the API specification is disabled the Swagger-UI will not be available.
 
 ### Runtime configuration
 By default api-specs will be generated and exposed on /api-specs url. To disable openapi definirions and Swagger UI in runtime you can use configuration property **kumuluzee.openapi.enabled** and set it to *false* (example in **config.yaml**).
