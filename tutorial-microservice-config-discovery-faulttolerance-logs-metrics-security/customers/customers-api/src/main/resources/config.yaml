@@ -23,7 +23,6 @@ kumuluzee:
     web-instrumentation:
       - name: customers-endpoint
         url-pattern: /v1/customers/*
-        registry-name: customersRegistry
   logs:
     config-file:
       '<?xml version="1.0" encoding="UTF-8"?>

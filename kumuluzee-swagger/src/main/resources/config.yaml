@@ -1,0 +1,4 @@
+kumuluzee:
+  swagger:
+    ui:
+      enabled: true

@@ -1,0 +1,4 @@
+kumuluzee:
+  openapi:
+    ui:
+      enabled: true
