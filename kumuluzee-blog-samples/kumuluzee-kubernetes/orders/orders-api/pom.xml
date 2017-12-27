@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>kumuluzee-orders</artifactId>
+        <groupId>com.kumuluz.ee.samples.blog</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>orders-api</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-servlet-jetty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-jax-rs-jersey</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kumuluz.ee.discovery</groupId>
+            <artifactId>kumuluzee-discovery-etcd</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kumuluz.ee.samples.blog</groupId>
+            <artifactId>orders-business-logic</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kumuluz.ee.metrics</groupId>
+            <artifactId>kumuluzee-metrics-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.health</groupId>
+            <artifactId>kumuluzee-health</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kumuluz.ee.cors</groupId>
+            <artifactId>kumuluzee-cors</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-maven-plugin</artifactId>
+                <version>${kumuluzee.version}</version>
+                <executions>
+                    <execution>
+                        <id>package</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

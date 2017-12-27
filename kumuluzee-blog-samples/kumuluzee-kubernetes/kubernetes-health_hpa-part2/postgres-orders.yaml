@@ -1,0 +1,41 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: postgres-orders-deployment
+  namespace: kumuluzee-blog
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres-orders
+    spec:
+      containers:
+        - image: postgres:latest
+          name: postgres-orders
+          env:
+            - name: POSTGRES_USER
+              value: dbuser
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: order
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-orders
+  namespace: kumuluzee-blog
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: postgres-orders

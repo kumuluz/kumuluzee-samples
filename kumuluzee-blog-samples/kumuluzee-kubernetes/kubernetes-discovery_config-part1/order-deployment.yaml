@@ -1,0 +1,22 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: order-deployment
+  namespace: kumuluzee-blog
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: order
+    spec:
+      containers:
+      - image: zvoneg/kubernetes-orders:v1.0.5
+        name: kubernetes-orders
+        envFrom:
+          - configMapRef:
+              name: kubernetes-order-config
+        ports:
+        - containerPort: 8081
+          name: server
+          protocol: TCP

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubernetes-order-config
+  namespace: kumuluzee-blog
+data:
+  KUMULUZEE_DISCOVERY_CLUSTER: private-coreos
+  KUMULUZEE_DISCOVERY_ETCD_HOSTS: http://etcd:2379
+  KUMULUZEE_CONFIG_ETCD_HOSTS: http://etcd:2379
+  KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres-orders:5432/order
+  KUMULUZEE_SERVER_BASEURL: http://192.168.29.246:32583
+  KUMULUZEE_HEALTH_CHECKS_DATASOURCEHEALTHCHECK_CONNECTIONURL: jdbc:postgresql://postgres-orders:5432/order

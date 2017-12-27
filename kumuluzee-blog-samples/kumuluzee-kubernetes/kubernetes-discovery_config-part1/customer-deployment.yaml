@@ -1,0 +1,22 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: customer-deployment
+  namespace: kumuluzee-blog
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: customer
+    spec:
+      containers:
+      - image: zvoneg/kubernetes-customers:v1.0.5
+        name: kubernetes-customer
+        envFrom:
+          - configMapRef:
+              name: kubernetes-customer-config
+        ports:
+        - containerPort: 8080
+          name: server
+          protocol: TCP
