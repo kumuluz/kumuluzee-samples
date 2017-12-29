@@ -16,6 +16,7 @@
         <module>jsf</module>
         <module>jsp</module>
         <module>jul</module>
+        <module>jms</module>
         <module>kumuluzee-config</module>
         <module>kumuluzee-config-mp</module>
         <module>kumuluzee-config-consul</module>
@@ -41,6 +42,7 @@
         <module>kumuluzee-microProfile-1.2</module>
         <module>kumuluzee-blog-samples</module>
         <module>kumuluzee-reactive-vertx</module>
+        <module>jms</module>
     </modules>
     <packaging>pom</packaging>
 
