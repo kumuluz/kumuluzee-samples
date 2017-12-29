@@ -19,22 +19,27 @@ public class QueueHandler {
 
     public static void addToQueue(Customer customer) {
 
+        // Create connection factory and allow all packages for test purpose
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
         connectionFactory.setTrustAllPackages(true);
         Connection connection;
-        
+
         try {
+            // Create connection
             connection = connectionFactory.createConnection();
             connection.start();
 
+            // create session and producer
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createQueue(queueName);
             MessageProducer producer = session.createProducer(destination);
 
+            // Create an serializable object to send to queue
             ObjectMessage msg = session.createObjectMessage();
             msg.setObject(customer);
             msg.setJMSType(Customer.class.getName());
 
+            // Sending to queue
             producer.send(msg);
 
             connection.close();
@@ -46,23 +51,28 @@ public class QueueHandler {
 
     public static Customer readFromQueue() {
 
+        // Create connection factory and allow all packages for test purpose
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
         connectionFactory.setTrustAllPackages(true);
         Connection connection;
+
         Customer customer = null;
 
         try {
-
+            // Create connection
             connection = connectionFactory.createConnection();
             connection.start();
 
+            // create session and consumer
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createQueue(queueName);
             MessageConsumer consumer = session.createConsumer(destination);
 
+            // retrieve message
             Message message = consumer.receive();
 
-            if (message instanceof ObjectMessage) {
+            // check if correct type and cast message to Customer
+            if (message instanceof ObjectMessage && Customer.class.getName().equals(message.getJMSType())) {
                 ObjectMessage msg = (ObjectMessage) consumer.receive();
                 customer = (Customer) msg.getObject();
             } else {
