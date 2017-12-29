@@ -6,12 +6,16 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import javax.jms.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Dejan Ognjenović
  * @since 2.4.0
  */
 public class QueueHandler {
+
+    private static Logger LOG = Logger.getLogger(QueueHandler.class.getName());
 
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
 
@@ -44,7 +48,7 @@ public class QueueHandler {
 
             connection.close();
         } catch (JMSException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE ,"JMS threw an error.", e);
         }
 
     }
@@ -76,12 +80,12 @@ public class QueueHandler {
                 ObjectMessage msg = (ObjectMessage) consumer.receive();
                 customer = (Customer) msg.getObject();
             } else {
-
+                LOG.log(Level.INFO ,"Message was not the right type.");
             }
 
             connection.close();
         } catch (JMSException e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE ,"JMS threw an error.", e);
         }
 
         return customer;
