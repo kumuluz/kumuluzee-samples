@@ -25,7 +25,7 @@ public class CustomerResource {
         Customer customer = QueueHandler.readFromQueue();
         return customer != null
                 ? Response.ok(customer).build()
-                : Response.status(Response.Status.NOT_FOUND).build();
+                : Response.noContent().build();
     }
 
 }
