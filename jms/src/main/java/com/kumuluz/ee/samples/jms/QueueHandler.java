@@ -25,6 +25,7 @@ public class QueueHandler {
 
         // Create connection factory and allow all packages for test purpose
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
+        // Not recommended to trust all packages, only use for testing purposes
         connectionFactory.setTrustAllPackages(true);
         Connection connection;
 
@@ -57,6 +58,7 @@ public class QueueHandler {
 
         // Create connection factory and allow all packages for test purpose
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
+        // Not recommended to trust all packages, only use for testing purposes
         connectionFactory.setTrustAllPackages(true);
         Connection connection;
 
