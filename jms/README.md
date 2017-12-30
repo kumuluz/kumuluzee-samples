@@ -219,7 +219,7 @@ public class CustomerResource {
         Customer customer = QueueHandler.readFromQueue();
         return customer != null
                 ? Response.ok(customer).build()
-                : Response.status(Response.Status.NOT_FOUND).build();
+                : Response.noContent().build();
     }
 }
 ```
@@ -248,6 +248,8 @@ public class QueueHandler {
     private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
 
     private static String queueName = "KUMULUZ_QUEUE";
+    
+    private static int timeout = 1000;
 
     public static void addToQueue(Customer customer) {
 
@@ -303,12 +305,14 @@ public class QueueHandler {
             MessageConsumer consumer = session.createConsumer(destination);
 
             // retrieve message
-            Message message = consumer.receive();
+            Message message = consumer.receive(timeout);
 
             // check if correct type and cast message to Customer
             if (message instanceof ObjectMessage && Customer.class.getName().equals(message.getJMSType())) {
-                ObjectMessage msg = (ObjectMessage) consumer.receive();
+                ObjectMessage msg = (ObjectMessage) message;
                 customer = (Customer) msg.getObject();
+            } else if (message == null) {
+                LOG.log(Level.INFO ,"Queue " + queueName +" is empty.");
             } else {
                 LOG.log(Level.INFO ,"Message was not the right type.");
             }
