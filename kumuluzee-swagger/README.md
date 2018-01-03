@@ -248,7 +248,7 @@ kumuluzee:
       enabled: false
 ```
 
-**Swagger-UI** is accessible at:
+**Swagger-UI** is available at:
 http://localhost:8080/api-specs/ui
 
 If serving of the API specification is disabled the Swagger-UI will not be available.
