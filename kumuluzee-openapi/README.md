@@ -261,7 +261,7 @@ To enable OpenAPI UI add **kumuluzee-openapi-ui** dependency to your project:
 </dependency>
 ```
 
-In case you want to disable OpenAPI during runtime you can set the following property:
+In case you want to disable OpenAPI you can set the following property:
 
 ```yaml
 kumuluzee:

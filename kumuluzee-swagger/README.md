@@ -239,7 +239,7 @@ To enable Swagger UI add **kumuluzee-swagger-ui** dependency to your project:
 </dependency>
 ```
 
-In case you want to disable Swagger UI during runtime you can set the following property:
+In case you want to disable Swagger UI you can set the following property:
 
 ```yaml
 kumuluzee:
