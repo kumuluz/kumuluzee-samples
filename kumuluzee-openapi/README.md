@@ -251,7 +251,7 @@ kumuluzee:
 
 #### OpenAPI UI
 
-To enable OpenAPI UI add `kumuluzee-openapi-ui` dependency to your project: 
+To enable OpenAPI UI add **kumuluzee-openapi-ui** dependency to your project: 
 
 ```xml
 <dependency>

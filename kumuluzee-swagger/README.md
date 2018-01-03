@@ -229,7 +229,17 @@ kumuluzee:
 
 #### Swagger-UI
 
-By default Swagger-UI (visualization of specification) is not included. To enable Swagger-UI set **kumuluzee.swagger.ui.enabled** to true:
+To enable Swagger UI add **kumuluzee-swagger-ui** dependency to your project: 
+
+```xml
+<dependency>
+    <groupId>com.kumuluz.ee.swagger</groupId>
+    <artifactId>kumuluzee-swagger-ui</artifactId>
+    <version>${kumuluzee-swagger.varsion}</version>
+</dependency>
+```
+
+In case you want to disable Swagger UI during runtime you can set the following property:
 
 ```yaml
 kumuluzee:
