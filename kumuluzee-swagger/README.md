@@ -245,7 +245,7 @@ In case you want to disable Swagger UI you can set the following property:
 kumuluzee:
   swagger:
     ui:
-      enabled: true
+      enabled: false
 ```
 
 **Swagger-UI** is accessible at:
