@@ -1,4 +1,4 @@
 kumuluzee:
   openapi:
     ui:
-      enabled: false
+      enabled: true
