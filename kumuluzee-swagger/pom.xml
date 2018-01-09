@@ -17,7 +17,7 @@
     <description>KumuluzEE Swagger usage sample with KumuluzEE</description>
 
     <properties>
-        <kumuluzee-swagger.varsion>1.0.0-SNAPSHOT</kumuluzee-swagger.varsion>
+        <kumuluzee-swagger.version>1.0.0-SNAPSHOT</kumuluzee-swagger.version>
     </properties>
 
     <dependencyManagement>
@@ -49,7 +49,12 @@
         <dependency>
             <groupId>com.kumuluz.ee.swagger</groupId>
             <artifactId>kumuluzee-swagger</artifactId>
-            <version>${kumuluzee-swagger.varsion}</version>
+            <version>${kumuluzee-swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.swagger</groupId>
+            <artifactId>kumuluzee-swagger-ui</artifactId>
+            <version>${kumuluzee-swagger.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -77,29 +82,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <specificationConfig>
-                        <includeSwaggerUI>true</includeSwaggerUI>
-                        <apiSpecifications>
-                            <apiSpecification>
-                                <applicationPath>
-                                    v1
-                                </applicationPath>
-                                <resourcePackages>
-                                    com.kumuluz.ee.samples.swagger.v1
-                                </resourcePackages>
-                            </apiSpecification>
-                            <apiSpecification>
-                                <applicationPath>
-                                    v2
-                                </applicationPath>
-                                <resourcePackages>
-                                    com.kumuluz.ee.samples.swagger.v2
-                                </resourcePackages>
-                            </apiSpecification>
-                        </apiSpecifications>
-                    </specificationConfig>
-                </configuration>
             </plugin>
         </plugins>
     </build>

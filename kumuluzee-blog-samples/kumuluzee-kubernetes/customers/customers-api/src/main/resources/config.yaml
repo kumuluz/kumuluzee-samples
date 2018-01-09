@@ -1,0 +1,73 @@
+kumuluzee:
+  name: customer-service
+  env:
+    name: dev
+  version: 1.0.0
+  server:
+    base-url: http://localhost:8080
+    http:
+      port: 8080
+  datasources:
+    - jndi-name: jdbc/CustomersDS
+      connection-url: jdbc:postgresql://192.168.99.100:5432/customer
+      username: dbuser
+      password: postgres
+      max-pool-size: 20
+  config:
+    etcd:
+      hosts: http://192.168.99.100:2379
+  discovery:
+    etcd:
+      hosts: http://192.168.99.100:2379
+  metrics:
+    web-instrumentation:
+      - name: customers-endpoint
+        url-pattern: /v1/customers/*
+        registry-name: customersRegistry
+  logs:
+    config-file:
+      '<?xml version="1.0" encoding="UTF-8"?>
+       <Configuration name="tutorial-logging">
+           <Appenders>
+               <Console name="console" target="SYSTEM_OUT">
+                   <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
+               </Console>
+
+               <!-- A socket definition for sending logs into Logstash using TCP and JSON format.-->
+               <!--<Socket name="logstash" host="192.168.99.100" port="5043" protocol="tcp">
+                   <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true"/>
+               </Socket>-->
+
+           </Appenders>
+           <Loggers>
+               <!-- Default logger -->
+               <Root level="info">
+                   <AppenderRef ref="console"/>
+                   <AppenderRef ref="logstash"/>
+               </Root>
+           </Loggers>
+       </Configuration>'
+  security:
+    keycloak:
+      json: '{
+               "realm": "customers-realm",
+               "bearer-only": true,
+               "auth-server-url": "http://192.168.99.100:8082/auth",
+               "ssl-required": "external",
+               "resource": "customers-api"
+             }'
+  health:
+    checks:
+      data-source-health-check:
+        connection-url: jdbc:postgresql://postgres-customers:5432/customer
+        username: dbuser
+        password: postgres
+      disk-space-health-check:
+        threshold: 100000000
+  cors-filter:
+        servlet:
+          allow-origin: "*"
+rest-properties:
+  external-dependencies:
+    order-service:
+      enabled: true

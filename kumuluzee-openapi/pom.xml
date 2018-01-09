@@ -51,6 +51,11 @@
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>com.kumuluz.ee.openapi</groupId>
+            <artifactId>kumuluzee-openapi-ui</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
             <version>1.7.25</version>
@@ -76,25 +81,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <specificationConfig>
-                        <includeSwaggerUI>true</includeSwaggerUI>
-                        <apiSpecifications>
-                            <apiSpecification>
-                                <applicationPath>/v1</applicationPath>
-                                <resourcePackages>
-                                    com.kumuluz.ee.samples.openapi.v1
-                                </resourcePackages>
-                            </apiSpecification>
-                            <apiSpecification>
-                                <applicationPath>/v2</applicationPath>
-                                <resourcePackages>
-                                    com.kumuluz.ee.samples.openapi.v2
-                                </resourcePackages>
-                            </apiSpecification>
-                        </apiSpecifications>
-                    </specificationConfig>
-                </configuration>
             </plugin>
         </plugins>
     </build>
