@@ -17,7 +17,7 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
+ */
 package com.kumuluz.ee.samples;
 
 import com.kumuluz.ee.samples.models.Customer;
@@ -71,6 +71,10 @@ public class ConfigResource {
     @ConfigProperty(name = "mp.custom-source-ordinal")
     private String customSourceOrdinal;
 
+    @Inject
+    @ConfigProperty(name = "mp.example-customers")
+    private Customer[] customers;
+
     @GET
     public Response testConfig() {
 
@@ -88,7 +92,8 @@ public class ConfigResource {
                         "\"nonExistentStringOpt\": \"%s\"," +
                         "\"customer\": \"%s\"," +
                         "\"customSourceValue\": \"%s\"," +
-                        "\"customSourceOrdinal\": \"%s\"" +
+                        "\"customSourceOrdinal\": \"%s\"," +
+                        "\"customers[1]\": \"%s\"" +
                         "}";
 
         response = String.format(
@@ -100,7 +105,8 @@ public class ConfigResource {
                 nonExistentStringOpt.orElse("Empty Optional"),
                 customer,
                 customSourceValue,
-                customSourceOrdinal
+                customSourceOrdinal,
+                customers[1]
         );
 
         return Response.ok(response).build();
