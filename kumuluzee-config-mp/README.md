@@ -138,7 +138,7 @@ separately:
     <dependency>
         <groupId>com.kumuluz.ee.config</groupId>
         <artifactId>kumuluzee-config-mp</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>1.2.0-SNAPSHOT</version>
     </dependency>
 </dependencies>
 ```
@@ -167,7 +167,7 @@ We could also add all the following dependencies separately: `kumuluzee-core`,`k
     <dependency>
         <groupId>com.kumuluz.ee.config</groupId>
         <artifactId>kumuluzee-config-mp</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>1.2.0-SNAPSHOT</version>
     </dependency>
 </dependencies>
 ```
@@ -224,6 +224,7 @@ Define your configuration properties in a `META-INF/microprofile-config.properti
 mp.example-string=Hello MicroProfile Config!
 mp.example-boolean=true
 mp.example-customer=John:Doe
+mp.example-customers=James:White,Robert:Simpson,Ronald:Smith
 ```
 
 ### Implement the JAX-RS service
@@ -382,6 +383,13 @@ Inject a `Customer` instance in your Resource implementation:
 private Customer customer;
 ```
 
+You can also inject an array of customers:
+```java
+@Inject
+@ConfigProperty(name = "mp.example-customers")
+private Customer[] customers;
+```
+
 ### Add custom configuration source
 
 Create a custom configuration source by implementing the `ConfigSource` interface. Our configuration source will
@@ -524,6 +532,10 @@ public class ConfigResource {
     @Inject
     @ConfigProperty(name = "mp.custom-source-ordinal")
     private String customSourceOrdinal;
+    
+    @Inject
+    @ConfigProperty(name = "mp.example-customers")
+    private Customer[] customers;
 
     @GET
     public Response testConfig() {
@@ -542,7 +554,8 @@ public class ConfigResource {
                         "\"nonExistentStringOpt\": \"%s\"," +
                         "\"customer\": \"%s\"," +
                         "\"customSourceValue\": \"%s\"," +
-                        "\"customSourceOrdinal\": \"%s\"" +
+                        "\"customSourceOrdinal\": \"%s\"," +
+                        "\"customers[1]\": \"%s\"" +
                         "}";
 
         response = String.format(
@@ -554,7 +567,8 @@ public class ConfigResource {
                 nonExistentStringOpt.orElse("Empty Optional"),
                 customer,
                 customSourceValue,
-                customSourceOrdinal
+                customSourceOrdinal,
+                customers[1]
         );
 
         return Response.ok(response).build();

@@ -29,6 +29,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Optional;
 
 /**
  * @author Urban Malc
@@ -41,44 +42,56 @@ public class DiscoverResource {
 
     @Inject
     @DiscoverService(value = "customer-service", version = "1.0.x", environment = "dev")
-    private WebTarget target;
+    private Optional<WebTarget> target;
 
     @GET
     @Path("url")
     @Produces(MediaType.TEXT_PLAIN)
     public Response getUrl() {
-        return Response.ok(target.getUri().toString()).build();
+        if (target.isPresent()) {
+            return Response.ok(target.get().getUri().toString()).build();
+        } else {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
     }
 
     @GET
     public Response getProxiedCustomers() {
-        WebTarget service = target.path("v1/customers");
+        if (target.isPresent()) {
+            WebTarget service = target.get().path("v1/customers");
 
-        Response response;
-        try {
-            response = service.request().get();
-        } catch (ProcessingException e) {
-            return Response.status(408).build();
+            Response response;
+            try {
+                response = service.request().get();
+            } catch (ProcessingException e) {
+                return Response.status(408).build();
+            }
+
+            ProxiedResponse proxiedResponse = new ProxiedResponse();
+            proxiedResponse.setResponse(response.readEntity(String.class));
+            proxiedResponse.setProxiedFrom(target.get().getUri().toString());
+
+            return Response.ok(proxiedResponse).build();
+        } else {
+            return Response.status(Response.Status.NO_CONTENT).build();
         }
-
-        ProxiedResponse proxiedResponse = new ProxiedResponse();
-        proxiedResponse.setResponse(response.readEntity(String.class));
-        proxiedResponse.setProxiedFrom(target.getUri().toString());
-
-        return Response.ok(proxiedResponse).build();
     }
 
     @POST
     public Response addNewCustomer(Customer customer) {
-        WebTarget service = target.path("v1/customers");
+        if (target.isPresent()) {
+            WebTarget service = target.get().path("v1/customers");
 
-        Response response;
-        try {
-            response = service.request().post(Entity.json(customer));
-        } catch (ProcessingException e) {
-            return Response.status(408).build();
+            Response response;
+            try {
+                response = service.request().post(Entity.json(customer));
+            } catch (ProcessingException e) {
+                return Response.status(408).build();
+            }
+
+            return Response.fromResponse(response).build();
+        } else {
+            return Response.status(Response.Status.NO_CONTENT).build();
         }
-
-        return Response.fromResponse(response).build();
     }
 }

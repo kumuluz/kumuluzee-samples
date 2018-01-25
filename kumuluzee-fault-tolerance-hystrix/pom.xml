@@ -23,7 +23,7 @@
 
     <properties>
         <kumuluzee-fault-tolerance.version>1.0.0-SNAPSHOT</kumuluzee-fault-tolerance.version>
-        <kumuluzee-config.version>1.0.0-SNAPSHOT</kumuluzee-config.version>
+        <kumuluzee-config.version>1.2.0-SNAPSHOT</kumuluzee-config.version>
     </properties>
 
     <dependencyManagement>
