@@ -47,6 +47,7 @@ Java EE samples:
 - Websocket
 - REST service over HTTPS
 - Logging with JUL and KumuluzEE
+- JMS
 
 KumuluzEE extensions - samples:
 - KumuluzEE Config
