@@ -8,7 +8,7 @@
 
         <jta-data-source>jdbc/CustomersDS</jta-data-source>
 
-        <class>com.kumuluz.ee.samples.jpa.Customer</class>
+        <class>com.kumuluz.ee.samples.graphql_simple.Customer</class>
 
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="create"/>
