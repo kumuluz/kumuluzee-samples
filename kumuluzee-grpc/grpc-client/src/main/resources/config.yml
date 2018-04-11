@@ -1,0 +1,13 @@
+kumuluzee:
+  name: "grpc client test"
+  server:
+    http:
+      port: 8081
+  grpc:
+    clients:
+    - name: client1
+      port: 8443
+      address: localhost
+#      certFile: D:\work\liis\certs\client@liis.si-cert.pem
+#      keyFile: D:\work\liis\certs\client@liis.si-key-pkcs8.pem
+#      chainFile: D:\work\liis\certs\KumuluzEEgRPC-cacert.pem

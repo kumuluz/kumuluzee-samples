@@ -1,0 +1,22 @@
+kumuluzee:
+  name: "grpc-server"
+  server:
+    http:
+      port: 8080
+  datasources:
+    - jndi-name: jdbc/UsersDB
+      connection-url: jdbc:postgresql://192.168.99.100:5432/users
+      username: postgres
+      password: postgres
+  grpc:
+    server:
+      port: 8443
+      auth:
+        public-key: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDW6Angsf0Ry+GFD5HPstdcuaHJU5KhpT+gkzCCx7zZAbKRaEQexaTA9nPXK2Uzk2JqWTbZXSQYX2kBzYeiiedMpW6wvTaZWL9QhGjEnA9o97oNV1G5wQHKL/8FsvLXqt/81BCeZzWPDGvLNuU9l0qK3/xXL3efaZYPsZkB2AyZiQIDAQAB
+        issuer: http://localhost
+#  grpc:
+#    server:
+#      certFile: D:\work\liis\certs\master@web.com-cert.pem
+#      keyFile: D:\work\liis\certs\master@web.com-key-pkcs8.pem
+#      chainFile: D:\work\liis\certs\KumuluzEEgRPC-cacert.pem
+#      mutualTLS: require

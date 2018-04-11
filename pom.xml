@@ -41,6 +41,7 @@
         <module>kumuluzee-microProfile-1.2</module>
         <module>kumuluzee-blog-samples</module>
         <module>kumuluzee-reactive-vertx</module>
+        <module>kumuluzee-grpc</module>
     </modules>
     <packaging>pom</packaging>
 
