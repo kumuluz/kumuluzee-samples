@@ -1,0 +1,7 @@
+kumuluzee:
+  ethereum:
+    wallet:
+      path: "kumuluzee-ethereum-web3j/wallet-sample-ebe82f9ac91697e8a81f4f3a30fcaf499ef65993.json"
+      password: "kumuluz"
+    client:
+      address: "https://rinkeby.infura.io/RqMYnA77aiFY4oxoxMRD" # if not set defaulting to http://localhost:8545

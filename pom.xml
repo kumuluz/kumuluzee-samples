@@ -22,6 +22,7 @@
         <module>kumuluzee-config-etcd</module>
         <module>kumuluzee-discovery-consul</module>
         <module>kumuluzee-discovery-etcd</module>
+        <module>kumuluzee-ethereum-web3j</module>
         <module>kumuluzee-fault-tolerance-hystrix</module>
         <module>kumuluzee-logs-jul</module>
         <module>kumuluzee-logs-log4j2</module>
@@ -116,7 +117,6 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
         <kumuluzee.version>2.6.0-SNAPSHOT</kumuluzee.version>
     </properties>
 
