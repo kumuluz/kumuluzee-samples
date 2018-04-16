@@ -18,7 +18,7 @@
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
 */
-package com.kumuluz.ee.samples.jaxws;
+package com.kumuluz.ee.samples.jaxws.metro;
 
 import javax.jws.WebMethod;
 import javax.jws.WebResult;
@@ -43,7 +43,7 @@ public class CustomerEndpoint {
     @ResponseWrapper(
             localName = "GetCustomersResponse",
             targetNamespace = "http://kumuluz.com/samples/jax-ws/customers/v1",
-            className = "com.kumuluz.ee.samples.jaxws.GetCustomersResponse"
+            className = "com.kumuluz.ee.samples.jaxws.metro.GetCustomersResponse"
     )
     public GetCustomersResponseMessage getCustomers() {
         Customer customer1 = new Customer();

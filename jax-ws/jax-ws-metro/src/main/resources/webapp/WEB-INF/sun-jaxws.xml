@@ -2,6 +2,6 @@
 <endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime"
            version="2.0">
     <endpoint name="WebServiceImpl"
-              implementation="com.kumuluz.ee.samples.jaxws.CustomerEndpoint"
+              implementation="com.kumuluz.ee.samples.jaxws.metro.CustomerEndpoint"
               url-pattern="/CustomerEndpoint"/>
 </endpoints>

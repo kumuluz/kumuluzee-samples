@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014-2017 Kumuluz and/or its affiliates
+ *  Copyright (c) 2014-2018 Kumuluz and/or its affiliates
  *  and other contributors as indicated by the @author tags and
  *  the contributor list.
  *
@@ -17,37 +17,35 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
-package com.kumuluz.ee.samples.jaxws;
+ */
+package com.kumuluz.ee.samples.jaxws.cxf.service;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
-import java.io.Serializable;
+import com.kumuluz.samples.jax_ws.cxf.customers._1.Customer;
+
+import javax.enterprise.context.Dependent;
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author Benjamin Kastelic
- * @since 2.3.0
+ * @author gpor89
+ * @since 3.0.0
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(
-        name = "CustomersList",
-        propOrder = {
-            "customer"
-        }
-)
-public class CustomersList implements Serializable {
+@Dependent
+public class CustomersServiceBean implements CustomersService {
 
-    @XmlElement(required = true)
-    private List<Customer> customer;
+    @Override
+    public List<Customer> getCustomers() {
 
-    public List<Customer> getCustomer() {
-        return customer;
-    }
+        Customer customer1 = new Customer();
+        customer1.setId("1");
+        customer1.setFirstName("John");
+        customer1.setLastName("Smith");
 
-    public void setCustomer(List<Customer> customer) {
-        this.customer = customer;
+        Customer customer2 = new Customer();
+        customer2.setId("2");
+        customer2.setFirstName("Cindy");
+        customer2.setLastName("Doe");
+
+        return Arrays.asList(customer1, customer2);
     }
 }
