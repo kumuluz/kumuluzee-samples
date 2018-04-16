@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:cust="http://kumuluz.com/samples/jax-ws/cxf/customers/1.0"
+                  name="CustomerEndpoint"
+                  targetNamespace="http://kumuluz.com/samples/jax-ws/cxf/customers/1.0">
+    <wsdl:types>
+        <xs:schema xmlns:tns="http://kumuluz.com/samples/jax-ws/cxf/customers/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0"
+                   targetNamespace="http://kumuluz.com/samples/jax-ws/cxf/customers/1.0">
+            <xs:element name="GetCustomers" type="tns:GetCustomers"/>
+            <xs:element name="GetCustomersResponse" type="tns:GetCustomersResponse"/>
+            <xs:complexType name="GetCustomers">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetCustomersResponse">
+                <xs:sequence>
+                    <xs:element name="customers" type="tns:Customer" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Customer">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:string"/>
+                    <xs:element name="firstName" type="cust:string32"/>
+                    <xs:element name="lastName" type="cust:string32"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="string32">
+                <xs:restriction base="xs:string">
+                    <xs:minLength value="1"/>
+                    <xs:maxLength value="32"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="GetCustomers">
+        <wsdl:part name="parameters" element="cust:GetCustomers"/>
+    </wsdl:message>
+    <wsdl:message name="GetCustomersResponse">
+        <wsdl:part name="parameters" element="cust:GetCustomersResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="CustomerEndpoint">
+        <wsdl:operation name="getCustomers">
+            <wsdl:input message="cust:GetCustomers"/>
+            <wsdl:output message="cust:GetCustomersResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CustomerEndpointSOAP" type="cust:CustomerEndpoint">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="getCustomers">
+            <soap:operation soapAction="http://kumuluz.com/samples/jax-ws/cxf/customers/1.0/GetCustomers"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CustomerEndpoint">
+        <wsdl:port name="CustomerEndpointSOAP" binding="cust:CustomerEndpointSOAP">
+            <soap:address location="https://gpor89.github.com/soap/CustomerEndpoint"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

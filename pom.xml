@@ -114,7 +114,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <kumuluzee.version>2.6.0-SNAPSHOT</kumuluzee.version>
+        <kumuluzee.version>3.0.0-SNAPSHOT</kumuluzee.version>
     </properties>
 
 </project>

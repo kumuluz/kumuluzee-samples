@@ -18,13 +18,14 @@
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
 */
-package com.kumuluz.ee.samples.jaxws;
+package com.kumuluz.ee.samples.jaxws.metro;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Benjamin Kastelic
@@ -32,43 +33,21 @@ import java.io.Serializable;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
-        name = "Customer",
+        name = "CustomersList",
         propOrder = {
-            "id",
-            "firstName",
-            "lastName"
+            "customer"
         }
 )
-public class Customer implements Serializable {
+public class CustomersList implements Serializable {
 
     @XmlElement(required = true)
-    private String id;
-    @XmlElement(required = true)
-    private String firstName;
-    @XmlElement(required = true)
-    private String lastName;
+    private List<Customer> customer;
 
-    public String getId() {
-        return id;
+    public List<Customer> getCustomer() {
+        return customer;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setCustomer(List<Customer> customer) {
+        this.customer = customer;
     }
 }
