@@ -1,0 +1,1 @@
+INSERT INTO account (name, surname) VALUES ('Primoz', 'Hrovat');

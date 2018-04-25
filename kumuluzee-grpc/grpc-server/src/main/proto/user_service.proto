@@ -1,0 +1,16 @@
+syntax = "proto3";
+option java_package = "grpc";
+
+service User {
+    rpc getUser(UserRequest) returns (UserResponse) {};
+}
+
+message UserRequest {
+    int32 id = 1;
+}
+
+message UserResponse {
+    int32 id = 1;
+    string name = 2;
+    string surname = 3;
+}
