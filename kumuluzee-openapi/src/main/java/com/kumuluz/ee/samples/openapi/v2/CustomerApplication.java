@@ -2,7 +2,9 @@ package com.kumuluz.ee.samples.openapi.v2;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.servers.Server;
@@ -21,7 +23,7 @@ import java.util.Set;
 @SecurityScheme(name = "openid-connect", type = SecuritySchemeType.OPENIDCONNECT,
         openIdConnectUrl = "http://auth-server-url/.well-known/openid-configuration")
 @ApplicationPath("v2")
-@OpenAPIDefinition(info = @Info(title = "CustomerApi", version = "v2.0.0"), servers = @Server(url = "http://localhost:8080/v2"), security
+@OpenAPIDefinition(info = @Info(title = "CustomerApi", version = "v2.0.0", contact = @Contact(), license = @License()), servers = @Server(url = "http://localhost:8080/v2"), security
         = @SecurityRequirement(name = "openid-connect"))
 public class CustomerApplication extends Application {
 
