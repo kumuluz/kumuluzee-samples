@@ -17,12 +17,33 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
+ */
 package com.kumuluz.ee.samples.kumuluzee_microProfile_12;
+
+import com.kumuluz.ee.jwt.auth.feature.JWTRolesAllowedDynamicFeature;
+import com.kumuluz.ee.jwt.auth.filter.JWTAuthorizationFilter;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+import java.util.HashSet;
+import java.util.Set;
 
 @ApplicationPath("v1")
 public class CustomerApplication extends Application {
+
+    @Override
+    public Set<Class<?>> getClasses() {
+
+        Set<Class<?>> classes = new HashSet<>();
+
+        // microprofile jwt auth filters
+        classes.add(JWTAuthorizationFilter.class);
+        classes.add(JWTRolesAllowedDynamicFeature.class);
+
+        // resources
+        classes.add(CustomerResource.class);
+
+        return classes;
+    }
+
 }
