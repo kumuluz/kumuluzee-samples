@@ -45,7 +45,7 @@ public class WsHandler implements SOAPHandler<SOAPMessageContext> {
     public boolean handleMessage(SOAPMessageContext messageContext) {
         Object soapAction = messageContext.get("SOAPAction");
 
-        LOG.info("Soap action: " + soapAction);
+        LOG.fine("Soap action: " + soapAction);
 
         return true;
     }

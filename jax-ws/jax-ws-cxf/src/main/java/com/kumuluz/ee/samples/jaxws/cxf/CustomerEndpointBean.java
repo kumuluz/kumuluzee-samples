@@ -63,7 +63,7 @@ public class CustomerEndpointBean implements CustomerEndpoint {
     public GetCustomersResponse getCustomers(final GetCustomers parameters) {
 
         String soapAction = (String) webServiceContext.getMessageContext().get("SOAPAction");
-        LOG.info("Soap action: " + soapAction);
+        LOG.fine("Soap action: " + soapAction);
 
         GetCustomersResponse response = new GetCustomersResponse();
         response.getCustomers().addAll(customersService.getCustomers());

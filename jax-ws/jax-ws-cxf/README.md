@@ -54,7 +54,7 @@ The example uses maven to build and run the microservices.
     $ java -jar target/${project.build.finalName}.jar
     ```
     
-    in Windows environemnt use the command
+    in Windows environment use the command
     ```batch
     java -jar target/${project.build.finalName}.jar
     ```

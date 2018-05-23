@@ -39,6 +39,7 @@
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-jax-ws-cxf</artifactId>
         </dependency>
+
         <!-- Remove if you don't need cdi -->
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
@@ -57,6 +58,7 @@
                         <id>package</id>
                         <goals>
                             <goal>repackage</goal>
+                            <!--goal>copy-dependencies</goal-->
                         </goals>
                     </execution>
                 </executions>
