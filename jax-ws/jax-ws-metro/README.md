@@ -39,7 +39,7 @@ The example uses maven to build and run the microservices.
 1. Build the sample using maven:
 
     ```bash
-    $ cd jax-ws
+    $ cd jax-ws/jax-ws-metro
     $ mvn clean package
     ```
 
@@ -264,7 +264,7 @@ public class CustomerEndpoint {
     @ResponseWrapper(
             localName = "GetCustomersResponse",
             targetNamespace = "http://kumuluz.com/samples/jax-ws/customers/v1",
-            className = "com.kumuluz.ee.samples.jaxws.GetCustomersResponse"
+            className = "com.kumuluz.ee.samples.jaxws.metro.GetCustomersResponse"
     )
     public GetCustomersResponseMessage getCustomers() {
 
@@ -296,13 +296,15 @@ public class Customer {
 }
 ```
 
-Create directory `webapp/WEB-INF` in `resources` folder and in this directory file `sun-jaxws.xml`. The file should contain the configuration as shown below. Replace the text attribute value `com.kumuluz.ee.samples.jaxws.CustomerEndpoint` with the name of your web service implementation class. To modify the URL of your web service, you can change the `url-pattern` attribute.
+Create directory `webapp/WEB-INF` in `resources` folder and in this directory file `sun-jaxws.xml`. The file should contain the configuration as 
+shown below. Replace the text attribute value `com.kumuluz.ee.samples.jaxws.metro.CustomerEndpoint` with the name of your web service implementation 
+class. To modify the URL of your web service, you can change the `url-pattern` attribute.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime"
            version="2.0">
     <endpoint name="WebServiceImpl"
-              implementation="com.kumuluz.ee.samples.jaxws.CustomerEndpoint"
+              implementation="com.kumuluz.ee.samples.jaxws.metro.CustomerEndpoint"
               url-pattern="/CustomerEndpoint"/>
 </endpoints>
 ```

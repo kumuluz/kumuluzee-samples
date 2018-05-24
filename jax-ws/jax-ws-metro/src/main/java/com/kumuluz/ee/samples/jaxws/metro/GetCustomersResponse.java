@@ -18,7 +18,7 @@
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
 */
-package com.kumuluz.ee.samples.jaxws;
+package com.kumuluz.ee.samples.jaxws.metro;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
