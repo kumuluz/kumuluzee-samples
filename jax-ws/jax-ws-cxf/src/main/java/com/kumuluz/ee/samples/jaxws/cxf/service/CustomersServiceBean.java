@@ -22,7 +22,7 @@ package com.kumuluz.ee.samples.jaxws.cxf.service;
 
 import com.kumuluz.samples.jax_ws.cxf.customers._1.Customer;
 
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.ApplicationScoped;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +30,7 @@ import java.util.List;
  * @author gpor89
  * @since 3.0.0
  */
-@Dependent
+@ApplicationScoped
 public class CustomersServiceBean implements CustomersService {
 
     @Override

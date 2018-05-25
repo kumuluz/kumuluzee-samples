@@ -42,7 +42,7 @@ public class WsInterceptor {
 
         Object soapAction = webServiceContext.getMessageContext().get("SOAPAction");
 
-        LOG.fine("Soap action: " + soapAction);
+        LOG.info("Soap action: " + soapAction);
 
         return context.proceed();
     }
