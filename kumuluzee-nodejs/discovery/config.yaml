@@ -1,0 +1,14 @@
+kumuluzee:
+  name: testni-servis
+  server:
+    base-url: http://localhost:3000
+    http:
+      port: 3000
+  env: 
+    name: dev
+  discovery:
+    etcd:
+      hosts: http://localhost:2379
+  config:
+    etcd:
+      hosts: http://localhost:2379

@@ -1,0 +1,14 @@
+{
+  "name": "discovery-sample",
+  "version": "1.0.0",
+  "description": "Sample project for KumuluzEE Discovery in NodeJS",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Miha Jamsek <miha_jamsek@windowslive.com> (https://github.com/Jamsek-m)",
+  "license": "ISC",
+  "dependencies": {
+    "@kumuluz/kumuluzee-discovery": "^1.0.0",
+    "express": "^4.16.3"
+  }
+}
