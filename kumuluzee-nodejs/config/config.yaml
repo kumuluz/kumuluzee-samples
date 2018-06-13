@@ -1,0 +1,22 @@
+kumuluzee:
+  # name of our service
+  name: test-service
+  server:
+    # url where our service will live
+    base-url: http://localhost:3000
+    http:
+      port: 3000
+  env:
+    name: dev
+  config:
+    etcd:
+      # url of our etcd server we setup before
+      hosts: http://localhost:2379
+# our custom configuration
+rest-config:
+  string-property: Monday
+  boolean-property: true
+  integer-property: 23
+  object-property:
+    sub-property: Object property value
+    sub-property-2: Another object property value
