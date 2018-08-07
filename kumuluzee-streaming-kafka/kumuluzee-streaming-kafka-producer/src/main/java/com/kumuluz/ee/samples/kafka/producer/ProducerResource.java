@@ -25,7 +25,6 @@ package com.kumuluz.ee.samples.kafka.producer;
 import com.kumuluz.ee.streaming.common.annotations.StreamProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;

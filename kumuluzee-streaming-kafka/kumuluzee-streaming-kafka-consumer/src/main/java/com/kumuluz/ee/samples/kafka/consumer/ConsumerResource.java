@@ -47,4 +47,5 @@ public class ConsumerResource {
 
         return Response.status(200).entity(consumer.getLastFiveMessages()).build();
     }
+
 }

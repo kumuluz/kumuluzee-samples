@@ -1,0 +1,12 @@
+kumuluzee:
+  server:
+    http:
+      port: 8800
+  streaming:
+    kafka:
+      streams:
+        bootstrap-servers: localhost:9092
+        application-id: sample-word-count
+        default-key-serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        default-value-serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        commit-interval-ms: 500

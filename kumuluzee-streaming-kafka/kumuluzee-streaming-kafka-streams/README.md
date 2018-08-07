@@ -1,10 +1,12 @@
-# KumuluzEE Event Streaming with Kafka &mdash; consume Kafka messages
+# KumuluzEE Event Streaming Kafka &mdash; Stream processing with Kafka Streams
 
-> Develop a REST service that consumes Kafka messages of selected topic
+> Develop a simple WordCount stream processing application using KumuluzEE Event Streaming with Kafka Streams
 
-The objective of this sample is to show how to consume Kafka messages using KumuluzEE Event Streaming extension.
-The tutorial will guide you through all the necessary steps. You will add KumuluzEE dependencies into pom.xml. You will develop a simple annotated method, which uses the KumuluzEE Event Streaming Kafka extension for consuming messages.
-Required knowledge: basic familiarity with Apache Kafka.
+The objective of this sample is to show how to easily develop a stream processing application using 
+KumuluzEE Event Streaming with Kafka Streams. The tutorial will guide you through all the necessary steps. 
+You will add KumuluzEE dependencies into pom.xml. You will develop a simple stream processing application,
+that implements the WordCount algorithm, which computes a word occurrence histogram from the input text.
+Required knowledge: basic familiarity with Apache Kafka Streams.
 
 ## Requirements
 
@@ -32,18 +34,19 @@ In order to run this example you will need the following:
 
 ## Prerequisites
 
-To run this sample you will need a Kafka and Zookeeper instance [Kafka Quickstart](https://kafka.apache.org/quickstart). 
-There are a lot of Kafka Docker available on the Docker hub, in this tutorial we use [ches/kafka](https://hub.docker.com/r/ches/kafka/) 
-and a separate Docker with the Zookeeper instance [jplock/zookeeper](https://hub.docker.com/r/jplock/zookeeper/)
+To run this sample you will need an Kafka and Zookeeper instance [Kafka Quickstart](https://kafka.apache.org/quickstart).
+There are a lot of Kafka Docker available on the Docker hub, in this tutorial we use  
+[ches/kafka](https://hub.docker.com/r/ches/kafka/) and a separate Docker with the Zookeeper instance 
+[jplock/zookeeper](https://hub.docker.com/r/jplock/zookeeper/)
 Here is an example on how to quickly run the Zookeeper and Kafka Docker:
 
 ```bash
 $ docker network create kafka-net
-          
+  
 $ docker run -d -p 2181:2181 --name zookeeper --network kafka-net zookeeper:3.4
 $ docker run -d -p 9092:9092 --name kafka --network kafka-net --env ZOOKEEPER_IP=zookeeper --env KAFKA_ADVERTISED_HOST_NAME={docker_host_ip} ches/kafka
 ```
-   
+    
 ## Usage
 
 The example uses Docker to set up the Kafka and Zookeeper instances and maven to build and run the microservice.
@@ -52,13 +55,20 @@ The example uses Docker to set up the Kafka and Zookeeper instances and maven to
 
     ```bash
     $ docker network create kafka-net
-          
+      
     $ docker run -d -p 2181:2181 --name zookeeper --network kafka-net zookeeper:3.4
     $ docker run -d -p 9092:9092 --name kafka --network kafka-net --env ZOOKEEPER_IP=zookeeper --env KAFKA_ADVERTISED_HOST_NAME={docker_host_ip} ches/kafka
     ```
     
-    To produce messages in the terminal, you can use the Kafka CLI command:
+    To consume messages in the terminal, you can use the Kafka CLI command:
     
+    ```bash
+    $ docker run --rm --network kafka-net ches/kafka \
+      kafka-console-consumer.sh --topic test --from-beginning --bootstrap-server kafka:9092
+    ```
+    
+    To produce messages in the terminal, you can use the Kafka CLI command:
+        
     ```bash
     $ docker run --rm --interactive --network kafka-net ches/kafka \
       kafka-console-producer.sh --topic test --broker-list kafka:9092
@@ -69,7 +79,7 @@ The example uses Docker to set up the Kafka and Zookeeper instances and maven to
 2. Build the sample using maven:
    
    ```bash
-   $ cd kumuluzee-streaming-kafka/kumuluzee-kafka-consumer
+   $ cd kumuluzee-streaming-kafka/kumuluzee-kafka-streams
    $ mvn clean package
    ```
 
@@ -95,23 +105,20 @@ The example uses Docker to set up the Kafka and Zookeeper instances and maven to
     ```batch
     java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
-    
-    
-4. The consumed messages will be printed in the terminal.
 
 To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
 
-This tutorial will guide you through the steps required to create a Kafka Consumer with the help of the KumuluzEE Event Streaming Kafka extension.
-We will develop a simple annotated method which will be invoked when the message is consumed. We will also build a Rest service that will display the last 5 received messages:
-* GET http://localhost:8080/v1/consume
+This tutorial will guide you through the steps required to create a service, 
+which uses KumuluzEE Event Streaming Kafka extension.
+We will develop a simple stream processing application.
 
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
 * Add Maven dependencies to KumuluzEE and include KumuluzEE components with the microProfile-1.0 dependency
 * Add Maven dependency to KumuluzEE Event Streaming Kafka extension
-* Implement the annotated method and Rest service
+* Implement the service
 * Build the microservice
 * Run it
 
@@ -132,17 +139,23 @@ Add the KumuluzEE BOM module dependency to your `pom.xml` file:
 </dependencyManagement>
 ```
 
-Add the `kumuluzee-microProfile-1.0` and `kumuluzee-streaming-kafka` dependencies:
+Add the `kumuluzee-microProfile-1.0`, `kumuluzee-streaming-kafka` and `kafka-streams` dependencies:
 ```xml
 <dependencies>
     <dependency>
         <groupId>com.kumuluz.ee</groupId>
         <artifactId>kumuluzee-microProfile-1.0</artifactId>
+        <version>2.2.0</version>
     </dependency>
     <dependency>
         <groupId>com.kumuluz.ee.streaming</groupId>
         <artifactId>kumuluzee-streaming-kafka</artifactId>
         <version>${kumuluzee-streaming-kafka.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.kafka</groupId>
+        <artifactId>kafka-streams</artifactId>
+        <version>${kafka.version}</version>
     </dependency>
 </dependencies>
 ```
@@ -159,6 +172,7 @@ We will use `kumuluzee-logs` for logging in this sample, so you need to include 
 For more information about the KumuluzEE Logs visit the [KumuluzEE Logs Github page](https://github.com/kumuluz/kumuluzee-logs). \
 Currently, Log4j2 is supported implementation of `kumuluzee-logs`, so you need to include a sample Log4j2 configuration, 
 which should be in a file named `log4j2.xml` and located in `src/main/resources`:
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration name="config-name">
@@ -228,96 +242,100 @@ or exploded:
 </build>
 ```
 
-### Implement the onMessage method and Rest service
+### Implement the stream processor
 
-Register your module as JAX-RS service and define the application path. You could do that in web.xml or for example with `@ApplicationPath` annotation:
+In an ApplicationScoped class we create a StreamProcessor annotated method that returns the StreamsBuilder object, the
+annotation has the parameter `id` set to "word-count" and autoStart to `false`, the configuration prefix has the default
+value "streams".
+
+In the annotated method we:
+1. Construct the StreamsBuilder.
+2. Construct a `KStream` from the input topic "input", where message values represent lines of text (for the sake of 
+this example, we ignore whatever may be stored in the message keys).
+3. With the help of Kafka `KTable` we then split each text line from the `KStream`, by whitespace, into words. Group the 
+text words as message keys and count the occurrences of each word (message key). 
+4. Then we store the running counts as a changelog stream to the output topic "output".
+5. At the end we return the constructed StreamsBuilder.
 
 ```java
-@ApplicationPath("v1")
-public class ConsumerApplication extends Application {
+@ApplicationScoped
+public class WordCountStreamsBuilder {
+
+    @StreamProcessor(id = "word-count", autoStart = false)
+    public StreamsBuilder wordCountBuilder() {
+
+        StreamsBuilder builder = new StreamsBuilder();
+
+        // Serializers/deserializers (serde) for String and Long types
+        final Serde<String> stringSerde = Serdes.String();
+        final Serde<Long> longSerde = Serdes.Long();
+
+        // Construct a `KStream` from the input topic "streams-plaintext-input", where message values
+        // represent lines of text (for the sake of this example, we ignore whatever may be stored
+        // in the message keys).
+        KStream<String, String> textLines = builder.stream("in",
+                Consumed.with(stringSerde, stringSerde));
+
+        KTable<String, Long> wordCounts = textLines
+                // Split each text line, by whitespace, into words.
+                .flatMapValues(value -> Arrays.asList(value.toLowerCase().split("\\W+")))
+                // Group the text words as message keys
+                .groupBy((key, value) -> value)
+                // Count the occurrences of each word (message key).
+                .count();
+
+        // Store the running counts as a changelog stream to the output topic.
+        wordCounts.toStream().to("out", Produced.with(stringSerde, longSerde));
+
+        return builder;
+
+    }
 }
 ```
 
-Implement class for example TestConsumer with a method annotated with `@StreamListener(topics = {"test"})`. 
-The method takes for a parameter the `ConsumerRecord` that contains the data of the received message.
-We will store the received messages in a List. We also implemented a method `getLast5Messages` for getting the last 5 messages from the List.
+Since we set the StreamProcessor parameter autoStart to `false` we must manually start the Streams instance. We can do 
+this by injecting StreamsController annotated with `@StreamProcessorController` with the parameter `id` set to the id of
+the previously annotated `wordCountBuilder` method.
+With the `StreamsController` class we can access the KafkaStreams methods that manage the lifecycle of the created 
+Kafka Streams instance.
+
+In the example below we can see that we created a method `startStream` that observes the initialization of the 
+ApplicationScoped class. In the method we start the Kafka Streams instance and attach a shutdown handler to catch 
+control-c and close the stream processor.
 
 ```java
-public class TestConsumer {
+@ApplicationScoped
+public class WordCountStreamsControl {
 
-    private static final Logger log = Logger.getLogger(TestConsumer.class.getName());
+    @StreamProcessorController(id="word-count")
+    StreamsController wordCountStreams;
 
-    private List<String> messages = new ArrayList<>();
-    
-    @StreamListener(topics = {"test"})
-    public void onMessage(ConsumerRecord<String, String> record) {
+    public void startStream(@Observes @Initialized(ApplicationScoped.class) Object init) {
+        final CountDownLatch latch = new CountDownLatch(1);
 
-        log.info(String.format("Consumed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value()));
+        // attach shutdown handler to catch control-c
+        Runtime.getRuntime().addShutdownHook(new Thread("streams-wordcount-shutdown-hook") {
+            @Override
+            public void run() {
+                wordCountStreams.close();
+                latch.countDown();
+            }
+        });
 
-        messages.add(record.value());
-    }
-    
-    public List<String> getLast5Messages() {
-        return messages.subList(messages.size()-5, messages.size());
+        try {
+            wordCountStreams.start();
+            latch.await();
+        } catch (Throwable e) {
+            System.exit(1);
         }
-}
-```
-
-In the example above, we defined the topics names with the parameter of the `@StreamListener` annotation, 
-but we could also rename the onMessage method to the desired topic name.
-
-If you would like to consume a batch fo messages change the onMessage method like this:
-
-```java
-@StreamListener(topics = {"test"})
-public void onMessage(List<ConsumerRecord<String, String>> records) {
-    
-    for (ConsumerRecord<String, String> record : records) {
-        log.info(String.format("Consumed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value()));
-        messages.add(record.value());
-    }
-    
-}
-```
-
-Implement JAX-RS resource, with a GET method for displaying the last 5 received  messages. Inject the `TestConsumer` 
-and retrieve the Kafka messages:
-
-```java
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-@Path("/consume")
-@RequestScoped
-public class ConsumerResource {
-
-    @Inject
-    TestConsumer consumer;
-
-    @GET
-    public Response getLast5Messages(){
-
-        return Response.status(200).entity(consumer.getLast5Messages()).build();
+        System.exit(0);
     }
 }
 ```
 
-To display the use of Kafka manual message offset committing we will implement another method in the `TestConsumer` class, 
-with an additional method parameter `Acknowledgement`, this consumer needs to have different configuration of 
-`enable-auto-commit: false`: 
+### Add required configuration for the Kafka Producer
 
-```java
-@StreamListener(topics = {"test"}, config = "consumer2")
-public void manualCommitMessage(ConsumerRecord<String, String> record, Acknowledgement ack) {
-
-    log.info(String.format("Manual committed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value()));
-    ack.acknowledge(); // acknowledges the consumed messages
-
-}
-```
-
-### Add required configuration for the Kafka Consumer
-
-You have to add the Kafka Consumer configuration using any KumuluzEE configuration source.
+You have to add the Kafka Streams configuration using any KumuluzEE configuration source.
 
 For example, you can use config.yaml file, placed in resources folder:
 
@@ -325,14 +343,12 @@ For example, you can use config.yaml file, placed in resources folder:
 kumuluzee:
   streaming:
     kafka:
-      consumer:
+      streams:
         bootstrap-servers: localhost:9092
-        group-id: group1
-        enable-auto-commit: true
-        auto-commit-interval-ms: 1000
-        auto-offset-reset: earliest
-        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        application-id: sample-word-count
+        default-key-serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        default-value-serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        commit-interval-ms: 500
 ```
 
 ### Build the microservice and run it

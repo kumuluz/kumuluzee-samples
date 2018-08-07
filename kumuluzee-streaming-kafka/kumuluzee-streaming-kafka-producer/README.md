@@ -67,7 +67,7 @@ The example uses Docker to set up the Kafka and Zookeeper instances and maven to
 2. Build the sample using maven:
    
    ```bash
-   $ cd kumuluzee-kafka/kumuluzee-kafka-producer
+   $ cd kumuluzee-streaming-kafka/kumuluzee-kafka-producer
    $ mvn clean package
    ```
 
@@ -321,7 +321,7 @@ and the Callback parameters. In the Callback we receive the sent message metadat
 
 You have to add the Kafka Producer configuration using any KumuluzEE configuration source.
 
-For example, you can use config.properties file, placed in resources folder:
+For example, you can use config.yaml file, placed in resources folder:
 
 ```yaml
 kumuluzee:
