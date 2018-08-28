@@ -10,7 +10,7 @@ kumuluzee:
       limit: 20
   datasources:
     - jndi-name: jdbc/Faculty
-      connection-url: jdbc:postgresql://localhost:5432/faculty
+      connection-url: jdbc:postgresql://192.168.99.100:5432/faculty
       username: postgres
       password: postgres
       max-pool-size: 20

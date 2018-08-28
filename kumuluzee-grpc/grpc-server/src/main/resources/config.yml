@@ -10,7 +10,8 @@ kumuluzee:
       password: postgres
   grpc:
     server:
-      port: 8443
+      http:
+        port: 8443
       auth:
         public-key: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDW6Angsf0Ry+GFD5HPstdcuaHJU5KhpT+gkzCCx7zZAbKRaEQexaTA9nPXK2Uzk2JqWTbZXSQYX2kBzYeiiedMpW6wvTaZWL9QhGjEnA9o97oNV1G5wQHKL/8FsvLXqt/81BCeZzWPDGvLNuU9l0qK3/xXL3efaZYPsZkB2AyZiQIDAQAB
         issuer: http://localhost
