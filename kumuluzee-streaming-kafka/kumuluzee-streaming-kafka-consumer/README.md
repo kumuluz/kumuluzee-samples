@@ -43,7 +43,9 @@ $ docker network create kafka-net
 $ docker run -d -p 2181:2181 --name zookeeper --network kafka-net zookeeper:3.4
 $ docker run -d -p 9092:9092 --name kafka --network kafka-net --env ZOOKEEPER_IP=zookeeper --env KAFKA_ADVERTISED_HOST_NAME={docker_host_ip} ches/kafka
 ```
-   
+
+Replace `{docker_host_ip}` with you Docker host IP.
+
 ## Usage
 
 The example uses Docker to set up the Kafka and Zookeeper instances and maven to build and run the microservice.
@@ -56,6 +58,8 @@ The example uses Docker to set up the Kafka and Zookeeper instances and maven to
     $ docker run -d -p 2181:2181 --name zookeeper --network kafka-net zookeeper:3.4
     $ docker run -d -p 9092:9092 --name kafka --network kafka-net --env ZOOKEEPER_IP=zookeeper --env KAFKA_ADVERTISED_HOST_NAME={docker_host_ip} ches/kafka
     ```
+    
+    Replace `{docker_host_ip}` with you Docker host IP.
     
     To produce messages in the terminal, you can use the Kafka CLI command:
     
@@ -124,7 +128,7 @@ Add the KumuluzEE BOM module dependency to your `pom.xml` file:
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-bom</artifactId>
-            <version>${kumuluz.version}</version>
+            <version>${kumuluzee.version}</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -138,6 +142,7 @@ Add the `kumuluzee-microProfile-1.0` and `kumuluzee-streaming-kafka` dependencie
     <dependency>
         <groupId>com.kumuluz.ee</groupId>
         <artifactId>kumuluzee-microProfile-1.0</artifactId>
+        <version>${kumuluzee.version}</version>
     </dependency>
     <dependency>
         <groupId>com.kumuluz.ee.streaming</groupId>
@@ -152,11 +157,11 @@ We will use `kumuluzee-logs` for logging in this sample, so you need to include 
 <dependency>
     <artifactId>kumuluzee-logs-log4j2</artifactId>
     <groupId>com.kumuluz.ee.logs</groupId>
-    <version>1.1.0</version>
+    <version>${kumuluzee-logs.version}</version>
 </dependency>
 ```
 
-For more information about the KumuluzEE Logs visit the [KumuluzEE Logs Github page](https://github.com/kumuluz/kumuluzee-logs). \
+For more information about the KumuluzEE Logs visit the [KumuluzEE Logs Github page](https://github.com/kumuluz/kumuluzee-logs).
 Currently, Log4j2 is supported implementation of `kumuluzee-logs`, so you need to include a sample Log4j2 configuration, 
 which should be in a file named `log4j2.xml` and located in `src/main/resources`:
 ```xml
@@ -180,7 +185,7 @@ If you would like to collect Kafka related logs through the KumuluzEE Logs, you 
 <dependency>
     <groupId>org.apache.logging.log4j</groupId>
     <artifactId>log4j-slf4j-impl</artifactId>
-    <version>2.8.1</version>
+    <version>${log4j-slf4j.version}</version>
 </dependency>
 ```
 
@@ -243,6 +248,7 @@ The method takes for a parameter the `ConsumerRecord` that contains the data of 
 We will store the received messages in a List. We also implemented a method `getLast5Messages` for getting the last 5 messages from the List.
 
 ```java
+@ApplicationScoped
 public class TestConsumer {
 
     private static final Logger log = Logger.getLogger(TestConsumer.class.getName());
@@ -259,7 +265,7 @@ public class TestConsumer {
     
     public List<String> getLast5Messages() {
         return messages.subList(messages.size()-5, messages.size());
-        }
+    }
 }
 ```
 

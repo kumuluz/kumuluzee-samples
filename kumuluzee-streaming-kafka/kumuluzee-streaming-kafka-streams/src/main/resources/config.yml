@@ -1,7 +1,4 @@
 kumuluzee:
-  server:
-    http:
-      port: 8800
   streaming:
     kafka:
       streams:
