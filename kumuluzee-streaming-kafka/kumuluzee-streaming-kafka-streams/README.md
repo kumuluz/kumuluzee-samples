@@ -110,7 +110,7 @@ The example uses Docker to set up the Kafka and Zookeeper instances and maven to
     java -cp target/classes;target/dependency/* com.kumuluz.ee.EeApplication
     ```
 
-To shut down the example simply stop the processes in the foreground.
+To shut down the example simply stop the processes in the foreground and all Docker containers started for this example.
 
 ## Tutorial
 

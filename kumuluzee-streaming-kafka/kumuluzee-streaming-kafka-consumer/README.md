@@ -103,7 +103,10 @@ The example uses Docker to set up the Kafka and Zookeeper instances and maven to
     
 4. The consumed messages will be printed in the terminal.
 
-To shut down the example simply stop the processes in the foreground.
+   The sample also exposes the following endpoints:
+   * GET http://localhost:8080/v1/consume - Last five messages consumed
+
+To shut down the example simply stop the processes in the foreground and all Docker containers started for this example.
 
 ## Tutorial
 
