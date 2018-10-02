@@ -2,4 +2,4 @@ kumuluzee:
   swagger:
     enabled: true
     ui:
-      enabled: false
+      enabled: true

@@ -1,10 +1,10 @@
 package com.kumuluz.ee.samples.swagger.v1;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import com.kumuluz.ee.samples.swagger.v1.Customer;
+import com.kumuluz.ee.security.annotations.Secure;
+import io.swagger.annotations.*;
 
+import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -22,10 +22,13 @@ import java.util.List;
 @Path("customer")
 @Api
 @Produces(MediaType.APPLICATION_JSON)
+@RequestScoped
+//@Secure
 public class CustomerResource {
 
     @GET
-    @ApiOperation(value = "Get customers list", tags = {"customers"}, notes = "Returns a list of customers.")
+    @ApiOperation(value = "Get customers list", tags = {"customers"}, notes = "Returns a list of customers.", authorizations = {
+            @Authorization(value = "application")})
     @ApiResponses(value = {@ApiResponse(message = "List of customers", code = 200, response = Customer.class)})
     public Response getCustomers() {
 

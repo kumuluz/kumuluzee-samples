@@ -17,7 +17,8 @@
     <description>KumuluzEE Swagger usage sample with KumuluzEE</description>
 
     <properties>
-        <kumuluzee-swagger.version>1.1.1</kumuluzee-swagger.version>
+        <kumuluzee-swagger.version>1.2.0-SNAPSHOT</kumuluzee-swagger.version>
+        <kumuluzee-security.version>1.0.1</kumuluzee-security.version>
     </properties>
 
     <dependencyManagement>
@@ -39,11 +40,15 @@
         </dependency>
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-jax-rs-jersey</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-servlet-jetty</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-jax-rs-jersey</artifactId>
+            <artifactId>kumuluzee-cdi-weld</artifactId>
         </dependency>
 
         <dependency>
@@ -55,6 +60,11 @@
             <groupId>com.kumuluz.ee.swagger</groupId>
             <artifactId>kumuluzee-swagger-ui</artifactId>
             <version>${kumuluzee-swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.security</groupId>
+            <artifactId>kumuluzee-security-keycloak</artifactId>
+            <version>${kumuluzee-security.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -71,9 +81,16 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.3.0</version>
         </dependency>
+
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>com.kumuluz.ee</groupId>
