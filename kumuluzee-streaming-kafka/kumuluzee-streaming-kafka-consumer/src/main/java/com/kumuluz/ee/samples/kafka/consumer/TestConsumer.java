@@ -40,7 +40,7 @@ public class TestConsumer {
 
     private List<String> messages = new ArrayList<>();
 
-    @StreamListener(topics = {"topic"})
+    @StreamListener(topics = {"test"})
     public void onMessage(ConsumerRecord<String, String> record) {
 
         log.info(String.format("Consumed message: offset = %d, key = %s, value = %s%n", record.offset(), record.key()

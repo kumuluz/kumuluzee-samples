@@ -5,7 +5,7 @@
     <parent>
         <artifactId>kumuluzee-samples</artifactId>
         <groupId>com.kumuluz.ee.samples</groupId>
-        <version>2.5.0-SNAPSHOT</version>
+        <version>3.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,7 +17,10 @@
 
     <properties>
         <kumuluzee-streaming-kafka.version>1.0.0-SNAPSHOT</kumuluzee-streaming-kafka.version>
+        <kumuluzee-logs.version>1.3.0</kumuluzee-logs.version>
+
         <kafka.version>2.0.0</kafka.version>
+        <log4j-slf4j.version>2.8.1</log4j-slf4j.version>
     </properties>
 
     <modules>

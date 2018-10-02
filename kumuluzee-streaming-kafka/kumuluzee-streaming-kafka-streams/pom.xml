@@ -5,7 +5,7 @@
     <parent>
         <artifactId>kumuluzee-streaming-kafka</artifactId>
         <groupId>com.kumuluz.ee.samples</groupId>
-        <version>2.5.0-SNAPSHOT</version>
+        <version>3.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -34,15 +34,14 @@
         <dependency>
             <artifactId>kumuluzee-logs-log4j2</artifactId>
             <groupId>com.kumuluz.ee.logs</groupId>
-            <version>1.1.0</version>
+            <version>${kumuluzee-logs.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.8.1</version>
+            <version>${log4j-slf4j.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>
