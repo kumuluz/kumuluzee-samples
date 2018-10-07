@@ -191,7 +191,7 @@ public class EventsEndpoint {
         SampleToken sampleToken = SampleToken.load(deployedContractAddress, web3j, credentials, Contract.GAS_PRICE, Contract.GAS_LIMIT);
         try {
             String logs = runMethod(sampleToken, methodName, argo, argo.getClass()).send().toString();
-            return methodName + "(" + argo + ") of is: " + logs;
+            return methodName + "(" + argo + ") is: " + logs;
         } catch (Exception e) {
             String error = "Error calling method";;
             log.severe(error);
