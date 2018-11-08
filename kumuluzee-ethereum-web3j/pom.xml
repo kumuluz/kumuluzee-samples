@@ -61,14 +61,6 @@
                     <soliditySourceFiles/>
                     <packageName>contracts</packageName>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>package</id>
-                        <goals>
-                            <goal>generate-sources</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>com.kumuluz.ee</groupId>
