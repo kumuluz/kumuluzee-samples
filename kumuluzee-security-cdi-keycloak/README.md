@@ -42,7 +42,7 @@ To run this sample you will need a Keycloak instance. Here is an example on how 
 $ docker run \
          -e KEYCLOAK_USER=<USERNAME> \
          -e KEYCLOAK_PASSWORD=<PASSWORD> \
-         jboss/keycloak
+         -p 8082:8080 jboss/keycloak
 ```
 
 ## Usage
