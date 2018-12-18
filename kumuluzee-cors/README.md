@@ -132,7 +132,7 @@ Add the `kumuluzee-cors` dependency:
 <dependency>
     <groupId>com.kumuluz.ee.cors</groupId>
     <artifactId>kumuluzee-cors</artifactId>
-    <version>${kumuluzee-cors.varsion}</version>
+    <version>${kumuluzee-cors.version}</version>
 </dependency>
 ```
 
