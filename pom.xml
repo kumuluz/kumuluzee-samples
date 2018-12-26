@@ -45,6 +45,7 @@
         <module>kumuluzee-grpc</module>
         <module>kumuluzee-graphql-advanced</module>
         <module>kumuluzee-graphql-jpa-simple</module>
+        <module>kumuluzee-opentracing</module>
     </modules>
     <packaging>pom</packaging>
 
