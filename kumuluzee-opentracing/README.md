@@ -58,9 +58,9 @@ customers and orders module:
 ```xml
 <!--Replace kumuluzee-opentracing-jaeger with this dependency.-->
 <dependency>
-  <groupId>com.kumuluz.ee.opentracing</groupId>
-  <artifactId>kumuluzee-opentracing-zipkin</artifactId> 
-  <version>${kumuluzee-opentracing.version}</version>
+    <groupId>com.kumuluz.ee.opentracing</groupId>
+    <artifactId>kumuluzee-opentracing-zipkin</artifactId> 
+    <version>${kumuluzee-opentracing.version}</version>
 </dependency>
 ```
 
@@ -109,62 +109,62 @@ Add Jaeger tracing dependency for each microservice:
 
 
 ```xml
-    <dependency>
-      <groupId>com.kumuluz.ee.opentracing</groupId>
-      <artifactId>kumuluzee-opentracing-jaeger</artifactId> 
-      <version>${kumuluzee-opentracing.version}</version>
-    </dependency>
+<dependency>
+    <groupId>com.kumuluz.ee.opentracing</groupId>
+    <artifactId>kumuluzee-opentracing-jaeger</artifactId> 
+    <version>${kumuluzee-opentracing.version}</version>
+</dependency>
 ```
 
 Add CDI dependency:
 
 ```xml
-    <dependency>
-        <groupId>com.kumuluz.ee</groupId>
-        <artifactId>kumuluzee-cdi-weld</artifactId>
-    </dependency>
+<dependency>
+    <groupId>com.kumuluz.ee</groupId>
+    <artifactId>kumuluzee-cdi-weld</artifactId>
+</dependency>
 ```
 
 By now you should have the following dependencies in pom.xml in Customers and Orders microservice:
 ```xml
-  <dependencies>
+<dependencies>
     <dependency>
-      <groupId>com.kumuluz.ee</groupId>
-      <artifactId>kumuluzee-core</artifactId>
+        <groupId>com.kumuluz.ee</groupId>
+        <artifactId>kumuluzee-core</artifactId>
     </dependency>
-
+    
     <dependency>
-      <groupId>com.kumuluz.ee</groupId>
-      <artifactId>kumuluzee-cdi-weld</artifactId>
+        <groupId>com.kumuluz.ee</groupId>
+        <artifactId>kumuluzee-cdi-weld</artifactId>
     </dependency>
-
+    
     <dependency>
-      <groupId>com.kumuluz.ee</groupId>
-      <artifactId>kumuluzee-servlet-jetty</artifactId>
+        <groupId>com.kumuluz.ee</groupId>
+        <artifactId>kumuluzee-servlet-jetty</artifactId>
     </dependency>
-
+    
     <dependency>
-      <groupId>com.kumuluz.ee</groupId>
-      <artifactId>kumuluzee-jax-rs-jersey</artifactId>
+        <groupId>com.kumuluz.ee</groupId>
+        <artifactId>kumuluzee-jax-rs-jersey</artifactId>
     </dependency>
-
+    
     <dependency>
-      <groupId>com.kumuluz.ee.opentracing</groupId>
-      <artifactId>kumuluzee-opentracing-jaeger</artifactId>
-      <version>${kumuluzee-opentracing.version}</version>
+        <groupId>com.kumuluz.ee.opentracing</groupId>
+        <artifactId>kumuluzee-opentracing-jaeger</artifactId>
+        <version>${kumuluzee-opentracing.version}</version>
     </dependency>
-  </dependencies>
+</dependencies>
 ```
 
 ### Tracing with no code instrumentation
 Create beans.xml file in resources/META-INF directory for each microservice with the following content:
 
 ```xml
-    <?xml version="1.0" encoding="UTF-8"?>
-    <beans xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_2.xsd"
-           bean-discovery-mode="annotated">
-    </beans>
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_2.xsd"
+       bean-discovery-mode="annotated">
+</beans>
 ```
 
 Add config.yaml file in resources directory for each microservice. 
