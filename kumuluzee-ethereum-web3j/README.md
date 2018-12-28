@@ -265,6 +265,20 @@ To send token to all your customers stored in database use. To check if transfer
         }
     }
 ```
+
+If you run your own Ethereum node (Infura is not supported) you can listen to smart contract events and react to them programatically inside methods annotated with EventListen annotation. To get data about the event pass appropriate EventResponse object.
+```java
+@EventListen(eventName="transfer", smartContractName = SampleToken.class, smartContractAddress = deployedContractAddress)
+    public void reactToEvent (SampleToken.TransferEventResponse transferEventResponse) {
+        if (transferEventResponse.tokens.compareTo(BigInteger.valueOf(20)) == 1) {
+            log.info("Granting service access to user " + transferEventResponse.from + ". " +
+                    transferEventResponse.tokens + " tokens received.");
+        } else {
+            log.info("Access denied. User " + transferEventResponse.from + " has send only " + transferEventResponse.tokens + " tokens.");
+        }
+    }
+```
+
 In order to get your wallet credentials use Web3jUtils
 ```java
 private Credentials credentials = Web3jUtils.getCredentials();

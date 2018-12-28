@@ -302,7 +302,7 @@ public class ConfigResource {
 To build the microservice and run the example, use the commands as described in previous sections.
 
 Since we have not defined any configuration properties in etcd, GET http://localhost:8080/v1/config will return 
-configuration properties from configuraiton file. We can now try and some values in etcd. Since we enabled watch on 
+configuration properties from configuraiton file. We can now try and add some values in etcd. Since we enabled watch on 
 the field `stringProperty`, it will be dynamically updated on any change in etcd. We can add a value to etcd with the
 following command:
 

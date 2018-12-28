@@ -1,0 +1,18 @@
+kumuluzee:
+  name: Customers Microservice
+  server:
+    http:
+      port: 3000
+  opentracing:
+    jaeger:
+      agent-host: localhost
+      agent-port: 5775
+    zipkin:
+      agent-host: http://localhost
+      agent-port: 9411
+
+mp:
+  opentracing:
+    server:
+      operation-name-provider: http-path
+      skip-pattern: /openapi.*|/health.*

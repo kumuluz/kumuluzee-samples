@@ -17,10 +17,11 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
+ */
 
 package com.kumuluz.ee.samples.ethereum;
 
+import com.kumuluz.ee.ethereum.annotations.EventListen;
 import com.kumuluz.ee.ethereum.annotations.Web3jUtil;
 import com.kumuluz.ee.ethereum.utils.Web3jUtils;
 import com.kumuluz.ee.samples.ethereum.entities.Customer;
@@ -28,13 +29,16 @@ import com.kumuluz.ee.samples.ethereum.services.CustomerService;
 import contracts.SampleToken;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.RemoteCall;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.core.methods.response.Web3ClientVersion;
-import org.web3j.tx.Contract;
 import org.web3j.tx.Transfer;
+import org.web3j.tx.gas.ContractGasProvider;
+import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Convert;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -58,7 +62,7 @@ public class EventsEndpoint {
 
     private Credentials credentials = Web3jUtils.getCredentials();
 
-    private String deployedContractAddress = "0x7f45B345fB76D47770af9C4eF36514eD7f713a33"; // Smart contract address of SampleToken
+    private final String deployedContractAddress = "0x7f45B345fB76D47770af9C4eF36514eD7f713a33"; // Smart contract address of SampleToken
 
     private Logger log = Logger.getLogger(EventsEndpoint.class.getName());
 
@@ -68,6 +72,7 @@ public class EventsEndpoint {
     @Inject
     @Web3jUtil
     private Web3j web3j;
+
 
     @GET
     @Path("client/version")
@@ -111,42 +116,55 @@ public class EventsEndpoint {
 
     @GET
     @Path("contract/deploy")
-    public String deployContract () {
+    public String deployContract() {
         try {
-            SampleToken sampleToken = SampleToken.deploy(web3j, credentials, Contract.GAS_PRICE, Contract.GAS_LIMIT).send();
+            ContractGasProvider contractGasProvider = new DefaultGasProvider();
+            SampleToken sampleToken = SampleToken.deploy(web3j, credentials, contractGasProvider).send();
             String contractAddress = sampleToken.getContractAddress();
             return "Contract is deployed at address: " + contractAddress;
         } catch (Exception e) {
-            String error = "Deploynment failure";;
+            String error = "Deploynment failure " + e.getMessage();
             log.severe(error);
             return error;
+        }
+    }
+
+    @EventListen(eventName = "transfer", smartContractName = SampleToken.class, smartContractAddress = deployedContractAddress)
+    public void reactToEvent(SampleToken.TransferEventResponse transferEventResponse) {
+        if (transferEventResponse.tokens.compareTo(BigInteger.valueOf(20)) == 1) {
+            log.info("Granting service access to user " + transferEventResponse.from + ". " +
+                    transferEventResponse.tokens + " tokens received.");
+        } else {
+            log.info("Access denied. User " + transferEventResponse.from + " has send only " + transferEventResponse.tokens + " tokens.");
         }
     }
 
     @GET
     @Path("contract/get/owner")
-    public String callContract () {
-        SampleToken sampleToken = SampleToken.load(deployedContractAddress, web3j, credentials, Contract.GAS_PRICE, Contract.GAS_LIMIT);
+    public String callContract() {
+        ContractGasProvider contractGasProvider = new DefaultGasProvider();
+        SampleToken sampleToken = SampleToken.load(deployedContractAddress, web3j, credentials, contractGasProvider);
         try {
             String address = sampleToken.owner().send();
             String owner = String.format("Owner is address %s\n", address);
             return owner;
         } catch (Exception e) {
-            String error = "Error calling method";;
+            String error = "Error calling method " + e.getMessage();
             log.severe(error);
             return error;
         }
     }
 
     @GET
-    @Path("contract/send/token/{to}")
-    public String sendToken (@PathParam("to") String transaction) {
-        SampleToken sampleToken = SampleToken.load(deployedContractAddress, web3j, credentials, Contract.GAS_PRICE, Contract.GAS_LIMIT);
+    @Path("contract/send/token/{to}/amount/{amount}")
+    public String sendToken(@PathParam("to") String transaction, @PathParam("amount") String amount) {
+        ContractGasProvider contractGasProvider = new DefaultGasProvider();
+        SampleToken sampleToken = SampleToken.load(deployedContractAddress, web3j, credentials, contractGasProvider);
         try {
-            String logs = "Transaction is at: " + sampleToken.transfer(transaction, BigInteger.valueOf(100)).send().getTransactionHash();
+            String logs = "Transaction is at: " + sampleToken.transfer(transaction, BigInteger.valueOf(Integer.valueOf(amount))).send().getTransactionHash();
             return logs;
         } catch (Exception e) {
-            String error = "Error calling method";;
+            String error = "Error calling method " + e.getMessage();
             log.severe(error);
             return error;
         }
@@ -154,8 +172,9 @@ public class EventsEndpoint {
 
     @GET
     @Path("contract/send/tokens/customers")
-    public String sendTokenToCustomers () {
-        SampleToken sampleToken = SampleToken.load(deployedContractAddress, web3j, credentials, Contract.GAS_PRICE, Contract.GAS_LIMIT);
+    public String sendTokenToCustomers() {
+        ContractGasProvider contractGasProvider = new DefaultGasProvider();
+        SampleToken sampleToken = SampleToken.load(deployedContractAddress, web3j, credentials, contractGasProvider);
         try {
             List<Customer> customerList = customerService.getCustomers();
             String logs = "";
@@ -165,7 +184,7 @@ public class EventsEndpoint {
             }
             return logs;
         } catch (Exception e) {
-            String error = "Error calling method";;
+            String error = "Error calling method " + e.getMessage();
             log.severe(error);
             return error;
         }
@@ -173,13 +192,14 @@ public class EventsEndpoint {
 
     @GET
     @Path("contract/call/method/{name}")
-    public String callContractMethod (@PathParam("name") String methodName) {
-        SampleToken sampleToken = SampleToken.load(deployedContractAddress, web3j, credentials, Contract.GAS_PRICE, Contract.GAS_LIMIT);
+    public String callContractMethod(@PathParam("name") String methodName) {
+        ContractGasProvider contractGasProvider = new DefaultGasProvider();
+        SampleToken sampleToken = SampleToken.load(deployedContractAddress, web3j, credentials, contractGasProvider);
         try {
             String logs = runMethod(sampleToken, methodName).send().toString();
             return logs;
         } catch (Exception e) {
-            String error = "Error calling method";;
+            String error = "Error calling method " + e.getMessage();
             log.severe(error);
             return error;
         }
@@ -187,13 +207,14 @@ public class EventsEndpoint {
 
     @GET
     @Path("contract/call/method/{name}/argument/{argument}")
-    public String callContractMethod (@PathParam("name") String methodName, @PathParam("argument") String argo) {
-        SampleToken sampleToken = SampleToken.load(deployedContractAddress, web3j, credentials, Contract.GAS_PRICE, Contract.GAS_LIMIT);
+    public String callContractMethod(@PathParam("name") String methodName, @PathParam("argument") String argo) {
+        ContractGasProvider contractGasProvider = new DefaultGasProvider();
+        SampleToken sampleToken = SampleToken.load(deployedContractAddress, web3j, credentials, contractGasProvider);
         try {
             String logs = runMethod(sampleToken, methodName, argo, argo.getClass()).send().toString();
-            return methodName + "(" + argo + ") of is: " + logs;
+            return methodName + "(" + argo + ") is: " + logs;
         } catch (Exception e) {
-            String error = "Error calling method";;
+            String error = "Error calling method " + e.getMessage();
             log.severe(error);
             return error;
         }
@@ -201,12 +222,12 @@ public class EventsEndpoint {
 
     private static RemoteCall runMethod(Object instance, String methodName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = instance.getClass().getMethod(methodName);
-        return (RemoteCall)method.invoke(instance);
+        return (RemoteCall) method.invoke(instance);
     }
 
     private static RemoteCall runMethod(Object instance, String methodName, String argo, Class<?> parameterType) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = instance.getClass().getMethod(methodName, parameterType);
-        return (RemoteCall)method.invoke(instance, argo);
+        return (RemoteCall) method.invoke(instance, argo);
     }
 }
 
