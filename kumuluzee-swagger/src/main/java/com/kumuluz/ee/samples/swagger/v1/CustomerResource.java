@@ -1,7 +1,5 @@
 package com.kumuluz.ee.samples.swagger.v1;
 
-import com.kumuluz.ee.samples.swagger.v1.Customer;
-import com.kumuluz.ee.security.annotations.Secure;
 import io.swagger.annotations.*;
 
 import javax.enterprise.context.RequestScoped;
