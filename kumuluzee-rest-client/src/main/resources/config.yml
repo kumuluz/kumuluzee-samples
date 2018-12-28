@@ -1,0 +1,9 @@
+kumuluzee:
+  server:
+    http:
+      port: 8081
+
+  rest-client:
+    registrations:
+      - class: com.kumuluz.ee.samples.kumuluzee_rest_client.api.CustomerApi
+        url: http://localhost:8080/v1
