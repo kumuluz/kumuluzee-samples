@@ -89,6 +89,7 @@ We will follow these steps:
 * Add configuration
 * Add ResponseExceptionMapper
 * Register ResponseExceptionMapper
+* Make asynchronous calls
 * Build the microservice and run it
 
 ### Add Maven dependencies
@@ -227,16 +228,21 @@ the use of CDI lookup.
 
 In order to consume the created API, we will expose our own RESTful API.
 
-__NOTE:__ You should put the application class and resources in a separate package. Otherwise, JAX-RS will try to
-register the `CustomerApi` interface we created before and fail because it's an interface and not a concrete class.
-
 First, create the application class:
 
 ```java
 @ApplicationPath("v1")
 public class RestApplication extends Application {
+
+    @Override
+    public Set<Class<?>> getClasses() {
+        return Collections.singleton(RestResource.class);
+    }
 }
 ```
+
+__NOTE:__ We'll use the `getClasses()` method to specify the resources manually, in order to avoid Jersey validating our
+API interfaces.
 
 And then, the resource:
 
@@ -401,6 +407,60 @@ CustomerApi programmaticLookupApi = RestClientBuilder.newBuilder()
 ```
 
 Notice the added `register(...)` call.
+
+### Make asynchronous calls
+
+KumuluzEE Rest Client supports asynchronous request execution. To make a call asynchronous, simply change the return
+type of the interface method to `CompletionStage`. We will make an additional method in our existing interface
+`CustomerApi`, which will create a customer asynchronously.
+
+```java
+@POST
+CompletionStage<Void> createCustomerAsynch(Customer customer);
+```
+
+Now, let's create an additional operation in our resource class that will use the newly created API call.
+
+```java
+@GET
+@Path("batchAsynch")
+public Response createBatchCustomersAsynch() {
+    String[] ids = {"1", "2", "3"};
+    String[] firstNames = {"Jonh", "Mary", "Joe"};
+    String[] lastNames = {"Doe", "McCallister", "Green"};
+
+    List<CompletionStage<Void>> requests = new LinkedList<>();
+
+    for (int i = 0; i < ids.length; i++) {
+        Customer c = new Customer();
+        c.setId(ids[i]);
+        c.setFirstName(firstNames[i]);
+        c.setLastName(lastNames[i]);
+
+        requests.add(customerApi.createCustomerAsynch(c));
+    }
+
+    boolean hasError = false;
+
+    for (CompletionStage<Void> cs : requests) {
+        try {
+            cs.toCompletableFuture().get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            hasError = true;
+        }
+    }
+
+    if (hasError) {
+        return Response.serverError().build();
+    }
+
+    return Response.noContent().build();
+}
+```
+
+This operation creates a batch of customers and is very similar to the `batch` operation. The difference is that the
+requests are now created asynchronously, whereas before each request had to be completed before a new one was started.
 
 ### Build the microservice and run it
 

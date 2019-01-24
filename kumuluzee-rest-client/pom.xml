@@ -19,7 +19,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <kumuluzee-rest-client.version>1.0.1-SNAPSHOT</kumuluzee-rest-client.version>
+        <kumuluzee-rest-client.version>1.1.0-SNAPSHOT</kumuluzee-rest-client.version>
     </properties>
 
     <dependencyManagement>

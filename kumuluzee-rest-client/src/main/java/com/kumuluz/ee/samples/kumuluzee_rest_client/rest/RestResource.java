@@ -33,6 +33,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Urban Malc
@@ -67,6 +71,42 @@ public class RestResource {
             c.setLastName(lastNames[i]);
 
             customerApi.createCustomer(c);
+        }
+
+        return Response.noContent().build();
+    }
+
+    @GET
+    @Path("batchAsynch")
+    public Response createBatchCustomersAsynch() {
+        String[] ids = {"1", "2", "3"};
+        String[] firstNames = {"Jonh", "Mary", "Joe"};
+        String[] lastNames = {"Doe", "McCallister", "Green"};
+
+        List<CompletionStage<Void>> requests = new LinkedList<>();
+
+        for (int i = 0; i < ids.length; i++) {
+            Customer c = new Customer();
+            c.setId(ids[i]);
+            c.setFirstName(firstNames[i]);
+            c.setLastName(lastNames[i]);
+
+            requests.add(customerApi.createCustomerAsynch(c));
+        }
+
+        boolean hasError = false;
+
+        for (CompletionStage<Void> cs : requests) {
+            try {
+                cs.toCompletableFuture().get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+                hasError = true;
+            }
+        }
+
+        if (hasError) {
+            return Response.serverError().build();
         }
 
         return Response.noContent().build();

@@ -28,6 +28,7 @@ import javax.enterprise.context.Dependent;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.concurrent.CompletionStage;
 
 /**
  * @author Urban Malc
@@ -50,6 +51,9 @@ public interface CustomerApi {
 
     @POST
     void createCustomer(Customer customer);
+
+    @POST
+    CompletionStage<Void> createCustomerAsynch(Customer customer);
 
     @DELETE
     @Path("{customerId}")
