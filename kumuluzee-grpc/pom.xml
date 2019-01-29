@@ -22,10 +22,10 @@
     </modules>
 
     <properties>
-        <kumuluzee.grpc.version>1.0.0</kumuluzee.grpc.version>
+        <kumuluzee.grpc.version>1.1.0</kumuluzee.grpc.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <grpc.version>1.15.1</grpc.version>
+        <grpc.version>1.18.0</grpc.version>
     </properties>
 
 
