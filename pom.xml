@@ -47,6 +47,7 @@
         <module>kumuluzee-graphql-jpa-simple</module>
         <module>kumuluzee-opentracing</module>
         <module>kumuluzee-rest-client</module>
+		<module>kumuluzee-amqp-rabbitmq</module>
     </modules>
     <packaging>pom</packaging>
 

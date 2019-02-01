@@ -1,0 +1,19 @@
+kumuluzee:
+  amqp:
+    rabbitmq:
+      hosts:
+        - name: MQtest
+          url: localhost
+          username: guest
+          password: guest
+          exchanges:
+            - name: directExchange
+              type: direct
+        - name: MQtest2
+          queues:
+          - name: testQueue
+      properties:
+        - name: testProperty
+          headers:
+            title: text
+          timestamp: true
