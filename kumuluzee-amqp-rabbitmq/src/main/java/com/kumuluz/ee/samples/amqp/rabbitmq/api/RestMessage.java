@@ -23,11 +23,36 @@ package com.kumuluz.ee.samples.amqp.rabbitmq.api;
 
 /**
  * @author Blaž Mrak
- * @since 1.0.0
+ * @since 3.2.0
  */
 
 public class RestMessage {
-    public String exchange;
-    public String key;
-    public String message;
+
+    private String exchange;
+    private String key;
+    private String message;
+
+    public String getExchange() {
+        return exchange;
+    }
+
+    public void setExchange(String exchange) {
+        this.exchange = exchange;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

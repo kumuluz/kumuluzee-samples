@@ -25,14 +25,13 @@ import java.io.Serializable;
 
 /**
  * @author Blaž Mrak
- * @since 1.0.0
+ * @since 3.2.0
  */
 
 public class ExampleObject implements Serializable {
+
     private String content;
     private int length;
-
-    public ExampleObject(){ }
 
     public String getContent() {
         return content;
@@ -43,7 +42,7 @@ public class ExampleObject implements Serializable {
         this.length = content.length();
     }
 
-    public int getLength(){
+    public int getLength() {
         return this.length;
     }
 }

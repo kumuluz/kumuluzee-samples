@@ -26,7 +26,7 @@ import javax.ws.rs.core.Application;
 
 /**
  * @author Blaž Mrak
- * @since 1.0.0
+ * @since 3.2.0
  */
 
 @ApplicationPath("v1")
