@@ -199,8 +199,6 @@ public class MessageProducer {
 ```
 This is not that convenient, as we have to have a specific structure that we are getting our data from. Another way of sending data is with `@AMQPProducer` annotation. All we need to do is to return the object we want to send. In this example we are sending a string "I'm red".
 ```java
-    ...
-
     @AMQProducer(host="MQtest", exchange="directExchange", key="red", properties="textPlain")
     public String sendRedMessage() {
         return "I'm red!";
@@ -208,8 +206,6 @@ This is not that convenient, as we have to have a specific structure that we are
 ```
 Instead of returning any object, we could return a specific object Message, to which we can set the host, exchange, keys, body and properties, which we cannot predefine. In this example our method will create a random number and based on it, it will choose to which consumer it will send a message. It is also good to know that Message parameters will override annotation parameters.
 ```java
-    ...
-
     @AMQPProducer
     public Message sendFullMessage(){
         Message message = new Message();
