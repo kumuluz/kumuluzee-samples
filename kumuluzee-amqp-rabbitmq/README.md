@@ -316,19 +316,19 @@ public class MessageResource {
 ```
 
 Example requests:  
-	POST: http://localhost:8080/v1/ Body:
-	```json
-	{
-	    "exchange": "directExchange", 
-	    "key": "red", 
-	    "message": "This is a message."
-	}
-	```
-	GET: http://localhost:8080/v1/red  
-	GET: http://localhost:8080/v1/object  
-	GET: http://localhost:8080/v1/message  
-	GET: http://localhost:8080/v1/queue  
-	GET: http://localhost:8080/v1/fullMessage  
+- POST: http://localhost:8080/v1/ Body:
+```json
+{
+    "exchange": "directExchange", 
+    "key": "red", 
+    "message": "This is a message."
+}
+```
+- GET: http://localhost:8080/v1/red  
+- GET: http://localhost:8080/v1/object  
+- GET: http://localhost:8080/v1/message  
+- GET: http://localhost:8080/v1/queue  
+- GET: http://localhost:8080/v1/fullMessage  
 
 ### Configure CDI
 
