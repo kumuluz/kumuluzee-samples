@@ -279,7 +279,7 @@ public class MessageResource {
         }
     }
 
-   @GET
+    @GET
     @Path("/red")
     public Response getRed(){
         messageProducer.sendRed();
