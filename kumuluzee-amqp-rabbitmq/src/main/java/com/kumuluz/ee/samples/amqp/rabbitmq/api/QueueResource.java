@@ -51,46 +51,47 @@ public class QueueResource {
     private MessageProducer messageProducer;
 
     @POST
-    public void messageToSend(RestMessage message){
+    public Response messageToSend(RestMessage message){
         try {
             channel.basicPublish(message.exchange, message.key, null, message.message.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return Response.ok("\"RestMessage sent.\"").build();
     }
 
     @GET
     @Path("/red")
     public Response getRed(){
         messageProducer.sendRed();
-        return Response.ok("Red message sent.").build();
+        return Response.ok("\"Red message sent.\"").build();
     }
 
     @GET
     @Path("/object")
     public Response getObject(){
         messageProducer.sendObject();
-        return Response.ok("Object message sent.").build();
+        return Response.ok("\"Object message sent.\"").build();
     }
 
     @GET
     @Path("/message")
     public Response getMessageObjectCustomProperty(){
         messageProducer.sendObjectMessageCustomProperty();
-        return Response.ok("Object message with custom properties sent.").build();
+        return Response.ok("\"Object message with custom properties sent.\"").build();
     }
 
     @GET
     @Path("/queue")
     public Response getMessageQueue(){
         messageProducer.sendToQueue();
-        return Response.ok("Object message with custom properties sent.").build();
+        return Response.ok("\"Object message with custom properties sent.\"").build();
     }
 
     @GET
     @Path("/fullMessage")
     public Response getFullMessage(){
         messageProducer.sendFullMessage();
-        return Response.ok("Object message sent to a random consumer.").build();
+        return Response.ok("\"Object message sent to a random consumer.\"").build();
     }
 }
