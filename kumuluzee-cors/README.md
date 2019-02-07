@@ -70,7 +70,7 @@ The example uses maven to build and run the microservices.
     
 The application/service can be accessed on the following URL:
 * Servlet - http://localhost:8080/CustomerServlet
-* JAX-RS - http://localhost:8080/v1/customer
+* JAX-RS - http://localhost:8080/v1/customers
 
 To shut down the example simply stop the processes in the foreground.
 
