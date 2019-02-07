@@ -1,8 +1,8 @@
 # KumuluzEE AMQP sample with RabbitMQ
 
-> Develop Messaging with RabbitMQ and pack it as a KumuluzEE microservice.
+> Develop messaging with RabbitMQ and pack it as a KumuluzEE microservice.
 
-The objective of this sample is to demonstrate how to develop messaging using RabbitMQ. The tutorial guides you through the development of RabbitMQ Publisher and Consumer. You will add KumuluzEE dependencies into pom.xml. You will recieve messages through your REST service and will then send them to the RabbitMQ broker, which will deliver them to appropriate Consumers.
+The objective of this sample is to demonstrate how to develop messaging using RabbitMQ. The tutorial guides you through the development of RabbitMQ publisher and consumer. You will add KumuluzEE dependencies into pom.xml. You will recieve messages through your REST service and will then send them to the RabbitMQ broker, which will deliver them to appropriate consumers.
 
 ## Requirements
 
@@ -36,8 +36,8 @@ In order to run this example you will need the following:
 		
 	* Or run RabbitMQ with docker:
 	
-		```bash
-        $ docker run -d --hostname my-rabbit --name some-rabbit rabbitmq:3 -p 5672:5672
+	```bash
+        $ docker run -d --hostname my-rabbit --name some-rabbit -p 5672:5672 rabbitmq:3
         ```
 
 ## Usage
@@ -47,7 +47,7 @@ The example uses maven to build and run the microservices.
 1. Build the sample using maven:
 
     ```bash
-    $ cd rabbitmq
+    $ cd kumuluzee-amqp-rabbitmq
     $ mvn clean package
     ```
 
@@ -94,7 +94,7 @@ We will follow these steps:
 
 ### Add Maven dependencies
 
-Since your existing starting point is the existing KumuluzEE JAX-RS REST sample, you should already have the dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` configured in `pom.xml`.
+Since your existing starting point is the existing KumuluzEE JAX-RS REST sample, you should already have the dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` configured in the `pom.xml`.
 
 Add the `kumuluzee-cdi-weld` and `kumuluzee-amqp-rabbitmq` dependencies:
 ```xml
@@ -105,6 +105,7 @@ Add the `kumuluzee-cdi-weld` and `kumuluzee-amqp-rabbitmq` dependencies:
 <dependency>
     <groupId>com.kumuluz.ee</groupId>
     <artifactId>kumuluzee-amqp-rabbitmq</artifactId>
+    <version>${kumuluzee.rabbitmq.version}</version>
 </dependency>
 ```
 
@@ -154,7 +155,7 @@ or exploded:
 
 ### Configure RabbitMQ broker
 
-In the directory `resources` add the file `config.yaml` with the following RabbitMQ properties:
+In the directory `resources` edit the file `config.yaml` by adding the following RabbitMQ properties:
 
 ```yaml
 kumuluzee:
@@ -176,8 +177,8 @@ kumuluzee:
           timestamp: true
 ```
 
-### Implement message Producer
-Create a new class called `MessageProducer` and inject a RabbitMQ channel into it with `@AMQChannel` annotation.
+### Implement message producer
+Create a new class called `MessageProducer` and inject a RabbitMQ channel into it with the `@AMQChannel` annotation.
 Then we can use `RestMessage` parameters to publish a message to a RabbitMQ broker.
 ```java
 @ApplicationScoped
@@ -198,8 +199,6 @@ public class MessageProducer {
 ```
 This is not that convenient, as we have to have a specific structure that we are getting our data from. Another way of sending data is with `@AMQPProducer` annotation. All we need to do is to return the object we want to send. In this example we are sending a string "I'm red".
 ```java
-    ...
-
     @AMQProducer(host="MQtest", exchange="directExchange", key="red", properties="textPlain")
     public String sendRedMessage() {
         return "I'm red!";
@@ -207,8 +206,6 @@ This is not that convenient, as we have to have a specific structure that we are
 ```
 Instead of returning any object, we could return a specific object Message, to which we can set the host, exchange, keys, body and properties, which we cannot predefine. In this example our method will create a random number and based on it, it will choose to which consumer it will send a message. It is also good to know that Message parameters will override annotation parameters.
 ```java
-    ...
-
     @AMQPProducer
     public Message sendFullMessage(){
         Message message = new Message();
@@ -229,16 +226,13 @@ Instead of returning any object, we could return a specific object Message, to w
         return message.body(exampleObject);
     }
 ```
-### Implement message Consumer
+### Implement message consumer
 Create a new class `MessageConsumer` and annotate it with `@ApplicationScoped` annotation. Then create a new method, annotate it with `@AMQPConsumer` and add ConsumerMessage parameter to it. 
 
 After we have created our method, we can print out the message we recieved.
 ```java
 @ApplicationScoped
 public class QueueHandler {
-
-    public QueueHandler(){
-    }
     
     @AMQConsumer(host="MQtest", exchange = "directExchange", key = "red")
     public void listenToRed(ConsumerMessage consumerMessage){
@@ -249,9 +243,9 @@ public class QueueHandler {
 
 ### Implement REST Service
 
-Create new REST object `RestMessage` which we will use to get information from the HTTP request.
+Create a new REST object `RestMessage` which we will use to get information from the HTTP request.
 
-* Add `String exchange`, `String key` and `String message`.
+* Add fields `String exchange`, `String key` and `String message`.
 
 ```java
 public class RestMessage {
@@ -271,10 +265,10 @@ public class MessageResource {
 
     @Inject
     @AMQPChannel("MQtest")
-    Channel channel;
+    private Channel channel;
 
     @Inject
-    MessageProducer messageProducer;
+    private MessageProducer messageProducer;
 
     @POST
     public void messageToSend(RestMessage message){
@@ -287,54 +281,55 @@ public class MessageResource {
 
     @GET
     @Path("/red")
-    public String getRed(){
+    public Response getRed(){
         messageProducer.sendRed();
-        return "Red message sent.";
+        return Response.ok("Red message sent.").build();
     }
 
     @GET
     @Path("/object")
-    public String getObject(){
+    public Response getObject(){
         messageProducer.sendObject();
-        return "Object message sent.";
+        return Response.ok("Object message sent.").build();
     }
 
     @GET
     @Path("/message")
-    public String getMessageObjectCustomProperty(){
+    public Response getMessageObjectCustomProperty(){
         messageProducer.sendObjectMessageCustomProperty();
-        return "Object message with custom properties sent.";
+        return Response.ok("Object message with custom properties sent.").build();
     }
 
     @GET
     @Path("/queue")
-    public String getMessageQueue(){
+    public Response getMessageQueue(){
         messageProducer.sendToQueue();
-        return "Object message with custom properties sent.";
+        return Response.ok("Object message with custom properties sent.").build();
     }
 
     @GET
     @Path("/fullMessage")
-    public String getFullMessage(){
+    public Response getFullMessage(){
         messageProducer.sendFullMessage();
-        return "Object message sent to a random consumer.";
+        return Response.ok("Object message sent to a random consumer.").build();
     }
 ```
 
 Example requests:  
-	POST: http://localhost:8080/v1/ Body:
-	```json
-	{
-	    "exchange": "directExchange", 
-	    "key": "red", 
-	    "message": "This is a message."
-	}
-	```
-	GET: http://localhost:8080/v1/red  
-	GET: http://localhost:8080/v1/object  
-	GET: http://localhost:8080/v1/message  
-	GET: http://localhost:8080/v1/queue  
-	GET: http://localhost:8080/v1/fullMessage  
+- POST: http://localhost:8080/v1/ Body:
+```json
+{
+    "exchange": "directExchange", 
+    "key": "red", 
+    "message": "This is a message."
+}
+```
+- GET: http://localhost:8080/v1/red  
+- GET: http://localhost:8080/v1/object  
+- GET: http://localhost:8080/v1/message  
+- GET: http://localhost:8080/v1/queue  
+- GET: http://localhost:8080/v1/fullMessage  
+
 ### Configure CDI
 
 Create the directory `resources/META-INF`. In this directory create the file `beans.xml` with the following content to enable CDI:

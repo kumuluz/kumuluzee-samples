@@ -29,34 +29,34 @@ import javax.enterprise.context.ApplicationScoped;
 
 /**
  * @author Blaž Mrak
- * @since 1.0.0
+ * @since 3.2.0
  */
 
 @ApplicationScoped
 public class MessageProducer {
 
-    @AMQPProducer(host="MQtest", exchange = "directExchange", key = "red", properties="textPlain")
-    public String sendRed(){
+    @AMQPProducer(host = "MQtest", exchange = "directExchange", key = "red", properties = "textPlain")
+    public String sendRed() {
         return "I'm Red!";
     }
 
-    @AMQPProducer(host="MQtest", exchange = "directExchange", key = "object")
-    public ExampleObject sendObject(){
+    @AMQPProducer(host = "MQtest", exchange = "directExchange", key = "object")
+    public ExampleObject sendObject() {
         ExampleObject exampleObject = new ExampleObject();
         exampleObject.setContent("I'm just an object.");
         return exampleObject;
     }
 
-    @AMQPProducer(host="MQtest", exchange = "directExchange", key = "message", properties = "testProperty")
-    public Message sendObjectMessageCustomProperty(){
+    @AMQPProducer(host = "MQtest", exchange = "directExchange", key = "message", properties = "testProperty")
+    public Message sendObjectMessageCustomProperty() {
         Message message = new Message();
         ExampleObject exampleObject = new ExampleObject();
         exampleObject.setContent("I'm an object in a message with custom properties.");
         return message.body(exampleObject);
     }
 
-    @AMQPProducer(host="MQtest2", key = "testQueue")
-    public Message sendToQueue(){
+    @AMQPProducer(host = "MQtest2", key = "testQueue")
+    public Message sendToQueue() {
         Message message = new Message();
         ExampleObject exampleObject = new ExampleObject();
         exampleObject.setContent("I'm an object in a message");
@@ -64,12 +64,12 @@ public class MessageProducer {
     }
 
     @AMQPProducer
-    public Message sendFullMessage(){
+    public Message sendFullMessage() {
         Message message = new Message();
         ExampleObject exampleObject = new ExampleObject();
         exampleObject.setContent("I'm an object in a special message");
 
-        if(Math.random() < 0.5){
+        if (Math.random() < 0.5) {
             message.host("MQtest")
                     .key(new String[]{"object"})
                     .exchange("directExchange")

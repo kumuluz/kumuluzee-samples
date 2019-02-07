@@ -2,24 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
+    <parent>
         <artifactId>kumuluzee-samples</artifactId>
         <groupId>com.kumuluz.ee.samples</groupId>
         <version>3.2.0-SNAPSHOT</version>
     </parent>
 
-	<modelVersion>4.0.0</modelVersion>
-	
+    <modelVersion>4.0.0</modelVersion>
+
     <artifactId>kumuluzee-amqp-rabbitmq</artifactId>
-	
-	<name>KumuluzEE AMQP RabbitMQ sample</name>
-    <description>Kumuluz EE AMQP RabbitMQ usage sample with KumuluzEE</description>
+
+    <name>KumuluzEE AMQP RabbitMQ sample</name>
+    <description>KumuluzEE AMQP RabbitMQ usage sample with KumuluzEE</description>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <kumuluzee.version>3.0.0</kumuluzee.version>
-
         <kumuluzee.rabbitmq.version>1.0.0-SNAPSHOT</kumuluzee.rabbitmq.version>
     </properties>
 
@@ -56,16 +52,6 @@
             <groupId>com.kumuluz.ee.amqp</groupId>
             <artifactId>kumuluzee-amqp-rabbitmq</artifactId>
             <version>${kumuluzee.rabbitmq.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.2.12</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-            <version>1.1.1</version>
         </dependency>
     </dependencies>
 

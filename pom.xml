@@ -49,6 +49,7 @@
         <module>kumuluzee-rest-client</module>
 		<module>kumuluzee-amqp-rabbitmq</module>
     </modules>
+
     <packaging>pom</packaging>
 
     <name>KumuluzEE samples</name>

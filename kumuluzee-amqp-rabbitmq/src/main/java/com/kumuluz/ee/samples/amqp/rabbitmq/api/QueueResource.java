@@ -34,7 +34,7 @@ import java.io.IOException;
 
 /**
  * @author Blaž Mrak
- * @since 1.0.0
+ * @since 3.2.0
  */
 
 @Path("/")
@@ -53,7 +53,7 @@ public class QueueResource {
     @POST
     public Response messageToSend(RestMessage message){
         try {
-            channel.basicPublish(message.exchange, message.key, null, message.message.getBytes());
+            channel.basicPublish(message.getExchange(), message.getKey(), null, message.getMessage().getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,35 +62,35 @@ public class QueueResource {
 
     @GET
     @Path("/red")
-    public Response getRed(){
+    public Response getRed() {
         messageProducer.sendRed();
         return Response.ok("\"Red message sent.\"").build();
     }
 
     @GET
     @Path("/object")
-    public Response getObject(){
+    public Response getObject() {
         messageProducer.sendObject();
         return Response.ok("\"Object message sent.\"").build();
     }
 
     @GET
     @Path("/message")
-    public Response getMessageObjectCustomProperty(){
+    public Response getMessageObjectCustomProperty() {
         messageProducer.sendObjectMessageCustomProperty();
         return Response.ok("\"Object message with custom properties sent.\"").build();
     }
 
     @GET
     @Path("/queue")
-    public Response getMessageQueue(){
+    public Response getMessageQueue() {
         messageProducer.sendToQueue();
         return Response.ok("\"Object message with custom properties sent.\"").build();
     }
 
     @GET
     @Path("/fullMessage")
-    public Response getFullMessage(){
+    public Response getFullMessage() {
         messageProducer.sendFullMessage();
         return Response.ok("\"Object message sent to a random consumer.\"").build();
     }

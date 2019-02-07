@@ -34,7 +34,7 @@ import java.util.logging.Logger;
 
 /**
  * @author Blaž Mrak
- * @since 1.0.0
+ * @since 3.2.0
  */
 
 @ApplicationScoped
@@ -42,10 +42,8 @@ public class ConnectionInitializer {
 
     private static Logger log = Logger.getLogger(ConnectionInitializer.class.getName());
 
-    public ConnectionInitializer(){}
-
     @AMQPConnection
-    public Map<String, Connection> localhostConnection(){
+    public Map<String, Connection> localhostConnection() {
         Map<String, Connection> localhost = new HashMap<>();
 
         ConnectionFactory connectionFactory = new ConnectionFactory();
@@ -55,7 +53,7 @@ public class ConnectionInitializer {
 
         try {
             connection = connectionFactory.newConnection();
-        } catch (IOException | TimeoutException  e) {
+        } catch (IOException | TimeoutException e) {
             log.severe("Connection could not be created");
         }
 
