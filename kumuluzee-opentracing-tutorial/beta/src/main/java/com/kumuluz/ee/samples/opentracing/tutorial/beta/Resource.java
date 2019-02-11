@@ -1,5 +1,7 @@
 package com.kumuluz.ee.samples.opentracing.tutorial.beta;
 
+import org.eclipse.microprofile.opentracing.ClientTracingRegistrar;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -14,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class Resource {
-    private Client client = ClientBuilder.newClient();
+    private Client client = ClientTracingRegistrar.configure(ClientBuilder.newBuilder()).build();
 
     @GET
     public Response get() {

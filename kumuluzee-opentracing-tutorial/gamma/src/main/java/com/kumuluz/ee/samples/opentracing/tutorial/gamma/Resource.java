@@ -1,5 +1,7 @@
 package com.kumuluz.ee.samples.opentracing.tutorial.gamma;
 
+import org.eclipse.microprofile.opentracing.ClientTracingRegistrar;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -13,7 +15,7 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class Resource {
-    private Client client = ClientBuilder.newClient();
+    private Client client = ClientTracingRegistrar.configure(ClientBuilder.newBuilder()).build();
 
     @Inject
     private Database database;
