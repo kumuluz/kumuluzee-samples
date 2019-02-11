@@ -1,6 +1,6 @@
 # KumuluzEE OpenTracing tutorial
 
-This is a starting point for the blog post at [link]. Finished project is available on branch _opentracing_tutorial_finished_. It is designed purely for purposes of demonstrating OpenTracing, which is why the only thing these microservices do is communicate with each other using HTTP requests. It is also beginner friendly due to the code being really simple.
+This is a starting point for the tutorial, published on the [KumuluzEE blog](https://blog.kumuluz.com/developers/community/2019/02/11/kumuluzee-opentracing-jaeger). Finished project is available on branch _opentracing_tutorial_finished_. It is designed purely for purposes of demonstrating OpenTracing, which is why the only thing these microservices do is communicate with each other using HTTP requests. It is also beginner friendly due to the code being really simple.
 
 ## Structure
 Project consists of 5 microservices:
