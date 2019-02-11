@@ -2,3 +2,6 @@ kumuluzee:
   server:
     http:
       port: 8080
+  opentracing:
+    jaeger:
+      service-name: master

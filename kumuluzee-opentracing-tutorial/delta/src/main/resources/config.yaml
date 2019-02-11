@@ -2,3 +2,6 @@ kumuluzee:
   server:
     http:
       port: 8084
+  opentracing:
+    jaeger:
+      service-name: delta

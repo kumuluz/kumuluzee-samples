@@ -2,3 +2,6 @@ kumuluzee:
   server:
     http:
       port: 8083
+  opentracing:
+    jaeger:
+      service-name: gamma
