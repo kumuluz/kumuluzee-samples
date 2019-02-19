@@ -23,7 +23,9 @@ package com.kumuluz.ee.samples.amqp.rabbitmq.api;
 
 import com.kumuluz.ee.amqp.common.annotations.AMQPChannel;
 import com.kumuluz.ee.samples.amqp.rabbitmq.messaging.MessageProducer;
+import com.rabbitmq.client.BasicProperties;
 import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.MessageProperties;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -53,7 +55,7 @@ public class QueueResource {
     @POST
     public Response messageToSend(RestMessage message){
         try {
-            channel.basicPublish(message.getExchange(), message.getKey(), null, message.getMessage().getBytes());
+            channel.basicPublish(message.getExchange(), message.getKey(), MessageProperties.TEXT_PLAIN, message.getMessage().getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
