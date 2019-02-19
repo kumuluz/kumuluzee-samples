@@ -1,0 +1,4 @@
+kumuluzee:
+  server:
+    http:
+      port: 8084
