@@ -23,7 +23,7 @@ package com.kumuluz.ee.samples.amqp.rabbitmq.messaging;
 
 import com.kumuluz.ee.amqp.common.annotations.AMQPConsumer;
 import com.kumuluz.ee.amqp.common.annotations.AMQPProducer;
-import com.kumuluz.ee.amqp.rabbitmq.utils.consumer.ConsumerMessage;
+import com.kumuluz.ee.amqp.rabbitmq.utils.consumer.MessageInfo;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.logging.Logger;
@@ -39,28 +39,24 @@ public class MessageConsumer {
     private static Logger log = Logger.getLogger(MessageConsumer.class.getName());
 
     @AMQPConsumer(host = "MQtest", exchange = "directExchange", key = "red")
-    public void listenToRed(ConsumerMessage consumerMessage) {
-        String message = (String) consumerMessage.getBody();
+    public void listenToRed(String message) {
         log.info("Recieved message: " + message + " from direct exchange with the red key.");
     }
 
     @AMQPConsumer(host = "MQtest", exchange = "directExchange", key = "object")
-    public void listenToObject(ConsumerMessage consumerMessage) {
-        ExampleObject message = (ExampleObject) consumerMessage.getBody();
+    public void listenToObject(ExampleObject message) {
         log.info("Recieved message: \"" + message.getContent() + "\" of length " + message.getLength());
     }
 
     @AMQPConsumer(host = "MQtest", exchange = "directExchange", key = "message")
     @AMQPProducer(host = "MQtest", exchange = "directExchange", key = "red")
-    public String listenToObjectMessage(ConsumerMessage consumerMessage) {
-        ExampleObject message = (ExampleObject) consumerMessage.getBody();
-        log.info("[" + consumerMessage.getProperties().getTimestamp().toString() + "] Recieved message: " + message.getContent() + " of length " + message.getLength() + " with title: '" + consumerMessage.getProperties().getHeaders().get("title") + "'");
+    public String listenToObjectMessage(ExampleObject message, MessageInfo messageInfo) {
+        log.info("[" + messageInfo.getProperties().getTimestamp().toString() + "] Recieved message: " + message.getContent() + " of length " + message.getLength() + " with title: '" + messageInfo.getProperties().getHeaders().get("title") + "'");
         return "WOW! I can receive and send messages";
     }
 
     @AMQPConsumer(host = "MQtest2", key = "testQueue")
-    public void listenToWorkQueue(ConsumerMessage consumerMessage) {
-        ExampleObject message = (ExampleObject) consumerMessage.getBody();
+    public void listenToWorkQueue(ExampleObject message) {
         log.info(" Recieved message: " + message.getContent() + " of length " + message.getLength());
     }
 }
