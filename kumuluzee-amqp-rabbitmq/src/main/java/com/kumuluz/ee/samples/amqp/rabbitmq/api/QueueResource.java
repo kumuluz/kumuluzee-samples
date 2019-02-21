@@ -23,7 +23,6 @@ package com.kumuluz.ee.samples.amqp.rabbitmq.api;
 
 import com.kumuluz.ee.amqp.common.annotations.AMQPChannel;
 import com.kumuluz.ee.samples.amqp.rabbitmq.messaging.MessageProducer;
-import com.rabbitmq.client.BasicProperties;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.MessageProperties;
 
@@ -53,9 +52,10 @@ public class QueueResource {
     private MessageProducer messageProducer;
 
     @POST
-    public Response messageToSend(RestMessage message){
+    public Response messageToSend(RestMessage message) {
         try {
-            channel.basicPublish(message.getExchange(), message.getKey(), MessageProperties.TEXT_PLAIN, message.getMessage().getBytes());
+            channel.basicPublish(message.getExchange(), message.getKey(), MessageProperties.TEXT_PLAIN,
+                    message.getMessage().getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
