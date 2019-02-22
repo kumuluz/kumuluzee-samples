@@ -43,22 +43,13 @@ import java.io.IOException;
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class QueueResource {
-
-    @Inject
-    @AMQPChannel("MQtest")
-    private Channel channel;
-
+	
     @Inject
     private MessageProducer messageProducer;
 
     @POST
     public Response messageToSend(RestMessage message) {
-        try {
-            channel.basicPublish(message.getExchange(), message.getKey(), MessageProperties.TEXT_PLAIN,
-                    message.getMessage().getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        messageProducer.sendRestMessage(message);
         return Response.ok("\"RestMessage sent.\"").build();
     }
 

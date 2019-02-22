@@ -188,13 +188,13 @@ public class MessageProducer {
     @AMQChannel("MQtest")
     private Channel channel;
 
-    public String sendRestMessage(RestMessage message) {
+    @POST
+    public void sendRestMessage(RestMessage message) {
         try {
-            channel.basicPublish(message.exchange, message.key, null, message.message.getBytes());
+            channel.basicPublish(message.getExchange(), message.getKey(), null, message.getMessage().getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return message.message;
     }
 ```
 This is not that convenient, as we have to have a specific structure that we are getting our data from. Another way of sending data is with `@AMQPProducer` annotation. All we need to do is to return the object we want to send. In this example we are sending a string "I'm red".
@@ -227,17 +227,18 @@ Instead of returning any object, we could return a specific object Message, to w
     }
 ```
 ### Implement message consumer
-Create a new class `MessageConsumer` and annotate it with `@ApplicationScoped` annotation. Then create a new method, annotate it with `@AMQPConsumer` and add ConsumerMessage parameter to it. 
+Create a new class `MessageConsumer` and annotate it with `@ApplicationScoped` annotation. Then create a new method, annotate it with `@AMQPConsumer` and add the parameter of the type that we nant to receive. 
 
 After we have created our method, we can print out the message we recieved.
 ```java
 @ApplicationScoped
-public class QueueHandler {
+public class MessageConsumer {
+    
+    private static Logger log = Logger.getLogger(MessageConsumer.class.getName());
     
     @AMQConsumer(host="MQtest", exchange = "directExchange", key = "red")
-    public void listenToRed(ConsumerMessage consumerMessage){
-        String message = (String) consumerMessage.getBody();
-        System.out.println("Recieved message: " + message + " from direct exchange with the red key.");
+    public void listenToRed(String message){
+       log.info("Recieved message: " + message + " from direct exchange with the red key.");
     }
 ```
 
@@ -264,54 +265,47 @@ Make `MessageResource` class a CDI bean by adding `@ApplicationScoped` annotatio
 public class MessageResource {
 
     @Inject
-    @AMQPChannel("MQtest")
-    private Channel channel;
-
-    @Inject
     private MessageProducer messageProducer;
 
     @POST
-    public void messageToSend(RestMessage message){
-        try {
-            channel.basicPublish(message.exchange, message.key, null, message.message.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public Response messageToSend(RestMessage message) {
+        messageProducer.sendRestMessage(message);
+        return Response.ok("\"RestMessage sent.\"").build();
     }
 
     @GET
     @Path("/red")
-    public Response getRed(){
+    public Response getRed() {
         messageProducer.sendRed();
-        return Response.ok("Red message sent.").build();
+        return Response.ok("\"Red message sent.\"").build();
     }
 
     @GET
     @Path("/object")
-    public Response getObject(){
+    public Response getObject() {
         messageProducer.sendObject();
-        return Response.ok("Object message sent.").build();
+        return Response.ok("\"Object message sent.\"").build();
     }
 
     @GET
     @Path("/message")
-    public Response getMessageObjectCustomProperty(){
+    public Response getMessageObjectCustomProperty() {
         messageProducer.sendObjectMessageCustomProperty();
-        return Response.ok("Object message with custom properties sent.").build();
+        return Response.ok("\"Object message with custom properties sent.\"").build();
     }
 
     @GET
     @Path("/queue")
-    public Response getMessageQueue(){
+    public Response getMessageQueue() {
         messageProducer.sendToQueue();
-        return Response.ok("Object message with custom properties sent.").build();
+        return Response.ok("\"Object message with custom properties sent.\"").build();
     }
 
     @GET
     @Path("/fullMessage")
-    public Response getFullMessage(){
+    public Response getFullMessage() {
         messageProducer.sendFullMessage();
-        return Response.ok("Object message sent to a random consumer.").build();
+        return Response.ok("\"Object message sent to a random consumer.\"").build();
     }
 ```
 

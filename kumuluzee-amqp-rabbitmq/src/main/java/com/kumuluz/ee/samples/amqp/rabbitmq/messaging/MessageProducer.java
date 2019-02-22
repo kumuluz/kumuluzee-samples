@@ -34,6 +34,18 @@ import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class MessageProducer {
+	
+	@Inject
+    @AMQChannel("MQtest")
+    private Channel channel;
+	
+	public void sendRestMessage(RestMessage restMessage) {
+		try {
+            channel.basicPublish(message.getExchange(), message.getKey(), null, message.getMessage().getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
 
     @AMQPProducer(host = "MQtest", exchange = "directExchange", key = "red", properties = "textPlain")
     public String sendRed() {
