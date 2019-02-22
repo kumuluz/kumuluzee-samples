@@ -1,0 +1,4 @@
+kumuluzee:
+  openapi-mp:
+    scan:
+      packages: com.kumuluz.ee.samples.openapi

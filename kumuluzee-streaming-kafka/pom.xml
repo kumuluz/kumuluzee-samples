@@ -16,7 +16,7 @@
     <description>Kumuluz EE Kafka usage sample with KumuluzEE</description>
 
     <properties>
-        <kumuluzee-streaming-kafka.version>1.1.0-SNAPSHOT</kumuluzee-streaming-kafka.version>
+        <kumuluzee-streaming-kafka.version>1.2.0-SNAPSHOT</kumuluzee-streaming-kafka.version>
         <kumuluzee-logs.version>1.3.0</kumuluzee-logs.version>
 
         <kafka.version>2.0.0</kafka.version>
