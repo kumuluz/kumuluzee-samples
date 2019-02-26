@@ -21,11 +21,16 @@
 
 package com.kumuluz.ee.samples.amqp.rabbitmq.messaging;
 
+import com.kumuluz.ee.amqp.common.annotations.AMQPChannel;
 import com.kumuluz.ee.amqp.common.annotations.AMQPProducer;
 import com.kumuluz.ee.amqp.rabbitmq.utils.producer.Message;
+import com.kumuluz.ee.samples.amqp.rabbitmq.api.RestMessage;
+import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.MessageProperties;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import java.io.IOException;
 
 /**
  * @author Blaž Mrak
@@ -36,12 +41,12 @@ import javax.enterprise.context.ApplicationScoped;
 public class MessageProducer {
 	
 	@Inject
-    @AMQChannel("MQtest")
+    @AMQPChannel("MQtest")
     private Channel channel;
 	
 	public void sendRestMessage(RestMessage restMessage) {
 		try {
-            channel.basicPublish(message.getExchange(), message.getKey(), null, message.getMessage().getBytes());
+            channel.basicPublish(restMessage.getExchange(), restMessage.getKey(), null, restMessage.getMessage().getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
