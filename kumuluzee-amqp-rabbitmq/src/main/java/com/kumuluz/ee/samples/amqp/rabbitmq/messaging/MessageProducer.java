@@ -39,18 +39,19 @@ import java.io.IOException;
 
 @ApplicationScoped
 public class MessageProducer {
-	
-	@Inject
+
+    @Inject
     @AMQPChannel("MQtest")
     private Channel channel;
-	
-	public void sendRestMessage(RestMessage restMessage) {
-		try {
-            channel.basicPublish(restMessage.getExchange(), restMessage.getKey(), null, restMessage.getMessage().getBytes());
+
+    public void sendRestMessage(RestMessage restMessage) {
+        try {
+            channel.basicPublish(restMessage.getExchange(), restMessage.getKey(), null,
+                    restMessage.getMessage().getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
-	}
+    }
 
     @AMQPProducer(host = "MQtest", exchange = "directExchange", key = "red", properties = "textPlain")
     public String sendRed() {
