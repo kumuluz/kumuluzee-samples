@@ -11,8 +11,8 @@
 
     <artifactId>kumuluzee-logs-jul</artifactId>
 
-    <name>KumuluzEE Logs Log4j2 sample</name>
-    <description>KumuluzEE Logs Log4j2 usage sample with KumuluzEE</description>
+    <name>KumuluzEE Logs JUL sample</name>
+    <description>KumuluzEE Logs JUL usage sample with KumuluzEE</description>
 
     <dependencyManagement>
         <dependencies>
