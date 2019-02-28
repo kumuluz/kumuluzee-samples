@@ -178,14 +178,14 @@ kumuluzee:
 ```
 
 ### Implement message producer
-Create a new class called `MessageProducer` and inject a RabbitMQ channel into it with the `@AMQChannel` annotation.
+Create a new class called `MessageProducer` and inject a RabbitMQ channel into it with the `@AMQPChannel` annotation.
 Then we can use `RestMessage` parameters to publish a message to a RabbitMQ broker.
 ```java
 @ApplicationScoped
 public class MessageProducer {
     
     @Inject
-    @AMQChannel("MQtest")
+    @AMQPChannel("MQtest")
     private Channel channel;
 
     @POST
@@ -199,7 +199,7 @@ public class MessageProducer {
 ```
 This is not that convenient, as we have to have a specific structure that we are getting our data from. Another way of sending data is with `@AMQPProducer` annotation. All we need to do is to return the object we want to send. In this example we are sending a string "I'm red".
 ```java
-    @AMQProducer(host="MQtest", exchange="directExchange", key="red", properties="textPlain")
+    @AMQPProducer(host="MQtest", exchange="directExchange", key="red", properties="textPlain")
     public String sendRedMessage() {
         return "I'm red!";
     }
@@ -236,7 +236,7 @@ public class MessageConsumer {
     
     private static Logger log = Logger.getLogger(MessageConsumer.class.getName());
     
-    @AMQConsumer(host="MQtest", exchange = "directExchange", key = "red")
+    @AMQPConsumer(host="MQtest", exchange = "directExchange", key = "red")
     public void listenToRed(String message){
        log.info("Recieved message: " + message + " from direct exchange with the red key.");
     }
@@ -256,13 +256,13 @@ public class RestMessage {
 }
 ```
 
-Make `MessageResource` class a CDI bean by adding `@ApplicationScoped` annotation. Then create three endpoints which we will use to send messages.
+Make `QueueResource` class a CDI bean by adding `@ApplicationScoped` annotation. Then create three endpoints which we will use to send messages.
 
 ```java
 @ApplicationScoped
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class MessageResource {
+public class QueueResource {
 
     @Inject
     private MessageProducer messageProducer;
