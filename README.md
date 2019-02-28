@@ -14,7 +14,7 @@ Samples will be constantly added over time.
 
 The samples demonstrate many different use cases for using KumuluzEE to create self-sustaining microservices. The latest version of the samples will always use the latest version of the KumuluzEE framework. Therefore, it is recommended to use the latest version of the KumuluzEE framework for these samples. This way, you will also get all the latest features of the KumuluzEE. Refer to the usage section on how to build and run the samples.
 
-Some samples are tagged as well. The tags (eg. `v2.2.0`) will correspond to the KumuluzEE release version in order to easily access the desired version of the framework that is used in the examples. Tha `master` branch will always use the latest snapshot version of the framework and the latest samples.
+Some samples are tagged as well. The tags (eg. `v3.2.0`) will correspond to the KumuluzEE release version in order to easily access the desired version of the framework that is used in the examples. Tha `master` branch will always use the latest snapshot version of the framework and the latest samples.
 
 If you wish to use a snapshot version of KumuluzEE when running the samples, you must make sure you add the Sonatype snapshots repository to your `pom.xml`. The `master` branch already contains the repository as it's targeted against the snapshot version of the framework.
 
@@ -65,7 +65,16 @@ KumuluzEE extensions - samples:
 - KumuluzEE Cors
 - KumuluzEE Metrics
 - KumuluzEE Health
-
+- KumuluzEE AMQP
+- KumuluzEE Ethereum
+- KumuluzEE GraphQL
+- KumuluzEE gRPC
+- KumuluzEE OpenAPI
+- KumuluzEE OpenAPI MicroProfile
+- KumuluzEE Swagger
+- KumuluzEE OpenTracing
+- KumuluzEE Reactive
+- KumuluzEE Rest Client
 
 ## Requirements
 
@@ -104,7 +113,7 @@ In order to run these examples as they are intended, you will need the following
 
     ```
     cd kumuluzee-samples
-    git checkout v2.4.0
+    git checkout v3.2.0
     ```
     
 To run a specific sample, please refer to the specific README file of the sample.

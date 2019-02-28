@@ -12,7 +12,8 @@ kumuluzee:
       connection-url: jdbc:postgresql://192.168.99.100:5432/customer
       username: dbuser
       password: postgres
-      max-pool-size: 20
+      pool:
+        max-size: 20
   config:
     etcd:
       hosts: http://192.168.99.100:2379

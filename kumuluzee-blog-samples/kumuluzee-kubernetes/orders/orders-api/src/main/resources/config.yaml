@@ -12,7 +12,8 @@ kumuluzee:
       connection-url: jdbc:postgresql://postgres-orders:5432/order
       username: dbuser
       password: postgres
-      max-pool-size: 20
+      pool:
+        max-size: 20
   discovery:
     etcd:
       hosts: http://192.168.99.100:2379

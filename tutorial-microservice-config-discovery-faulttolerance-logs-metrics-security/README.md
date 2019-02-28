@@ -232,7 +232,8 @@ kumuluzee:
       connection-url: jdbc:postgresql://localhost:5432/customer
       username: postgres
       password: postgres
-      max-pool-size: 20
+      pool:
+        max-size: 20
 ```
 
 ##### Define persistance.xml

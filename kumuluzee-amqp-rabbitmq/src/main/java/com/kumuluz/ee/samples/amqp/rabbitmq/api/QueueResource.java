@@ -21,17 +21,13 @@
 
 package com.kumuluz.ee.samples.amqp.rabbitmq.api;
 
-import com.kumuluz.ee.amqp.common.annotations.AMQPChannel;
 import com.kumuluz.ee.samples.amqp.rabbitmq.messaging.MessageProducer;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.MessageProperties;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
 
 /**
  * @author Blaž Mrak
@@ -43,7 +39,7 @@ import java.io.IOException;
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class QueueResource {
-	
+
     @Inject
     private MessageProducer messageProducer;
 
