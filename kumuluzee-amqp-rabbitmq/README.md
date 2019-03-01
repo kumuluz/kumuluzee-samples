@@ -164,6 +164,8 @@ kumuluzee:
       hosts:
         - name: MQtest
           url: localhost
+          username: guest
+          password: guest
           exchanges:
             - name: directExchange
               type: direct
@@ -183,36 +185,38 @@ Then we can use `RestMessage` parameters to publish a message to a RabbitMQ brok
 ```java
 @ApplicationScoped
 public class MessageProducer {
-    
+
     @Inject
     @AMQPChannel("MQtest")
     private Channel channel;
 
-    @POST
-    public void sendRestMessage(RestMessage message) {
+    public void sendRestMessage(RestMessage restMessage) {
         try {
-            channel.basicPublish(message.getExchange(), message.getKey(), null, message.getMessage().getBytes());
+            channel.basicPublish(restMessage.getExchange(), restMessage.getKey(), null,
+                    restMessage.getMessage().getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    ...
+}
 ```
 This is not that convenient, as we have to have a specific structure that we are getting our data from. Another way of sending data is with `@AMQPProducer` annotation. All we need to do is to return the object we want to send. In this example we are sending a string "I'm red".
 ```java
-    @AMQPProducer(host="MQtest", exchange="directExchange", key="red", properties="textPlain")
-    public String sendRedMessage() {
-        return "I'm red!";
+    @AMQPProducer(host = "MQtest", exchange = "directExchange", key = "red", properties = "textPlain")
+    public String sendRed() {
+        return "I'm Red!";
     }
 ```
 Instead of returning any object, we could return a specific object Message, to which we can set the host, exchange, keys, body and properties, which we cannot predefine. In this example our method will create a random number and based on it, it will choose to which consumer it will send a message. It is also good to know that Message parameters will override annotation parameters.
 ```java
     @AMQPProducer
-    public Message sendFullMessage(){
+    public Message sendFullMessage() {
         Message message = new Message();
         ExampleObject exampleObject = new ExampleObject();
         exampleObject.setContent("I'm an object in a special message");
 
-        if(Math.random() < 0.5){
+        if (Math.random() < 0.5) {
             message.host("MQtest")
                     .key(new String[]{"object"})
                     .exchange("directExchange")
@@ -233,13 +237,15 @@ After we have created our method, we can print out the message we recieved.
 ```java
 @ApplicationScoped
 public class MessageConsumer {
-    
+
     private static Logger log = Logger.getLogger(MessageConsumer.class.getName());
-    
-    @AMQPConsumer(host="MQtest", exchange = "directExchange", key = "red")
-    public void listenToRed(String message){
-       log.info("Recieved message: " + message + " from direct exchange with the red key.");
+
+    @AMQPConsumer(host = "MQtest", exchange = "directExchange", key = "red")
+    public void listenToRed(String message) {
+        log.info("Recieved message: " + message + " from direct exchange with the red key.");
     }
+    ...
+}
 ```
 
 ### Implement REST Service
@@ -250,18 +256,22 @@ Create a new REST object `RestMessage` which we will use to get information from
 
 ```java
 public class RestMessage {
-    public String exchange;
-    public String key;
-    public String message;
+
+    private String exchange;
+    private String key;
+    private String message;
+    
+    // getters and setters
 }
 ```
 
 Make `QueueResource` class a CDI bean by adding `@ApplicationScoped` annotation. Then create three endpoints which we will use to send messages.
 
 ```java
-@ApplicationScoped
+@Path("/")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@ApplicationScoped
 public class QueueResource {
 
     @Inject
@@ -307,6 +317,7 @@ public class QueueResource {
         messageProducer.sendFullMessage();
         return Response.ok("\"Object message sent to a random consumer.\"").build();
     }
+}
 ```
 
 Example requests:  
