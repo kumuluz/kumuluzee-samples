@@ -1,7 +1,7 @@
 # KumuluzEE GraphQL advanced sample
 > Unleash the full power of GraphQL extension.
 
-This is an advanced tutorial, which demonstrates advanced extension usage. Please finish the [basic tutorial](https://github.com/kumuluz/kumuluzee-samples/tree/master/graphql) first.
+This is an advanced tutorial, which demonstrates advanced extension usage. Please finish the [basic tutorial](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-graphql-jpa-simple) first.
 
 ## Requirements
 
