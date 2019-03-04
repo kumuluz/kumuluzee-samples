@@ -164,7 +164,7 @@ public class CustomerResource {
 You can now execute selected queries:
 ```
 query getAllCustomers {
-  getAllCustomers {
+  allCustomers {
     id
     firstName
     lastName
@@ -172,7 +172,7 @@ query getAllCustomers {
 }
   
 query getCustomerById {
-  getCustomer(customerId: "1") {
+  customer(customerId: "1") {
     id
     firstName
     lastName
