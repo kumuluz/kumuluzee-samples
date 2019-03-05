@@ -57,7 +57,7 @@ public class CustomerResource {
     }
 
     @GraphQLMutation
-    public void deleteCustomer(@GraphQLArgument(name="customerId") String customerId) {
-        customerBean.deleteCustomer(customerId);
+    public Boolean deleteCustomer(@GraphQLArgument(name="customerId") String customerId) {
+        return customerBean.deleteCustomer(customerId);
     }
 }
