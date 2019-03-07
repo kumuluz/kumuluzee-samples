@@ -39,6 +39,11 @@ In order to run this sample you will have to setup a local PostgreSQL database:
 
 The required tables will be created automatically upon running the sample.
 
+You can run the database inside docker:
+```
+docker run -d --name pg-jpa -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=customers -p 5432:5432 postgres:latest
+```
+
 ## Usage
 
 The example uses maven to build and run the microservices.
