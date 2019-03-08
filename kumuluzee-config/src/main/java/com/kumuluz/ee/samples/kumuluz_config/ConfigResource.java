@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014-2017 Kumuluz and/or its affiliates
+ *  Copyright (c) 2014-2019 Kumuluz and/or its affiliates
  *  and other contributors as indicated by the @author tags and
  *  the contributor list.
  *
@@ -17,7 +17,7 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
+ */
 package com.kumuluz.ee.samples.kumuluz_config;
 
 import javax.enterprise.context.RequestScoped;
@@ -47,16 +47,18 @@ public class ConfigResource {
     public Response test() {
         String response =
                 "{" +
-                    "\"stringProperty\": \"%s\"," +
-                    "\"booleanProperty\": %b," +
-                    "\"integerProperty\": %d" +
-                "}";
+                        "\"stringProperty\": \"%s\"," +
+                        "\"booleanProperty\": %b," +
+                        "\"integerProperty\": %d," +
+                        "\"encodedProperty\": \"%s\"" +
+                        "}";
 
         response = String.format(
                 response,
                 properties.getStringProperty(),
                 properties.getBooleanProperty(),
-                properties.getIntegerProperty()
+                properties.getIntegerProperty(),
+                properties.getEncodedProperty()
         );
 
         return Response.ok(response).build();
