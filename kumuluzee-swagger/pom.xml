@@ -19,7 +19,6 @@
     <properties>
         <kumuluzee-swagger.version>1.2.1</kumuluzee-swagger.version>
         <kumuluzee-security.version>1.0.1</kumuluzee-security.version>
-        <kumuluzee.version>3.0.0</kumuluzee.version>
     </properties>
 
     <dependencyManagement>
@@ -101,7 +100,7 @@
                     <execution>
                         <id>package</id>
                         <goals>
-                            <goal>copy-dependencies</goal>
+                            <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>

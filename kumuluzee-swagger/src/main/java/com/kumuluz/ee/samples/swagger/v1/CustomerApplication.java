@@ -14,7 +14,7 @@ import javax.ws.rs.core.Application;
  * @author Zvone Gazvoda
  * @since 2.5.0
  */
-@ApplicationPath("v1/customers")
+@ApplicationPath("v1")
 //@DeclareRoles({"user"})
 @SwaggerDefinition(info = @Info(title = "CustomersAPI", version = "v1.0.0"), host = "localhost:8080", securityDefinition =
 @SecurityDefinition(
