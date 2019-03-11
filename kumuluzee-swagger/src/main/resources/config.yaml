@@ -1,4 +1,12 @@
 kumuluzee:
+  name: customer-service
+  env:
+    name: dev
+  version: 1.0.0
+  server:
+    base-url: http://localhost:8080
+    http:
+      port: 8080
   swagger:
     enabled: true
     ui:
