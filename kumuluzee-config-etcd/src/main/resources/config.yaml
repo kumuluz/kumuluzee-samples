@@ -7,7 +7,7 @@ kumuluzee:
     start-retry-delay-ms: 500
     max-retry-delay-ms: 900000
     etcd:
-      hosts: http://localhost:2379
+      hosts: http://192.168.144.129:2379
 #      username: root
 #      password: admin
 #      ca: -----BEGIN CERTIFICATE-----
@@ -31,6 +31,6 @@ kumuluzee:
 #          -----END CERTIFICATE-----
 
 rest-config:
-  string-property: Monday
+  string-property: cG9zdGdyZXM=
   boolean-property: true
   integer-property: 23
