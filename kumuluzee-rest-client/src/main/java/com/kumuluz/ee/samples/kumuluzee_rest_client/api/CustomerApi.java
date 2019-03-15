@@ -21,6 +21,7 @@
 package com.kumuluz.ee.samples.kumuluzee_rest_client.api;
 
 import com.kumuluz.ee.samples.kumuluzee_rest_client.entities.Customer;
+import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
 import org.eclipse.microprofile.rest.client.annotation.RegisterProvider;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
@@ -37,6 +38,7 @@ import java.util.concurrent.CompletionStage;
 @Path("/customers")
 @RegisterRestClient
 @RegisterProvider(SensitiveDataResponseMapper.class)
+@RegisterClientHeaders
 @Dependent
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)

@@ -20,9 +20,11 @@
  */
 package com.kumuluz.ee.samples.kumuluzee_rest_client.rest;
 
+import com.kumuluz.ee.rest.client.mp.providers.IncomingHeadersInterceptor;
+
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -34,6 +36,9 @@ public class RestApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        return Collections.singleton(RestResource.class);
+        Set<Class<?>> classes = new HashSet<>();
+        classes.add(RestResource.class);
+        classes.add(IncomingHeadersInterceptor.class);
+        return classes;
     }
 }
