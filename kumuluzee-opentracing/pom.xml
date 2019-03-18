@@ -8,7 +8,7 @@
     </parent>
 
     <properties>
-        <kumuluzee-opentracing.version>1.0.0-SNAPSHOT</kumuluzee-opentracing.version>
+        <kumuluzee-opentracing.version>1.4.0-SNAPSHOT</kumuluzee-opentracing.version>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
