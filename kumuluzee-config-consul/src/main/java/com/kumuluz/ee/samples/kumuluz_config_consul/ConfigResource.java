@@ -17,7 +17,7 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
+ */
 package com.kumuluz.ee.samples.kumuluz_config_consul;
 
 import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
@@ -51,14 +51,16 @@ public class ConfigResource {
                 "{" +
                         "\"stringProperty\": \"%s\"," +
                         "\"booleanProperty\": %b," +
-                        "\"integerProperty\": %d" +
+                        "\"integerProperty\": %d," +
+                        "\"encodedProperty\": \"%s\"" +
                         "}";
 
         response = String.format(
                 response,
                 properties.getStringProperty(),
                 properties.getBooleanProperty(),
-                properties.getIntegerProperty());
+                properties.getIntegerProperty(),
+                properties.getEncodedProperty());
 
         return Response.ok(response).build();
     }
