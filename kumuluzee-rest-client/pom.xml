@@ -20,6 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <kumuluzee-rest-client.version>1.3.0-SNAPSHOT</kumuluzee-rest-client.version>
+        <kumuluzee-rest.version>1.3.0-SNAPSHOT</kumuluzee-rest.version>
     </properties>
 
     <dependencyManagement>
@@ -55,11 +56,15 @@
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-json-p-jsonp</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.kumuluz.ee.rest-client</groupId>
             <artifactId>kumuluzee-rest-client</artifactId>
             <version>${kumuluzee-rest-client.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.rest</groupId>
+            <artifactId>kumuluzee-rest-core</artifactId>
+            <version>${kumuluzee-rest.version}</version>
         </dependency>
     </dependencies>
 

@@ -20,6 +20,8 @@
  */
 package com.kumuluz.ee.samples.kumuluzee_rest_client.rest;
 
+import com.kumuluz.ee.rest.client.mp.integrations.KeeRestParameters;
+import com.kumuluz.ee.rest.enums.FilterOperation;
 import com.kumuluz.ee.samples.kumuluzee_rest_client.api.CustomerApi;
 import com.kumuluz.ee.samples.kumuluzee_rest_client.api.SensitiveDataResponseMapper;
 import com.kumuluz.ee.samples.kumuluzee_rest_client.entities.Customer;
@@ -54,7 +56,22 @@ public class RestResource {
 
     @GET
     public Response getAllCustomers() {
-        return Response.ok(customerApi.getAllCustomers()).build();
+        return Response.ok(customerApi.getAllCustomers(null)).build();
+    }
+
+    @GET
+    @Path("filter")
+    public Response getCustomersWhoseNamesStartWithJ() throws MalformedURLException {
+        KeeRestParameters parameters = new KeeRestParameters.KeeRestParametersBuilder()
+                .addFilter("firstName", FilterOperation.LIKE,"J%").build();
+
+        CustomerApi customerApi = RestClientBuilder.newBuilder()
+                .property("jersey.config.client.suppressHttpComplianceValidation", true)
+                .baseUrl(new URL("http://localhost:8080/v1"))
+                .build(CustomerApi.class);
+
+        List<Customer> JCustomers = customerApi.getAllCustomers(parameters);
+        return Response.ok(JCustomers).build();
     }
 
     @GET

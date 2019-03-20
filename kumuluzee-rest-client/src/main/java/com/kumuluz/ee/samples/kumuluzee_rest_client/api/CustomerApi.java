@@ -20,6 +20,7 @@
  */
 package com.kumuluz.ee.samples.kumuluzee_rest_client.api;
 
+import com.kumuluz.ee.rest.client.mp.integrations.KeeRestParameters;
 import com.kumuluz.ee.samples.kumuluzee_rest_client.entities.Customer;
 import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
 import org.eclipse.microprofile.rest.client.annotation.RegisterProvider;
@@ -45,7 +46,7 @@ import java.util.concurrent.CompletionStage;
 public interface CustomerApi {
 
     @GET
-    List<Customer> getAllCustomers();
+    List<Customer> getAllCustomers(@BeanParam KeeRestParameters restParameters);
 
     @GET
     @Path("{customerId}")

@@ -33,8 +33,7 @@ In order to run this example you will need the following:
 ## Prerequisites
 
 This sample requires a running instance of the
-[KumuluzEE JAX-RS REST sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs). The JAX-RS sample
-requires no additional dependencies and is easy to run and understand.
+[KumuluzEE REST sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-rest).
 
 ## Usage
 
@@ -100,6 +99,7 @@ We will need the following dependencies in our microservice:
 - `kumuluzee-servlet-jetty`
 - `kumuluzee-jax-rs-jersey`
 - `kumuluzee-cdi-weld`
+- `kumuluzee-rest`
 - `kumuluzee-rest-client`
 
 To add them, add the following snippet to the pom.xml:
@@ -121,7 +121,11 @@ To add them, add the following snippet to the pom.xml:
     <groupId>com.kumuluz.ee</groupId>
     <artifactId>kumuluzee-cdi-weld</artifactId>
 </dependency>
-
+<dependency>
+    <groupId>com.kumuluz.ee</groupId>
+    <artifactId>kumuluzee-rest</artifactId>
+    <version>${kumuluzee-rest.version}</version>
+</dependency>
 <dependency>
     <groupId>com.kumuluz.ee.rest-client</groupId>
     <artifactId>kumuluzee-rest-client</artifactId>
@@ -193,7 +197,7 @@ public class Customer implements Serializable {
 The API interface is the core of this sample, since it describes the API our microservice will consume. The interface
 uses existing JAX-RS annotations, which you should already be familiar with. The methods declared in the interface are
 one-to-one mapping to the methods in
-[JAX-RS resource](https://github.com/kumuluz/kumuluzee-samples/blob/master/jax-rs/src/main/java/com/kumuluz/ee/samples/jaxrs/CustomerResource.java)
+[JAX-RS resource](https://github.com/kumuluz/kumuluzee-samples/blob/master/kumuluzee-rest/src/main/java/com/kumuluz/ee/samples/rest/CustomerResource.java)
 of the microservice, exposing the API.
 
 ```java
@@ -205,7 +209,7 @@ of the microservice, exposing the API.
 public interface CustomerApi {
 
     @GET
-    List<Customer> getAllCustomers();
+    List<Customer> getAllCustomers(@BeanParam KeeRestParameters parameters);
 
     @GET
     @Path("{customerId}")
@@ -223,6 +227,9 @@ public interface CustomerApi {
 The only new annotation is the `@RegisterRestClient` annotation. As we will see, you can retrieve a rest client
 programmatically or with CDI. The `@RegisterRestClient` simply registers the interface as a bean and enables
 the use of CDI lookup.
+
+Notice how we are using KeeRestParameters as a function parameter in getAllCustomers. They are used for filtering and pagination
+and will be explained more in-depth later.
 
 ### Implement REST interface which will consume created API
 
@@ -259,7 +266,7 @@ public class RestResource {
 
 Now, let's add a simple method, that will proxy all customers from the JAX-RS microservice. We will use CDI lookup to
 get an instance of the rest client and then proceed to use it in a method. Note that when using CDI lookup the
-`@RestClient` qualifier must be used.
+`@RestClient` qualifier must be used and we use `null` as the function parameter, as we won't be doing any filtering.
 
 ```java
 @Inject
@@ -268,7 +275,7 @@ private CustomerApi customerApi;
 
 @GET
 public Response getAllCustomers() {
-    return Response.ok(customerApi.getAllCustomers()).build();
+    return Response.ok(customerApi.getAllCustomers(null)).build();
 }
 ```
 
@@ -461,6 +468,28 @@ public Response createBatchCustomersAsynch() {
 
 This operation creates a batch of customers and is very similar to the `batch` operation. The difference is that the
 requests are now created asynchronously, whereas before each request had to be completed before a new one was started.
+
+### Filtering and pagination
+
+KumuluzEE Rest Client supports filtering and pagination, but when using it the dependency `kumuluzee-rest` has be included.
+
+The following code returns a list of all customers whose names start with "J". 
+
+```java
+@GET
+@Path("filter")
+public Response getCustomersWhoseNamesStartWithJ() throws MalformedURLException {
+    KeeRestParameters parameters = new KeeRestParameters.KeeRestParametersBuilder()
+            .addFilter("firstName", FilterOperation.LIKE,"J%").build();
+
+    CustomerApi customerApi = RestClientBuilder.newBuilder()
+            .baseUrl(new URL("http://localhost:8080/v1"))
+            .build(CustomerApi.class);
+
+    List<Customer> JCustomers = customerApi.getAllCustomers(parameters);
+    return Response.ok(JCustomers).build();
+}
+```
 
 ### Build the microservice and run it
 
