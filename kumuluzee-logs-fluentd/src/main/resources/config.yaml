@@ -1,0 +1,9 @@
+kumuluzee:
+  name: fluentd-sample
+  env:
+    name: dev
+  version: 1.0.0
+  logs:
+    fluentd:
+      address: localhost
+      port: 24224
