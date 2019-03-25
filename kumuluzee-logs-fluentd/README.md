@@ -1,6 +1,7 @@
 # KumuluzEE Logs sample with Fluentd implementation
 
-> Build a REST service which utilizes a built-in logging framework with Fluentd implementation to log basic metrics and pack it as a KumuluzEE microservice
+> Build a REST service that utilizes a built-in logging framework with Fluentd implementation to log basic metrics and 
+pack it as a KumuluzEE microservice
 
 The objective of this sample is to demonstrate how to use the built-in logging framework with Fluentd implementation to log basic metrics.
 
@@ -146,7 +147,8 @@ or exploded:
 </build>
 ```
 ### Create Fluentd configuration file
-In this sample we will use the following configuration which is available in the sample. The configuration exposes endpoint on the port 24224 for the purpose of collecting logs from Java application. Furthermore we can define where logs from different classes inside our application will get routed with match directive. For example logs from CustomerResource class will be exposed through standard output. 
+In this sample we will run Fluentd in a Docker container. We will use the following configuration (configuration file
+ can be found in the root of the repository):  
 ```
 <source>
     @type forward
@@ -195,12 +197,16 @@ In this sample we will use the following configuration which is available in the
 </label>
 ```
 
+The configuration exposes endpoint on the port 24224 for the purpose of collecting logs from Java application. Furthermore we define where logs from different classes inside our application will get routed with match directive. For example logs from CustomerResource class will be exposed through standard output.
+
 ### Run Fluentd daemon
-Confuration file is available in the project as Customers.conf we are going to copy it to `/tmp`.
+The confuration file is available in the project as Customers.conf. We are going to copy it to `/tmp` of our Docker 
+host.
+
 ```bash
 cp Customers.conf /tmp
 ```
-Then we can run the Daemon inside Docker and mount the `/fluentd/log`
+Then we run the Daemon inside Docker and mount the `/fluentd/log` directory.
 ```bash
 docker run --name fluentd-daemon -d -p 24224:24224 -p 24224:24224/udp -v /tmp:/fluentd/log -v /tmp:/fluentd/etc fluent/fluentd:v1.3-debian-1 -c /fluentd/etc/Customers.conf
 ```
@@ -213,7 +219,7 @@ Enhance `CustomerResource` class by adding KumuluzEE Logs annotations:
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("customers")
-@Log(LogParams.METRICS)
+@Log
 public class CustomerResource {
 
     ...
@@ -241,7 +247,7 @@ kumuluzee:
   version: 1.0.0
   logs:
     fluentd:
-      address: localhost
+      hostname: localhost
       port: 24224
 ```
 ### Build the microservice and run it
