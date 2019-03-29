@@ -66,7 +66,6 @@ public class RestResource {
                 .addFilter("firstName", FilterOperation.LIKE,"J%").build();
 
         CustomerApi customerApi = RestClientBuilder.newBuilder()
-                .property("jersey.config.client.suppressHttpComplianceValidation", true)
                 .baseUrl(new URL("http://localhost:8080/v1"))
                 .build(CustomerApi.class);
 
