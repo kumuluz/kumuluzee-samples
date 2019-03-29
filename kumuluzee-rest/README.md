@@ -37,6 +37,11 @@ In order to run this sample you will have to setup a local PostgreSQL database:
 - __user__: postgres
 - __password__: postgres
 
+You can run the database inside docker:
+```
+docker run -d --name pg-rest -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=customers -p 5432:5432 postgres:latest
+```
+
 The required tables will be created automatically upon running the sample.
 
 ## Usage

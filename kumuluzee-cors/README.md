@@ -41,7 +41,7 @@ The example uses maven to build and run the microservices.
 1. Build the sample using maven:
 
     ```bash
-    $ cd servlet
+    $ cd kumuluzee-cors
     $ mvn clean package
     ```
 

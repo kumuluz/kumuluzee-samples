@@ -17,7 +17,7 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
+ */
 package com.kumuluz.ee.samples.kumuluz_config_consul;
 
 import com.kumuluz.ee.configuration.cdi.ConfigBundle;
@@ -39,6 +39,9 @@ public class ConfigProperties {
     private Boolean booleanProperty;
 
     private Integer integerProperty;
+
+    @ConfigValue(watch = true)
+    private String encodedProperty;
 
     public String getStringProperty() {
         return stringProperty;
@@ -62,5 +65,13 @@ public class ConfigProperties {
 
     public void setIntegerProperty(Integer integerProperty) {
         this.integerProperty = integerProperty;
+    }
+
+    public String getEncodedProperty() {
+        return encodedProperty;
+    }
+
+    public void setEncodedProperty(String encodedProperty) {
+        this.encodedProperty = encodedProperty;
     }
 }
