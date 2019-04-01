@@ -5,7 +5,7 @@
     <parent>
         <artifactId>kumuluzee-samples</artifactId>
         <groupId>com.kumuluz.ee.samples</groupId>
-        <version>3.3.0-SNAPSHOT</version>
+        <version>3.4.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -39,7 +39,7 @@
             <dependency>
                 <groupId>com.kumuluz.ee.samples</groupId>
                 <artifactId>kumuluzee-fault-tolerance-hystrix-common</artifactId>
-                <version>3.3.0-SNAPSHOT</version>
+                <version>3.4.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
