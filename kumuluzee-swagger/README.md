@@ -70,7 +70,7 @@ The example uses maven to build and run the microservices.
     ```
     
 The application/service can be accessed on the following URL:
-* JAX-RS - http://localhost:8080/v1/customer
+* JAX-RS - http://localhost:8080/v1/customers
 
 ### Swagger specification
 
@@ -88,7 +88,7 @@ Package contains two versions of JAX-RS application CustomersAPI.
 
 **CustomersAPI v1**
 JAX-RS resource:
-* GET http://localhost:8080/v1/customer - list of all customers.
+* GET http://localhost:8080/v1/customers - list of all customers.
 
 OpenAPI specification:
 * GET http://localhost:8080/api-specs/v1/swagger.json
@@ -202,8 +202,16 @@ public class CustomerApplication extends Application {
 public class CustomerResource {
 
     @GET
-    @ApiOperation(value = "Get customers list", tags = {"customers"}, notes = "Returns a list of customers.")
-    @ApiResponses(value = {@ApiResponse(message = "List of customers", code = 200, response = Customer.class)})
+    @ApiOperation(value = "Get customers list", tags = {"customers"}, notes = "Returns a list of customers.",
+            authorizations = {
+                    @Authorization(value = "application")})
+    @ApiResponses(value = {
+            @ApiResponse(
+                    message = "List of customers",
+                    code = 200,
+                    response = Customer.class,
+                    responseContainer = "List")
+    })
     public Response getCustomers() {
 
         List<Customer> customers = new ArrayList<>();
