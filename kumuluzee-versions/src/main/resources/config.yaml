@@ -1,0 +1,3 @@
+kumuluzee:
+  versions:
+    docker-image-name: my_docker_image
