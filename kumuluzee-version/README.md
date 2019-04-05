@@ -121,6 +121,39 @@ and also the maven buildnumber plugin, to get the git commit id. We only need to
 You can set doCheck to true, to make building fail if there are any locally modified files. Setting doUpdate to true
 will update your local repository from remote before building.
 
+### Adding VERSION.json
+
+We have to add a file, that will be edited by the plugins and from which versioning will be read from.
+
+We will create a VERSION.json file in the resources folder with the following content:
+
+```json
+{
+  "maven_group_id": "${project.groupId}",
+  "maven_artifact_id": "${project.parent.artifactId}",
+  "maven_version": "${project.version}",
+  "project_artifactId": "${project.artifactId}",
+  "git_commit_id": "${buildNumber}"
+}
+```
+
+These fields will then be exposed by the servlet. When running this example in exploded format, the maven buildnumber plugin 
+fills the value with key "git_commit_id" with "", which gets logged as an error. This can be avoided by running the
+example in an Uber-jar format.
+
+### Setting docker image name
+
+We set the docker image name in config.yaml file in resources folder with:
+
+```yaml
+kumuluzee:
+  version:
+    docker-image-name: my_docker_image
+```
+
+This sets the "docker_image_name" key to `m̀y_docker_image`. This can be overwritten with an environment variable
+KUMULUZEE_VERSION_DOCKERIMAGENAME.
+
 ### Setting resources folder
 
 We have to set the resources folders, so that the plugins know in which folders to look for files that have fields that
@@ -134,12 +167,12 @@ need to be filled.
             <filtering>false</filtering>
         </resource>
         <resource>
-            <directory>src/main/resources/META-INF</directory>
+            <directory>src/main/resources</directory>
             <filtering>true</filtering>
             <includes>
                 <include>VERSION.json</include>
             </includes>
-            <targetPath>META-INF</targetPath>
+            <targetPath>.</targetPath>
         </resource>
     </resources>
 </build>

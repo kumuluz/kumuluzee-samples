@@ -92,12 +92,12 @@
                 <filtering>false</filtering>
             </resource>
             <resource>
-                <directory>src/main/resources/META-INF</directory>
+                <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <includes>
                     <include>VERSION.json</include>
                 </includes>
-                <targetPath>META-INF</targetPath>
+                <targetPath>.</targetPath>
             </resource>
         </resources>
     </build>
