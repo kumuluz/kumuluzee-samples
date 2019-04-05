@@ -13,6 +13,10 @@
 
     <name>KumuluzEE Versions sample</name>
 
+    <properties>
+        <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -67,7 +71,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>1.4</version>
+                <version>${buildnumber-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>
