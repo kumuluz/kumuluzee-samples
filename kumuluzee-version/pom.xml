@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>kumuluzee-versions</artifactId>
+    <artifactId>kumuluzee-version</artifactId>
 
-    <name>KumuluzEE Versions sample</name>
+    <name>KumuluzEE Version sample</name>
 
     <properties>
         <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
@@ -47,8 +47,8 @@
             <artifactId>kumuluzee-json-p-jsonp</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.kumuluz.ee.versions</groupId>
-            <artifactId>kumuluzee-versions</artifactId>
+            <groupId>com.kumuluz.ee.version</groupId>
+            <artifactId>kumuluzee-version</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
@@ -95,7 +95,7 @@
                 <directory>src/main/resources/META-INF</directory>
                 <filtering>true</filtering>
                 <includes>
-                    <include>VERSIONS.json</include>
+                    <include>VERSION.json</include>
                 </includes>
                 <targetPath>META-INF</targetPath>
             </resource>

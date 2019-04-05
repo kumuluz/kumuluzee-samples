@@ -1,6 +1,6 @@
-# KumuluzEE Versions example
+# KumuluzEE Version example
 
-This sample demonstrates how to use KumuluzEE Versions.
+This sample demonstrates how to use KumuluzEE Version.
 
 ## Requirements
 
@@ -66,13 +66,13 @@ The example uses maven to build and run the microservice.
     
     
 The application/service can be accessed on the following URL:
-* The versions endpoint will be by default accessible at http://localhost:8080/versions
+* The version endpoint will be by default accessible at http://localhost:8080/version
 
 To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
 
-This tutorial will show you how to enable KumuluzEE Versions.
+This tutorial will show you how to enable KumuluzEE Version.
 
 ### Add Maven dependencies
 
@@ -84,8 +84,8 @@ Dependencies are the same as in the jax-rs example with the addition of:
         <artifactId>kumuluzee-json-p-jsonp</artifactId>
     </dependency>
     <dependency>
-        <groupId>com.kumuluz.ee.versions</groupId>
-        <artifactId>kumuluzee-versions</artifactId>
+        <groupId>com.kumuluz.ee.version</groupId>
+        <artifactId>kumuluzee-version</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </dependency>
 </dependencies>
@@ -137,7 +137,7 @@ need to be filled.
             <directory>src/main/resources/META-INF</directory>
             <filtering>true</filtering>
             <includes>
-                <include>VERSIONS.json</include>
+                <include>VERSION.json</include>
             </includes>
             <targetPath>META-INF</targetPath>
         </resource>
@@ -145,7 +145,7 @@ need to be filled.
 </build>
 ```
 
-Note that if you have a custom name of the VERSIONS.json file, you also have to change it here.
+Note that if you have a custom name of the VERSION.json file, you also have to change it here.
 
 ### Build the microservice and run it
 
