@@ -197,7 +197,7 @@ In this sample we will run Fluentd in a Docker container. We will use the follow
 </label>
 ```
 
-The configuration exposes endpoint on the port 24224 for the purpose of collecting logs from Java application. Furthermore we define where logs from different classes inside our application will get routed with match directive. For example logs from CustomerResource class will be exposed through standard output.
+The configuration exposes endpoint on the port 24224 for the purpose of collecting logs from Java application. Furthermore we define where logs from different classes inside our application will get routed with match directive. For example logs from CustomerResource class will be exposed through fluentd and standard output.
 
 ### Run Fluentd daemon
 The confuration file is available in the project as Customers.conf. We are going to copy it to `/tmp` of our Docker 
@@ -222,7 +222,7 @@ Enhance `CustomerResource` class by adding KumuluzEE Logs annotations:
 @Log
 public class CustomerResource {
 
-    ...
+    //...
 
     @POST
     @Log(value = LogParams.METRICS, methodCall = false)
