@@ -71,3 +71,7 @@ The application/service can be accessed on the following URL:
 To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
+
+This tutorial will show you how to enable KumuluzEE Versions.
+
+### Add Maven dependencies
