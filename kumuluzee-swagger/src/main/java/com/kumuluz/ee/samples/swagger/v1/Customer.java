@@ -17,11 +17,8 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
+ */
 package com.kumuluz.ee.samples.swagger.v1;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Customer class.
@@ -29,7 +26,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Zvone Gazvoda
  * @since 2.5.0
  */
-@XmlRootElement(name = "Customer")
 public class Customer {
 
     private String id;
@@ -42,7 +38,6 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    @XmlElement(name = "id")
     public String getId() {
         return id;
     }
@@ -51,7 +46,6 @@ public class Customer {
         this.id = id;
     }
 
-    @XmlElement(name = "first-name")
     public String getFirstName() {
         return firstName;
     }
@@ -60,8 +54,6 @@ public class Customer {
         this.firstName = firstName;
     }
 
-
-    @XmlElement(name = "last-name")
     public String getLastName() {
         return lastName;
     }

@@ -209,10 +209,14 @@ public class CustomerApplication extends Application {
 public class CustomerResource {
 
     @GET
-    @Operation(summary = "Get customers list", tags = {"customers"}, description = "Returns a list of customers.", responses = {
-            @ApiResponse(description = "List of customers", responseCode = "200", content = @Content(schema = @Schema(implementation =
-                    Customer.class)))
-    })
+    @Operation(summary = "Get customers list", tags = {"customers"}, description = "Returns a list of customers.",
+            responses = {
+                    @ApiResponse(
+                            description = "List of customers",
+                            responseCode = "200",
+                            content = @Content(array = @ArraySchema(schema = @Schema(implementation = Customer.class)))
+                    )
+            })
     public Response getCustomers() {
 
         List<Customer> customers = new ArrayList<>();

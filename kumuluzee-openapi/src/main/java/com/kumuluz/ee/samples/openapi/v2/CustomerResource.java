@@ -2,6 +2,7 @@ package com.kumuluz.ee.samples.openapi.v2;
 
 import com.kumuluz.ee.samples.openapi.Customer;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,10 +27,14 @@ import java.util.List;
 public class CustomerResource {
 
     @GET
-    @Operation(summary = "Get customers list", tags = {"customers"}, description = "Returns a list of customers.", responses = {
-            @ApiResponse(description = "List of customers", responseCode = "200", content = @Content(schema = @Schema(implementation =
-                    Customer.class)))
-    })
+    @Operation(summary = "Get customers list", tags = {"customers"}, description = "Returns a list of customers.",
+            responses = {
+                    @ApiResponse(
+                            description = "List of customers",
+                            responseCode = "200",
+                            content = @Content(array = @ArraySchema(schema = @Schema(implementation = Customer.class)))
+                    )
+            })
     public Response getCustomers() {
 
         List<Customer> customers = new ArrayList<>();
@@ -41,10 +46,12 @@ public class CustomerResource {
     }
 
     @GET
-    @Operation(summary = "Get customers details", tags = {"customers"}, description = "Returns customer details.", responses = {
-            @ApiResponse(description = "Customer details", responseCode = "200", content = @Content(schema = @Schema(implementation =
-                    Customer.class)))
-    })
+    @Operation(summary = "Get customers details", tags = {"customers"}, description = "Returns customer details.",
+            responses = {
+                    @ApiResponse(description = "Customer details", responseCode = "200", content = @Content(schema =
+                    @Schema(implementation =
+                            Customer.class)))
+            })
     @Path("{customerId}")
     public Response getCustomer(@PathParam("customerId") String customerId) {
 
