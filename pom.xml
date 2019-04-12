@@ -50,6 +50,7 @@
         <module>kumuluzee-opentracing-tutorial</module>
         <module>kumuluzee-rest-client</module>
 		<module>kumuluzee-amqp-rabbitmq</module>
+        <module>kumuluzee-version</module>
     </modules>
 
     <packaging>pom</packaging>

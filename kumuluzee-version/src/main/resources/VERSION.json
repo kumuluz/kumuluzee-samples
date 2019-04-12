@@ -1,0 +1,7 @@
+{
+  "maven_group_id": "${project.groupId}",
+  "maven_artifact_id": "${project.parent.artifactId}",
+  "maven_version": "${project.version}",
+  "project_artifactId": "${project.artifactId}",
+  "git_commit_id": "${buildNumber}"
+}
