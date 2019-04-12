@@ -141,18 +141,20 @@ These fields will then be exposed by the servlet. When running this example in e
 fills the value with key "git_commit_id" with "", which gets logged as an error. This can be avoided by running the
 example in an Uber-jar format.
 
-### Setting docker image name
+### Setting custom values
 
-We set the docker image name in config.yaml file in resources folder with:
+We can set custom values that will then be exposed by the servlet for example we set the docker image name in
+ config.yaml file in resources folder with:
 
 ```yaml
 kumuluzee:
   version:
-    docker-image-name: my_docker_image
+    values:
+      docker-image-name: my_docker_image
 ```
 
 This sets the "docker_image_name" key to `m̀y_docker_image`. This can be overwritten with an environment variable
-KUMULUZEE_VERSION_DOCKERIMAGENAME.
+KUMULUZEE_VERSION_VALUES_DOCKERIMAGENAME.
 
 ### Setting resources folder
 
