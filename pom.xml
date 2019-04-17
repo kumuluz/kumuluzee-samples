@@ -6,7 +6,7 @@
 
     <groupId>com.kumuluz.ee.samples</groupId>
     <artifactId>kumuluzee-samples</artifactId>
-    <version>3.4.0-SNAPSHOT</version>
+    <version>3.5.0-SNAPSHOT</version>
     <modules>
         <module>bean-validation</module>
         <module>https</module>
