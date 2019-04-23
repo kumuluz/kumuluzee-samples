@@ -1,9 +1,10 @@
-# KumuluzEE Logs sample with Fluentd implementation
+# KumuluzEE Logs sample with Fluentd logger
 
-> Build a REST service that utilizes a built-in logging framework with Fluentd implementation to log basic metrics and 
+> Build a REST service that utilizes a built-in logging framework with Fluentd logger and 
 pack it as a KumuluzEE microservice
 
-The objective of this sample is to demonstrate how to use the built-in logging framework with Fluentd implementation to log basic metrics.
+The objective of this sample is to demonstrate how to use the built-in logging framework with Fluentd logger to log 
+application logs to the Fluentd logging layer.
 
 ## Requirements
 
@@ -82,7 +83,7 @@ We will follow these steps:
 * Complete the tutorial for [KumuluzEE JAX-RS REST sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jax-rs) or clone the existing sample
 * Add Maven dependencies
 * Add KumuluzEE Logs support
-* Add fluentd logging configuration
+* Add Fluentd logging configuration
 * Build the microservice
 * Run it
 
@@ -197,7 +198,9 @@ In this sample we will run Fluentd in a Docker container. We will use the follow
 </label>
 ```
 
-The configuration exposes endpoint on the port 24224 for the purpose of collecting logs from Java application. Furthermore we define where logs from different classes inside our application will get routed with match directive. For example logs from CustomerResource class will be exposed through fluentd and standard output.
+The configuration exposes endpoint on the port 24224 for the purpose of collecting logs from Java application. 
+Furthermore we define where logs from different classes inside our application will get routed with match directive. 
+For example, logs from CustomerResource class will be exposed through Fluentd and standard output.
 
 ### Run Fluentd daemon
 The confuration file is available in the project as Customers.conf. We are going to copy it to `/tmp` of our Docker 
@@ -253,5 +256,6 @@ kumuluzee:
 ### Build the microservice and run it
 
 To build the microservice and run the example, use the commands as described in previous sections.
+
 ### Check the logs
 Logs are avaiable in `/fluentd/log/` directory inside Docker container and were mounted on `/tmp` directory on your computer. 
