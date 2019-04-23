@@ -5,5 +5,5 @@ kumuluzee:
   version: 1.0.0
   logs:
     fluentd:
-      address: localhost
+      hostname: localhost
       port: 24224
