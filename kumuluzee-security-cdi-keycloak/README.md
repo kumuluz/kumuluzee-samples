@@ -109,7 +109,7 @@ Since your existing starting point is the existing KumuluzEE JAX-RS REST sample,
 dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` configured 
 in `pom.xml`.
 
-Add the `kumuluzee-cdi-weld` and `kumuluzee-security-keycloak` dependencies:
+Add the `kumuluzee-cdi-weld`, `kumuluzee-security-keycloak` and `keycloak-jetty94-adapter` dependencies:
 ```xml
 <dependency>
     <groupId>com.kumuluz.ee</groupId>
@@ -119,6 +119,11 @@ Add the `kumuluzee-cdi-weld` and `kumuluzee-security-keycloak` dependencies:
     <groupId>com.kumuluz.ee.security</groupId>
     <artifactId>kumuluzee-security-keycloak</artifactId>
     <version>${kumuluzee-security.version}</version>
+</dependency>
+<dependency>
+    <groupId>org.keycloak</groupId>
+    <artifactId>keycloak-jetty94-adapter</artifactId>
+    <version>${keycloak.version}</version>
 </dependency>
 ```
  
@@ -291,7 +296,7 @@ public client on Keycloak and the username and password of your Keycloak user):
 
 ```bash
 $ curl -X POST \
-  http://localhost:8082/auth/realms/customers/protocol/openid-connect/token \
+  http://localhost:8082/auth/realms/customers-realm/protocol/openid-connect/token \
   -H 'content-type: application/x-www-form-urlencoded' \
   -d 'grant_type=password&client_id=customers-app&username=johndoe&password=abc123'
 ```
