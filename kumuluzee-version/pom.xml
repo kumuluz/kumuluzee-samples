@@ -14,6 +14,7 @@
 
     <properties>
         <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
+        <compiler-maven-plugin.version></compiler-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -82,14 +83,6 @@
                 <configuration>
                     <doCheck>false</doCheck>
                     <doUpdate>false</doUpdate>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>7</source>
-                    <target>7</target>
                 </configuration>
             </plugin>
         </plugins>
