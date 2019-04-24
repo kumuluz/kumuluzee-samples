@@ -16,7 +16,7 @@
 
     <properties>
         <kumuluzee-security.version>1.1.0-SNAPSHOT</kumuluzee-security.version>
-        <kumuluzee-config.version>1.2.0-SNAPSHOT</kumuluzee-config.version>
+        <kumuluzee-config.version>1.2.0</kumuluzee-config.version>
     </properties>
 
     <dependencyManagement>
