@@ -14,12 +14,14 @@ import com.kumuluz.ee.graphql.utils.GraphQLUtils;
 import io.leangen.graphql.annotations.*;
 import io.leangen.graphql.execution.ResolutionEnvironment;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @GraphQLClass
+@ApplicationScoped
 public class StudentResolvers {
     @Inject
     private FacultyBean facultyBean;

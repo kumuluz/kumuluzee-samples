@@ -13,9 +13,11 @@ import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLNonNull;
 import io.leangen.graphql.annotations.GraphQLQuery;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 @GraphQLClass
+@ApplicationScoped
 public class SubjectResolvers {
     @Inject
     private SubjectBean subjectBean;

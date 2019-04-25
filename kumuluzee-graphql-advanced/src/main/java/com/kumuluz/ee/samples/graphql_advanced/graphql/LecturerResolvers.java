@@ -10,10 +10,12 @@ import com.kumuluz.ee.graphql.classes.Sort;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLQuery;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.List;
 
 @GraphQLClass
+@ApplicationScoped
 public class LecturerResolvers {
     @Inject
     private FacultyBean facultyBean;
