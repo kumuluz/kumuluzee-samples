@@ -15,7 +15,7 @@
     <description>KumuluzEE Security extension with CDI based security usage sample with KumuluzEE and Keycloak</description>
 
     <properties>
-        <kumuluzee-security.version>1.1.0-SNAPSHOT</kumuluzee-security.version>
+        <kumuluzee-security.version>1.2.0-SNAPSHOT</kumuluzee-security.version>
         <keycloak.version>5.0.0</keycloak.version>
         <kumuluzee-config.version>1.2.0</kumuluzee-config.version>
     </properties>

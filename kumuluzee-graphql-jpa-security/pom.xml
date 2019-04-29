@@ -17,7 +17,7 @@
 
     <properties>
         <kumuluzee-graphql.version>1.1.0-SNAPSHOT</kumuluzee-graphql.version>
-        <kumuluzee-security.version>1.1.0-SNAPSHOT</kumuluzee-security.version>
+        <kumuluzee-security.version>1.2.0-SNAPSHOT</kumuluzee-security.version>
         <keycloak.version>5.0.0</keycloak.version>
         <postgresql.version>42.2.1</postgresql.version>
     </properties>
