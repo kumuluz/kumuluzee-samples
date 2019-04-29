@@ -1,8 +1,9 @@
 # KumuluzEE GraphQL sample with JPA, CDI and Security
 
-> Develop JPA entities with CDI within a GraphQL service, secure it with Keycloak and pack it as a KumuluzEE microservice.
+> Enable security on a GraphQL microservice.
 
-The object of this sample is to demonstrate, how to add security to your existing GraphQL endpoint. This sample builds on previous sample: [KumuluzEE JPA and CDI with GraphQL](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-graphql-jpa-simple).
+The objective of this sample is to demonstrate how to add security to your existing GraphQL endpoint. This sample 
+builds on previous sample: [KumuluzEE JPA and CDI with GraphQL](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-graphql-jpa-simple).
 
 ## Requirements
 
@@ -38,12 +39,12 @@ In order to run this sample you will have to setup a local PostgreSQL database:
 - __password__: postgres
 
 The required tables will be created automatically upon running the sample.
-You can run databases inside docker:
+You can run databases with docker:
 ```
 docker run -d --name pg-graphql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=customers -p 5432:5432 postgres:latest
 ```
 
-Due to added security, running Keycloak is also required. You can run it inside docker:
+Due to added security, running Keycloak is also required. You can run it with docker:
 ```
 $ docker run \
          -e KEYCLOAK_USER=<USERNAME> \
@@ -146,7 +147,7 @@ In order to enable security on our GraphQL endpoint, we need to do the following
 @DeclareRoles({"user", "admin"})
 public class MyGraphQL extends GraphQLApplication {}
 ```
-* annotate desired GraphQL classes with `Secure` annotation (the classes we want protected)
+* annotate desired GraphQL classes with `@Secure` annotation (the classes we want protected)
 ```
 @RequestScoped
 @GraphQLClass
@@ -192,7 +193,8 @@ public class CustomerResource {
 With these annotations, we have now protected GraphQL endpoint. With `PermitAll`, all authorized requests are permitted. `RolesAllowed` allows us to specify which user roles can access specific operations. If we want to forbid using specific operations, we can use `DenyAll`.
 
 ### Querying endpoint
-After following these steps, the GraphQL endpoint can now be queried with Bearer token. To get the token, send a request to Keycloak auth endpoint: `http://{keycloakhost:port}/auth/realms/{realmname}/protocol/openid-connect/token` (`http://localhost:8082/auth/realms/master/protocol/openid-connect/token`).
+After following these steps, the GraphQL endpoint can now be queried with Bearer token. To get the token, send a request to Keycloak auth endpoint: `http://{keycloakhost:port}/auth/realms/{realmname}/protocol/openid-connect/token` (`http://localhost:8082/auth/realms/customers-realm/protocol/openid-connect/token`).
+
 All secured requests should now include `Authorization` header with content: `Bearer {token}`.
 
 ### Build the microservice and run it
