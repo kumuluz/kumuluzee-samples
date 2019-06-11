@@ -22,8 +22,9 @@
     </modules>
 
     <properties>
-        <kumuluzee-fault-tolerance.version>1.0.0-SNAPSHOT</kumuluzee-fault-tolerance.version>
-        <kumuluzee-config.version>1.2.0-SNAPSHOT</kumuluzee-config.version>
+        <kumuluzee-fault-tolerance.version>1.2.0-SNAPSHOT</kumuluzee-fault-tolerance.version>
+        <kumuluzee-config-mp.version>1.4.0-SNAPSHOT</kumuluzee-config-mp.version>
+        <kumuluzee-metrics.version>1.2.0-SNAPSHOT</kumuluzee-metrics.version>
     </properties>
 
     <dependencyManagement>
@@ -39,18 +40,23 @@
             <dependency>
                 <groupId>com.kumuluz.ee.samples</groupId>
                 <artifactId>kumuluzee-fault-tolerance-hystrix-common</artifactId>
-                <version>3.5.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.kumuluz.ee.fault.tolerance</groupId>
-                <artifactId>kumuluzee-fault-tolerance-hystrix</artifactId>
+                <artifactId>kumuluzee-fault-tolerance-smallrye</artifactId>
                 <version>${kumuluzee-fault-tolerance.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.kumuluz.ee.config</groupId>
-                <artifactId>kumuluzee-config-etcd</artifactId>
-                <version>${kumuluzee-config.version}</version>
+                <artifactId>kumuluzee-config-mp</artifactId>
+                <version>${kumuluzee-config-mp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.metrics</groupId>
+                <artifactId>kumuluzee-metrics-core</artifactId>
+                <version>${kumuluzee-metrics.version}</version>
             </dependency>
 
             <dependency>

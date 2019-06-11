@@ -32,6 +32,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Luka Šarc
@@ -57,14 +58,14 @@ public class CustomerResource {
 
     @GET
     @Path("{customerId}")
-    public Response getCustomer(@PathParam("customerId") String customerId) {
+    public Response getCustomer(@PathParam("customerId") String customerId) throws ExecutionException, InterruptedException {
 
         Customer customer = Database.getCustomer(customerId);
 
         if (customer == null)
             return Response.status(Response.Status.NOT_FOUND).build();
 
-        List<Order> customerOrders = ordersBean.findOrdersByCustomerId(customerId);
+        List<Order> customerOrders = ordersBean.findOrdersByCustomerId(customerId).get();
         customer.setOrders(customerOrders);
 
         return Response.ok(customer).build();
@@ -89,9 +90,9 @@ public class CustomerResource {
 
     @GET
     @Path("{customerId}/order")
-    public Response getCustomerOrders(@PathParam("customerId") String customerId) {
+    public Response getCustomerOrders(@PathParam("customerId") String customerId) throws ExecutionException, InterruptedException {
 
-        List<Order> customerOrders = ordersBean.findOrdersByCustomerId(customerId);
+        List<Order> customerOrders = ordersBean.findOrdersByCustomerId(customerId).get();
 
         return Response.ok(customerOrders).build();
     }

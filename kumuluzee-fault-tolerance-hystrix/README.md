@@ -1,6 +1,6 @@
 # KumuluzEE Fault Tolerance sample with Hystrix
 
-> Build a REST service which utilizes KumuluzEE Faul Tolerance to provide fault tolerance and latency tolerance to 
+> Build a REST service which utilizes KumuluzEE Fault Tolerance to provide fault tolerance and latency tolerance to 
 your code using the fault tolerance patterns in a KumuluzEE microservice
 
 The objective of this sample is to show how to develop a microservice that uses KumuluzEE Fault Tolerance extension to
@@ -9,8 +9,8 @@ pattern. One microservice will be dependent on the other and will produce HTTP c
 patterns. We will demonstrate how to configure KumuluzEE Fault Tolerance using KumuluzEE config extension. 
 Optionally you can use etcd configuration server for KumuluzEE Fault Tolerance configuration. This tutorial 
 will guide you through all the necessary steps. To develop the REST services, we will use the standard JAX-RS 2 API. Required knowledge: 
-basic familiarity with JAX-RS 2, fault tolerance patterns (circuit breaker, bulkhead, timeout, fallback), Hystrix framework and basic 
-concepts of REST. Optional knowledge: basic knowledge of etcd configuration server and KumuluzEE Config.
+basic familiarity with JAX-RS 2, fault tolerance patterns (circuit breaker, bulkhead, timeout, fallback) and basic 
+concepts of REST. Optional knowledge: basic knowledge of KumuluzEE Config and KumuluzEE Metrics.
 
 This sample contains two modules, each representing one microservice - customers and orders REST service. Customer can 
 have multiple orders and therefore customer service uses orders service to get customer's orders. The third module represents
@@ -39,29 +39,6 @@ In order to run this example you will need the following:
         ```
         git --version
         ```
-    
-## Prerequisites
-
-In this sample you can optionally try to configure KumuluzEE Fault Tolerance using etcd configuration server and 
-KumuluzEE Config for etcd extension. Here is an example on how to quickly run an etcd instance with docker:
-
-```bash
-$ docker run -d --net=host \
-    --name etcd \
-    --volume=/tmp/etcd-data:/etcd-data \
-    quay.io/coreos/etcd:v3.1.7 \
-    /usr/local/bin/etcd \
-    --name my-etcd-1 \
-    --data-dir /etcd-data \
-    --listen-client-urls http://0.0.0.0:2379 \
-    --advertise-client-urls http://0.0.0.0:2379 \
-    --listen-peer-urls http://0.0.0.0:2380 \
-    --initial-advertise-peer-urls http://0.0.0.0:2380 \
-    --initial-cluster my-etcd-1=http://0.0.0.0:2380 \
-    --initial-cluster-token my-etcd-token \
-    --initial-cluster-state new \
-    --auto-compaction-retention 1
-```
 
 ## Usage 
 
@@ -79,26 +56,22 @@ The example uses Maven to build and run the microservices.
 - Uber-jar:
 
     ```bash
-    $ export PORT=8080
     $ java -jar customer-api/target/${project.build.finalName}.jar
     ```
 
     in Windows environment use the command
     ```
-    set PORT=8080
     java -jar customer-api/target/${project.build.finalName}.jar
     ```
 
 - Exploded:
 
     ```bash
-    $ export PORT=8080
     $ java -cp customer-api/target/classes:customer-api/target/dependency/* com.kumuluz.ee.EeApplication
     ```
 
     in Windows environment use the command
     ```
-    set PORT=8080
     java -cp customer-api/target/classes;customer-api/target/dependency/* com.kumuluz.ee.EeApplication
     ```
     
@@ -107,26 +80,22 @@ The example uses Maven to build and run the microservices.
 - Uber-jar:
 
     ```bash
-    $ export PORT=8081
     $ java -jar order-api/target/${project.build.finalName}.jar
     ```
 
     in Windows environment use the command
     ```
-    set PORT=8081
     java -jar order-api/target/${project.build.finalName}.jar
     ```
 
 - Exploded:
 
     ```bash
-    $ export PORT=8081
     $ java -cp order-api/target/classes:order-api/target/dependency/* com.kumuluz.ee.EeApplication
     ```
 
     in Windows environment use the command
     ```
-    set PORT=8081
     java -cp order-api/target/classes;order-api/target/dependency/* com.kumuluz.ee.EeApplication
     ```
     
@@ -151,6 +120,7 @@ We will follow these steps:
 * Add HTTP client dependency and HTTP client implementation
 * Wrap HTTP call with fault tolerance patterns
 * Test fault tolerance patterns and configurations
+* Check out the fault tolerance metrics
 
 ### Create a maven project
 
@@ -170,28 +140,28 @@ Create a maven project with three submodules - common, order-api and customer-ap
         <dependency>
             <groupId>com.kumuluz.ee.samples</groupId>
             <artifactId>kumuluzee-fault-tolerance-hystrix-common</artifactId>
-            <version>2.3.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.kumuluz.ee.fault.tolerance</groupId>
-            <artifactId>kumuluzee-fault-tolerance-hystrix</artifactId>
+            <artifactId>kumuluzee-fault-tolerance-smallrye</artifactId>
             <version>${kumuluzee-fault-tolerance.version}</version>
         </dependency>
         <dependency>
             <groupId>com.kumuluz.ee.config</groupId>
-            <artifactId>kumuluzee-config-etcd</artifactId>
-            <version>${kumuluzee-config.version}</version>
+            <artifactId>kumuluzee-config-mp</artifactId>
+            <version>${kumuluzee-config-mp.version}</version>
         </dependency>
         
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.3</version>
+            <version>${httpclient.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.8.8.1</version>
+            <version>${jackson.version}</version>
         </dependency>
     </dependencies>
 </dependencyManagement>
@@ -404,17 +374,17 @@ A REST microservice for customers can be copied from KumuluzEE JAX-RS REST sampl
     
     <dependency>
         <groupId>com.kumuluz.ee.fault.tolerance</groupId>
-        <artifactId>kumuluzee-fault-tolerance-hystrix</artifactId>
+        <artifactId>kumuluzee-fault-tolerance-smallrye</artifactId>
     </dependency>
     <dependency>
         <groupId>com.kumuluz.ee.config</groupId>
-        <artifactId>kumuluzee-config-etcd</artifactId>
+        <artifactId>kumuluzee-config-mp</artifactId>
     </dependency>
 </dependencies>
 ```
 
-We have already added dependencies for KumuluzEE Fault Tolerance extension. Optionally, add the KumuluzEE Config extension if
-you will also be using etcd configuration server.
+We have already added dependencies for KumuluzEE Fault Tolerance extension. The KumuluzEE Config MP dependency is
+required in order for KumuluzEE Faule Tolerance to work correctly.
 
 ### Add HTTP client dependency and HTTP client implementation
 
@@ -438,12 +408,12 @@ For executing HTTP calls with Apache HttpComponents library, we should first imp
  of HTTP clients:
  
 ```java
-@ApplicationScoped
 public class HttpClientProducer {
 
     private static final int DEFAULT_POOL_MAX_CONNECTIONS = 5;
 
     @Produces
+    @ApplicationScoped
     public HttpClient httpClient() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
 
         SSLContext sslContext = SSLContexts.custom()
@@ -573,45 +543,67 @@ Note that in order to be able to properly inject `OrdersBean`, we needed to add 
 We will now add annotations to our `OrdersBean` in order to execute our remote HTTP call with fault tolerance patterns
 using KumuluzEE Fault Tolerance extension. We will add `@Bulkhead` annotation on class to enable bulkhead pattern for
 methods within class. It will limit the number of concurrent executions. `@CircuitBreaker` annotation must be added
-to method for enabling circuit breaker pattern. At this time all patterns are supported only if circuit breaker pattern
-is also used. `@Timeout` and `@Asynchronous` are also added to method. First one will enable timeout pattern and the 
-second will turn on thread bulkhead execution.
+to method for enabling circuit breaker pattern. `@Timeout` and `@Asynchronous` are also added to method. First one will
+enable timeout pattern and the second will turn on thread bulkhead execution.
 
-Note that we also used `@GroupKey` and `@CommandKey` annotations to change default command and group keys. If not provided,
-method name will be used as command key and class name will be used as group key.
+Note that we have to return a `Future` object since the method is annotated with `@Asynchronous`. Simply change the
+return statements to `CompletableFuture.completedFuture(...)` and KumuluzEE Fault Tolerance will do the rest.
  
 We will also implement fallback method which will return one order with customerId field set and "N/A" values 
 set on other fields. Add `@Fallback` annotation:
 
 ```java
 @RequestScoped
-@Bulkhead
-@GroupKey("orders")
 public class OrdersBean {
 
     @CircuitBreaker
     @Fallback(fallbackMethod = "findOrdersByCustomerIdFallback")
-    @CommandKey("http-find-order")
     @Timeout
     @Asynchronous
-    public List<Order> findOrdersByCustomerId(String customerId) {
-        // HTTP calll
+    @Bulkhead
+    public Future<List<Order>> findOrdersByCustomerId(String customerId) {
+
+        try {
+
+            HttpGet request = new HttpGet(ordersApiPath + "?customerId=" + customerId);
+            HttpResponse response = httpClient.execute(request);
+
+            int status = response.getStatusLine().getStatusCode();
+
+            if (status >= 200 && status < 300) {
+                HttpEntity entity = response.getEntity();
+
+                if (entity != null)
+                    return CompletableFuture.completedFuture(toOrdersArray(EntityUtils.toString(entity)));
+            } else {
+                String msg = "Remote server '" + ordersApiPath + "' failed with status " + status + ".";
+                log.warn(msg);
+                throw new InternalServerErrorException(msg);
+            }
+
+        } catch (IOException e) {
+            String msg = e.getClass().getName() + " occured: " + e.getMessage();
+            log.warn(msg);
+            throw new InternalServerErrorException(msg);
+        }
+
+        return CompletableFuture.completedFuture(new ArrayList<>());
     }
 
-    public List<Order> findOrdersByCustomerIdFallback(String zavarovanecId) {
+    public Future<List<Order>> findOrdersByCustomerIdFallback(String customerId) {
 
         log.info("Fallback called for findOrdersByCustomerId.");
 
         Order order = new Order();
-        order.setCustomerId(zavarovanecId);
-        order.setAddress("N/A");
+        order.setCustomerId(customerId);
+        order.setName("N/A");
         order.setPaymentType("N/A");
         order.setId("N/A");
 
         List<Order> orders = new ArrayList<>();
         orders.add(order);
 
-        return orders;
+        return CompletableFuture.completedFuture(orders);
     }
 
 }
@@ -623,80 +615,51 @@ will provide some configuration for Hystrix framework using KumuluzEE Config in 
 ```yml
 kumuluzee:
   env: dev
-  config:
-    etcd:
-      hosts: http://localhost:2379
-orders-api:
-  path: http://localhost:8081/v1/orders
-fault-tolerance:
-  config:
-    watch-enabled: true
-    watch-properties: timeout.value,circuit-breaker.failure-ratio,bulkhead.value
-  orders:
+
+  fault-tolerance:
     bulkhead:
       value: 5
-    http-find-order:
-      timeout:
-        value: 1000ms
-      circuit-breaker:
-        request-threshold: 10
-        failure-ratio: 0.3
-        delay: 3000ms
-        metrics:
-          rolling-window:
-            size: 5s
-            buckets: 5
+
+    annotation-overrides:
+      - class: com.kumuluz.ee.samples.circuit_breaker_hystrix.customer.beans.OrdersBean
+        method: findOrdersByCustomerId
+        annotation: timeout
+        parameters:
+          value: 1500
+      - class: com.kumuluz.ee.samples.circuit_breaker_hystrix.customer.beans.OrdersBean
+        method: findOrdersByCustomerId
+        annotation: circuit-breaker
+        parameters:
+          request-threshold: 10
+          failure-ratio: 0.3
+          delay: 3000
+
+orders-api:
+  path: http://localhost:8081/v1/orders
 ```
 
-We have added etcd configuration hosts configuration in case you are using configuration server. 
-Our command is configured under `http-find-order` command key and `orders` group key. Watches for KumuluzEE
-config are enabled on property keys `timeout.value`, `circuit-breaker.failure-ratio` and `bulkhead.value`. You can 
-see watch configuration under `watch-enabled` and `watch-properties`.
+A global override is set for `@Bulkhead` annotations. Some parameters for the `@Timeout` and `@CircuitBreaker` are also
+set.
 
 ### Test fault tolerance patterns and configurations
 
-Different configurations can now be tried on fault tolerance patterns. If you are using etcd configuration server, 
-configurations can be set by setting appropriate keys. For properties that have enabled watches, you can try to change 
-configurations on fault tolerance during runtime. You can set values for keys on etcd configuration server running in 
-docker the following way:
-                                                                  
-```bash
-$ docker exec etcd etcdctl set /environments/dev/services/fault-tolerance/orders/http-find-order/timeout/value 2s
-```
+Test the fault tolerance patterns by executing requests on the customer service. Observe what happens if you shut down
+the orders service and keep making requests on the customer service.
 
-Hystrix fault tolerance performance can be monitored using Hystrix dashboard. You must first add the metrics event stream
-to the customer-api `pom.xml`:
+### Check out the fault tolerance metrics
+
+The next thing to do is to enable metrics collection for the fault tolerance patterns. To enable metrics collection
+simply add the following dependency to the customer service:
 
 ```xml
 <dependency>
-    <groupId>com.netflix.hystrix</groupId>
-    <artifactId>hystrix-metrics-event-stream</artifactId>
-    <version>1.5.12</version>
+    <groupId>com.kumuluz.ee.metrics</groupId>
+    <artifactId>kumuluzee-metrics-core</artifactId>
+    <version>${kumuluzee-metrics.version}</version>
 </dependency>
 ```
 
-Next thing to do is to enable Hystrix stream servlet. Create a `web.xml` file inside `WEB-INF` directory. Hystrix
-Metrics Stream Servlet is defined and enabled inside this file:
+You can check out the metrics on the following URL: http://localhost:8080/metrics
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-
-    <servlet>
-        <display-name>HystrixMetricsStreamServlet</display-name>
-        <servlet-name>HystrixMetricsStreamServlet</servlet-name>
-        <servlet-class>com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>HystrixMetricsStreamServlet</servlet-name>
-        <url-pattern>/hystrix.stream</url-pattern>
-    </servlet-mapping>
-</web-app>
-```
-
-Stream can be the accessed on URL http://localhost:8080/hystrix.stream. Check the [Hystrix Dashboard wiki page]
-(https://github.com/Netflix/Hystrix/wiki/Dashboard) for instructions on how to see stream in a graphic interface.
+Note that the metrics will be shown in the Prometheus format. If you want to read metrics in a more human readable
+format use a request making software (e.g. Postman) and add the `Accept: application/json` header to the request.
