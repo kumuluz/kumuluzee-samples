@@ -35,7 +35,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("customers")
-@Log(LogParams.METRICS)
+@Log
 public class CustomerResource {
 
     @GET
