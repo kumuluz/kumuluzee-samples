@@ -26,6 +26,7 @@
         <module>kumuluzee-fault-tolerance-hystrix</module>
         <module>kumuluzee-logs-jul</module>
         <module>kumuluzee-logs-log4j2</module>
+        <module>kumuluzee-logs-fluentd</module>
         <module>kumuluzee-metrics</module>
         <module>kumuluzee-rest</module>
         <module>kumuluzee-security-cdi-keycloak</module>
