@@ -20,9 +20,9 @@
 */
 package com.kumuluz.ee.samples.health;
 
-import org.eclipse.microprofile.health.Health;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
+import org.eclipse.microprofile.health.Readiness;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.net.HttpURLConnection;
@@ -33,7 +33,7 @@ import java.util.logging.Logger;
  * @author Marko Škrjanec
  * @since 2.5.0
  */
-@Health
+@Readiness
 @ApplicationScoped
 public class GithubHealthCheckBean implements HealthCheck {
 

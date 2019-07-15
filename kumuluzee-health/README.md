@@ -82,7 +82,7 @@ The example uses maven to build and run the microservices.
     
 The application/service can be accessed on the following URL:
 * JAX-RS REST resource - http://localhost:8080/v1/customers
-* Health servlet - http://localhost:8080/health
+* Health servlet - http://localhost:8080/health/live and http://localhost:8080/health/ready
 
 To shut down the example simply stop the processes in the foreground.
 
@@ -116,14 +116,14 @@ Add the `kumuluzee-health` dependency:
 
 ### Implement Health Check Bean
 
-Implement a class which implements `HealthCheck` and is annotated with `@Health` and `@ApplicationScoped`. The bean 
+Implement a class which implements `HealthCheck` and is annotated with `@Readiness` and `@ApplicationScoped`. The bean 
 should contain a method call() which executes health check. The bean will be registered to the HealthRegistry 
 automatically and called either by accessing health servlet or by periodic health checks which are logged to the logs.
 
 Sample implementation of such a class (which could also be checked by a built in HttpHealthCheck):
 
 ```java
-import org.eclipse.microprofile.health.Health;
+import org.eclipse.microprofile.health.Readiness;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 
@@ -132,7 +132,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.logging.Logger;
 
-@Health
+@Readiness
 @ApplicationScoped
 public class GithubHealthCheckBean implements HealthCheck {
 
@@ -157,6 +157,9 @@ public class GithubHealthCheckBean implements HealthCheck {
     }
 }
 ```
+
+You can also use `@Liveness` instead of `@Readiness`. For more information about the difference see the
+[KumuluzEE Health README](https://github.com/kumuluz/kumuluzee-health#liveness-and-readiness).
 
 ### Add Health configuration
 
@@ -192,19 +195,19 @@ kumuluzee:
 
 To build the microservice and run the example, use the commands as described in previous sections.
 
-The json output (http://localhost:8080/health) should look similar to the one bellow:
+The json output (http://localhost:8080/health/ready) should look similar to the one bellow:
 ```json
 {
-  "outcome" : "UP",
+  "status" : "UP",
   "checks" : [ {
     "name" : "DiskSpaceHealthCheck",
-    "state" : "UP"
+    "status" : "UP"
   }, {
     "name" : "DataSourceHealthCheck",
-    "state" : "UP"
+    "status" : "UP"
   }, {
     "name" : "GithubHealthCheckBean",
-    "state" : "UP"
+    "status" : "UP"
   } ]
 }
 ```
