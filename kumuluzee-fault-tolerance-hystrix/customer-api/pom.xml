@@ -39,11 +39,15 @@
 
         <dependency>
             <groupId>com.kumuluz.ee.fault.tolerance</groupId>
-            <artifactId>kumuluzee-fault-tolerance-hystrix</artifactId>
+            <artifactId>kumuluzee-fault-tolerance-smallrye</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kumuluz.ee.config</groupId>
-            <artifactId>kumuluzee-config-etcd</artifactId>
+            <artifactId>kumuluzee-config-mp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.metrics</groupId>
+            <artifactId>kumuluzee-metrics-core</artifactId>
         </dependency>
 
         <dependency>
@@ -62,12 +66,6 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.netflix.hystrix</groupId>
-            <artifactId>hystrix-metrics-event-stream</artifactId>
-            <version>1.5.12</version>
         </dependency>
     </dependencies>
 

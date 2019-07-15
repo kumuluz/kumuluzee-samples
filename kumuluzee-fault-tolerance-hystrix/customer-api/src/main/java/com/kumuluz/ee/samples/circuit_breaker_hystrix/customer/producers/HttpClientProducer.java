@@ -40,12 +40,12 @@ import java.security.NoSuchAlgorithmException;
  * @author Luka Šarc
  * @since 2.3.0
  */
-@ApplicationScoped
 public class HttpClientProducer {
 
     private static final int DEFAULT_POOL_MAX_CONNECTIONS = 5;
 
     @Produces
+    @ApplicationScoped
     public HttpClient httpClient() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
 
         SSLContext sslContext = SSLContexts.custom()

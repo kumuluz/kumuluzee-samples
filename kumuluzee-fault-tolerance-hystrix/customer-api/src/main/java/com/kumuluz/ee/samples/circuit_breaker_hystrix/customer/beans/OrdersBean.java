@@ -22,8 +22,6 @@ package com.kumuluz.ee.samples.circuit_breaker_hystrix.customer.beans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
-import com.kumuluz.ee.fault.tolerance.annotations.CommandKey;
-import com.kumuluz.ee.fault.tolerance.annotations.GroupKey;
 import com.kumuluz.ee.samples.circuit_breaker_hystrix.models.Order;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -40,14 +38,14 @@ import javax.ws.rs.InternalServerErrorException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 /**
  * @author Luka Šarc
  * @since 2.3.0
  */
 @RequestScoped
-@Bulkhead
-@GroupKey("orders")
 public class OrdersBean {
 
     private static final Logger log = LoggerFactory.getLogger(OrdersBean.class);
@@ -72,10 +70,10 @@ public class OrdersBean {
 
     @CircuitBreaker
     @Fallback(fallbackMethod = "findOrdersByCustomerIdFallback")
-    @CommandKey("http-find-order")
     @Timeout
     @Asynchronous
-    public List<Order> findOrdersByCustomerId(String customerId) {
+    @Bulkhead
+    public Future<List<Order>> findOrdersByCustomerId(String customerId) {
 
         try {
 
@@ -88,7 +86,7 @@ public class OrdersBean {
                 HttpEntity entity = response.getEntity();
 
                 if (entity != null)
-                    return toOrdersArray(EntityUtils.toString(entity));
+                    return CompletableFuture.completedFuture(toOrdersArray(EntityUtils.toString(entity)));
             } else {
                 String msg = "Remote server '" + ordersApiPath + "' failed with status " + status + ".";
                 log.warn(msg);
@@ -101,10 +99,10 @@ public class OrdersBean {
             throw new InternalServerErrorException(msg);
         }
 
-        return new ArrayList<>();
+        return CompletableFuture.completedFuture(new ArrayList<>());
     }
 
-    public List<Order> findOrdersByCustomerIdFallback(String customerId) {
+    public Future<List<Order>> findOrdersByCustomerIdFallback(String customerId) {
 
         log.info("Fallback called for findOrdersByCustomerId.");
 
@@ -117,7 +115,7 @@ public class OrdersBean {
         List<Order> orders = new ArrayList<>();
         orders.add(order);
 
-        return orders;
+        return CompletableFuture.completedFuture(orders);
     }
 
     private List<Order> toOrdersArray(String json) throws IOException {
