@@ -22,7 +22,7 @@ import java.util.List;
  * @author Zvone Gazvoda
  * @since 2.5.0
  */
-@Path("customer")
+@Path("customers")
 @Produces(MediaType.APPLICATION_JSON)
 public class CustomerResource {
 
