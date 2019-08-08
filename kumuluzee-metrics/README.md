@@ -101,11 +101,16 @@ Since your existing starting point is the existing KumuluzEE JAX-RS REST sample,
 dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty` and `kumuluzee-jax-rs-jersey` configured
 in `pom.xml`.
 
-Add the `kumuluzee-cdi-weld` and `kumuluzee-metrics-core` dependencies:
+Add the `kumuluzee-cdi-weld`, `kumuluzee-config-mp` and `kumuluzee-metrics-core` dependencies:
 ```xml
 <dependency>
     <groupId>com.kumuluz.ee</groupId>
     <artifactId>kumuluzee-cdi-weld</artifactId>
+</dependency>
+<dependency>
+    <groupId>com.kumuluz.ee.config</groupId>
+    <artifactId>kumuluzee-config-mp</artifactId>
+    <version>${kumuluzee-config-mp.version}</version>
 </dependency>
 <dependency>
     <groupId>com.kumuluz.ee.metrics</groupId>
@@ -132,7 +137,7 @@ public class CustomerResource {
 
     @Inject
     @Metric(name = "customer_counter")
-    private Counter customerCounter;
+    private ConcurrentGauge customerCounter;
 
     @Inject
     @Metric(name = "first_name_length_histogram")

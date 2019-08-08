@@ -21,10 +21,7 @@
 package com.kumuluz.ee.samples.kumuluzee_metrics;
 
 
-import org.eclipse.microprofile.metrics.Counter;
-import org.eclipse.microprofile.metrics.Histogram;
-import org.eclipse.microprofile.metrics.Meter;
-import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.*;
 import org.eclipse.microprofile.metrics.annotation.Gauge;
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.eclipse.microprofile.metrics.annotation.Metric;
@@ -45,7 +42,7 @@ public class CustomerResource {
 
     @Inject
     @Metric(name = "customer_counter")
-    private Counter customerCounter;
+    private ConcurrentGauge customerCounter;
 
     @Inject
     @Metric(name = "first_name_length_histogram")

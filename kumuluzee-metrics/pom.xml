@@ -21,6 +21,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <kumuluzee-metrics.version>1.2.0-SNAPSHOT</kumuluzee-metrics.version>
+        <kumuluzee-config-mp.version>1.4.0-SNAPSHOT</kumuluzee-config-mp.version>
     </properties>
 
     <dependencyManagement>
@@ -51,6 +52,11 @@
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-cdi-weld</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.config</groupId>
+            <artifactId>kumuluzee-config-mp</artifactId>
+            <version>${kumuluzee-config-mp.version}</version>
         </dependency>
 
         <dependency>
