@@ -24,7 +24,7 @@
     <properties>
         <kumuluzee-fault-tolerance.version>2.1.0-SNAPSHOT</kumuluzee-fault-tolerance.version>
         <kumuluzee-config-mp.version>1.4.0-SNAPSHOT</kumuluzee-config-mp.version>
-        <kumuluzee-metrics.version>1.2.0-SNAPSHOT</kumuluzee-metrics.version>
+        <kumuluzee-metrics.version>2.1.0-SNAPSHOT</kumuluzee-metrics.version>
     </properties>
 
     <dependencyManagement>
