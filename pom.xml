@@ -53,6 +53,7 @@
         <module>kumuluzee-rest-client</module>
 		<module>kumuluzee-amqp-rabbitmq</module>
         <module>kumuluzee-version</module>
+        <module>kumuluzee-feature-flags-unleash</module>
     </modules>
 
     <packaging>pom</packaging>
