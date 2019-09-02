@@ -174,17 +174,14 @@ Access the admin UI on http://localhost:4242 and create a new flag. Name it "tes
 You can check if feature flags are enabled by using FeatureFlags object in the same way as you would use Unleash client object.
 
 ```java
+@Inject
+private FeatureFlags featureFlags;
 
-if(FeatureFlags.isEnabled("test-feature"){
-
-//do something
-
+if(featureFlags.isEnabled("test-feature"){
+    //do something
 } else {
-
-//do something else
-
+    //do something else
 }
-
 ```
 
 ### Build the microservice and run it
