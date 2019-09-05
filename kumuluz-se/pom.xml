@@ -32,7 +32,12 @@
         </dependency>
 		<dependency>
 			<groupId>com.kumuluz.ee</groupId>
-			<artifactId>kumuluz-server-se</artifactId>
+			<artifactId>kumuluzee-cdi-weld-se</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.kumuluz.ee</groupId>
+			<artifactId>kumuluzee-loader</artifactId>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
