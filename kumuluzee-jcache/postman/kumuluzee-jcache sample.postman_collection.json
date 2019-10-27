@@ -1,0 +1,160 @@
+{
+	"info": {
+		"_postman_id": "58e899df-ccf3-404d-9bdc-c3a34a63aaae",
+		"name": "kumuluzee-jcache sample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Put data - CachePut 15 seconds",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"123456\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/invoices/123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"invoices",
+						"123"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get data - CacheResult 15 seconds",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/invoices/123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"invoices",
+						"123"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get data - CacheResult (different key)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/invoices/321",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"invoices",
+						"321"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get data - prog default 10 seconds",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/invoices/123/default",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"invoices",
+						"123",
+						"default"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get data - prog my 5 seconds",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/invoices/123/my",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"invoices",
+						"123",
+						"my"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
