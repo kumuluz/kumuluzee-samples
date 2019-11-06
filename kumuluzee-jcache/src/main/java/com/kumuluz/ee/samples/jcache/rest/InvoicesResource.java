@@ -53,7 +53,7 @@ public class InvoicesResource {
 
     @POST
     @Path("/{id}")
-    public Response getContracts(@PathParam("id") String id, InvoiceData in) {
+    public Response addData(@PathParam("id") String id, InvoiceData in) {
         InvoiceData data = invoiceService.putInvoice(id, in);
         return Response.ok(data).build();
     }
