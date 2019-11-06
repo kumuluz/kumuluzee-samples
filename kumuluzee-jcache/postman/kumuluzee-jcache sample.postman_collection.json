@@ -155,6 +155,93 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get data - CacheResult - max entries 1",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/invoices/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"invoices",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get data - CacheResult - max entries 2",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/invoices/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"invoices",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get data - CacheResult - max entries 3",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/invoices/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"invoices",
+						"3"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
