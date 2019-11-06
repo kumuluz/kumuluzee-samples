@@ -30,32 +30,7 @@ In order to run this example you will need the following:
 
 # Tutorial
 
-First create a basic rest application, you can refer to `kumuluzee-rest` sample for that. Then we will use JCache to cache and speed up our API responses.
-
-First create 3 different endpoints for different test case.
-
-```java
-//This endpoint will invoke @CachePut to simulate storing to cache
-@POST
-@Path("/{id}")
-public Response addData(@PathParam("id") String id, InvoiceData in) {
-    
-}
-
-//This endpoint will invoke @CacheResult to return cached result from the first method or store a mock object if cache is empty.
-@GET
-@Path("/{id}")
-public Response getData(@PathParam("id") String id) {
-    
-}
-
-//This endpoint will invoke cache named "default" and simulate @CacheResult programmatically
-@GET
-@Path("/{id}/default")
-public Response getInvoicesDefault(@PathParam("id") String id) {
-    
-}
-```
+First create a basic rest application, you can refer to `kumuluzee-rest` sample for that.
 
 ## Add JCache dependency
 
@@ -69,17 +44,46 @@ Add `kumuluzee-jcache-caffeine` dependency to your root pom.
 </dependency>
 ```
 
-## Business logic
+## REST API
 
-Now let's implement the following interface which for our REST methods to use.
+We create 3 different API endpoints for different test cases.
+
+```java
+//This endpoint will invoke @CachePut to simulate storing to cache
+@POST
+@Path("/{id}")
+public Response addData(@PathParam("id") String id, InvoiceData in) {
+    InvoiceData data = invoiceService.putInvoice(id, in);
+    return Response.ok(data).build();
+}
+
+//This endpoint will invoke @CacheResult to return cached result from the first method 
+//or store a mock object if cache is empty.
+@GET
+@Path("/{id}")
+public Response getData(@PathParam("id") String id) {
+    InvoiceData data = invoiceService.getInvoice(id);
+    return Response.ok(data).build();
+}
+
+//This endpoint will invoke cache named "default" and simulate @CacheResult programmatically
+@GET
+@Path("/{id}/default")
+public Response getInvoicesDefault(@PathParam("id") String id) {
+    InvoiceData data = invoiceService.getInvoiceDefault(id);
+    return Response.ok(data).build();
+}
+```
+
+Our business logic will implement the following interface:
 ```java
 public interface InvoiceService {
 
     //@CachePut
-    InvoiceData getInvoice(String key);
+    InvoiceData putInvoice(String key, InvoiceData data);
 
     //@CacheResult
-    InvoiceData putInvoice(String key, InvoiceData data);
+    InvoiceData getInvoice(String key);
 
     //Programatic API
     InvoiceData getInvoiceDefault(String key);
@@ -88,7 +92,7 @@ public interface InvoiceService {
 
 ## JCache annotations
 
-For our annotations we will use a cache named `invoices`. The first step is to configure it in `config.yaml`:
+For our JCache annotations we will use a cache named `invoices`. The first step is to configure it in `config.yaml`:
 ```yaml
 kumuluzee:
   jcache:
@@ -104,9 +108,9 @@ kumuluzee:
             maximum:
               size: 2
 ```
-Cache will take `String` as a key and `InvocieData` object as value. Entries eagerly expire after 15 seconds and maximum number of entries in cache is 2.
+Cache will take `String` as a key and `InvoiceData` object as value. Entries eagerly expire after 15 seconds and maximum number of entries in cache is 2.
 
-The first method only stores data to cache and returns the same data. We want to use the path ID parameter as the cache key, so we annotate it with `@CacheKey`. We want to store the POST body as value, so we annotate it with `@CacheValue`.
+Let's implement `InvoiceService`. The put method only stores data to cache and returns the same data. We want to use the path ID parameter as the cache key, so we annotate it with `@CacheKey`. We want to store the POST body as value, so we annotate it with `@CacheValue`.
 ```java
 @CachePut(cacheName = "invoices")
 @Override
@@ -124,7 +128,7 @@ POST http://localhost:8080/invoices/123
 ```
 We can't really see anything yet since data is only stored to cache and immediately returned.
 
-Now to implement the getter:
+Implementing the getter:
 ```java
 @CacheResult(cacheName = "invoices")
 public InvoiceData getInvoice(@CacheKey String key) {
@@ -137,10 +141,10 @@ public InvoiceData getInvoice(@CacheKey String key) {
 }
 ```
 
-We use the same path ID parameter as cache key. If the key is already present, `@CacheResult` will return the cached value, otherwise a mock data is returned and cached. We flipped the entity ID in the example to notice the difference right away. A sleep of 3 seconds is added to simulate slow business logic.
+We use the same path ID parameter as cache key. If the key is already present, `@CacheResult` will return the cached value, otherwise a mock data is returned and cached. A sleep of 3 seconds is added to simulate slow business logic.
 Also note that we use the same named cache called `invoices` so both annotations operate on the same cache.
 
-Now let's test this. Run the application and load the included postman collection.
+To test it, run the application and load the included postman collection.
 
 1. CachePut+CacheResult test
 ```

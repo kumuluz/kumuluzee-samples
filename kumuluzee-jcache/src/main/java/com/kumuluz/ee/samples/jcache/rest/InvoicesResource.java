@@ -44,17 +44,17 @@ public class InvoicesResource {
     private InvoiceService invoiceService;
 
     //JCache annotations
-    @GET
-    @Path("/{id}")
-    public Response getData(@PathParam("id") String id) {
-        InvoiceData data = invoiceService.getInvoice(id);
-        return Response.ok(data).build();
-    }
-
     @POST
     @Path("/{id}")
     public Response addData(@PathParam("id") String id, InvoiceData in) {
         InvoiceData data = invoiceService.putInvoice(id, in);
+        return Response.ok(data).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response getData(@PathParam("id") String id) {
+        InvoiceData data = invoiceService.getInvoice(id);
         return Response.ok(data).build();
     }
 
