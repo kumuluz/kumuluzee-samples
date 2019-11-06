@@ -46,9 +46,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     private static final Logger LOG = LogManager.getLogger(InvoiceServiceImpl.class.getName());
 
-    @Inject
-    private CacheManager cacheManager;
-
     @DefaultCache
     @Inject
     private Cache<String, InvoiceData> defaultCache;
@@ -75,7 +72,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             e.printStackTrace();
         }
 
-        return new InvoiceData("123456");
+        return new InvoiceData("654321");
     }
 
     @Override

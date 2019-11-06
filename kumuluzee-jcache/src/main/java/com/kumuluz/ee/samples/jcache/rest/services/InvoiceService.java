@@ -29,9 +29,9 @@ import com.kumuluz.ee.samples.jcache.rest.lib.InvoiceData;
  */
 public interface InvoiceService {
 
-    InvoiceData getInvoice(String key);
-
     InvoiceData putInvoice(String key, InvoiceData data);
+
+    InvoiceData getInvoice(String key);
 
     InvoiceData getInvoiceDefault(String key);
 

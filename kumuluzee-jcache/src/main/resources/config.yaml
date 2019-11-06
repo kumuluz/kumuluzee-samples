@@ -20,4 +20,4 @@ kumuluzee:
             eager-expiration:
               after-write: "15s"
             maximum:
-              size: 5
+              size: 2
