@@ -141,6 +141,17 @@ These fields will then be exposed by the servlet. When running this example in e
 fills the value with key "git_commit_id" with "", which gets logged as an error. This can be avoided by running the
 example in an Uber-jar format.
 
+### Enabling version servlet
+
+The servlet exposing version information have to be manually enabled with the configuration key 
+`kumuluzee.version.endpoint`.
+
+```yaml
+kumuluzee:
+  version:
+    endpoint: /version
+```
+
 ### Setting custom values
 
 We can set custom values that will then be exposed by the servlet for example we set the docker image name in
@@ -149,6 +160,7 @@ We can set custom values that will then be exposed by the servlet for example we
 ```yaml
 kumuluzee:
   version:
+    endpoint: /version
     values:
       docker-image-name: my_docker_image
 ```
