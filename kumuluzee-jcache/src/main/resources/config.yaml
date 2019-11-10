@@ -1,0 +1,23 @@
+kumuluzee:
+  name: kumuluzee-jcache
+  version: 1.0.0
+  env:
+    name: dev
+  jcache:
+    enabled: true
+    caffeine:
+      caffeine.jcache:
+        default:
+          policy:
+            eager-expiration:
+              after-write: "10s"
+            maximum:
+              size: 10000
+        invoices:
+          key-type: java.lang.String
+          value-type: com.kumuluz.ee.samples.jcache.rest.lib.InvoiceData
+          policy:
+            eager-expiration:
+              after-write: "15s"
+            maximum:
+              size: 2
