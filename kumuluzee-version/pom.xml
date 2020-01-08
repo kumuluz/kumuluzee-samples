@@ -14,7 +14,6 @@
 
     <properties>
         <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
-        <compiler-maven-plugin.version></compiler-maven-plugin.version>
     </properties>
 
     <dependencyManagement>

@@ -1,5 +1,9 @@
 kumuluzee:
-  version:
+  name: customer-service
+  version: 1.0.0
+  env:
+    name: dev
+  version-info:
     endpoint: /version
     values:
       docker-image-name: my_docker_image
