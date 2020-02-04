@@ -20,7 +20,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <kumuluzee-metrics.version>2.1.0-SNAPSHOT</kumuluzee-metrics.version>
+        <kumuluzee-metrics.version>2.3.0-SNAPSHOT</kumuluzee-metrics.version>
         <kumuluzee-config-mp.version>1.4.0-SNAPSHOT</kumuluzee-config-mp.version>
     </properties>
 
