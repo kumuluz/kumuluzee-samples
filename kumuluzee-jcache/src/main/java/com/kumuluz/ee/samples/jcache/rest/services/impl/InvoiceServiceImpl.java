@@ -28,14 +28,18 @@ import com.kumuluz.ee.samples.jcache.rest.producers.DefaultCache;
 import com.kumuluz.ee.samples.jcache.rest.producers.MyCache;
 import com.kumuluz.ee.samples.jcache.rest.services.InvoiceService;
 
+import javax.annotation.PostConstruct;
 import javax.cache.Cache;
-import javax.cache.CacheManager;
 import javax.cache.annotation.CacheKey;
 import javax.cache.annotation.CachePut;
 import javax.cache.annotation.CacheResult;
 import javax.cache.annotation.CacheValue;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.NotFoundException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author cen1
@@ -54,10 +58,23 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Inject
     private Cache<String, InvoiceData> myCache;
 
+    private ConcurrentHashMap<String, InvoiceData> db;
+
+    @PostConstruct
+    void init() {
+        db = new ConcurrentHashMap<>();
+        db.put("654321", new InvoiceData("654321"));
+        db.put("654322", new InvoiceData("654322"));
+        db.put("654323", new InvoiceData("654323"));
+        db.put("654324", new InvoiceData("654324"));
+        db.put("654325", new InvoiceData("654325"));
+    }
+
     @CachePut(cacheName = "invoices")
     @Override
     public InvoiceData putInvoice(@CacheKey String key, @CacheValue InvoiceData data) {
         LOG.info("putInvoice() put to cache");
+        db.put(key, data);
         return data;
     }
 
@@ -72,7 +89,12 @@ public class InvoiceServiceImpl implements InvoiceService {
             e.printStackTrace();
         }
 
-        return new InvoiceData("654321");
+        if (db.containsKey(key)) {
+            return db.get(key);
+        }
+        else {
+            throw new NotFoundException();
+        }
     }
 
     @Override
@@ -90,10 +112,13 @@ public class InvoiceServiceImpl implements InvoiceService {
                 e.printStackTrace();
             }
 
-            InvoiceData d = new InvoiceData(key);
-
-            defaultCache.put(key, d);
-            return d;
+            if (db.containsKey(key)) {
+                defaultCache.put(key, db.get(key));
+                return db.get(key);
+            }
+            else {
+                throw new NotFoundException();
+            }
         }
     }
 
@@ -112,10 +137,13 @@ public class InvoiceServiceImpl implements InvoiceService {
                 e.printStackTrace();
             }
 
-            InvoiceData d = new InvoiceData(key);
-
-            myCache.put(key, d);
-            return d;
+            if (db.containsKey(key)) {
+                myCache.put(key, db.get(key));
+                return db.get(key);
+            }
+            else {
+                throw new NotFoundException();
+            }
         }
     }
 }
