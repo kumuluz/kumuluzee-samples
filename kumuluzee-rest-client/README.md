@@ -122,8 +122,8 @@ To add them, add the following snippet to the pom.xml:
     <artifactId>kumuluzee-cdi-weld</artifactId>
 </dependency>
 <dependency>
-    <groupId>com.kumuluz.ee</groupId>
-    <artifactId>kumuluzee-rest</artifactId>
+    <groupId>com.kumuluz.ee.rest</groupId>
+    <artifactId>kumuluzee-rest-core</artifactId>
     <version>${kumuluzee-rest.version}</version>
 </dependency>
 <dependency>
