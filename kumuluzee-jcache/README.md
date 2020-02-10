@@ -34,7 +34,7 @@ First create a basic rest application, you can refer to `kumuluzee-rest` sample 
 
 ## Add JCache dependency
 
-Add `kumuluzee-jcache-caffeine` dependency to your root pom.
+Add `kumuluzee-jcache-caffeine` dependency to your `pom.xml`.
 
 ```xml
 <dependency>
