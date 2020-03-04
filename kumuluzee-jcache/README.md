@@ -34,7 +34,7 @@ First create a basic rest application, you can refer to `kumuluzee-rest` sample 
 
 ## Add JCache dependency
 
-Add `kumuluzee-jcache-caffeine` dependency to your root pom.
+Add `kumuluzee-jcache-caffeine` dependency to your `pom.xml`.
 
 ```xml
 <dependency>
@@ -58,7 +58,7 @@ public Response addData(@PathParam("id") String id, InvoiceData in) {
 }
 
 //This endpoint will invoke @CacheResult to return cached result from the first method 
-//or store a mock object if cache is empty.
+//return and cache result from "database" for ids 654321-654325 or return HTTP 404 if id does not exist.
 @GET
 @Path("/{id}")
 public Response getData(@PathParam("id") String id) {
@@ -110,7 +110,7 @@ kumuluzee:
 ```
 Cache will take `String` as a key and `InvoiceData` object as value. Entries eagerly expire after 15 seconds and maximum number of entries in cache is 2.
 
-Let's implement `InvoiceService`. The put method only stores data to cache and returns the same data. We want to use the path ID parameter as the cache key, so we annotate it with `@CacheKey`. We want to store the POST body as value, so we annotate it with `@CacheValue`.
+Let's implement `InvoiceService`. The put method only stores data to db and cache and returns the same data. We want to use the path ID parameter as the cache key, so we annotate it with `@CacheKey`. We want to store the POST body as value, so we annotate it with `@CacheValue`.
 ```java
 @CachePut(cacheName = "invoices")
 @Override
@@ -131,47 +131,56 @@ We can't really see anything yet since data is only stored to cache and immediat
 Implementing the getter:
 ```java
 @CacheResult(cacheName = "invoices")
-public InvoiceData getInvoice(@CacheKey String key) {
-    try {
-        Thread.sleep(3000);
-    } catch (InterruptedException e) {
-        e.printStackTrace();
+    public InvoiceData getInvoice(@CacheKey String key) {
+
+        LOG.info("getInvoice() Returning non-cached data");
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (db.containsKey(key)) {
+            return db.get(key);
+        }
+        else {
+            throw new NotFoundException();
+        }
     }
-    return new InvoiceData("654321");
-}
 ```
 
-We use the same path ID parameter as cache key. If the key is already present, `@CacheResult` will return the cached value, otherwise a mock data is returned and cached. A sleep of 3 seconds is added to simulate slow business logic.
+We use the same path ID parameter as cache key. If the key is already present, `@CacheResult` will return the cached value, otherwise it will try to find it in database and ultimately fail with 404 if no key is found. A sleep of 3 seconds is added to simulate slow business logic.
 Also note that we use the same named cache called `invoices` so both annotations operate on the same cache.
 
 To test it, run the application and load the included postman collection.
 
 1. CachePut+CacheResult test
 ```
-POST http://localhost:8080/invoices/123
+POST http://localhost:8080/invoices/123456
 {
 	"id": "123456"
 }
 ```
 ```
-GET http://localhost:8080/invoices/123
+GET http://localhost:8080/invoices/123456
 ```
 Executing both calls one after the other, we get a very fast response (t<3s) from the GET method due to value already existing in cache.
-Waiting 15 seconds and executing GET again results in t>3s due to cache entry eagerly expiring and mock object id of `654321`.
+Waiting 15 seconds and executing GET again results in t>3s due to cache entry eagerly expiring and result is returned from database. However, calling the GET method again will be fast due to CacheResult storing the previous result for us.
 
 2. CacheResult test
 ```
-GET http://localhost:8080/invoices/123
+GET http://localhost:8080/invoices/123456
 ```
 Simply executing the call repeatedly will cause a slow call every 15 seconds.
 
 3. CacheResult max entries test
 ```
-GET http://localhost:8080/invoices/1
-GET http://localhost:8080/invoices/2
-GET http://localhost:8080/invoices/3
+GET http://localhost:8080/invoices/654321
+GET http://localhost:8080/invoices/654322
+GET http://localhost:8080/invoices/654323
 ```
-Execute each GET request twice. First call is slow, second is fast. After executing #3, calling #2 is fast but calling #1 is  slow. That is because we reached max entry size of 2 and earliest entry is evicted from cache.
+Execute each GET request twice. First call is slow, second is fast. After executing #3, one of the calls to #2 or #1 will be slow, depending on which entry got evicted from the cache. Caffeine does not use straight up LRU strategy. Exactly which entry will be evicted depends on [https://github.com/ben-manes/caffeine/wiki/Efficiency](eviction strategy) used by Caffeine.
 
 ## JCache programmatic API
 
@@ -232,16 +241,22 @@ public class InvoiceServiceImpl implements InvoiceService {
             return defaultCache.get(key);
         }
         else {
+            LOG.info("getInvoiceDefault() Returning non-cached data");
+
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            InvoiceData d = new InvoiceData(key);
-            defaultCache.put(key, d);
-            return d;
-    }
+            if (db.containsKey(key)) {
+                defaultCache.put(key, db.get(key));
+                return db.get(key);
+            }
+            else {
+                throw new NotFoundException();
+            }
+        }
 }
 ```
 
