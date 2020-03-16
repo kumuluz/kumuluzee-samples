@@ -17,15 +17,15 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
+ */
 package com.kumuluz.ee.samples.kumuluzee_metrics;
 
 
-import org.eclipse.microprofile.metrics.*;
-import org.eclipse.microprofile.metrics.annotation.Gauge;
-import org.eclipse.microprofile.metrics.annotation.Metered;
-import org.eclipse.microprofile.metrics.annotation.Metric;
-import org.eclipse.microprofile.metrics.annotation.Timed;
+import org.eclipse.microprofile.metrics.ConcurrentGauge;
+import org.eclipse.microprofile.metrics.Histogram;
+import org.eclipse.microprofile.metrics.Meter;
+import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.*;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -53,6 +53,7 @@ public class CustomerResource {
     private Meter addMeter;
 
     @GET
+    @SimplyTimed(name = "get_all_customers_simple_timer")
     public Response getAllCustomers() {
         List<Customer> customers = Database.getCustomers();
         getCustomerCount();
@@ -63,7 +64,7 @@ public class CustomerResource {
     @Path("{customerId}")
     public Response getCustomer(@PathParam("customerId") int customerId) {
         Customer customer = Database.getCustomer(customerId);
-        if(customer != null) {
+        if (customer != null) {
             return Response.ok(customer).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
