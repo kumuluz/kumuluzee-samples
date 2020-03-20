@@ -20,6 +20,7 @@
         <module>kumuluzee-config-mp</module>
         <module>kumuluzee-config-consul</module>
         <module>kumuluzee-config-etcd</module>
+        <module>kumuluzee-config-zookeeper</module>
         <module>kumuluzee-discovery-consul</module>
         <module>kumuluzee-discovery-etcd</module>
         <module>kumuluzee-ethereum-web3j</module>

@@ -46,9 +46,9 @@ public class ConfigurationEventHandler {
             if (watchedKey.equals(key)) {
 
                 if ("true".equals(value.toLowerCase())) {
-                    log.info("Maintenence mode enabled.");
+                    log.info("Maintenance mode enabled.");
                 } else {
-                    log.info("Maintenence mode disabled.");
+                    log.info("Maintenance mode disabled.");
                 }
 
             }

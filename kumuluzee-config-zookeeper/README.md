@@ -1,14 +1,14 @@
-# KumuluzEE Config sample with etcd 
+# KumuluzEE Config sample with Apache ZooKeeper 
 
-> Build a REST service which utilizes KumuluzEE Config to access configuration properties stored in etcd and pack it 
-as a KumuluzEE microservice
+> Build a REST service which utilizes KumuluzEE Config to access configuration properties stored in Apache ZooKeeper and 
+> pack it as a KumuluzEE microservice
 
 The objective of this sample is to show how to develop a microservice that uses KumuluzEE Config extension to
-access configuration properties stored in etcd. In this sample we develop a simple REST service that returns
+access configuration properties stored in Apache ZooKeeper. In this sample we develop a simple REST service that returns
 a list of configuration properties from all available configuration sources and pack it as KumuluzEE microservice. This 
 tutorial will guide you through all the necessary steps. You will first add KumuluzEE dependencies into pom.xml. To 
 develop the REST service, you will use the standard JAX-RS 2 API. Required knowledge: basic familiarity with JAX-RS 2
-and basic concepts of REST, JSON, yaml and etcd.
+and basic concepts of REST, JSON, yaml and ZooKeeper.
 
 ## Requirements
 
@@ -37,27 +37,12 @@ In order to run this example you will need the following:
 
 ## Prerequisites
 
-To run this sample you will need an etcd instance. Note that such setup with only one etcd node is not viable for 
-production environments, but only for developing purposes. Here is an example on how to quickly run an etcd instance 
+To run this sample you will need a ZooKeeper instance. Note that such setup with only one node is not viable for 
+production environments, but only for developing purposes. Here is an example on how to quickly run a ZooKeeper instance 
 with docker:
 
    ```bash
-    $ docker run -d -p 2379:2379 \
-        --name etcd \
-        --volume=/tmp/etcd-data:/etcd-data \
-        quay.io/coreos/etcd:latest \
-        /usr/local/bin/etcd \
-        --name my-etcd-1 \
-        --data-dir /etcd-data \
-        --listen-client-urls http://0.0.0.0:2379 \
-        --advertise-client-urls http://0.0.0.0:2379 \
-        --listen-peer-urls http://0.0.0.0:2380 \
-        --initial-advertise-peer-urls http://0.0.0.0:2380 \
-        --initial-cluster my-etcd-1=http://0.0.0.0:2380 \
-        --initial-cluster-token my-etcd-token \
-        --initial-cluster-state new \
-        --auto-compaction-retention 1 \
-        -cors="*"
+    $ docker run -p 2181:2181 --name zookeeper --restart always -d zookeeper
    ```
 
 
@@ -68,7 +53,7 @@ The example uses maven to build and run the microservice.
 1. Build the sample using maven:
 
     ```bash
-    $ cd kumuluzee-config-etcd
+    $ cd kumuluzee-config-zookeeper
     $ mvn clean package
     ```
 
@@ -116,7 +101,7 @@ We will follow these steps:
 * Implement the service using standard JAX-RS 2
 * Build the microservice
 * Run it
-* Dynamically change configuration properties in etcd
+* Dynamically change configuration properties in ZooKeeper
 
 ### Add Maven dependencies
 
@@ -165,7 +150,7 @@ Add dependency to KumuluzEE Config extension:
 ```xml
     <dependency>
         <groupId>com.kumuluz.ee.config</groupId>
-        <artifactId>kumuluzee-config-etcd</artifactId>
+        <artifactId>kumuluzee-config-zookeeper</artifactId>
         <version>${kumuluzee-config.version}</version>
     </dependency>
 ```
@@ -228,8 +213,8 @@ kumuluzee:
   config:
     start-retry-delay-ms: 500
     max-retry-delay-ms: 900000
-    etcd:
-      hosts: http://192.168.99.100:2379
+    zookeeper:
+      hosts: localhost:2181
 
 rest-config:
   string-property: Monday
@@ -248,8 +233,8 @@ public class ConfigApplication extends Application {
 
 Implement an application scoped CDI bean that will automatically load and hold our configuration properties. It shall
 be annotated with `@ConfigBundle` annotation whose value represents the prefix for the configuration properties keys.
-Add a `@ConfigValue(watch = true)` to enable watch on the key. This will monitor the changes of this key in etcd and 
-automatically update the value in the configuration bean. 
+Add a `@ConfigValue(watch = true)` to enable watch on the key. This will monitor the changes of this key in ZooKeeper
+and automatically update the value in the configuration bean. 
  
 ```java
 @ApplicationScoped
@@ -301,13 +286,8 @@ public class ConfigResource {
 
 To build the microservice and run the example, use the commands as described in previous sections.
 
-Since we have not defined any configuration properties in etcd, GET http://localhost:8080/v1/config will return 
-configuration properties from configuration file. We can now try and add some values in etcd. Since we enabled watch on 
-the field `stringProperty`, it will be dynamically updated on any change in etcd. We can add a value to etcd with the
-following command:
-
-   ```bash
-    $ docker exec etcd etcdctl --endpoints //192.168.99.100:2379 set /environments/dev/services/customer-service/1.0.0/config/rest-config/string-property test_string
-   ```
-
-Access the config endpoint again and you will get an updated value from etcd.
+Since we have not defined any configuration properties in ZooKeeper, GET http://localhost:8080/v1/config will return 
+configuration properties from configuration file. We can now try and add some values in ZooKeeper. Since we enabled
+the watch on the field `stringProperty`, it will be dynamically updated on any change. We can add a value to
+ZooKeeper using any client tool. After the update, access the config endpoint again and you will get an updated value
+from ZooKeeper.

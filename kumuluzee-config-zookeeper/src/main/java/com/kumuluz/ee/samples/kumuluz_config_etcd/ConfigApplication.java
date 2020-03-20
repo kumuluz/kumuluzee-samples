@@ -18,42 +18,15 @@
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
 */
-
 package com.kumuluz.ee.samples.kumuluz_config_etcd;
 
-import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Initialized;
-import javax.enterprise.event.Observes;
-import java.util.logging.Logger;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 
 /**
- * @author Jan Meznarič
+ * @author Benjamin Kastelic
  * @since 2.3.0
  */
-@ApplicationScoped
-public class ConfigurationEventHandler {
-
-    private static final Logger log = Logger.getLogger(ConfigurationEventHandler.class.getName());
-
-    public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
-
-        String watchedKey = "rest-config.maintenance";
-
-        ConfigurationUtil.getInstance().subscribe(watchedKey, (String key, String value) -> {
-
-            if (watchedKey.equals(key)) {
-
-                if ("true".equals(value.toLowerCase())) {
-                    log.info("Maintenance mode enabled.");
-                } else {
-                    log.info("Maintenance mode disabled.");
-                }
-
-            }
-
-        });
-    }
-
+@ApplicationPath("/v1")
+public class ConfigApplication extends Application {
 }
