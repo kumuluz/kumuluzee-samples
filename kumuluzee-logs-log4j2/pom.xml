@@ -46,7 +46,7 @@
         <dependency>
             <groupId>com.kumuluz.ee.logs</groupId>
             <artifactId>kumuluzee-logs-log4j2</artifactId>
-            <version>1.4.0-SNAPSHOT</version>
+            <version>1.5.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
