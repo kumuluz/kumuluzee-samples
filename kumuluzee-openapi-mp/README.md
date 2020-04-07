@@ -78,6 +78,12 @@ The application/service can be accessed on the following URL:
 OpenAPI specification for API can be accessed on the following URL:
 * API v2 - http://localhost:8080/openapi
 
+Swagger UI can be accessed on the following URL:
+* http://localhost:8080/openapi/ui
+
+If you change the server context path you need to prepend the context path to default or custom mapping 
+path of the specification and/or ui. 
+
 ## Tutorial
 
 This tutorial will guide you through the steps required to document JAX-RS application using MicroProfile OpenAPI

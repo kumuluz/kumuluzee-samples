@@ -1,4 +1,12 @@
 kumuluzee:
+  server:
+    #context-path: /kumuluzee-openapi-mp/v1
   openapi-mp:
+    enabled: true
     scan:
       packages: com.kumuluz.ee.samples.openapi
+    servlet:
+      mapping: /openapi
+    ui:
+      enabled: true
+      mapping: /openapi/ui
