@@ -19,6 +19,7 @@
     <properties>
         <kumuluzee-openapi-mp.version>1.2.0-SNAPSHOT</kumuluzee-openapi-mp.version>
         <kumuluzee-config-mp.version>1.3.0</kumuluzee-config-mp.version>
+        <kumuluzee-logs.version>1.4.0</kumuluzee-logs.version>
     </properties>
 
     <dependencyManagement>
@@ -47,6 +48,10 @@
             <artifactId>kumuluzee-jax-rs-jersey</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-cdi-weld</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.kumuluz.ee.openapi</groupId>
             <artifactId>kumuluzee-openapi-mp</artifactId>
             <version>${kumuluzee-openapi-mp.version}</version>
@@ -60,6 +65,11 @@
             <groupId>com.kumuluz.ee.config</groupId>
             <artifactId>kumuluzee-config-mp</artifactId>
             <version>${kumuluzee-config-mp.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>kumuluzee-logs-log4j2</artifactId>
+            <groupId>com.kumuluz.ee.logs</groupId>
+            <version>${kumuluzee-logs.version}</version>
         </dependency>
     </dependencies>
 
