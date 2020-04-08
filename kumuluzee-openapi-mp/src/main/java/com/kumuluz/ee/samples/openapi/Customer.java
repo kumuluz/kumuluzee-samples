@@ -20,6 +20,8 @@
 */
 package com.kumuluz.ee.samples.openapi;
 
+import java.util.List;
+
 /**
  * Customer class.
  *
@@ -31,6 +33,7 @@ public class Customer {
     private String id;
     private String firstName;
     private String lastName;
+    private List<Membership> membership;
 
     public Customer(String id, String firstName, String lastName) {
         this.id = id;
@@ -61,6 +64,14 @@ public class Customer {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<Membership> getMembership() {
+        return membership;
+    }
+
+    public void setMembership(List<Membership> membership) {
+        this.membership = membership;
     }
 
     @Override

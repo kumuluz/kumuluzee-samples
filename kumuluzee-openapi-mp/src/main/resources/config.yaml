@@ -4,9 +4,11 @@ kumuluzee:
   openapi-mp:
     enabled: true
     scan:
-      packages: com.kumuluz.ee.samples.openapi
+      packages: com.kumuluz.ee.samples.openapi,com.kumuluz.ee.samples.openapi.v2
     servlet:
       mapping: /openapi
     ui:
       enabled: true
       mapping: /openapi/ui
+    scanning:
+      debug: true
