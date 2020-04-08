@@ -247,7 +247,7 @@ scanning to only `com.kumuluz.ee.samples.openapi` you can use the following _con
 kumuluzee:
   openapi-mp:
     scan:
-      packages: com.kumuluz.ee.samples.openapi.*
+      packages: com.kumuluz.ee.samples.openapi,com.kumuluz.ee.samples.openapi.v2
 ```
 
 ### Build the microservice and run it
