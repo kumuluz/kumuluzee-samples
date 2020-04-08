@@ -23,7 +23,7 @@
         <module>kumuluzee-discovery-consul</module>
         <module>kumuluzee-discovery-etcd</module>
         <module>kumuluzee-ethereum-web3j</module>
-        <module>kumuluzee-fault-tolerance-hystrix</module>
+        <module>kumuluzee-fault-tolerance</module>
         <module>kumuluzee-logs-jul</module>
         <module>kumuluzee-logs-log4j2</module>
         <module>kumuluzee-logs-fluentd</module>

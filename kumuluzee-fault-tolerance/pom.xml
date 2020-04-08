@@ -9,11 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>kumuluzee-fault-tolerance-hystrix</artifactId>
+    <artifactId>kumuluzee-fault-tolerance</artifactId>
     <packaging>pom</packaging>
 
-    <name>KumuluzEE Fault Tolerance Hystrix sample</name>
-    <description>KumuluzEE Fault Tolerance extensions usage sample with KumuluzEE and Hystrix</description>
+    <name>KumuluzEE Fault Tolerance sample</name>
+    <description>KumuluzEE Fault Tolerance extensions usage sample with KumuluzEE</description>
 
     <modules>
         <module>customer-api</module>
@@ -22,9 +22,9 @@
     </modules>
 
     <properties>
-        <kumuluzee-fault-tolerance.version>2.1.0-SNAPSHOT</kumuluzee-fault-tolerance.version>
-        <kumuluzee-config-mp.version>1.4.0-SNAPSHOT</kumuluzee-config-mp.version>
-        <kumuluzee-metrics.version>2.1.0-SNAPSHOT</kumuluzee-metrics.version>
+        <kumuluzee-fault-tolerance.version>2.2.0-SNAPSHOT</kumuluzee-fault-tolerance.version>
+        <kumuluzee-config-mp.version>1.5.0-SNAPSHOT</kumuluzee-config-mp.version>
+        <kumuluzee-metrics.version>2.4.0-SNAPSHOT</kumuluzee-metrics.version>
     </properties>
 
     <dependencyManagement>
@@ -39,7 +39,7 @@
 
             <dependency>
                 <groupId>com.kumuluz.ee.samples</groupId>
-                <artifactId>kumuluzee-fault-tolerance-hystrix-common</artifactId>
+                <artifactId>kumuluzee-fault-tolerance-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

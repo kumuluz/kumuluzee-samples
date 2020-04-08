@@ -60,7 +60,7 @@ KumuluzEE extensions - samples:
 - KumuluzEE REST
 - KumuluzEE Security with Keycloak for REST services
 - KumuluzEE Security with Keycloak for CDI
-- KumuluzEE Fault Tolerance with Hystrix
+- KumuluzEE Fault Tolerance 
 - KumuluzEE Event Streaming with Kafka
 - KumuluzEE Cors
 - KumuluzEE Metrics

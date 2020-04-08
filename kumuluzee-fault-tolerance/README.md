@@ -1,4 +1,4 @@
-# KumuluzEE Fault Tolerance sample with Hystrix
+# KumuluzEE Fault Tolerance sample 
 
 > Build a REST service which utilizes KumuluzEE Fault Tolerance to provide fault tolerance and latency tolerance to 
 your code using the fault tolerance patterns in a KumuluzEE microservice
@@ -47,7 +47,7 @@ The example uses Maven to build and run the microservices.
 1. Build the sample using Maven:
 
     ```bash
-    $ cd kumuluzee-fault-tolerance-hystrix
+    $ cd kumuluzee-fault-tolerance
     $ mvn clean package
     ```
 
@@ -139,7 +139,7 @@ Create a maven project with three submodules - common, order-api and customer-ap
 
         <dependency>
             <groupId>com.kumuluz.ee.samples</groupId>
-            <artifactId>kumuluzee-fault-tolerance-hystrix-common</artifactId>
+            <artifactId>kumuluzee-fault-tolerance-common</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -270,7 +270,7 @@ We will now create REST service for orders. Create a order-api module add the fo
 <dependencies>
     <dependency>
         <groupId>com.kumuluz.ee.samples</groupId>
-        <artifactId>kumuluzee-fault-tolerance-hystrix-common</artifactId>
+        <artifactId>kumuluzee-fault-tolerance-common</artifactId>
     </dependency>
 
     <dependency>
@@ -352,7 +352,7 @@ A REST microservice for customers can be copied from KumuluzEE JAX-RS REST sampl
 <dependencies>
     <dependency>
         <groupId>com.kumuluz.ee.samples</groupId>
-        <artifactId>kumuluzee-fault-tolerance-hystrix-common</artifactId>
+        <artifactId>kumuluzee-fault-tolerance-common</artifactId>
     </dependency>
     
     <dependency>
