@@ -1,4 +1,11 @@
 kumuluzee:
+  server:
+    #context-path: /custom
   openapi:
+    enabled: true
+    #servlet:
+      #mapping: ""
+    #base-url: http://behind.proxy.example.com
     ui:
       enabled: true
+      #mapping: /openapi/ui

@@ -253,6 +253,8 @@ kumuluzee:
       enabled: false
 ```
 
+Example with server context and custom path mapping is commented out in `config.yml`.
+
 #### OpenAPI UI
 
 To enable OpenAPI UI add **kumuluzee-openapi-ui** dependency to your project: 
