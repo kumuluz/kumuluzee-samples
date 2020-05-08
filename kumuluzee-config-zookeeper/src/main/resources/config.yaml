@@ -1,0 +1,14 @@
+kumuluzee:
+  name: customer-service
+  version: 1.0.0
+  env:
+    name: dev
+  config:
+    zookeeper:
+      hosts: localhost:2181
+
+rest-config:
+  string-property: Monday
+  boolean-property: true
+  integer-property: 23
+  encoded-property: ZW5jb2RlZCBwcm9wZXJ0eQ==

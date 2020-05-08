@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014-2017 Kumuluz and/or its affiliates
+ *  Copyright (c) 2014-2020 Kumuluz and/or its affiliates
  *  and other contributors as indicated by the @author tags and
  *  the contributor list.
  *
@@ -19,7 +19,7 @@
  *  limitations under the License.
 */
 
-package com.kumuluz.ee.samples.kumuluz_config_consul;
+package com.kumuluz.ee.samples.kumuluz_config_etcd;
 
 import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
 
