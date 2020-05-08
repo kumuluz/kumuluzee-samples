@@ -91,7 +91,7 @@ To shut down the example simply stop the processes in the foreground.
 This tutorial will guide you through the steps required to create a simple REST service that exposes configuration 
 properties retrieved with a built-in configuration framework and KumuluEE config extension. We will develop a 
 simple REST service with just one resource:
-* GET http://localhost:8080/v1/config - list of all configuration properties from configuration file 
+* GET http://localhost:8080/v1/config - list of all configuration properties from configuration framework 
 
 We will follow these steps:
 * Create a Maven project in the IDE of your choice (Eclipse, IntelliJ, etc.)
@@ -142,19 +142,6 @@ Add the `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluzee-jax-rs-jersey` a
 </dependencies>
 ```
 
-Alternatively, we could add the `kumuluzee-microProfile-1.0`, which adds the MicroProfile 1.0 dependencies (JAX-RS, CDI,
-JSON-P, and Servlet).
-
-Add dependency to KumuluzEE Config extension:
-
-```xml
-    <dependency>
-        <groupId>com.kumuluz.ee.config</groupId>
-        <artifactId>kumuluzee-config-zookeeper</artifactId>
-        <version>${kumuluzee-config.version}</version>
-    </dependency>
-```
- 
 Add the `kumuluzee-maven-plugin` build plugin to package microservice as uber-jar:
 
 ```xml
@@ -211,8 +198,6 @@ kumuluzee:
   env:
     name: dev
   config:
-    start-retry-delay-ms: 500
-    max-retry-delay-ms: 900000
     zookeeper:
       hosts: localhost:2181
 
@@ -222,8 +207,7 @@ rest-config:
   integer-property: 23
 ```
 
-Register your module as JAX-RS service and define the application path. You could do that in web.xml or for example 
-with the `@ApplicationPath` annotation:
+Register your module as JAX-RS service and define the application with the `@ApplicationPath` annotation:
 
 ```java
 @ApplicationPath("v1")

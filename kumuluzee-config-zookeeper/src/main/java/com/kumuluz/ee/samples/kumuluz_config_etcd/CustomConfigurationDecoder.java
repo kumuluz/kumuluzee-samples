@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014-2019 Kumuluz and/or its affiliates
+ *  Copyright (c) 2014-2020 Kumuluz and/or its affiliates
  *  and other contributors as indicated by the @author tags and
  *  the contributor list.
  *
