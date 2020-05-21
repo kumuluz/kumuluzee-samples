@@ -56,6 +56,11 @@
             <artifactId>kumuluzee-health</artifactId>
             <version>${kumuluzee-health.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.config</groupId>
+            <artifactId>kumuluzee-config-mp</artifactId>
+            <version>1.4.0</version>
+        </dependency>
 
         <dependency>
             <groupId>org.postgresql</groupId>

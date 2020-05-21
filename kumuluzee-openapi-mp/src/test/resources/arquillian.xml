@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<arquillian xmlns="http://jboss.org/schema/arquillian"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://jboss.org/schema/arquillian http://www.jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+    <container qualifier="KumuluzEE" default="true">
+        <configuration>
+            <property name="deleteTemporaryFiles">false</property>
+            <property name="includeRequiredLibraries">fromPom</property>
+        </configuration>
+    </container>
+
+</arquillian>

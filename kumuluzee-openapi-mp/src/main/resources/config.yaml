@@ -10,5 +10,9 @@ kumuluzee:
     ui:
       enabled: true
       mapping: /openapi/ui
+      implementation: rapidoc
+      extensions:
+        rapidoc:
+          show-header: true
     scanning:
       debug: true
