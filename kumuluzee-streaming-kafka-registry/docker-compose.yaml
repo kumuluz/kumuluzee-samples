@@ -1,0 +1,75 @@
+version: '3'
+
+services:
+  sample-zookeeper:
+    image: confluentinc/cp-zookeeper:5.5.0
+    container_name: sample-zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_AUTOPURGE_SNAP_RETAIN-COUNT: 5
+      ZOOKEEPER_AUTOPURGE_PURGE_INTERVAL: 24
+    volumes:
+      - ./tmp/etc/data/sample-zookeeper/data:/var/lib/zookeeper/data
+      - ./tmp/etc/data/sample-zookeeper/txn-logs:/var/lib/zookeeper/log
+      - ./tmp/etc/logs/sample-zookeeper:/var/log/zookeeper
+
+  sample-kafka:
+    image: confluentinc/cp-kafka:5.5.0
+    container_name: sample-kafka
+    depends_on:
+      - sample-zookeeper
+    ports:
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'sample-zookeeper:2181'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_CONTROLLED_SHUTDOWN_ENABLE: "true"
+      KAFKA_LISTENERS: PLAINTEXT://sample-kafka:9092,EXTERNAL://0.0.0.0:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://sample-kafka:9092,EXTERNAL://localhost:29092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      CONFLUENT_SUPPORT_METRICS_ENABLE: "false"
+      CONFLUENT_SUPPORT_METRICS_TOPIC: ""
+    volumes:
+      - ./tmp/etc/data/sample-kafka/data:/var/lib/kafka/data
+      - ./tmp/etc/logs/sample-kafka:/var/log/kafka
+
+  sample-schema-registry:
+    image: confluentinc/cp-schema-registry:5.5.0
+    container_name: sample-schema-registry
+    depends_on:
+      - sample-kafka
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "sample-zookeeper:2181"
+      SCHEMA_REGISTRY_HOST_NAME: sample-schema-registry
+      SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
+    ports:
+      - 8081:8081
+
+  sample-schema-registry-ui:
+    image: landoop/schema-registry-ui:latest
+    container_name: sample-schema-registry-ui
+    depends_on:
+      - sample-schema-registry
+    environment:
+      PROXY: "true"
+      SCHEMAREGISTRY_URL: "http://sample-schema-registry:8081"
+    ports:
+      - 8000:8000
+
+  sample-kafdrop:
+    image: obsidiandynamics/kafdrop:latest
+    container_name: sample-kafdrop
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: "sample-kafka:9092"
+      SCHEMAREGISTRY_CONNECT: http://localhost:8081
+      JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+    depends_on:
+      - "sample-kafka"

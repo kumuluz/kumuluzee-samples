@@ -1,0 +1,15 @@
+kumuluzee:
+  server:
+    http:
+      port: 8078
+  streaming:
+    kafka:
+      streams-avro:
+        bootstrap-servers: localhost:29092
+        application-id: sample-price-sum
+        default-key-serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        default-value-serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        commit-interval-ms: 500
+        schema-registry-url: http://localhost:8081
+        specific-avro-reader: true
+        auto-register-schemas: false

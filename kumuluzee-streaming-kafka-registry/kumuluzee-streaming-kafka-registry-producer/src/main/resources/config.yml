@@ -1,0 +1,9 @@
+kumuluzee:
+  streaming:
+    kafka:
+      producer-avro:
+        bootstrap-servers: localhost:29092
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+        schema-registry-url: http://localhost:8081
+        auto-register-schemas: false
