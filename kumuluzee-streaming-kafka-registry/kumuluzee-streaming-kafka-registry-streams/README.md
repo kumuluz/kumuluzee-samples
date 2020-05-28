@@ -20,13 +20,13 @@ We need Avro and record serializer:
 # Tutorial
 Our streams application will behave like a consumer and producer at the same time. We will consume prices from `pricing-avro` topic, sum the `price` field and produce the new sum into `sum-avro` topic using a sum schema.
 
-## Generate Sum POJO and register schema
+## Producing: Generate Sum POJO and register schema
 Our schema resides in `src/main/resources/schemas/avro/sum.avsc`. Generate POJO with `mvn compile`.
 POJO appears in `src/generated` folder.
 
-Now register the schema with `mvn schema-registry:download`.
+Now register the schema with `mvn schema-registry:register`.
 
-## Download Pricing schema and generate POJO
+## Consuming: Download Pricing schema and generate POJO
 For the consumer part, we need to pull down the latest schema and generate the POJO:
 ```
 mvn schema-registry:download
