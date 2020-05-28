@@ -62,4 +62,4 @@ curl -X GET http://localhost:8079/consume
 ## Schema evolution
 When producers update their schema, simply pull down the latest schema and rebuild the consumer. Follow the [compatibility guide](https://docs.confluent.io/current/schema-registry/avro.html) for the deployment strategy.
 
-Now that we have successfully consumed a record, continue to the streams module README.
+Now that we have successfully consumed a record, continue to the [streams module](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-streaming-kafka-registry/kumuluzee-streaming-kafka-registry-streams) README.
