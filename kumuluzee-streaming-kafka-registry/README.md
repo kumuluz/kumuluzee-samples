@@ -5,9 +5,9 @@
 This module contains three samples that will introduce you to KumuluzEE
 Event Streaming project using Kafka and Schema Registry:
 
-- [`kumuluzee-streaming-kafka-registry-producer`](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-streaming-kafka/kumuluzee-streaming-kafka-registry-producer) Kafka message producer microservice that produces messages using Avro schema and Confluent Schema Registry
-- [`kumuluzee-streaming-kafka-registry-consumer`](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-streaming-kafka/kumuluzee-streaming-kafka-consumer) Kafka message consumer microservice that consumes messages using Avro schema and Confluent Schema Registry
-- [`kumuluzee-streaming-kafka-streams`](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-streaming-kafka/kumuluzee-streaming-kafka-streams) Kafka Streams microservice for stream processing using Avro schema and Confluent Schema Registry
+- [`kumuluzee-streaming-kafka-registry-producer`](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-streaming-kafka-registry/kumuluzee-streaming-kafka-registry-producer) Kafka message producer microservice that produces messages using Avro schema and Confluent Schema Registry
+- [`kumuluzee-streaming-kafka-registry-consumer`](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-streaming-kafka-registry/kumuluzee-streaming-kafka-consumer) Kafka message consumer microservice that consumes messages using Avro schema and Confluent Schema Registry
+- [`kumuluzee-streaming-kafka-streams`](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-streaming-kafka-registry/kumuluzee-streaming-kafka-streams) Kafka Streams microservice for stream processing using Avro schema and Confluent Schema Registry
 
 More information about the samples can be found in the README of each sample.
 
