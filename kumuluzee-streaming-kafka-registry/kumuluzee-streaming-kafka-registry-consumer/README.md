@@ -29,7 +29,7 @@ We need Avro and record serializer:
 2. Generate .java POJO with `avro-maven-plugin` (with `mvn compile`)
 3. Use the generated POJO in Kafka Consumer (`TestConsumer.java`).
 
-COnsumer configuration is the same as regular Kafka consumer with added schema registry URL and enabling `specific-avro-reader` (by default, it deserializes to a generic record). We use `KafkaAvroDeserializer` to deserialize Avro format to POJO.
+Consumer configuration is the same as regular Kafka consumer with added schema registry URL and enabling `specific-avro-reader` (by default, it deserializes to a generic record). We use `KafkaAvroDeserializer` to deserialize Avro format to POJO.
 ```
 consumer-avro:
     bootstrap-servers: localhost:29092
