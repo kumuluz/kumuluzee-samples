@@ -66,4 +66,4 @@ However, if we remove the new required field from our 2.0.0 schema and re-run th
 
 We could now change our Avro Maven Plugin source directory to `v2.0.0`, generate the new POJO and register the new schema.
 
-Now that we have successfully produced a record, continue to the consumer module README.
+Now that we have successfully produced a record, continue to the [consumer module](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-streaming-kafka-registry/kumuluzee-streaming-kafka-registry-consumer) README.
