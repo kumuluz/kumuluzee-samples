@@ -1,0 +1,16 @@
+kumuluzee:
+  server:
+    http:
+      port: 8079
+  streaming:
+    kafka:
+      consumer-avro:
+        bootstrap-servers: localhost:29092
+        group-id: group1
+        enable-auto-commit: true
+        auto-commit-interval-ms: 1000
+        auto-offset-reset: latest
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+        schema-registry-url: http://localhost:8081
+        specific-avro-reader: true

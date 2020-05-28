@@ -1,0 +1,8 @@
+{
+  "namespace": "com.kumuluz.ee.samples.kafka.registry.avro.lib",
+  "type": "record",
+  "name": "Sum",
+  "fields": [
+    {"name": "sum", "type": "string"}
+  ]
+}

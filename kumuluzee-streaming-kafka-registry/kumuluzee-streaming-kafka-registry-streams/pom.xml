@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>kumuluzee-streaming-kafka-registry</artifactId>
+        <groupId>com.kumuluz.ee.samples</groupId>
+        <version>3.10.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>kumuluzee-streaming-kafka-registry-streams</artifactId>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-microProfile-3.3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.streaming</groupId>
+            <artifactId>kumuluzee-streaming-kafka</artifactId>
+            <version>${kumuluzee-streaming-kafka.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>kumuluzee-logs-log4j2</artifactId>
+            <groupId>com.kumuluz.ee.logs</groupId>
+            <version>${kumuluzee-logs.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-streams</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-streams-avro-serde</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-maven-plugin</artifactId>
+                <version>${kumuluzee.version}</version>
+                <executions>
+                    <execution>
+                        <id>package</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>src/main/resources/schemas/avro/</sourceDirectory>
+                            <outputDirectory>${project.basedir}/src/generated/java/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.confluent</groupId>
+                <artifactId>kafka-schema-registry-maven-plugin</artifactId>
+                <configuration>
+                    <schemaTypes>
+                        <pricing-avro-value>AVRO</pricing-avro-value>
+                    </schemaTypes>
+                    <subjects>
+                        <sum-avro-value>src/main/resources/schemas/avro/sum.avsc</sum-avro-value>
+                    </subjects>
+                    <subjectPatterns>
+                        <param>pricing-avro-value</param>
+                    </subjectPatterns>
+                    <outputDirectory>${project.basedir}/src/main/resources/schemas/avro/</outputDirectory>
+                </configuration>
+                <goals>
+                    <goal>test-compatibility</goal>
+                </goals>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

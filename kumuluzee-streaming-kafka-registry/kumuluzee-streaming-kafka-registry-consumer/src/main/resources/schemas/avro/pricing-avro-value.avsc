@@ -1,0 +1,1 @@
+{"type":"record","name":"Pricing","namespace":"com.kumuluz.ee.samples.kafka.registry.avro.lib","fields":[{"name":"price","type":"string"},{"name":"priceExTax","type":"string"},{"name":"basePrice","type":"string"},{"name":"taxAmount","type":"string"},{"name":"description","type":"string"}]}

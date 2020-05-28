@@ -1,0 +1,14 @@
+{
+  "namespace": "com.kumuluz.ee.samples.kafka.registry.avro.lib",
+  "type": "record",
+  "name": "Pricing",
+  "fields": [
+    {"name": "price", "type": "string"},
+    {"name": "priceExTax", "type": "string"},
+    {"name": "basePrice", "type": "string"},
+    {"name": "taxAmount", "type": "string"},
+    {"name": "description", "type": "string"},
+    {"name": "taxPercentRequired", "type": "string"},
+    {"name": "taxPercentOptional", "type": "string", "default": "undefined"}
+  ]
+}

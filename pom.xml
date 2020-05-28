@@ -33,6 +33,7 @@
         <module>kumuluzee-security-cdi-keycloak</module>
         <module>kumuluzee-security-keycloak</module>
         <module>kumuluzee-streaming-kafka</module>
+        <module>kumuluzee-streaming-kafka-registry</module>
         <module>microservices-simple</module>
         <module>servlet</module>
         <module>websocket</module>
