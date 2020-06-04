@@ -15,7 +15,7 @@
     <description>KumuluzEE Config extensions usage sample with KumuluzEE and Consul</description>
 
     <properties>
-        <kumuluzee-config.version>1.2.0-SNAPSHOT</kumuluzee-config.version>
+        <kumuluzee-config.version>1.4.0-SNAPSHOT</kumuluzee-config.version>
     </properties>
 
     <dependencyManagement>

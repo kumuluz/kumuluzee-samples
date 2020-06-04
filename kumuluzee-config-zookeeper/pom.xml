@@ -15,7 +15,7 @@
     <description>KumuluzEE Config extensions usage sample with KumuluzEE and Apache ZooKeeper</description>
 
     <properties>
-        <kumuluzee-config.version>1.3.0-SNAPSHOT</kumuluzee-config.version>
+        <kumuluzee-config.version>1.4.0-SNAPSHOT</kumuluzee-config.version>
         <log4j-slf4j.version>2.13.1</log4j-slf4j.version>
     </properties>
 
