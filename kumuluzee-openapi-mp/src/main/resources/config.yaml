@@ -1,6 +1,8 @@
 kumuluzee:
   server:
     #context-path: /kumuluzee-openapi-mp/v1
+    http:
+      port: 8080
   openapi-mp:
     enabled: true
     scan:
@@ -10,9 +12,10 @@ kumuluzee:
     ui:
       enabled: true
       mapping: /openapi/ui
-      implementation: rapidoc
+      implementation: swaggerui
       extensions:
         rapidoc:
           show-header: true
+          theme: dark
     scanning:
       debug: true

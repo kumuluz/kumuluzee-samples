@@ -82,7 +82,9 @@ Swagger UI can be accessed on the following URL:
 * http://localhost:8080/openapi/ui
 
 If you change the server context path you need to prepend the context path to default or custom mapping 
-path of the specification and/or ui. 
+path of the specification and/or ui.
+
+You can switch the UI to use RapiDoc by changing the `ui.implementation` key in `config.yaml` to __rapidoc__.
 
 ## Tutorial
 

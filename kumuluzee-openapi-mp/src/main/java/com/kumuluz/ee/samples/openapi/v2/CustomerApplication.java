@@ -41,7 +41,7 @@ import javax.ws.rs.core.Application;
 @SecurityScheme(securitySchemeName = "openid-connect", type = SecuritySchemeType.OPENIDCONNECT,
         openIdConnectUrl = "http://auth-server-url/.well-known/openid-configuration")
 @ApplicationPath("v2")
-@OpenAPIDefinition(info = @Info(title = "CustomerApi", version = "v2.0.0", contact = @Contact(), license = @License(name="something")), servers = @Server(url = "http://localhost:8080/v2"), security
+@OpenAPIDefinition(info = @Info(title = "CustomerApi", version = "v2.0.0", contact = @Contact(), license = @License(name="something")), servers = @Server(url = "http://localhost:8080"), security
         = @SecurityRequirement(name = "openid-connect"))
 public class CustomerApplication extends Application {
 }
