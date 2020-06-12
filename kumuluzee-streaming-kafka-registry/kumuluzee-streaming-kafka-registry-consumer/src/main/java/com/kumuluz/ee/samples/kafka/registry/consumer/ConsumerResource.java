@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014-2017 Kumuluz and/or its affiliates
+ *  Copyright (c) 2014-2020 Kumuluz and/or its affiliates
  *  and other contributors as indicated by the @author tags and
  *  the contributor list.
  *
@@ -31,7 +31,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * @author Matija Kljun
+ * @author cen1
  */
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)

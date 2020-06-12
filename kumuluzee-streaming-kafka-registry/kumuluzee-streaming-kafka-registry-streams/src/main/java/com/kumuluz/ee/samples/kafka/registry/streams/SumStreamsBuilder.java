@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014-2017 Kumuluz and/or its affiliates
+ *  Copyright (c) 2014-2020 Kumuluz and/or its affiliates
  *  and other contributors as indicated by the @author tags and
  *  the contributor list.
  *
@@ -17,7 +17,7 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
+ */
 
 package com.kumuluz.ee.samples.kafka.registry.streams;
 
@@ -29,17 +29,18 @@ import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.kstream.*;
+import org.apache.kafka.streams.kstream.Consumed;
+import org.apache.kafka.streams.kstream.Grouped;
+import org.apache.kafka.streams.kstream.Produced;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
 /**
- * @author Matija Kljun
+ * @author cen1
  */
 @ApplicationScoped
 public class SumStreamsBuilder {

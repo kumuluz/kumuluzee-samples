@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014-2017 Kumuluz and/or its affiliates
+ *  Copyright (c) 2014-2020 Kumuluz and/or its affiliates
  *  and other contributors as indicated by the @author tags and
  *  the contributor list.
  *
@@ -17,7 +17,7 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
+ */
 
 package com.kumuluz.ee.samples.kafka.registry.producer;
 
@@ -25,6 +25,7 @@ import com.kumuluz.ee.samples.kafka.registry.avro.lib.Pricing;
 import com.kumuluz.ee.streaming.common.annotations.StreamProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -37,7 +38,7 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 /**
- * @author Matija Kljun
+ * @author cen1
  */
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)

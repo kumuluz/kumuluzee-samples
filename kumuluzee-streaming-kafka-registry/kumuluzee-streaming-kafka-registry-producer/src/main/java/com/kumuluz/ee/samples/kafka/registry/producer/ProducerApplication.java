@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014-2017 Kumuluz and/or its affiliates
+ *  Copyright (c) 2014-2020 Kumuluz and/or its affiliates
  *  and other contributors as indicated by the @author tags and
  *  the contributor list.
  *
@@ -17,7 +17,7 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
+ */
 
 package com.kumuluz.ee.samples.kafka.registry.producer;
 
@@ -25,7 +25,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 /**
- * @author Matija Kljun
+ * @author cen1
  */
 @ApplicationPath("")
 public class ProducerApplication extends Application {

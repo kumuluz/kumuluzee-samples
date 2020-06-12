@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2014-2017 Kumuluz and/or its affiliates
+ *  Copyright (c) 2014-2020 Kumuluz and/or its affiliates
  *  and other contributors as indicated by the @author tags and
  *  the contributor list.
  *
@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * @author Matija Kljun
+ * @author cen1
  */
 @ApplicationScoped
 public class TestConsumer {
