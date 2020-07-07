@@ -7,7 +7,11 @@ kumuluzee:
       packages: com.kumuluz.ee.samples.openapi,com.kumuluz.ee.samples.openapi.v2
     servlet:
       mapping: /openapi
+    servers: https://example-api.com
     ui:
+      server-auto-config:
+        enabled: true
+        original-uri-check: true
       enabled: true
       mapping: /openapi/ui
     scanning:
