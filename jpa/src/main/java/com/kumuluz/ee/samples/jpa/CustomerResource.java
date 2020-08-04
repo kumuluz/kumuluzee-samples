@@ -67,4 +67,11 @@ public class CustomerResource {
         customerBean.deleteCustomer(customerId);
         return Response.noContent().build();
     }
+
+    @GET
+    @Path("/failed")
+    public Response getAllCustomersFailed() {
+        List<Customer> customers = customerBean.getCustomersFailed();
+        return Response.ok(customers).build();
+    }
 }

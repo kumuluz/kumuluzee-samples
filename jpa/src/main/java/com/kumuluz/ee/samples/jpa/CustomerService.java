@@ -34,8 +34,11 @@ import java.util.List;
 @RequestScoped
 public class CustomerService {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "kumuluzee-samples-jpa")
     private EntityManager em;
+
+    @PersistenceContext(unitName = "kumuluzee-samples-jpa-failed")
+    private EntityManager emFailed;
 
     public Customer getCustomer(String customerId) {
         return em.find(Customer.class, customerId);
@@ -63,5 +66,13 @@ public class CustomerService {
         if (customer != null) {
             em.remove(customer);
         }
+    }
+
+    public List<Customer> getCustomersFailed() {
+        List<Customer> customers = emFailed
+            .createNamedQuery("Customer.findCustomers", Customer.class)
+            .getResultList();
+
+        return customers;
     }
 }

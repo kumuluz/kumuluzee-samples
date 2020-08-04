@@ -5,4 +5,16 @@ kumuluzee:
       username: postgres
       password: postgres
       pool:
-        max-size: 20
+        max-size: 2
+    - jndi-name: jdbc/FailedCustomersDS
+      connection-url: jdbc:postgresql://localhost:55432/some-nonexisting-database
+      username: postgres
+      password: postgres
+      continue-on-error: true
+      pool:
+        max-size: 2
+  persistence-units:
+    - name: "kumuluzee-samples-jpa"
+      continue-on-error: false
+    - name: "kumuluzee-samples-jpa-failed"
+      continue-on-error: true

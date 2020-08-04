@@ -17,4 +17,10 @@
         </properties>
 
     </persistence-unit>
+
+    <persistence-unit name="kumuluzee-samples-jpa-failed" transaction-type="JTA">
+
+        <jta-data-source>jdbc/FailedCustomersDS</jta-data-source>
+
+    </persistence-unit>
 </persistence>

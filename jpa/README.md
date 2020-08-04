@@ -341,3 +341,19 @@ kumuluzee:
 ### Build the microservice and run it
 
 To build the microservice and run the example, use the commands as described in previous sections.
+
+## Continue framework startup on database connection failure
+
+By default, if any persistence unit fails to establish a database connection, the startup of the framework will fail and your REST API will return error 503.
+If you have a database connection not deemed critical for the system and want to continue a regular startup of the service, you can override the behaviour in `persistence-units` config:
+```
+kumuluzee:
+  persistence-units:
+    - name: "kumuluzee-samples-jpa"
+      continue-on-error: false
+    - name: "kumuluzee-samples-jpa-failed"
+      continue-on-error: true
+```
+Note that this configuration takes persistence-unit name (not data source jndi name) and is a separate section in KumuluzEE config.
+
+Even though the service will complete the startup successfully with one database connection inoperable, you need to expect the failed EntityManager to be null and expect NullPointerException-s if not handled properly.
