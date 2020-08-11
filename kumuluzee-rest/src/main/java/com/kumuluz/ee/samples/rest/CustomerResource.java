@@ -20,6 +20,7 @@
 */
 package com.kumuluz.ee.samples.rest;
 
+import com.kumuluz.ee.rest.beans.Queried;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 
 import javax.enterprise.context.RequestScoped;
@@ -30,6 +31,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Benjamin Kastelic, Marko Skrjanec
@@ -49,8 +51,13 @@ public class CustomerResource {
 
     @GET
     public Response getAllCustomers() {
-        List<Customer> customers = customerBean.getCustomers(createQuery());
-        return Response.ok(customers).build();
+        Queried<Customer> customers = customerBean.getCustomers(createQuery());
+
+        List<Customer> response = customers.stream()
+                //.map() // my api object mapper
+                .collect(Collectors.toList());
+
+        return Response.ok(response).header("total", customers.getTotalCount()).build();
     }
 
     @GET

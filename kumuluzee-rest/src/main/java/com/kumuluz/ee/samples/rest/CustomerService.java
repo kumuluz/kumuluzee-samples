@@ -17,9 +17,10 @@
  *  out of or in connection with the software or the use or other dealings in the
  *  software. See the License for the specific language governing permissions and
  *  limitations under the License.
-*/
+ */
 package com.kumuluz.ee.samples.rest;
 
+import com.kumuluz.ee.rest.beans.Queried;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 
@@ -27,7 +28,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.List;
 
 /**
  * @author Benjamin Kastelic, Marko Skrjanec
@@ -43,9 +43,9 @@ public class CustomerService {
         return em.find(Customer.class, customerId);
     }
 
-    public List<Customer> getCustomers(QueryParameters query) {
-        List<Customer> customers = JPAUtils.queryEntities(em, Customer.class, query);
-        return customers;
+    public Queried<Customer> getCustomers(QueryParameters query) {
+        Queried<Customer> customersQueried = JPAUtils.getQueried(em, Customer.class, query);
+        return customersQueried;
     }
 
 
