@@ -189,6 +189,8 @@ To build the microservice and run the example, use the commands as described in 
 
 ### Executing queries
 
+You can see the generated schema at: http://localhost:8080/graphql/schema.graphql
+
 You can now try executing queries. You can start with one of these:
 
 ```
