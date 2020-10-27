@@ -20,11 +20,11 @@
 */
 package com.kumuluz.ee.samples.graphql_security;
 
-import com.kumuluz.ee.graphql.annotations.GraphQLClass;
 import com.kumuluz.ee.security.annotations.Secure;
-import io.leangen.graphql.annotations.GraphQLArgument;
-import io.leangen.graphql.annotations.GraphQLMutation;
-import io.leangen.graphql.annotations.GraphQLQuery;
+import org.eclipse.microprofile.graphql.GraphQLApi;
+import org.eclipse.microprofile.graphql.Mutation;
+import org.eclipse.microprofile.graphql.Name;
+import org.eclipse.microprofile.graphql.Query;
 
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
@@ -38,35 +38,35 @@ import java.util.List;
  * @since 2.3.0
  */
 @RequestScoped
-@GraphQLClass
+@GraphQLApi
 @Secure
 public class CustomerResource {
 
     @Inject
     private CustomerService customerBean;
 
-    @GraphQLQuery
+    @Query
     @PermitAll
     public List<Customer> getAllCustomers() {
        return customerBean.getCustomers();
     }
 
-    @GraphQLQuery
+    @Query
     @RolesAllowed({"user", "admin"})
-    public Customer getCustomer(@GraphQLArgument(name="customerId") String customerId) {
+    public Customer getCustomer(@Name("customerId") String customerId) {
         return customerBean.getCustomer(customerId);
     }
 
-    @GraphQLMutation
+    @Mutation
     @RolesAllowed("admin")
-    public Customer addNewCustomer(@GraphQLArgument(name="customer") Customer customer) {
+    public Customer addNewCustomer(@Name("customer") Customer customer) {
         customerBean.saveCustomer(customer);
         return customer;
     }
 
-    @GraphQLMutation
+    @Mutation
     @DenyAll
-    public void deleteCustomer(@GraphQLArgument(name="customerId") String customerId) {
-        customerBean.deleteCustomer(customerId);
+    public Customer deleteCustomer(@Name("customerId") String customerId) {
+        return customerBean.deleteCustomer(customerId);
     }
 }

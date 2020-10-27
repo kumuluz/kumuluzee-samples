@@ -45,12 +45,15 @@ docker run -d --name pg-graphql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=p
 ```
 
 Due to added security, running Keycloak is also required. You can run it with docker:
+
 ```
-$ docker run \
-         -e KEYCLOAK_USER=<USERNAME> \
-         -e KEYCLOAK_PASSWORD=<PASSWORD> \
-         -p 8082:8080 jboss/keycloak
+$ docker run -p 8082:8080 \
+        -e KEYCLOAK_USER=admin \
+        -e KEYCLOAK_PASSWORD=admin \
+        -e DB_VENDOR=h2 \
+        quay.io/keycloak/keycloak:11.0.2
 ```
+
 ## Usage
 
 The example uses maven to build and run the microservices.
@@ -92,10 +95,16 @@ The application/service can be accessed on the following URL:
 
 To shut down the example simply stop the processes in the foreground.
 
-> Postman is recommended for making requests due to GraphiQL not supporting sending Bearer tokens. GraphiQL can still be used for testing query syntax and for checking the structure of requests.
+> Postman is recommended for making requests due to GraphiQL not supporting sending Bearer tokens. GraphiQL can still 
+> be used for testing query syntax and for checking the structure of requests.
 
 ## Tutorial
-This tutorial will guide you through the steps required to create a simple GraphQL microservice with security and pack it as a KumuluzEE microservice. We will extend the existing [KumuluzEE JPA and CDI sample with GraphQL](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-graphql-jpa-simple). Therefore, first complete the existing sample tutorial, or clone the sample code. We will use PostgreSQL in this tutorial.
+
+This tutorial will guide you through the steps required to create a simple GraphQL microservice with security and 
+pack it as a KumuluzEE microservice. We will extend the existing 
+[KumuluzEE JPA and CDI sample with GraphQL](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-graphql-jpa-simple).
+Therefore, first complete the existing sample tutorial, or clone the sample code. We will use PostgreSQL in this
+tutorial.
 
 We will follow these steps:
 * Complete the tutorial for [KumuluzEE JPA and CDI with GraphQL](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-graphql-jpa-simple) or clone the existing sample
@@ -108,10 +117,14 @@ We will follow these steps:
 
 ### Add Maven dependencies
 
-Since your starting point is the existing `KumuluzEE JPA and CDI sample with GraphQL`, you should already have the dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluzee-jax-rs-jersey`, `kumuluzee-cdi-weld`, `kumuluzee-jpa-eclipselink`, `kumuluzee-graphql`, `kumuluzz-graphql-ui` and `postgresql` configured in `pom.xml`.
+Since your starting point is the existing `KumuluzEE JPA and CDI sample with GraphQL`, you should already have the
+dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluzee-jax-rs-jersey`,
+`kumuluzee-cdi-weld`, `kumuluzee-jpa-eclipselink`, `kumuluzee-graphql-mp`, `kumuluzee-json-p-jsonp`,
+`kumuluzee-json-b-yasson`, `kumuluzz-graphql-ui` and `postgresql` configured in `pom.xml`.
 
 
 Add `kumuluzee-security` and `Keycloak Jetty adapter`:
+
 ```xml
 <dependency>
     <groupId>com.kumuluz.ee.security</groupId>
@@ -129,74 +142,87 @@ Add `kumuluzee-security` and `Keycloak Jetty adapter`:
 `kumuluzee-maven-plugin` should already be added to your project from JPA and CDI sample.
 
 ### Configure Keycloak
-Follow the [Configure Keycloak](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-security-keycloak#configure-keycloak) steps from `kumuluzee-security-keycloak` sample.
+
+Follow the [Configure Keycloak](https://github.com/kumuluz/kumuluzee-samples/tree/master/kumuluzee-security-keycloak#configure-keycloak)
+steps from `kumuluzee-security-keycloak` sample.
 
 ### Add GraphQLApplication class
+
 Before we can enable security on GraphQL endpoint, we need to add a custom class, which extends GraphQLApplication class.
 Annotation `GraphQLApplicationClass` is also required.
+
 ```
 @GraphQLApplicationClass
-public class MyGraphQL extends GraphQLApplication {}
+public class CustomerApp extends GraphQLApplication {}
 ```
 
 ### Implement security
+
 In order to enable security on our GraphQL endpoint, we need to do the following:
-* annotate GraphQLApplication class with `DeclareRoles` annotation
-```
+
+- annotate GraphQLApplication class with `@DeclareRoles` annotation
+```java
 @GraphQLApplicationClass
 @DeclareRoles({"user", "admin"})
-public class MyGraphQL extends GraphQLApplication {}
+public class CustomerApp extends GraphQLApplication {}
 ```
-* annotate desired GraphQL classes with `@Secure` annotation (the classes we want protected)
-```
+
+- annotate desired GraphQL classes with `@Secure` annotation (the classes we want protected)
+```java
 @RequestScoped
-@GraphQLClass
+@GraphQLApi
 @Secure
 public class CustomerResource { ... }
 ```
-* annotate queries and mutations with security annotations (`PermitAll`, `RolesAllowed`, `DenyAll`...)
-```
+
+- annotate queries and mutations with security annotations (`PermitAll`, `RolesAllowed`, `DenyAll`...)
+```java
 @RequestScoped
-@GraphQLClass
+@GraphQLApi
 @Secure
 public class CustomerResource {
 
     @Inject
     private CustomerService customerBean;
 
-    @GraphQLQuery
+    @Query
     @PermitAll
     public List<Customer> getAllCustomers() {
        return customerBean.getCustomers();
     }
 
-    @GraphQLQuery
+    @Query
     @RolesAllowed({"user", "admin"})
-    public Customer getCustomer(@GraphQLArgument(name="customerId") String customerId) {
+    public Customer getCustomer(@Name("customerId") String customerId) {
         return customerBean.getCustomer(customerId);
     }
 
-    @GraphQLMutation
+    @Mutation
     @RolesAllowed("admin")
-    public Customer addNewCustomer(@GraphQLArgument(name="customer") Customer customer) {
+    public Customer addNewCustomer(@Name("customer") Customer customer) {
         customerBean.saveCustomer(customer);
         return customer;
     }
 
-    @GraphQLMutation
+    @Mutation
     @DenyAll
-    public void deleteCustomer(@GraphQLArgument(name="customerId") String customerId) {
+    public void deleteCustomer(@Name("customerId") String customerId) {
         customerBean.deleteCustomer(customerId);
     }
 }
 ```
-With these annotations, we have now protected GraphQL endpoint. With `PermitAll`, all authorized requests are permitted. `RolesAllowed` allows us to specify which user roles can access specific operations. If we want to forbid using specific operations, we can use `DenyAll`.
-
-### Querying endpoint
-After following these steps, the GraphQL endpoint can now be queried with Bearer token. To get the token, send a request to Keycloak auth endpoint: `http://{keycloakhost:port}/auth/realms/{realmname}/protocol/openid-connect/token` (`http://localhost:8082/auth/realms/customers-realm/protocol/openid-connect/token`).
-
-All secured requests should now include `Authorization` header with content: `Bearer {token}`.
+With these annotations, we have now protected GraphQL endpoint. With `PermitAll`, all authorized requests are permitted.
+`RolesAllowed` allows us to specify which user roles can access specific operations. If we want to forbid using
+specific operations, we can use `DenyAll`.
 
 ### Build the microservice and run it
 
 To build the microservice and run the example, use the commands as described in previous sections.
+
+### Querying endpoint
+
+After following these steps, the GraphQL endpoint can now be queried with Bearer token. To get the token, send a
+request to Keycloak auth endpoint: `http://{keycloakhost:port}/auth/realms/{realmname}/protocol/openid-connect/token`
+(`http://localhost:8082/auth/realms/customers-realm/protocol/openid-connect/token`).
+
+All secured requests should now include `Authorization` header with content: `Bearer {token}`.

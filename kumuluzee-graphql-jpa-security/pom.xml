@@ -16,9 +16,10 @@
     <description>GraphQL example usage with KumuluzEE</description>
 
     <properties>
-        <kumuluzee-graphql.version>1.1.0-SNAPSHOT</kumuluzee-graphql.version>
-        <kumuluzee-security.version>1.2.0-SNAPSHOT</kumuluzee-security.version>
-        <keycloak.version>5.0.0</keycloak.version>
+        <kumuluzee-graphql.version>1.2.0-SNAPSHOT</kumuluzee-graphql.version>
+        <kumuluzee-config-mp.version>1.5.0-SNAPSHOT</kumuluzee-config-mp.version>
+        <kumuluzee-security.version>1.3.0-SNAPSHOT</kumuluzee-security.version>
+        <keycloak.version>11.0.2</keycloak.version>
         <postgresql.version>42.2.1</postgresql.version>
     </properties>
 
@@ -60,8 +61,21 @@
             <artifactId>kumuluzee-jta-narayana</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-json-p-jsonp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-json-b-yasson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.config</groupId>
+            <artifactId>kumuluzee-config-mp</artifactId>
+            <version>${kumuluzee-config-mp.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.kumuluz.ee.graphql</groupId>
-            <artifactId>kumuluzee-graphql</artifactId>
+            <artifactId>kumuluzee-graphql-mp</artifactId>
             <version>${kumuluzee-graphql.version}</version>
         </dependency>
         <dependency>
