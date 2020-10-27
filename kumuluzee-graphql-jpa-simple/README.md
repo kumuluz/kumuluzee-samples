@@ -1,8 +1,10 @@
 # KumuluzEE JPA and CDI with GraphQL
 
-> Develop JPA entities and use CDI within a GraphQL service and pack it as a KumuluzEE microservice.
+> Convert an existing REST application to GraphQL and pack it as a KumuluzEE microservice.
 
-The object of of this sample is to demonstrate, how to convert your existing JPA and CDI application to expose GraphQL API instead of REST. Before starting this tutorial, please make sure, that you have finished the tutorial this one is based on: [KumuluzEE JPA and CDI with REST](https://github.com/kumuluz/kumuluzee-samples/tree/master/jpa).
+The objective of this sample is to demonstrate how to convert your existing JPA/CDI application to expose GraphQL
+API instead of REST. Before starting this tutorial, please make sure, that you have finished 
+[KumuluzEE JPA and CDI with REST](https://github.com/kumuluz/kumuluzee-samples/tree/master/jpa) tutorial.
 
 ## Requirements
 
@@ -85,10 +87,13 @@ The application/service can be accessed on the following URL:
 To shut down the example simply stop the processes in the foreground.
 
 ## Tutorial
-This tutorial will guide you through the steps required to create a simple GraphQL microservice which uses JPA 2.1 and pack it as a KumuluzEE microservice. We will extend the existing [KumuluzEE JPA and CDI sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jpa). Therefore, first complete the existing sample tutorial, or clone the JPA and CDI sample code. We will use PostgreSQL in this tutorial.
+This tutorial will guide you through the steps required to create a simple GraphQL microservice which uses JPA 2.1 and
+pack it as a KumuluzEE microservice. We will extend the existing
+[KumuluzEE JPA and CDI sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jpa).
+Therefore, first complete the existing sample tutorial, or clone the JPA and CDI sample code. We will use PostgreSQL
+in this tutorial.
 
 We will follow these steps:
-* Complete the tutorial for [KumuluzEE JPA and CDI sample](https://github.com/kumuluz/kumuluzee-samples/tree/master/jpa) or clone the existing sample
 * Add Maven dependencies
 * Remove JAX-RS annotations and replace them with GraphQL annotations
 * Build the microservice
@@ -96,14 +101,19 @@ We will follow these steps:
 
 ### Add Maven dependencies
 
-Since your existing starting point is the existing KumuluzEE JPA and CDI sample, you should already have the dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluzee-jax-rs-jersey`, `kumuluzee-cdi-weld`, `kumuluzee-jpa-eclipselink` and `postgresql` configured in `pom.xml`.
+Since your existing starting point is the existing KumuluzEE JPA and CDI sample, you should already have the
+dependencies for `kumuluzee-bom`, `kumuluzee-core`, `kumuluzee-servlet-jetty`, `kumuluzee-jax-rs-jersey`,
+`kumuluzee-cdi-weld`, `kumuluzee-jpa-eclipselink` and `postgresql` configured in `pom.xml`.
 
 
-Add the `kumuluzee-graphql` and `kumuluzz-graphql-ui` dependencies:
+Add the `kumuluzee-graphql-mp` and `kumuluzz-graphql-ui` dependencies and remove `kumuluzee-jax-rs-jersey` dependency.
+GraphQL extension also requires `kumuluzee-json-p-jsonp`, `kumuluzee-json-b-yasson` and `kumuluzee-config-mp`
+dependencies, so also add those:
+
 ```xml
 <dependency>
     <groupId>com.kumuluz.ee.graphql</groupId>
-    <artifactId>kumuluzee-graphql</artifactId>
+    <artifactId>kumuluzee-graphql-mp</artifactId>
     <version>${kumuluzee-graphql.version}</version>
 </dependency>
 <dependency>
@@ -111,7 +121,19 @@ Add the `kumuluzee-graphql` and `kumuluzz-graphql-ui` dependencies:
     <artifactId>kumuluzee-graphql-ui</artifactId>
     <version>${kumuluzee-graphql.version}</version>
 </dependency>
-
+<dependency>
+    <groupId>com.kumuluz.ee</groupId>
+    <artifactId>kumuluzee-json-p-jsonp</artifactId>
+</dependency>
+<dependency>
+    <groupId>com.kumuluz.ee</groupId>
+    <artifactId>kumuluzee-json-b-yasson</artifactId>
+</dependency>
+<dependency>
+    <groupId>com.kumuluz.ee.config</groupId>
+    <artifactId>kumuluzee-config-mp</artifactId>
+    <version>${kumuluzee-config-mp.version}</version>
+</dependency>
 ```
 
 `kumuluzee-maven-plugin` should already be added to your project from JPA and CDI sample.
@@ -120,65 +142,56 @@ Add the `kumuluzee-graphql` and `kumuluzz-graphql-ui` dependencies:
 ### Converting REST service to GraphQL endpoint
 Here are the required steps:
 - Delete CustomerApplication.java file, because we will no longer be using the REST endpoint
-- Replace REST annotations (`@Consumes @Produces and @Path`) with `@GraphQLClass` annotation
-- Register API endpoints to become GraphQL queries and mutations: replace `@GET` annotations with `@GraphQLQuery` and `@POST`, `@DELETE` annotations with `@GraphQLMutation`
+- Replace REST annotations (`@Consumes @Produces and @Path`) with `@GraphQLApi` annotation
+- Register API endpoints to become GraphQL queries and mutations: replace `@GET` annotations with `@Query` and `@POST`, `@DELETE` annotations with `@Mutation`
 - Remove all `@Path` annotations
-- Replace parameters annotations (`@PathParam("name")` with `@GraphQLArgument(name="name")`)
-- Replace output types (we are not returning `Response` anymore but actual types; e.g. getAllCustomers should return `List<Customer>` and not `Response`)
+- Replace parameters annotations (`@PathParam("name")` with `@Name("name")`)
+- Replace output types (we are not returning `Response` anymore but actual types; e.g. `getAllCustomers` should return `List<Customer>` and not `Response`)
 
 
 The final code should look something like this:
 ```java
 @RequestScoped
-@GraphQLClass
+@GraphQLApi
 public class CustomerResource {
   
     @Inject
     private CustomerService customerBean;
   
-    @GraphQLQuery
+    @Query
     public List<Customer> getAllCustomers() {
        return customerBean.getCustomers();
     }
   
-    @GraphQLQuery
-    public Customer getCustomer(@GraphQLArgument(name="customerId") String customerId) {
+    @Query
+    public Customer getCustomer(@Name("customerId") String customerId) {
         return customerBean.getCustomer(customerId);
     }
   
-    @GraphQLMutation
-    public Customer addNewCustomer(@GraphQLArgument(name="customer") Customer customer) {
+    @Mutation
+    public Customer addNewCustomer(@Name("customer") Customer customer) {
         customerBean.saveCustomer(customer);
         return customer;
     }
   
-    @GraphQLMutation
-    public void deleteCustomer(@GraphQLArgument(name="customerId") String customerId) {
+    @Mutation
+    public void deleteCustomer(@Name("customerId") String customerId) {
         customerBean.deleteCustomer(customerId);
     }
 }
 
 ```
 
+### Build the microservice and run it
+
+To build the microservice and run the example, use the commands as described in previous sections. Graph*i*QL
+(GraphQL UI) should now be accessible on http://localhost:8080/graphiql.
+
 ### Executing queries
-You can now execute selected queries:
+
+You can now try executing queries. You can start with one of these:
+
 ```
-query getAllCustomers {
-  allCustomers {
-    id
-    firstName
-    lastName
-  }
-}
-  
-query getCustomerById {
-  customer(customerId: "1") {
-    id
-    firstName
-    lastName
-  }
-}
-  
 mutation addCustomer {
   addNewCustomer(customer: {id: "1", firstName: "Gary", lastName: "Bartlett"}) {
     id
@@ -186,13 +199,24 @@ mutation addCustomer {
     lastName
   }
 }
-  
-mutation deleteCustomer {
-  deleteCustomer(customerId: "2")
+
+query getAllCustomers {
+  allCustomers {
+    id
+    firstName
+    lastName
+  }
 }
-  
+
+query getCustomerById {
+  customer(customerId: "1") {
+    id
+    firstName
+    lastName
+  }
+}
+
+mutation deleteCustomer {
+  deleteCustomer(customerId: "1")
+}
 ```
-
-### Build the microservice and run it
-
-To build the microservice and run the example, use the commands as described in previous sections.

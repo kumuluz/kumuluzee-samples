@@ -20,10 +20,10 @@
 */
 package com.kumuluz.ee.samples.graphql_simple;
 
-import com.kumuluz.ee.graphql.annotations.GraphQLClass;
-import io.leangen.graphql.annotations.GraphQLArgument;
-import io.leangen.graphql.annotations.GraphQLMutation;
-import io.leangen.graphql.annotations.GraphQLQuery;
+import org.eclipse.microprofile.graphql.GraphQLApi;
+import org.eclipse.microprofile.graphql.Mutation;
+import org.eclipse.microprofile.graphql.Name;
+import org.eclipse.microprofile.graphql.Query;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -34,30 +34,30 @@ import java.util.List;
  * @since 2.3.0
  */
 @RequestScoped
-@GraphQLClass
+@GraphQLApi
 public class CustomerResource {
 
     @Inject
     private CustomerService customerBean;
 
-    @GraphQLQuery
+    @Query
     public List<Customer> getAllCustomers() {
        return customerBean.getCustomers();
     }
 
-    @GraphQLQuery
-    public Customer getCustomer(@GraphQLArgument(name="customerId") String customerId) {
+    @Query
+    public Customer getCustomer(@Name("customerId") String customerId) {
         return customerBean.getCustomer(customerId);
     }
 
-    @GraphQLMutation
-    public Customer addNewCustomer(@GraphQLArgument(name="customer") Customer customer) {
+    @Mutation
+    public Customer addNewCustomer(@Name("customer") Customer customer) {
         customerBean.saveCustomer(customer);
         return customer;
     }
 
-    @GraphQLMutation
-    public Boolean deleteCustomer(@GraphQLArgument(name="customerId") String customerId) {
+    @Mutation
+    public Boolean deleteCustomer(@Name("customerId") String customerId) {
         return customerBean.deleteCustomer(customerId);
     }
 }
