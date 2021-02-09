@@ -48,6 +48,7 @@
         <module>kumuluzee-blog-samples</module>
         <module>kumuluzee-reactive-vertx</module>
         <module>kumuluzee-grpc</module>
+        <module>kumuluzee-graphql-advanced</module>
         <module>kumuluzee-graphql-jpa-simple</module>
         <module>kumuluzee-graphql-jpa-security</module>
         <module>kumuluzee-opentracing</module>

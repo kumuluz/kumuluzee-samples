@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <persistence-unit name="kumuluzee-samples-graphql" transaction-type="JTA">
+
+        <jta-data-source>jdbc/Faculty</jta-data-source>
+
+        <class>com.kumuluz.ee.samples.graphql_advanced.entities.Assistant</class>
+        <class>com.kumuluz.ee.samples.graphql_advanced.entities.Lecturer</class>
+        <class>com.kumuluz.ee.samples.graphql_advanced.entities.Person</class>
+        <class>com.kumuluz.ee.samples.graphql_advanced.entities.Student</class>
+
+        <properties>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="javax.persistence.schema-generation.create-source" value="metadata"/>
+            <property name="javax.persistence.schema-generation.drop-source" value="metadata"/>
+            <property name="javax.persistence.sql-load-script-source" value="sql-scripts/init-db.sql"/>
+        </properties>
+    </persistence-unit>
+</persistence>
