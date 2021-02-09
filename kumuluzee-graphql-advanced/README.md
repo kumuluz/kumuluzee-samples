@@ -38,7 +38,8 @@ In order to run this example you will have to setup a local PostgreSQL database:
 
 The required tables will be created automatically upon running the sample.
 You can run database inside docker:
-```
+
+```bash
 docker run -d --name pg-graphql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=faculty -p 5432:5432 postgres:latest
 ```
 
@@ -330,7 +331,7 @@ public class Student extends Person {
 
 To use the mutation use the following query:
 
-```
+```graphql
 mutation CreateStudent {
   createStudent(
     student: {name: "Mike", surname: "Grady", studentNumber: 63170003}

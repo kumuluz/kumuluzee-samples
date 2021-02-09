@@ -41,7 +41,8 @@ In order to run this sample you will have to setup a local PostgreSQL database:
 
 The required tables will be created automatically upon running the sample.
 You can run databases inside docker:
-```
+
+```bash
 docker run -d --name pg-graphql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=customers -p 5432:5432 postgres:latest
 ```
 
@@ -193,7 +194,7 @@ You can see the generated schema at: http://localhost:8080/graphql/schema.graphq
 
 You can now try executing queries. You can start with one of these:
 
-```
+```graphql
 mutation addCustomer {
   addNewCustomer(customer: {id: "1", firstName: "Gary", lastName: "Bartlett"}) {
     id

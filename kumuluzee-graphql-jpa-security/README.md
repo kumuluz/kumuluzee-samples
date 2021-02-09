@@ -40,13 +40,13 @@ In order to run this sample you will have to setup a local PostgreSQL database:
 
 The required tables will be created automatically upon running the sample.
 You can run databases with docker:
-```
+```bash
 docker run -d --name pg-graphql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=customers -p 5432:5432 postgres:latest
 ```
 
 Due to added security, running Keycloak is also required. You can run it with docker:
 
-```
+```bash
 $ docker run -p 8082:8080 \
         -e KEYCLOAK_USER=admin \
         -e KEYCLOAK_PASSWORD=admin \
@@ -151,7 +151,7 @@ steps from `kumuluzee-security-keycloak` sample.
 Before we can enable security on GraphQL endpoint, we need to add a custom class, which extends GraphQLApplication class.
 Annotation `GraphQLApplicationClass` is also required.
 
-```
+```java
 @GraphQLApplicationClass
 public class CustomerApp extends GraphQLApplication {}
 ```
