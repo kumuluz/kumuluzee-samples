@@ -30,6 +30,7 @@
         <module>kumuluzee-logs-fluentd</module>
         <module>kumuluzee-metrics</module>
         <module>kumuluzee-rest</module>
+        <module>kumuluzee-rest-form</module>
         <module>kumuluzee-security-cdi-keycloak</module>
         <module>kumuluzee-security-keycloak</module>
         <module>kumuluzee-streaming-kafka</module>
