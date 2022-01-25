@@ -1,0 +1,19 @@
+kumuluzee:
+  name: kumuluzee-samples-migrations-liquibase
+  datasources:
+    - jndi-name: jdbc/BooksDS
+      connection-url: jdbc:postgresql://localhost:5432/postgres
+      username: postgres
+      password: postgres
+      pool:
+        max-size: 20
+  database-schema-migrations:
+    enabled: true
+    liquibase:
+      changelogs:
+        - jndi-name: jdbc/BooksDS
+          file: db/books-changelog.xml
+          contexts: "init"
+          startup:
+            drop-all: true
+            update: true

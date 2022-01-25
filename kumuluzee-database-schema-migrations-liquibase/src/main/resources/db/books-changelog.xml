@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet author="KumuluzEE" id="create_table_book" context="init">
+        <createTable tableName="book">
+            <column name="id" type="varchar(128)"/>
+            <column name="title" type="varchar(64)"/>
+            <column name="author" type="varchar(64)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="KumuluzEE" id="populate_table_book" context="populate">
+        <insert tableName="book">
+            <column name="id">2465c7c0-4e43-4dd9-8257-0542d4661b94</column>
+            <column name="title">KumuluzEE in action</column>
+            <column name="author">KumuluzEE</column>
+        </insert>
+        <insert tableName="book">
+            <column name="id">452aa339-6481-49d4-9024-5796fa6ac633</column>
+            <column name="title">KumuluzEE database schema migrations</column>
+            <column name="author">KumuluzEE</column>
+        </insert>
+        <insert tableName="book">
+            <column name="id">9c3bb6ce-3906-4a37-b807-229e6687346d</column>
+            <column name="title">KumuluzEE tips and tricks</column>
+            <column name="author">KumuluzEE</column>
+        </insert>
+        <insert tableName="book">
+            <column name="id">f7c5deb1-1602-41a5-b75d-d23d80f547fc</column>
+            <column name="title">KumuluzEE best practices</column>
+            <column name="author">KumuluzEE</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

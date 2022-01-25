@@ -21,6 +21,7 @@
         <module>kumuluzee-config-consul</module>
         <module>kumuluzee-config-etcd</module>
         <module>kumuluzee-config-zookeeper</module>
+        <module>kumuluzee-database-schema-migrations-liquibase</module>
         <module>kumuluzee-discovery-consul</module>
         <module>kumuluzee-discovery-etcd</module>
         <module>kumuluzee-ethereum-web3j</module>
