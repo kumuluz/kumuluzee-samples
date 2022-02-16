@@ -18,7 +18,7 @@
     <properties>
         <kumuluzee-graphql.version>1.2.0-SNAPSHOT</kumuluzee-graphql.version>
         <kumuluzee-config-mp.version>1.5.0-SNAPSHOT</kumuluzee-config-mp.version>
-        <postgresql.version>42.2.1</postgresql.version>
+        <postgresql.version>42.3.3</postgresql.version>
     </properties>
 
     <dependencyManagement>
