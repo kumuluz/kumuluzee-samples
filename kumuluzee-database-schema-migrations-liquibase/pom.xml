@@ -17,7 +17,7 @@
     <properties>
         <kumuluzee-database-schema-migrations.version>1.0.0-SNAPSHOT</kumuluzee-database-schema-migrations.version>
         <kumuluzee-logs-jul.version>1.4.6</kumuluzee-logs-jul.version>
-        <postgresql.version>42.2.19</postgresql.version>
+        <postgresql.version>42.3.3</postgresql.version>
     </properties>
 
     <dependencyManagement>
